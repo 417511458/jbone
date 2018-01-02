@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<head>
+    <title th:text="#{screen.consent.title}"></title>
+
+    <link rel="stylesheet" th:href="@{#{webjars.datatables.bootstrapmin.css}}"/>
+    <script th:src="@{#{webjars.datatables.jquery.datatablesmin.js}}"></script>
+    <script th:src="@{#{webjars.datatables.datatables.bootstrapmin.js}}"></script>
+
+    <link rel="stylesheet" th:href="@{#{webjars.bootstrap-selectmin.css}}">
+    <script th:src="@{#{webjars.bootstrap-selectmin.js}}"></script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var data = {
+            attributes: /*[[${attributes}]]*/
+        };
+        var strings = {
+            info: /*[[#{screen.consent.attributes.data.info}]]*/
+        };
+        /*]]>*/
+    </script>
+    <script type="text/javascript" th:inline="javascript">
+
+        function jqueryReady() {
+            head.load(
+                /*[[@{/js/consent.js}]]*/
+            );
+        }
+    </script>
+</head>
+
+<body id="cas">
+<div layout:fragment="content">
+
+    <form method="post" id="fm1">
+        <div class="alert alert-info">
+            <h1 th:text="#{screen.consent.title}"></h1>
+
+
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#attributesPanel" th:text="#{screen.consent.attributes}"/></li>
+                <li><a data-toggle="tab" href="#optionsPanel" th:text="#{screen.consent.options}"/></li>
+            </ul>
+
+            <div class="tab-content clearfix">
+                <div class="tab-pane active" id="attributesPanel">
+                    <br/>
+                    <p th:utext="#{screen.consent.attributes.header(${service.id})}"/>
+                    <table id="attributesTable" class="display table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th th:text="#{screen.consent.attributes.attribute}"/>
+                            <th th:text="#{screen.consent.attributes.values}"/>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="optionsPanel" class="tab-pane">
+
+                    <div class="panel panel-primary">
+
+                        <div class="panel-heading" th:text="#{screen.consent.options.header}"/>
+                        <div class="panel-body">
+                            <div class="radio">
+                                <label><input type="radio" name="option" value="0" th:checked="${option == 0}" onclick="optionSelected()"
+                                              th:utext="#{screen.consent.options.always}"/>
+                                <span class="help-block" th:text="#{screen.consent.options.desc.always(${service.id})}"/>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="option" value="1" th:checked="${option == 1}" onclick="optionSelected()"
+                                              th:utext="#{screen.consent.options.attributename}"/>
+                                <span class="help-block" th:text="#{screen.consent.options.desc.attributename(${service.id})}"/>
+                        </span>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="option" value="2" th:checked="${option == 2}" onclick="optionSelected()"
+                                              th:utext="#{screen.consent.options.attributevalue}"/>
+                                <span class="help-block" th:utext="#{screen.consent.options.desc.attributevalue.intro} +
+                                      '<ul><li>' +
+                                      #{screen.consent.options.desc.attributevalue.first(${service.id})} +
+                                      '</li><li>' +
+                                      #{screen.consent.options.desc.attributevalue.second(${service.id})} +
+                                      '</li><li>' +
+                                      #{screen.consent.options.desc.attributevalue.third(${service.id})} +
+                                      '</li><ul>'"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="reminderPanel" class="panel panel-primary">
+                        <div class="panel-heading" th:text="#{screen.consent.options.reminder.header}"/>
+                        <div class="panel-body">
+                            <span th:text="#{screen.consent.options.reminder.expl(${service.id})}"/> <p/>
+                            </span>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input name="reminder" id="reminder"
+                                               class="form-control" type="number" th:value="${reminder}">
+                                    </td>
+                                    <td>
+                                        <select name="reminderTimeUnit" id="reminderTimeUnit" class="selectpicker">
+                                            <option value="seconds" th:selected="${#strings.toLowerCase(reminderTimeUnit)  == 'seconds'}"
+                                                    th:text="#{screen.consent.options.timeunit.seconds}"/>
+                                            <option value="minutes" th:selected="${#strings.toLowerCase(reminderTimeUnit)  == 'minutes'}"
+                                                    th:text="#{screen.consent.options.timeunit.minutes}"/>
+                                            <option value="hours" th:selected="${#strings.toLowerCase(reminderTimeUnit)  == 'hours'}"
+                                                    th:text="#{screen.consent.options.timeunit.hours}"/>
+                                            <option value="days" th:selected="${#strings.toLowerCase(reminderTimeUnit) == 'days'}"
+                                                    th:text="#{screen.consent.options.timeunit.days}"/>
+                                            <option value="weeks" th:selected="${#strings.toLowerCase(reminderTimeUnit) == 'weeks'}"
+                                                    th:text="#{screen.consent.options.timeunit.weeks}"/>
+                                            <option value="months" th:selected="${#strings.toLowerCase(reminderTimeUnit)  == 'months'}"
+                                                    th:text="#{screen.consent.options.timeunit.months}"/>
+                                            <option value="years" th:selected="${#strings.toLowerCase(reminderTimeUnit)  == 'years'}"
+                                                    th:text="#{screen.consent.options.timeunit.years}"/>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div align="center">
+
+                <input type="hidden" name="execution" th:value="${flowExecutionKey}"/>
+                <input type="hidden" name="_eventId" value="confirm"/>
+                <input class="btn btn-primary btn-lg"
+                       name="confirm"
+                       accesskey="l"
+                       th:value="#{screen.consent.confirm}"
+                       type="submit"/>
+                &nbsp;
+                <a class="btn btn-success btn-lg" id="cancel" name="cancel"
+                   th:href="@{/login}" th:text="#{screen.consent.cancel}"/>
+
+            </div>
+
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+cas:
+  authn:
+        #accept:
+        #      users: casusertest::Mellon
+        shiro:
+              requiredRoles: guest
+              location: classpath:shiro.ini
+  server:
+        name: https://cas.majunwei.com:8443
+        prefix: https://cas.majunwei.com:8443/cas
+  adminPagesSecurity:
+        ip: 127.0.0.1
+
+spring:
+    http:
+        encoding:
+              charset: UTF-8
+              enabled: true
+              force  : true
+
+    cloud:
+        bus:
+              enabled: false
+    thymeleaf:
+        encoding: UTF-8
+        cache: true
+        mode: HTML
+    aop:
+        auto: true
+        proxy-target-class: true
+
+endpoints:
+    enabled: false
+    sensitive: true
+    restart:
+        enabled: false
+    shutdown:
+        enabled: false
+
+management:
+    security:
+        enabled: true
+        roles  : ACTUATOR,ADMIN
+        sessions: if_required
+    context-path: /status
+    add-application-context-header: false
+
+security:
+    basic:
+        authorize-mode: role
+        enabled: false
+        path: /cas/status/**
+logging:
+    config: classpath:log4j2.xml
