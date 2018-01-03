@@ -9,6 +9,7 @@
     <module>jbone-cas</module>
     <module>jbone-sm</module>
     <module>jbone-common</module>
+      <module>jbone-sys</module>
   </modules>
   <packaging>pom</packaging>
 
