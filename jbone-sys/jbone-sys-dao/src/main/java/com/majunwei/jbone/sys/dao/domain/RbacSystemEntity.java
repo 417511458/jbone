@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "rbac_system", schema = "jbone_sys", catalog = "")
+@Table(name = "rbac_system")
 public class RbacSystemEntity {
     private int id;
     private String icon;

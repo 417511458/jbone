@@ -3,7 +3,7 @@ package com.majunwei.jbone.sys.dao.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "sys_log", schema = "jbone_sys", catalog = "")
+@Table(name = "sys_log")
 public class SysLogEntity {
     private int id;
     private String description;

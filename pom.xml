@@ -10,6 +10,7 @@
         <module>jbone-sm</module>
         <module>jbone-common</module>
         <module>jbone-sys</module>
+        <module>jbone-configuration</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -37,7 +38,48 @@
         <commons-lang3.version>3.6</commons-lang3.version>
         <log4j.version>2.7</log4j.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <druid.version>1.1.6</druid.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.majunwei</groupId>
+            <artifactId>jbone-configuration</artifactId>
+            <version>${jbone.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.majunwei</groupId>
+            <artifactId>jbone-common-utils</artifactId>
+            <version>${jbone.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.majunwei</groupId>
+            <artifactId>jbone-common-boot</artifactId>
+            <version>${jbone.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
@@ -692,16 +734,8 @@
                 <version>${shiro.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.majunwei</groupId>
-                <artifactId>jbone-common-utils</artifactId>
-                <version>${jbone.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.majunwei</groupId>
-                <artifactId>jbone-common-boot</artifactId>
-                <version>${jbone.version}</version>
-            </dependency>
+
+
         </dependencies>
 
 

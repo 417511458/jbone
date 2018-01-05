@@ -34,7 +34,7 @@ public class AbastractJboneBanner implements Banner {
     }
 
     protected String getTitle() {
-        return "(CAS)";
+        return "(Jbone)";
     }
 
     /**

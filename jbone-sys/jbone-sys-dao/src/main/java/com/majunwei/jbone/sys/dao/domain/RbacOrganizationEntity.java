@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-@Table(name = "rbac_organization", schema = "jbone_sys", catalog = "")
+@Table(name = "rbac_organization")
 public class RbacOrganizationEntity {
     private int id;
     private Integer pid;
