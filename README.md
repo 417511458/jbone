@@ -1,10 +1,10 @@
 # jbone
 ## jbone定位
 ### 对企业
-jbone使用spring cloud技术，采用微服务架构，为中小企业提供系统管理、内容管理、电商平台等解决方案。使中小企业花最少的成本建立自己对电商平台、企业管理平台、支付平台等。
+jbone采用微服务架构，为中小企业提供系统管理、内容管理、电商平台等解决方案。使中小企业花最少的成本建立自己的电商平台、企业管理平台、支付平台等。
 jbone功能包括服务管理、系统管理平台、内容管理平台、电商平台、支付平台、工作流平台等子系统。
 ### 对开发
-jbone使用spring cloud、spring boot比较前沿的技术，供开发人员学习和交流。
+jbone为企业提供解决方案的同时，更重视对前沿技术的学习和探索；jbone使用spring cloud生态体系技术，采用微服务架构，为企业微服务架构提供一种解决方案，供开发人员学习和交流。
 ## 技术选型
 ### 后端技术
 技术 | 简介 | 网址
@@ -23,11 +23,9 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 ### 前端技术
 技术 | 简介 | 网址
 ---- | ------ | ----
-![Spring Cloud架构图](doc/diagram-distributed-systems.svg)
-
 ## jbone架构图
 ### Spring Cloud架构图
-
+![Spring Cloud架构图](doc/diagram-distributed-systems.svg)
 ### jbone功能和进度表
 ![进度](doc/jboneProcess.png)
 
