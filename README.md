@@ -1,4 +1,4 @@
 # jbone
 ## 功能进度表
 
-![进度](doc/jboneProcess.png)
+![进度](/doc/jboneProcess.png)
