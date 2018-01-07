@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/user")
 public interface UserApi {
     @RequestMapping("/getUserByName")
-    UserInfoModel getUserByName(@RequestParam("name") String username);
+    UserInfoModel getUserByName(@RequestParam("username") String username);
 
     @RequestMapping("/getUserDetail")
-    UserModel getUserDetailByName(@RequestParam("name") String username);
+    UserModel getUserDetailByName(@RequestParam("username") String username);
 }

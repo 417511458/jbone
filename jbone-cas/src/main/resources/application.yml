@@ -1,9 +1,11 @@
+server:
+  port: 30001
 cas:
   authn:
         #accept:
         #      users: casusertest::Mellon
         shiro:
-              requiredRoles: guest
+              requiredRoles: sso
               location: classpath:shiro.ini
   server:
         name: https://cas.majunwei.com:8443
