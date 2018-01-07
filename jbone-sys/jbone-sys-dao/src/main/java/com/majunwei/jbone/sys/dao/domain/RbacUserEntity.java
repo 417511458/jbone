@@ -13,13 +13,12 @@ public class RbacUserEntity {
     private int id;
     private String username;
     private String password;
-    private String salt;
     private String realname;
     private String avatar;
     private String phone;
     private String email;
-    private Byte sex;
-    private Byte locked;
+    private int sex;
+    private int locked;
     private Timestamp addTime;
     private Timestamp updateTime;
     private Integer version;
@@ -56,16 +55,6 @@ public class RbacUserEntity {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Basic
-    @Column(name = "salt")
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
     @Basic
@@ -110,21 +99,21 @@ public class RbacUserEntity {
 
     @Basic
     @Column(name = "sex")
-    public Byte getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(Byte sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 
     @Basic
     @Column(name = "locked")
-    public Byte getLocked() {
+    public int getLocked() {
         return locked;
     }
 
-    public void setLocked(Byte locked) {
+    public void setLocked(int locked) {
         this.locked = locked;
     }
 
