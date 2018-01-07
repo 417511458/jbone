@@ -28,6 +28,8 @@ spring:
     aop:
         auto: true
         proxy-target-class: true
+    application:
+        name: Jbone CAS
 
 endpoints:
     enabled: false
@@ -52,3 +54,17 @@ security:
         path: /cas/status/**
 logging:
     config: classpath:log4j2.xml
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:10001/eureka/
+ribbon:
+    ConnectTimeout: 500
+    ReadTimeout: 3000
+feign:
+    compression:
+        request:
+            enabled: true
+        response:
+            enabled: true

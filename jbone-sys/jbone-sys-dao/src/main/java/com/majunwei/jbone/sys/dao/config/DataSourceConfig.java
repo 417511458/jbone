@@ -15,7 +15,7 @@ public class DataSourceConfig {
     @Autowired
     private JboneConfiguration jboneConfiguration;
 
-    @Bean(name="dataSource",initMethod="init",destroyMethod="destroy")
+    @Bean(name="dataSource",initMethod="init",destroyMethod="close")
     public DataSource shopDataSource(){
         JdbcProperties jdbc = jboneConfiguration.getSys().getJdbc();
 
@@ -25,11 +25,18 @@ public class DataSourceConfig {
         dataSource.setUsername(jdbc.getUsername());
         dataSource.setPassword(jdbc.getPassword());
         dataSource.setDriverClassName(jdbc.getDriverClassName());
-        dataSource.setMaxActive(jdbc.getMaxActive());
-        dataSource.setInitialSize(jdbc.getInitialSize());
-        dataSource.setMaxWait(jdbc.getMaxWait());
-        dataSource.setMinIdle(jdbc.getMinIdle());
-
+        if(jdbc.getMaxActive() <= 0){
+            dataSource.setMaxActive(jdbc.getMaxActive());
+        }
+        if(jdbc.getInitialSize() <= 0){
+            dataSource.setInitialSize(jdbc.getInitialSize());
+        }
+        if(jdbc.getMaxWait() <= 0){
+            dataSource.setMaxWait(jdbc.getMaxWait());
+        }
+        if(jdbc.getMinIdle() <= 0){
+            dataSource.setMinIdle(jdbc.getMinIdle());
+        }
         return dataSource;
     }
 }

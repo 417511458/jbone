@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jbone-sys-server</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>jbone-sys-server</name>
     <url>http://maven.apache.org</url>
@@ -19,10 +19,24 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.majunwei</groupId>
+            <artifactId>jbone-sys-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.majunwei</groupId>
+            <artifactId>jbone-sys-service</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.majunwei</groupId>
+            <artifactId>jbone-common-boot</artifactId>
+        </dependency>
+
     </dependencies>
 </project>

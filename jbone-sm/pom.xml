@@ -18,7 +18,10 @@
         <dependency>
             <groupId>com.majunwei</groupId>
             <artifactId>jbone-common-utils</artifactId>
-            <version>${jbone.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.majunwei</groupId>
+            <artifactId>jbone-common-boot</artifactId>
         </dependency>
     </dependencies>
 
