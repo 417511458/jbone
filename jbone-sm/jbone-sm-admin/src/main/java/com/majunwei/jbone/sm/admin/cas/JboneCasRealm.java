@@ -1,5 +1,6 @@
 package com.majunwei.jbone.sm.admin.cas;
 
+import com.majunwei.jbone.configuration.JboneConfiguration;
 import com.majunwei.jbone.sm.admin.rpc.sys.UserService;
 import com.majunwei.jbone.sys.api.model.UserModel;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -22,16 +23,18 @@ public class JboneCasRealm extends CasRealm {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JboneConfiguration jboneConfiguration;
+
     public JboneCasRealm(EhCacheManager ehCacheManager){
         this.setCacheManager(ehCacheManager);
     }
 
     @PostConstruct
     public void initProperty(){
-//      setDefaultRoles("ROLE_USER");
-        setCasServerUrlPrefix(ShiroCasConfiguration.casServerUrlPrefix);
+        setCasServerUrlPrefix(jboneConfiguration.getCas().getCasServerUrl());
         // 客户端回调地址
-        setCasService(ShiroCasConfiguration.shiroServerUrlPrefix + ShiroCasConfiguration.casFilterUrlPattern);
+        setCasService(jboneConfiguration.getCas().getCurrentServerUrlPrefix() + jboneConfiguration.getCas().getCasFilterUrlPattern());
     }
 
     /**
@@ -42,7 +45,8 @@ public class JboneCasRealm extends CasRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        logger.info("##################执行Shiro权限认证##################");
+        logger.info("##################加载Shiro权限认证##################");
+
         String loginName = (String)super.getAvailablePrincipal(principalCollection);
         UserModel userModel = userService.getUserDetailByName(loginName);
         List<String> roles = userModel.getRoles();

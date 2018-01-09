@@ -99,5 +99,9 @@
             <groupId>com.majunwei</groupId>
             <artifactId>jbone-sys-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.majunwei</groupId>
+            <artifactId>jbone-configuration</artifactId>
+        </dependency>
     </dependencies>
 </project>

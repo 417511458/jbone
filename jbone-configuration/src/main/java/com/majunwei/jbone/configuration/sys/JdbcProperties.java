@@ -2,14 +2,42 @@ package com.majunwei.jbone.configuration.sys;
 
 import java.io.Serializable;
 
+/**
+ * Jbone数据源公关配置属性
+ */
 public class JdbcProperties implements Serializable {
+    /**
+     * 数据库连接地址
+     */
     private String url;
+    /**
+     * 数据库名字
+     */
     private String username;
+    /**
+     * 密码
+     */
     private String password;
+    /**
+     * 驱动类
+     */
     private String driverClassName;
+    /**
+     * 最大活动连接
+     */
     private int maxActive;
+    /**
+     * 初始化连接数
+     */
     private int initialSize;
+    /**
+     * 获取连接时最大等待时间，单位毫秒
+     */
     private int maxWait;
+
+    /**
+     * 最小空闲连接数
+     */
     private int minIdle;
 
     public String getUrl() {
