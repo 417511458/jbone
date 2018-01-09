@@ -1,0 +1,8 @@
+{
+  "@class" : "org.apereo.cas.services.RegexRegisteredService",
+  "serviceId" : "^http://localhost:10002/jbone-sm-admin/shiro-cas",
+  "name" : "jbone",
+  "id" : 10000003,
+  "description" : "jbone sm admin service",
+  "evaluationOrder" : 2
+}

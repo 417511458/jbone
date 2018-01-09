@@ -12,6 +12,7 @@
     <url>http://maven.apache.org</url>
     <modules>
         <module>jbone-sm-register</module>
+        <module>jbone-sm-admin</module>
     </modules>
 
     <dependencies>

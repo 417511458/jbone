@@ -2,8 +2,6 @@ server:
   port: 30001
 cas:
   authn:
-        #accept:
-        #      users: casusertest::Mellon
         shiro:
               requiredRoles: sso
               location: classpath:shiro.ini
@@ -12,7 +10,20 @@ cas:
         prefix: https://cas.majunwei.com:8443/cas
   adminPagesSecurity:
         ip: 127.0.0.1
-
+        loginUrl: https://cas.majunwei.com:8443/cas/login
+        service: https://cas.majunwei.com:8443/cas/status/dashboard
+        users: file:/etc/cas/config/adminusers.properties
+        adminRoles[0]: ROLE_ADMIN
+        actuatorEndpointsEnabled: true
+  monitor:
+        endpoints:
+            dashboard:
+                enabled: true
+                sensitive: true
+  #使用json加载注册到CAS上的服务，还可以使用redis／rest等方式
+  serviceRegistry:
+        json:
+            location: classpath:/services
 spring:
     http:
         encoding:
@@ -32,28 +43,36 @@ spring:
         proxy-target-class: true
     application:
         name: Jbone CAS
+    boot:
+        admin:
+          client:
+            managementUrl: https://cas.majunwei.com:8443/cas/status
+            prefer-ip: true
+            name: Jbone CAS
+            serviceBaseUrl: https://cas.majunwei.com:8443
+          url: http://localhost:10002/
 
 endpoints:
-    enabled: false
-    sensitive: true
-    restart:
-        enabled: false
-    shutdown:
-        enabled: false
+    enabled: true
+    sensitive: false
+#    restart:
+#        enabled: false
+#    shutdown:
+#        enabled: false
 
 management:
     security:
         enabled: true
-        roles  : ACTUATOR,ADMIN
+        roles: ACTUATOR,ADMIN
         sessions: if_required
     context-path: /status
-    add-application-context-header: false
-
 security:
-    basic:
-        authorize-mode: role
-        enabled: false
-        path: /cas/status/**
+  ignored[0]: /**
+#security:
+#    basic:
+#        authorize-mode: role
+#        enabled: false
+#       path: /cas/status/**
 logging:
     config: classpath:log4j2.xml
 

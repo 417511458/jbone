@@ -1,0 +1,57 @@
+server.port=30001
+cas.authn.shiro.requiredRoles=sso
+cas.authn.shiro.location=classpath:shiro.ini
+cas.server.name= https://cas.majunwei.com:8443
+cas.server.prefix: https://cas.majunwei.com:8443/cas
+cas.adminPagesSecurity.ip= 127.0.0.1
+
+spring.http.encoding.charset=UTF-8
+spring.http.encoding.enabled=true
+spring.http.encoding.force=true
+
+spring.cloud.bus.enabled=false
+
+spring.thymeleaf.encoding= UTF-8
+spring.thymeleaf.cache=true
+spring.thymeleaf.mode=HTML
+spring.aop.auto=true
+spring.aop.proxy-target-class=true
+spring.application.name=Jbone-CAS
+
+
+management.security.enabled=false
+management.context-path=/info
+management.add-application-context-header=false
+
+security.basic.authorize-mode=role
+security.basic.enabled=false
+security.basic.path=/cas/status/**
+logging.config=classpath:log4j2.xml
+
+eureka.client.service-url.defaultZone=http://localhost:10001/eureka/
+ribbon.ConnectTimeout=500
+ribbon.ReadTimeout=3000
+
+feign.compression.request.enabled=true
+feign.compression.response.enabled=true
+
+endpoints.sensitive=false
+endpoints.enabled=true
+endpoints.actuator.enabled=true
+
+ endpoints.restart.enabled=false
+ endpoints.shutdown.enabled=false
+ endpoints.autoconfig.enabled=true
+ endpoints.beans.enabled=true
+ endpoints.bus.enabled=true
+ endpoints.configprops.enabled=true
+ endpoints.dump.enabled=true
+ endpoints.env.enabled=true
+ endpoints.health.enabled=true
+ endpoints.features.enabled=true
+ endpoints.info.enabled=true
+ endpoints.loggers.enabled=true
+ endpoints.logfile.enabled=true
+ endpoints.trace.enabled=true
+ endpoints.docs.enabled=false
+ endpoints.heapdump.enabled=true
