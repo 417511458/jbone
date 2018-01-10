@@ -12,11 +12,13 @@ QQ群：547104190
 ## jbone功能架构图
 ![Jbone功能架构图](doc/功能架构图.png)
 ## jbone物理结构图
+![Jbone物理架构图](doc/物理架构图.png)
 ## 非功能设计
 ### 可用性
 HA >=99.99%（无任何单点问题，对单点故障零容忍）
 ### 性能设计
 RTT < 1S（客户端的感受会受客户机器和网络的影响）
+
 单机QPS：>100（系统容量根据机器的大小伸缩）
 ### 伸缩性设计
 所有系统可以根据访问量，通过添加／减少机器的数量，实现系统伸缩
@@ -28,6 +30,11 @@ RTT < 1S（客户端的感受会受客户机器和网络的影响）
 Spring Boot | 基础构建框架，用于快速整合各资源 | [https://projects.spring.io/spring-boot/](https://projects.spring.io/spring-boot/)
 Spring Framework | 底层容器 |  [https://projects.spring.io/spring-framework/](https://projects.spring.io/spring-framework/)
 Spring Cloud | 微服务框架 | [https://projects.spring.io/spring-cloud/](https://projects.spring.io/spring-cloud/)
+Spring Cloud Eureka | 服务注册中心 | [https://projects.spring.io/spring-cloud/](https://projects.spring.io/spring-cloud/)
+Spring Cloud Zuul | 服务网关 | [https://projects.spring.io/spring-cloud/](https://projects.spring.io/spring-cloud/)
+Spring Cloud Hystrix | 服务容错框架 | [https://projects.spring.io/spring-cloud/](https://projects.spring.io/spring-cloud/)
+Spring Cloud Feign | 微服务声明式调用框架 | [https://projects.spring.io/spring-cloud/](https://projects.spring.io/spring-cloud/)
+Spring Boot Admin | 服务管理中心 | [https://github.com/codecentric/spring-boot-admin](https://github.com/codecentric/spring-boot-admin)
 Spring Data Jpa | 持久化框架 | [https://projects.spring.io/spring-data-jpa/](https://projects.spring.io/spring-data-jpa/)
 Spring Data Redis | 缓存框架 | [https://projects.spring.io/spring-data-redis/](https://projects.spring.io/spring-data-redis/)
 Apache Shiro | 安全框架 | [http://shiro.apache.org/](http://shiro.apache.org/)
