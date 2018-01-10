@@ -24,6 +24,46 @@ cas:
   serviceRegistry:
         json:
             location: classpath:/services
+  #票据持久化，用于分布式管理用户票据
+  ticket:
+        registry:
+            jpa:
+                ticketLockType: NONE
+                jpaLockingTimeout: 3600
+                healthQuery: select 1 from DUAL
+                isolateInternalQueries: false
+                url: jdbc:mysql://localhost:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+                failFastTimeout: 1
+                dialect: org.hibernate.dialect.MySQL5Dialect
+                leakThreshold: 10
+                jpaLockingTgtEnabled: true
+                batchSize: 1
+                defaultCatalog: 
+                defaultSchema: jbone_cas
+                user: root
+                ddlAuto: update
+                password: 123
+                autocommit: false
+                driverClass: com.mysql.jdbc.Driver
+                idleTimeout: 5000
+                dataSourceName: 
+                dataSourceProxy: false
+
+                # Hibernate-specific properties (i.e. `hibernate.globally_quoted_identifiers`)
+                properties.hibernate.hbm2ddl.auto: update
+                properties.hibernate.show_sql: true
+
+                pool.suspension: false
+                pool.minSize: 6
+                pool.maxSize: 18
+                pool.maxWait: 2000
+
+                crypto.signing.key:
+                crypto.signing.keySize: 512
+                crypto.encryption.key:
+                crypto.encryption.keySize: 16
+                crypto.alg: AES
+                crypto.enabled: false
 spring:
     http:
         encoding:

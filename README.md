@@ -27,6 +27,8 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 ## jbone架构图
 ### jbone功能架构图
 ![Jbone功能架构图](doc/功能架构图.png)
+### jbone物理结构图
+
 ### Spring Boot架构图
 ![Spring Boot架构图](doc/diagram-boot-reactor.png)
 ### Spring Cloud架构图
