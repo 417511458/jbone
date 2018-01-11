@@ -10,9 +10,6 @@ import java.sql.Timestamp;
 @Table(name = "rbac_system")
 public class RbacSystemEntity {
     private int id;
-    private String icon;
-    private String banner;
-    private String theme;
     private String basepath;
     private Byte status;
     private String name;
@@ -22,6 +19,15 @@ public class RbacSystemEntity {
     private Timestamp addTime;
     private Timestamp updateTime;
     private Integer version;
+    private int serviceRegistered;
+    private String serviceCasFilter;
+    private String serviceThemeServer;
+    private int serviceId;
+    private String serviceDescription;
+    private int serviceEvaluationOrder;
+    private String serviceName;
+    private String serviceThemePath;
+
 
     @Id
     @Column(name = "id")
@@ -31,36 +37,6 @@ public class RbacSystemEntity {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "icon")
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    @Basic
-    @Column(name = "banner")
-    public String getBanner() {
-        return banner;
-    }
-
-    public void setBanner(String banner) {
-        this.banner = banner;
-    }
-
-    @Basic
-    @Column(name = "theme")
-    public String getTheme() {
-        return theme;
-    }
-
-    public void setTheme(String theme) {
-        this.theme = theme;
     }
 
     @Basic
@@ -124,7 +100,6 @@ public class RbacSystemEntity {
     }
 
     @CreationTimestamp
-    @Basic
     @Column(name = "add_time")
     public Timestamp getAddTime() {
         return addTime;
@@ -135,7 +110,6 @@ public class RbacSystemEntity {
     }
 
     @UpdateTimestamp
-    @Basic
     @Column(name = "update_time")
     public Timestamp getUpdateTime() {
         return updateTime;
@@ -155,4 +129,67 @@ public class RbacSystemEntity {
         this.version = version;
     }
 
+    public int getServiceRegistered() {
+        return serviceRegistered;
+    }
+
+    public void setServiceRegistered(int serviceRegistered) {
+        this.serviceRegistered = serviceRegistered;
+    }
+
+    public String getServiceCasFilter() {
+        return serviceCasFilter;
+    }
+
+    public void setServiceCasFilter(String serviceCasFilter) {
+        this.serviceCasFilter = serviceCasFilter;
+    }
+
+    public String getServiceThemeServer() {
+        return serviceThemeServer;
+    }
+
+    public void setServiceThemeServer(String serviceThemeServer) {
+        this.serviceThemeServer = serviceThemeServer;
+    }
+
+    public int getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public String getServiceDescription() {
+        return serviceDescription;
+    }
+
+    public void setServiceDescription(String serviceDescription) {
+        this.serviceDescription = serviceDescription;
+    }
+
+    public int getServiceEvaluationOrder() {
+        return serviceEvaluationOrder;
+    }
+
+    public void setServiceEvaluationOrder(int serviceEvaluationOrder) {
+        this.serviceEvaluationOrder = serviceEvaluationOrder;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getServiceThemePath() {
+        return serviceThemePath;
+    }
+
+    public void setServiceThemePath(String serviceThemePath) {
+        this.serviceThemePath = serviceThemePath;
+    }
 }

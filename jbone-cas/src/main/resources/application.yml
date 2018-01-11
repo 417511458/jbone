@@ -76,7 +76,7 @@ spring:
               enabled: false
     thymeleaf:
         encoding: UTF-8
-        cache: true
+        cache: false
         mode: HTML
     aop:
         auto: true
