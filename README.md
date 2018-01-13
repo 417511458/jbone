@@ -59,13 +59,9 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 ### 功能简介
 篇幅有限，简单介绍下：
 
-**内存和JVM概况**
+**系统健康概况及内存和JVM概况**
 
-![内存分析](doc/admin_memory.png)
-
-**健康详情**
-
-![健康检查](doc/admin_health.png)
+![系统内存分析](doc/admin_index.jpg)
 
 **对象分析**
 
