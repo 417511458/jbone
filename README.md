@@ -57,13 +57,17 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jbone／jbone，即可进入
 ### 功能简介
 篇幅有限，简单介绍下：
-健康详情
-![健康检查](doc/admin_health.png)
-内存和JVM概况
+
+**内存和JVM概况**
 ![内存分析](doc/admin_memory.png)
-对象分析
+
+**健康详情**
+![健康检查](doc/admin_health.png)
+
+**对象分析**
 ![对象分析](doc/admin_metrixs.png)
-环境变量
+
+**环境变量**
 ![环境变量](doc/admin_properties.png)
 ## jbone功能和进度表
 ![进度](doc/jboneProcess.png)
