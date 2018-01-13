@@ -76,6 +76,7 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 ![环境变量](doc/admin_properties.png)
 ## jbone功能和进度表
 ![进度](doc/jboneProcess.png)
+# jbone部署说明
 
 # 关键开源技术介绍
 ## Spring Boot架构图

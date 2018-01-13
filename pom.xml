@@ -11,6 +11,11 @@
         <module>jbone-common</module>
         <module>jbone-sys</module>
         <module>jbone-configuration</module>
+        <module>jbone-eb</module>
+        <module>jbone-pay</module>
+        <module>jbone-bpm</module>
+        <module>jbone-cms</module>
+        <module>jbone-im</module>
     </modules>
     <packaging>pom</packaging>
 
