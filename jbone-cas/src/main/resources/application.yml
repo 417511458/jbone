@@ -6,12 +6,12 @@ cas:
               requiredRoles: sso
               location: classpath:shiro.ini
   server:
-        name: https://cas.majunwei.com:8443
-        prefix: https://cas.majunwei.com:8443/cas
+        name: https://jbone-cas.majunwei.com:8443
+        prefix: https://jbone-cas.majunwei.com:8443/cas
   adminPagesSecurity:
         ip: 127.0.0.1
-        loginUrl: https://cas.majunwei.com:8443/cas/login
-        service: https://cas.majunwei.com:8443/cas/status/dashboard
+        loginUrl: https://jbone-cas.majunwei.com:8443/cas/login
+        service: https://jbone-cas.majunwei.com:8443/cas/status/dashboard
         users: file:/etc/cas/config/adminusers.properties
         adminRoles[0]: ROLE_ADMIN
         actuatorEndpointsEnabled: true
@@ -94,10 +94,10 @@ spring:
     boot:
         admin:
           client:
-            managementUrl: https://cas.majunwei.com:8443/cas/status
+            managementUrl: https://jbone-cas.majunwei.com:8443/cas/status
             prefer-ip: true
             name: Jbone CAS
-            serviceBaseUrl: https://cas.majunwei.com:8443
+            serviceBaseUrl: https://jbone-cas.majunwei.com:8443
           url: http://localhost:10002/
 
 endpoints:

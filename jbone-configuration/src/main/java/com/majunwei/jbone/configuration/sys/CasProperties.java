@@ -15,11 +15,11 @@ public class CasProperties implements Serializable {
     /**
      * 登录URL
      */
-    private String loginUrl = casServerUrl + "/login";;
+    private String loginUrl =  "/login";;
     /**
      * 推出登录URL
      */
-    private String logoutUrl = casServerUrl + "/logout";
+    private String logoutUrl =  "/logout";
     /**
      * 当前服务URL
      */
@@ -110,7 +110,7 @@ public class CasProperties implements Serializable {
 
     public String getEncodedLoginUrl(){
         try {
-            return loginUrl + "?service=" + URLEncoder.encode(currentServerUrlPrefix + casFilterUrlPattern, "utf-8");
+            return casServerUrl + loginUrl + "?service=" + URLEncoder.encode(currentServerUrlPrefix + casFilterUrlPattern, "utf-8");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
