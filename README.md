@@ -43,7 +43,12 @@ Thymeleaf | 模板引擎  | [http://www.thymeleaf.org/](http://www.thymeleaf.org
 Maven | 项目构建管理  | [http://maven.apache.org/](http://maven.apache.org/)
 Redis | 分布式缓存数据库 | [https://redis.io/](https://redis.io/)
 Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
-
+## Jbone CAS
+### 实现方式
+服务采用Apereo CAS作为登录认证中心，底层集成Shiro，通过Spring Cloud Feign声明式调用权限数据，完成用户授权。
+### 定制登录认证页面
+考虑到不同系统可能有显示不同风格的登录页面，后端支持配置系统登录皮肤，登录皮肤需要自己开发。默认试图如下：
+![CAS登录](doc/loginview.png)
 ## jbone功能和进度表
 ![进度](doc/jboneProcess.png)
 

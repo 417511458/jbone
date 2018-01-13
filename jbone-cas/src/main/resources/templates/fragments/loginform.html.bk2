@@ -1,0 +1,80 @@
+<div class="login-box">
+    <div class="login-logo">
+        <b>JBone</b> CAS
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">欢迎使用JBone CAS单点登录</p>
+        <form action="../../index2.html" method="post">
+            <div class="form-group has-feedback">
+                <div th:if="${openIdLocalId}">
+                    <strong>
+                        <span th:utext="${openIdLocalId}"/>
+                    </strong>
+                    <input type="hidden"
+                           id="username"
+                           name="username"
+                           th:value="${openIdLocalId}"/>
+                </div>
+                <div th:unless="${openIdLocalId}">
+                    <input class="required form-control"
+                           id="username"
+                           size="25"
+                           tabindex="1"
+                           type="text"
+                           autocomplete="off" placeholder="用户名" />
+                </div>
+
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <div>
+                    <input class="required form-control"
+                           type="password"
+                           id="password"
+                           size="25"
+                           tabindex="2"
+                           autocomplete="off" placeholder="密码" />
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <p th:if="${rememberMeAuthenticationEnabled}">
+                            <label>
+                                <input type="checkbox" name="rememberMe" id="rememberMe" value="true" tabindex="5" />
+                                记住我
+                            </label>
+                        </p>
+
+
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+        <!--
+                <div class="social-auth-links text-center">
+                    <p>- OR -</p>
+                    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+                        Facebook</a>
+                    <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
+                        Google+</a>
+                </div>
+                 /.social-auth-links
+
+        <a href="#">忘记密码?</a><br>
+        <a href="#" class="text-center">注册新用户</a>-->
+
+    </div>
+    <!-- /.login-box-body -->
+</div>
+
+

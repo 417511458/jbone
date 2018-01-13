@@ -65,7 +65,7 @@ header h1 {
   float: right;
   width: 119px;
   height: 60px;
-  background: url(../images/cas-logo.png) no-repeat;
+  /*background: url(../images/cas-logo.png) no-repeat;*/
   text-indent: -999em;
   color: white;
 }

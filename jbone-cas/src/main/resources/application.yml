@@ -30,7 +30,7 @@ cas:
             jpa:
                 ticketLockType: NONE
                 jpaLockingTimeout: 3600
-                healthQuery: select 1 from DUAL
+                healthQuery: select now()
                 isolateInternalQueries: false
                 url: jdbc:mysql://localhost:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
                 failFastTimeout: 1
@@ -64,6 +64,14 @@ cas:
                 crypto.encryption.keySize: 16
                 crypto.alg: AES
                 crypto.enabled: false
+        tgt:
+            # 启用rememberMe
+            rememberMe:
+                enabled: true
+                timeToKillInSeconds: 28800
+            # tgt有效期（会话超时时间）
+            timeout:
+                maxTimeToLiveInSeconds: 28800
 spring:
     http:
         encoding:

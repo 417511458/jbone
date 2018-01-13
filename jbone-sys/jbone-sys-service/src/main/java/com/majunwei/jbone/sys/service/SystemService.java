@@ -20,11 +20,11 @@ public class SystemService {
     public String findServiceTheme(String service){
         List<RbacSystemEntity> systemEntities = rbacSystemRepository.findByServiceCasFilterOrderByServiceEvaluationOrderDesc(service);
 
-        if(systemEntities != null){
+        if(systemEntities != null && !systemEntities.isEmpty()){
             RbacSystemEntity entity = systemEntities.get(0);
             return entity.getServiceThemePath();
         }
 
-        return null;
+        return "cas-theme-default";
     }
 }
