@@ -48,6 +48,7 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 服务采用Apereo CAS作为登录认证中心，底层集成Shiro，通过Spring Cloud Feign声明式调用权限数据，完成用户授权。
 ### 定制登录认证页面
 考虑到不同系统可能有显示不同风格的登录页面，后端支持配置系统登录皮肤（登录皮肤需要自己开发），也可使用默认视图。
+
 默认视图加载系统的名字和描述信息，以下为登录服务管理系统的视图：
 ![CAS登录](doc/loginview.png)
 ## Jbone SM Admin(服务管理中心)
@@ -59,15 +60,19 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 篇幅有限，简单介绍下：
 
 **内存和JVM概况**
+
 ![内存分析](doc/admin_memory.png)
 
 **健康详情**
+
 ![健康检查](doc/admin_health.png)
 
 **对象分析**
+
 ![对象分析](doc/admin_metrixs.png)
 
 **环境变量**
+
 ![环境变量](doc/admin_properties.png)
 ## jbone功能和进度表
 ![进度](doc/jboneProcess.png)
