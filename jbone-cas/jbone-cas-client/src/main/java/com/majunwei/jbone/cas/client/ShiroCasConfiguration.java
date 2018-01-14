@@ -1,12 +1,8 @@
-package com.majunwei.jbone.sm.admin.cas;
+package com.majunwei.jbone.cas.client;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import javax.servlet.Filter;
-
+import com.majunwei.jbone.cas.client.realm.JboneCasRealm;
 import com.majunwei.jbone.configuration.JboneConfiguration;
+import com.majunwei.jbone.sys.api.UserApi;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.cas.CasFilter;
 import org.apache.shiro.cas.CasSubjectFactory;
@@ -17,10 +13,18 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cloud.netflix.feign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.filter.DelegatingFilterProxy;
+
+import javax.servlet.Filter;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Shiro集成Cas配置
@@ -30,6 +34,15 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 public class ShiroCasConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(ShiroCasConfiguration.class);
+
+
+    @Bean
+    public JboneCasRealm getJboneCasRealm(EhCacheManager ehCacheManager,UserApi userApi,JboneConfiguration jboneConfiguration){
+        JboneCasRealm realm = new JboneCasRealm(ehCacheManager,userApi);
+        realm.setCasServerUrlPrefix(jboneConfiguration.getCas().getCasServerUrl());
+        realm.setCasService(jboneConfiguration.getCas().getCurrentServerUrlPrefix() + jboneConfiguration.getCas().getCasFilterUrlPattern());
+        return realm;
+    }
 
     @Bean
     public EhCacheManager getEhCacheManager() {
@@ -119,7 +132,7 @@ public class ShiroCasConfiguration {
         // SecurityManager，Shiro安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        // Shiro登录页面，这里默认为CAS的登录页面：cas.majunwei.com/login?service=serviceurl
+        // Shiro登录页面，这里默认为CAS的登录页面：jbone-cas.majunwei.com/login?service=serviceurl
         shiroFilterFactoryBean.setLoginUrl(jboneConfiguration.getCas().getEncodedLoginUrl());
 
         shiroFilterFactoryBean.setSuccessUrl(jboneConfiguration.getCas().getSuccessUrl());

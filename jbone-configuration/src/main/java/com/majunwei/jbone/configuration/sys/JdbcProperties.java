@@ -103,4 +103,18 @@ public class JdbcProperties implements Serializable {
     public void setMinIdle(int minIdle) {
         this.minIdle = minIdle;
     }
+
+    @Override
+    public String toString() {
+        return "JdbcProperties{" +
+                "url='" + url + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", driverClassName='" + driverClassName + '\'' +
+                ", maxActive=" + maxActive +
+                ", initialSize=" + initialSize +
+                ", maxWait=" + maxWait +
+                ", minIdle=" + minIdle +
+                '}';
+    }
 }

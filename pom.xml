@@ -383,6 +383,18 @@
             </dependency>
 
             <dependency>
+                <groupId>com.majunwei</groupId>
+                <artifactId>jbone-cas-client</artifactId>
+                <version>${jbone.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.majunwei</groupId>
+                <artifactId>jbone-sys-api-feign</artifactId>
+                <version>${jbone.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>

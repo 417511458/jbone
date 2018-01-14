@@ -103,5 +103,9 @@
             <groupId>com.majunwei</groupId>
             <artifactId>jbone-configuration</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.majunwei</groupId>
+            <artifactId>jbone-cas-client</artifactId>
+        </dependency>
     </dependencies>
 </project>

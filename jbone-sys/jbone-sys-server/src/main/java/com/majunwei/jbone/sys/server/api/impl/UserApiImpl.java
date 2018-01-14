@@ -28,6 +28,9 @@ public class UserApiImpl implements UserApi {
     @RequestMapping("/getUserByName")
     public UserInfoModel getUserByName(String username) {
         RbacUserEntity userEntity = userService.findByUserName(username);
+        if(userEntity == null){
+            return null;
+        }
         UserInfoModel userInfoModel = new UserInfoModel();
         BeanUtils.copyProperties(userEntity,userInfoModel);
         logger.info("username : {}" , username);

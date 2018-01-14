@@ -115,4 +115,19 @@ public class CasProperties implements Serializable {
             throw new RuntimeException(e);
         }
     }
+
+
+    @Override
+    public String toString() {
+        return "CasProperties{" +
+                "casServerUrl='" + casServerUrl + '\'' +
+                ", loginUrl='" + loginUrl + '\'' +
+                ", logoutUrl='" + logoutUrl + '\'' +
+                ", currentServerUrlPrefix='" + currentServerUrlPrefix + '\'' +
+                ", casFilterUrlPattern='" + casFilterUrlPattern + '\'' +
+                ", successUrl='" + successUrl + '\'' +
+                ", unauthorizedUrl='" + unauthorizedUrl + '\'' +
+                ", filterChainDefinition=" + filterChainDefinition +
+                '}';
+    }
 }

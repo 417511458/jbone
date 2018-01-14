@@ -3,6 +3,7 @@ package org.apereo.cas.web.realm;
 import com.majunwei.jbone.sys.api.UserApi;
 import com.majunwei.jbone.sys.api.model.UserInfoModel;
 import com.majunwei.jbone.sys.api.model.UserModel;
+import org.apereo.cas.services.UnauthorizedServiceForPrincipalException;
 import org.apereo.cas.web.SpringManager;
 import org.apereo.cas.web.rpc.sys.UserService;
 import org.apache.shiro.authc.*;
@@ -37,6 +38,9 @@ public class JboneCasRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         UserInfoModel userInfoModel = getUserService().getUserByName(token.getUsername());
+        if(userInfoModel == null){
+            throw new AuthenticationException("用户不存在");
+        }
         return new SimpleAuthenticationInfo(userInfoModel.getUsername(), userInfoModel.getPassword(), getName());
     }
 
