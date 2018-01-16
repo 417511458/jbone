@@ -1,27 +1,38 @@
 package com.majunwei.jbone.cas.client;
 
+import com.majunwei.jbone.cas.client.listener.JboneCasSessionListener;
 import com.majunwei.jbone.cas.client.realm.JboneCasRealm;
+import com.majunwei.jbone.cas.client.session.JboneCasSessionDao;
+import com.majunwei.jbone.cas.client.session.JboneCasSessionFactory;
 import com.majunwei.jbone.configuration.JboneConfiguration;
 import com.majunwei.jbone.sys.api.UserApi;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.cas.CasFilter;
 import org.apache.shiro.cas.CasSubjectFactory;
+import org.apache.shiro.session.SessionListener;
+import org.apache.shiro.session.mgt.SessionFactory;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.netflix.feign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -78,20 +89,52 @@ public class ShiroCasConfiguration {
     }
 
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(JboneCasRealm jboneCasRealm) {
-        DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager();
-        dwsm.setRealm(jboneCasRealm);
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(JboneCasRealm jboneCasRealm,DefaultWebSessionManager sessionManager) {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setRealm(jboneCasRealm);
         //用户授权/认证信息Cache, 采用EhCache 缓存
-        dwsm.setCacheManager(getEhCacheManager());
-        dwsm.setSubjectFactory(new CasSubjectFactory());
-        return dwsm;
+        securityManager.setCacheManager(getEhCacheManager());
+        securityManager.setSubjectFactory(new CasSubjectFactory());
+        securityManager.setSessionManager(sessionManager);
+
+        return securityManager;
     }
+
+    @Bean(name = "sessionManager")
+    public DefaultWebSessionManager getDefaultWebSessionManager(SessionListener sessionListener, SessionDAO sessionDao, SessionFactory sessionFactory,JboneConfiguration jboneConfiguration){
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setGlobalSessionTimeout(jboneConfiguration.getCas().getClientSessionTimeout());
+        sessionManager.setSessionValidationSchedulerEnabled(false);
+        sessionManager.setSessionListeners(Arrays.asList(sessionListener));
+        sessionManager.setSessionDAO(sessionDao);
+        sessionManager.setSessionFactory(sessionFactory);
+        return sessionManager;
+    }
+
+    @Bean(name = "sessionDao")
+    public SessionDAO getSessionDao(StringRedisTemplate redisTemplate){
+        JboneCasSessionDao sessionDao = new JboneCasSessionDao(redisTemplate);
+
+        return sessionDao;
+    }
+
+    @Bean(name = "sessionListener")
+    public SessionListener getSessionListener(){
+        return new JboneCasSessionListener();
+    }
+
+    @Bean(name = "sessionFactory")
+    public SessionFactory getSessionFactory(){
+        return new JboneCasSessionFactory();
+    }
+
+
 
     @Bean
     public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
-        aasa.setSecurityManager(securityManager);
-        return aasa;
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
     }
 
     /**

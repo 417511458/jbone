@@ -79,5 +79,7 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 ![Spring Boot架构图](doc/diagram-boot-reactor.png)
 ## Spring Cloud架构图
 ![Spring Cloud架构图](doc/diagram-distributed-systems.png)
+## CAS认证过程
+![CAS认证过程](doc/cas_protocol.jpg)
 
 

@@ -40,6 +40,11 @@ public class CasProperties implements Serializable {
     private String unauthorizedUrl = "/403";
 
     /**
+     * 客户端Session超时时间
+     */
+    private long clientSessionTimeout = 1000 * 60 * 3;
+
+    /**
      * 权限过滤规则，限制需要CAS过滤的请求路径
      */
     private Map<String,String> filterChainDefinition;
@@ -116,6 +121,13 @@ public class CasProperties implements Serializable {
         }
     }
 
+    public long getClientSessionTimeout() {
+        return clientSessionTimeout;
+    }
+
+    public void setClientSessionTimeout(long clientSessionTimeout) {
+        this.clientSessionTimeout = clientSessionTimeout;
+    }
 
     @Override
     public String toString() {
@@ -127,6 +139,7 @@ public class CasProperties implements Serializable {
                 ", casFilterUrlPattern='" + casFilterUrlPattern + '\'' +
                 ", successUrl='" + successUrl + '\'' +
                 ", unauthorizedUrl='" + unauthorizedUrl + '\'' +
+                ", clientSessionTimeout=" + clientSessionTimeout +
                 ", filterChainDefinition=" + filterChainDefinition +
                 '}';
     }
