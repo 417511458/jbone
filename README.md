@@ -13,6 +13,28 @@ QQ群：547104190
 ![Jbone功能架构图](doc/功能架构图.png)
 ## jbone物理结构图
 ![Jbone物理架构图](doc/物理架构图.png)
+## 项目模块划分
+* jbone-cas : 用户单点登录模块
+    * jbone-cas-client：客户端jar包，用于集成到需要CAS授权的系统
+    * jbone-cas-server：CAS服务端，单独部署，用于完成单点登录、票据管理等
+* jbone-sm : 服务管理模块
+    * jbone-sm-admin : 服务管理系统，包括服务监控、服务管理等
+    * jbone-sm-register : 服务注册中心，原则上所有服务都要注册进来
+* jbone-sys : 系统管理模块
+    * jbone-sys-admin ： 系统管理后台
+    * jbone-sys-api : 系统服务对外接口定义
+    * jbone-sys-api-feign : 基于Spring Cloud Feign的调用实现
+    * jbone-sys-dao : 系统管理数据层
+    * jbone-sys-service : 系统管理逻辑层
+    * jbone-sys-server : 系统管理服务
+* jbone-cms ：内容管理模块
+* jbone-bpm : 工作流模块
+* jbone-common : 共用模块
+* jbone-configuration : 公共配置模块
+* jbone-eb : 电商平台模块
+* jbone-pay : 支付平台模块
+* jbone-im : 即时通信模块
+
 ## 非功能设计
 ### 可用性
 HA >=99.99%（无任何单点问题，对单点故障零容忍）
