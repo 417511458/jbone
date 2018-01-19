@@ -49,7 +49,7 @@ public class ShiroCasConfiguration {
 
     @Bean
     public JboneCasRealm getJboneCasRealm(EhCacheManager ehCacheManager,UserApi userApi,JboneConfiguration jboneConfiguration){
-        JboneCasRealm realm = new JboneCasRealm(ehCacheManager,userApi);
+        JboneCasRealm realm = new JboneCasRealm(ehCacheManager,userApi,jboneConfiguration.getSys().getServerName());
         realm.setCasServerUrlPrefix(jboneConfiguration.getCas().getCasServerUrl());
         realm.setCasService(jboneConfiguration.getCas().getCurrentServerUrlPrefix() + jboneConfiguration.getCas().getCasFilterUrlPattern());
         return realm;

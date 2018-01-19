@@ -22,6 +22,7 @@ public class RbacMenuEntity {
     private Integer version;
     private List<RbacRoleEntity> roles;
     private List<RbacUserEntity> users;
+    private List<RbacMenuEntity> childMenus;
 
     @Id
     @Column(name = "id")
@@ -143,4 +144,13 @@ public class RbacMenuEntity {
         this.users = users;
     }
 
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "pid")
+    public List<RbacMenuEntity> getChildMenus() {
+        return childMenus;
+    }
+
+    public void setChildMenus(List<RbacMenuEntity> childMenus) {
+        this.childMenus = childMenus;
+    }
 }

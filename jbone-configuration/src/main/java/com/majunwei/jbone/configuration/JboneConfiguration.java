@@ -1,5 +1,6 @@
 package com.majunwei.jbone.configuration;
 
+import com.majunwei.jbone.configuration.sys.AuthProperties;
 import com.majunwei.jbone.configuration.sys.CasProperties;
 import com.majunwei.jbone.configuration.sys.SysProperties;
 import org.slf4j.Logger;
@@ -26,6 +27,10 @@ public class JboneConfiguration {
      */
     private CasProperties cas = new CasProperties();
 
+    /**
+     * 授权服务
+     */
+    private AuthProperties auth = new AuthProperties();
 
 
     public SysProperties getSys() {
@@ -44,12 +49,20 @@ public class JboneConfiguration {
         this.cas = cas;
     }
 
+    public AuthProperties getAuth() {
+        return auth;
+    }
+
+    public void setAuth(AuthProperties auth) {
+        this.auth = auth;
+    }
 
     @Override
     public String toString() {
         return "JboneConfiguration{" +
                 "sys=" + sys +
                 ", cas=" + cas +
+                ", auth=" + auth +
                 '}';
     }
 

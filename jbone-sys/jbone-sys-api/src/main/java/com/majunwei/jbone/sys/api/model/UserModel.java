@@ -8,6 +8,7 @@ public class UserModel implements Serializable {
     private List<String> roles;
     private String username;
     private String realname;
+    private List<Menu> menus;
 
     public List<String> getPermissions() {
         return permissions;
@@ -39,5 +40,13 @@ public class UserModel implements Serializable {
 
     public void setRealname(String realname) {
         this.realname = realname;
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 }

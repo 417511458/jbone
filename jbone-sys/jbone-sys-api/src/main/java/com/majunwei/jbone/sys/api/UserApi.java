@@ -13,4 +13,7 @@ public interface UserApi {
 
     @RequestMapping(value = "/getUserDetail")
     UserModel getUserDetailByName(@RequestParam("username") String username);
+
+    @RequestMapping(value = "/getUserDetailByNameAndServerName")
+    UserModel getUserDetailByNameAndServerName(@RequestParam("username") String username,@RequestParam("serverName") String serverName);
 }

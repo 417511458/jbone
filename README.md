@@ -38,6 +38,7 @@ Spring Boot Admin | 服务管理中心 | [https://github.com/codecentric/spring-
 Spring Data Jpa | 持久化框架 | [https://projects.spring.io/spring-data-jpa/](https://projects.spring.io/spring-data-jpa/)
 Spring Data Redis | 缓存框架 | [https://projects.spring.io/spring-data-redis/](https://projects.spring.io/spring-data-redis/)
 Apache Shiro | 安全框架 | [http://shiro.apache.org/](http://shiro.apache.org/)
+thymeleaf-extras-shiro | thymeleaf的shiro标签 | [https://github.com/theborakompanioni/thymeleaf-extras-shiro](https://github.com/theborakompanioni/thymeleaf-extras-shiro)
 Apereo CAS | 单点登陆框架 | [https://github.com/apereo/cas](https://github.com/apereo/cas)
 Thymeleaf | 模板引擎  | [http://www.thymeleaf.org/](http://www.thymeleaf.org/)
 Maven | 项目构建管理  | [http://maven.apache.org/](http://maven.apache.org/)

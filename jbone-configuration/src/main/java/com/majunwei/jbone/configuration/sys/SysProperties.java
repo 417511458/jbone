@@ -14,11 +14,6 @@ public class SysProperties implements Serializable {
      */
     private String serverName;
 
-    /**
-     * 协议
-     */
-    private String serverProtol = "http://";
-
     public JdbcProperties getJdbc() {
         return jdbc;
     }
@@ -35,20 +30,11 @@ public class SysProperties implements Serializable {
         this.serverName = serverName;
     }
 
-    public String getServerProtol() {
-        return serverProtol;
-    }
-
-    public void setServerProtol(String serverProtol) {
-        this.serverProtol = serverProtol;
-    }
-
     @Override
     public String toString() {
         return "SysProperties{" +
                 "jdbc=" + jdbc +
                 ", serverName='" + serverName + '\'' +
-                ", serverProtol='" + serverProtol + '\'' +
                 '}';
     }
 }
