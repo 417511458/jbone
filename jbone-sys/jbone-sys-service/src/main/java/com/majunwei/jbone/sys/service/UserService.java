@@ -57,7 +57,9 @@ public class UserService {
             for (RbacMenuEntity menuEntity:menuEntityList){
                 Menu menu = new Menu();
                 BeanUtils.copyProperties(menuEntity,menu);
-
+                if(isContains(menuList,menuEntity)){
+                    continue;
+                }
                 List<Menu> childMenuList = new ArrayList<Menu>();
                 List<RbacMenuEntity> childMenus = menuEntity.getChildMenus();
                 if(childMenus != null && !childMenus.isEmpty()){
@@ -96,18 +98,11 @@ public class UserService {
 
         List<RbacMenuEntity> correctMenuList = new ArrayList<>();
         List<RbacPermissionEntity> correctPermissionList = new ArrayList<>();
-
-        List<RbacMenuEntity> menuEntityList = userEntity.getMenus();
         List<RbacPermissionEntity> permissionEntityList = userEntity.getPermissions();
 
 
         if(roleEntityList != null && !roleEntityList.isEmpty()){
             for (RbacRoleEntity roleEntity: roleEntityList){
-                List<RbacMenuEntity> menuEntities = roleEntity.getMenus();
-                if(menuEntities != null && !menuEntities.isEmpty()){
-                    menuEntityList.addAll(menuEntities);
-                }
-
                 //角色对应的权限
                 List<RbacPermissionEntity> permissionEntities = roleEntity.getPermissions();
 
@@ -119,12 +114,23 @@ public class UserService {
 
         // 清洗所有非一级菜单，以及非当前系统的菜单
         RbacSystemEntity systemEntity = systemRepository.findByName(serverName);
-        if(menuEntityList != null && !menuEntityList.isEmpty()){
-            for (RbacMenuEntity menuEntity:menuEntityList){
-                if(menuEntity.getPid() == 0 && systemEntity.getId() == menuEntity.getSystemId() && !isContains(correctMenuList,menuEntity)){
-                    correctMenuList.add(menuEntity);
-                }
-            }
+
+        List<RbacUserEntity> userCondition = new ArrayList<>();
+        userCondition.add(userEntity);
+
+        //获取用户和对应角色拥有的系统菜单
+        List<RbacMenuEntity> roleMenus = menuRepository.findDistinctByRolesInAndPidAndSystemIdOrderByOrders(userEntity.getRoles(),0,systemEntity.getId());
+        List<RbacMenuEntity> userMenus = menuRepository.findDistinctByUsersInAndPidAndSystemIdOrderByOrders(userCondition,0,systemEntity.getId());
+        correctMenuList.addAll(roleMenus);
+        correctMenuList.addAll(userMenus);
+
+        for (RbacMenuEntity menuEntity : correctMenuList){
+            List<RbacMenuEntity> childRoleMenus = menuRepository.findDistinctByRolesInAndPidAndSystemIdOrderByOrders(userEntity.getRoles(),menuEntity.getId(),systemEntity.getId());
+            List<RbacMenuEntity> childUserMenus = menuRepository.findDistinctByUsersInAndPidAndSystemIdOrderByOrders(userCondition,menuEntity.getId(),systemEntity.getId());
+            List<RbacMenuEntity> childMenus = new ArrayList<>();
+            childMenus.addAll(childRoleMenus);
+            childMenus.addAll(childUserMenus);
+            menuEntity.setChildMenus(childMenus);
         }
 
         // 清洗本系统之外的权限
@@ -142,8 +148,8 @@ public class UserService {
         return userEntity;
     }
 
-    private boolean isContains(List<RbacMenuEntity> menuEntities,RbacMenuEntity menuEntity){
-        for (RbacMenuEntity rbacMenuEntity : menuEntities){
+    private boolean isContains(List<Menu> menuEntities,RbacMenuEntity menuEntity){
+        for (Menu rbacMenuEntity : menuEntities){
             if(menuEntity.getId() == rbacMenuEntity.getId()){
                 return true;
             }
