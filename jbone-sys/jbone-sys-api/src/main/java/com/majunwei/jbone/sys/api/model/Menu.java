@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class Menu implements Serializable {
+public class Menu implements Serializable,Comparable<Menu> {
     private int id;
     private Integer systemId;
     private Integer pid;
@@ -13,6 +13,7 @@ public class Menu implements Serializable {
     private String target;
     private Long orders;
     private Integer version;
+    private String icon;
     private List<Menu> childMenus;
 
     public int getId() {
@@ -85,5 +86,18 @@ public class Menu implements Serializable {
 
     public void setChildMenus(List<Menu> childMenus) {
         this.childMenus = childMenus;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    @Override
+    public int compareTo(Menu o) {
+        return this.orders.compareTo(o.orders);
     }
 }

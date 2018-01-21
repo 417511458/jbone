@@ -20,6 +20,7 @@ public class RbacMenuEntity {
     private Timestamp addTime;
     private Timestamp updateTime;
     private Integer version;
+    private String icon;
     private List<RbacRoleEntity> roles;
     private List<RbacUserEntity> users;
     private List<RbacMenuEntity> childMenus;
@@ -152,5 +153,14 @@ public class RbacMenuEntity {
 
     public void setChildMenus(List<RbacMenuEntity> childMenus) {
         this.childMenus = childMenus;
+    }
+    @Basic
+    @Column(name = "icon")
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

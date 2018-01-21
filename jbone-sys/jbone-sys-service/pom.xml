@@ -21,7 +21,10 @@
         <dependency>
             <groupId>com.majunwei</groupId>
             <artifactId>jbone-sys-dao</artifactId>
-            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.majunwei</groupId>
+            <artifactId>jbone-sys-api</artifactId>
         </dependency>
     </dependencies>
 </project>

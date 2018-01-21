@@ -1,5 +1,6 @@
 package com.majunwei.jbone.sys.dao.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -115,6 +116,7 @@ public class RbacRoleEntity {
         this.permissions = permissions;
     }
 
+    @JsonBackReference
     @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "roles")
     public List<RbacUserEntity> getUsers() {
         return users;

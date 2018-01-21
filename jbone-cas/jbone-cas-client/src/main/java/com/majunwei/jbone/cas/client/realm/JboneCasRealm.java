@@ -3,6 +3,7 @@ package com.majunwei.jbone.cas.client.realm;
 import com.majunwei.jbone.sys.api.UserApi;
 import com.majunwei.jbone.sys.api.model.Menu;
 import com.majunwei.jbone.sys.api.model.UserModel;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -13,6 +14,7 @@ import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.cas.CasAuthenticationException;
 import org.apache.shiro.cas.CasRealm;
 import org.apache.shiro.cas.CasToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.CollectionUtils;
@@ -25,8 +27,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class JboneCasRealm extends CasRealm {
     private static final Logger logger = LoggerFactory.getLogger(JboneCasRealm.class);
@@ -90,24 +94,23 @@ public class JboneCasRealm extends CasRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         logger.info("##################加载Shiro权限认证##################");
 
-//        String loginName = (String)super.getAvailablePrincipal(principalCollection);
-//        UserModel userModel = userApi.getUserDetailByNameAndServerName(loginName,serverName);
         UserModel userModel = (UserModel)super.getAvailablePrincipal(principalCollection);
-        List<String> roles = userModel.getRoles();
-        List<String> permissions = userModel.getPermissions();
-        List<Menu> menus = userModel.getMenus();
+        Set<String> roles = userModel.getRoles();
+        Set<String> permissions = userModel.getPermissions();
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         if(roles != null && !roles.isEmpty()){
-            for (int i = 0;i < roles.size();i++){
-                info.addRole(roles.get(i));
+            Iterator<String> iterator = roles.iterator();
+            while (iterator.hasNext()){
+                info.addRole(iterator.next());
             }
         }
 
         if(permissions != null && !permissions.isEmpty()){
-            for (int i = 0;i < permissions.size();i++){
-                info.addStringPermission(permissions.get(i));
+            Iterator<String> iterator = permissions.iterator();
+            while (iterator.hasNext()){
+                info.addStringPermission(iterator.next());
             }
         }
 

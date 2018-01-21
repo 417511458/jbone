@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 授权管理
@@ -48,19 +50,21 @@ public class JboneCasRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String userName = (String) principals.fromRealm(getName()).iterator().next();
         UserModel userModel = getUserService().getUserDetailByName(userName);
-        List<String> roles = userModel.getRoles();
-        List<String> permissions = userModel.getPermissions();
+        Set<String> roles = userModel.getRoles();
+        Set<String> permissions = userModel.getPermissions();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         if(roles != null && !roles.isEmpty()){
-            for (int i = 0;i < roles.size();i++){
-                info.addRole(roles.get(i));
+            Iterator<String> iterator = roles.iterator();
+            while (iterator.hasNext()){
+                info.addRole(iterator.next());
             }
         }
 
         if(permissions != null && !permissions.isEmpty()){
-            for (int i = 0;i < permissions.size();i++){
-                info.addStringPermission(permissions.get(i));
+            Iterator<String> iterator = permissions.iterator();
+            while (iterator.hasNext()){
+                info.addStringPermission(iterator.next());
             }
         }
 

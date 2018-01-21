@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class UserApiImpl implements UserApi {
@@ -42,8 +44,8 @@ public class UserApiImpl implements UserApi {
     public UserModel getUserDetailByName(String username){
         RbacUserEntity userEntity = userService.findByUserName(username);
         UserModel userModel = new UserModel();
-        List<String> permissions = new ArrayList<String>();
-        List<String> roles = new ArrayList<String>();
+        Set<String> permissions = new HashSet<>();
+        Set<String> roles = new HashSet<String>();
         List<RbacPermissionEntity> permissionEntities =  userEntity.getPermissions();
         List<RbacRoleEntity> roleEntities = userEntity.getRoles();
         if(permissionEntities != null && !permissionEntities.isEmpty()){
@@ -66,10 +68,12 @@ public class UserApiImpl implements UserApi {
             }
         }
 
-        userModel.setRealname(userEntity.getRealname());
+        BeanUtils.copyProperties(userEntity,userModel);
+
         userModel.setPermissions(permissions);
         userModel.setRoles(roles);
-        userModel.setUsername(userEntity.getUsername());
+        //不需要菜单信息
+        userModel.setMenus(null);
 
         return userModel;
     }
@@ -77,54 +81,6 @@ public class UserApiImpl implements UserApi {
 
     @RequestMapping("/getUserDetailByNameAndServerName")
     public UserModel getUserDetailByNameAndServerName(String username, String serverName) {
-        RbacUserEntity userEntity = userService.findByUserNameAndServerName(username,serverName);
-        UserModel userModel = new UserModel();
-        List<String> permissions = new ArrayList<String>();
-        List<String> roles = new ArrayList<String>();
-        List<RbacPermissionEntity> permissionEntities =  userEntity.getPermissions();
-        List<RbacRoleEntity> roleEntities = userEntity.getRoles();
-        if(permissionEntities != null && !permissionEntities.isEmpty()){
-            for(RbacPermissionEntity permissionEntity : permissionEntities){
-                permissions.add(permissionEntity.getPermissionValue());
-            }
-        }
-
-        if(roleEntities != null && !roleEntities.isEmpty()){
-            for(RbacRoleEntity roleEntity : roleEntities){
-                roles.add(roleEntity.getName());
-            }
-        }
-
-        userModel.setRealname(userEntity.getRealname());
-        userModel.setPermissions(permissions);
-        userModel.setRoles(roles);
-        userModel.setUsername(userEntity.getUsername());
-
-
-        //解析前用户拥有的菜单
-        List<Menu> menuList = new ArrayList<Menu>();
-        List<RbacMenuEntity> menuEntityList = userEntity.getMenus();
-        if(menuEntityList != null && !menuEntityList.isEmpty()){
-            for (RbacMenuEntity menuEntity:menuEntityList){
-                Menu menu = new Menu();
-                BeanUtils.copyProperties(menuEntity,menu);
-
-                List<Menu> childMenuList = new ArrayList<Menu>();
-                List<RbacMenuEntity> childMenus = menuEntity.getChildMenus();
-                if(childMenus != null && !childMenus.isEmpty()){
-                    for (RbacMenuEntity childMenuEntity:childMenus){
-                        Menu childMenu = new Menu();
-                        BeanUtils.copyProperties(childMenuEntity,childMenu);
-                        childMenuList.add(childMenu);
-                    }
-                }
-                menu.setChildMenus(childMenuList);
-                menuList.add(menu);
-            }
-        }
-
-        userModel.setMenus(menuList);
-
-        return userModel;
+        return userService.getUserDetailByNameAndServerName(username,serverName);
     }
 }
