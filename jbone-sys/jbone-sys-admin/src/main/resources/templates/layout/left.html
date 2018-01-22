@@ -43,7 +43,7 @@
                     </a>
                     <ul class="treeview-menu" th:if="${not #lists.isEmpty(menu.childMenus)}" >
                         <li th:each="cmenu : ${menu.childMenus}">
-                            <a th:href="${cmenu.url}"><i class="fa fa-circle-o"></i> <font th:text="${cmenu.name}"></font></a>
+                            <a href="javascript:void(0);" th:attr="addtabs=${cmenu.url},id=${cmenu.id},title=${cmenu.name}" close="true"><i class="fa fa-circle-o"></i> <font th:text="${cmenu.name}"></font></a>
                         </li>
                     </ul>
                 </li>
