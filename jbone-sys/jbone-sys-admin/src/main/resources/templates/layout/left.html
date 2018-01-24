@@ -33,6 +33,15 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">菜单导航</li>
+                <li class="treeview">
+                    <a href="javascript:void(0);" addtabs="/dashboard" url="/dashboard" id="dashboard" title="首页面板">
+                        <i class="fa fa-pie-chart"></i>
+                        <span>首页面板</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                </li>
                 <li th:each="menu,iterStat : ${user.menus}" class="treeview">
                     <a th:href="${menu.url}">
                         <i class="fa fa-pie-chart"></i>
@@ -43,7 +52,7 @@
                     </a>
                     <ul class="treeview-menu" th:if="${not #lists.isEmpty(menu.childMenus)}" >
                         <li th:each="cmenu : ${menu.childMenus}">
-                            <a href="javascript:void(0);" th:attr="addtabs=${cmenu.url},id=${cmenu.id},title=${cmenu.name}" close="true"><i class="fa fa-circle-o"></i> <font th:text="${cmenu.name}"></font></a>
+                            <a href="javascript:void(0);" th:attr="addtabs=${cmenu.url},id=${cmenu.id},title=${cmenu.name},url=${cmenu.url}" closeable="true"><i class="fa fa-circle-o"></i> <font th:text="${cmenu.name}"></font></a>
                         </li>
                     </ul>
                 </li>

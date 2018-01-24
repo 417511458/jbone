@@ -44,7 +44,7 @@ var closeTab = function (id) {
 
 $(function () {
     $("[addtabs]").click(function () {
-        addTabs({id: $(this).attr("id"), title: $(this).attr('title'), close: true});
+        addTabs({id: $(this).attr("id"), title: $(this).attr('title'), close: $(this).attr("closeable"), url:$(this).attr("url")});
     });
 
     $(".nav-tabs-title").on("click","[tabclose]", function (e) {

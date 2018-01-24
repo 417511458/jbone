@@ -23,4 +23,10 @@ public class IndexController extends CommonController {
         setCurrentUser(userService,modelMap,jboneConfiguration);
         return "index";
     }
+
+    @RequestMapping("dashboard")
+    public String dashboard(ModelMap modelMap){
+        setCurrentUser(userService,modelMap,jboneConfiguration);
+        return "pages/dashboard";
+    }
 }
