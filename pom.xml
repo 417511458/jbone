@@ -279,50 +279,6 @@
                 </exclusions>
             </dependency>
 
-            <!-- log4j
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-api</artifactId>
-                <version>${log4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>${log4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-jcl</artifactId>
-                <version>${log4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-slf4j-impl</artifactId>
-                <version>${log4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-web</artifactId>
-                <version>${log4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jul-to-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
--->
             <dependency>
                 <groupId>org.apereo.cas</groupId>
                 <artifactId>cas-server-support-generic</artifactId>
@@ -404,6 +360,57 @@
                 <groupId>org.webjars.bower</groupId>
                 <artifactId>adminlte</artifactId>
                 <version>2.3.11</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>font-awesome</artifactId>
+                <version>4.5.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>ionicons</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.npm</groupId>
+                <artifactId>bootstrap-menu</artifactId>
+                <version>1.0.14</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>devicejs</artifactId>
+                <version>0.2.7</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>raphael</artifactId>
+                <version>2.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>html5shiv</artifactId>
+                <version>3.7.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>respond</artifactId>
+                <version>1.4.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>bootstrap-table</artifactId>
+                <version>1.11.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>waves</artifactId>
+                <version>0.7.5</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>jquery-confirm</artifactId>
+                <version>2.7.0</version>
             </dependency>
 
             <dependency>
