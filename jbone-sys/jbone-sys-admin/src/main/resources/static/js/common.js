@@ -15,8 +15,6 @@ $(function() {
 			$(this).parent().find('label').removeClass('active');
 		}
 	});
-	// select2初始化
-	//$('select').select2();
 });
 // 动态高度
 function getHeight() {

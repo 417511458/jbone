@@ -412,6 +412,18 @@
                 <artifactId>jquery-confirm</artifactId>
                 <version>2.7.0</version>
             </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>github-com-craftpip-jquery-confirm</artifactId>
+                <version>3.3.2</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>jquery-ui</artifactId>
+                <version>1.12.1</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.github.theborakompanioni</groupId>
