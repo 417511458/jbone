@@ -16,6 +16,7 @@
         <module>jbone-bpm</module>
         <module>jbone-cms</module>
         <module>jbone-im</module>
+        <module>jbone-ui</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -357,79 +358,11 @@
             </dependency>
 
             <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>adminlte</artifactId>
-                <version>2.3.11</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>font-awesome</artifactId>
-                <version>4.5.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>ionicons</artifactId>
-                <version>2.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.npm</groupId>
-                <artifactId>bootstrap-menu</artifactId>
-                <version>1.0.14</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>devicejs</artifactId>
-                <version>0.2.7</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>raphael</artifactId>
-                <version>2.1.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>html5shiv</artifactId>
-                <version>3.7.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>respond</artifactId>
-                <version>1.4.2</version>
+                <groupId>com.majunwei</groupId>
+                <artifactId>jbone-ui</artifactId>
+                <version>${jbone.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>bootstrap-table</artifactId>
-                <version>1.11.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>waves</artifactId>
-                <version>0.7.5</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>jquery-confirm</artifactId>
-                <version>2.7.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>github-com-craftpip-jquery-confirm</artifactId>
-                <version>3.3.2</version>
-            </dependency>
-
-
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>jquery-ui</artifactId>
-                <version>1.12.1</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.theborakompanioni</groupId>
-                <artifactId>thymeleaf-extras-shiro</artifactId>
-                <version>1.2.1</version>
-            </dependency>
         </dependencies>
 
 
