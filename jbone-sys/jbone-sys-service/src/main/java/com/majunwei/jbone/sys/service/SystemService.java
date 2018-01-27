@@ -2,14 +2,15 @@ package com.majunwei.jbone.sys.service;
 
 import com.majunwei.jbone.sys.dao.domain.RbacSystemEntity;
 import com.majunwei.jbone.sys.dao.repository.RbacSystemRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +18,21 @@ public class SystemService {
 
     @Autowired
     private RbacSystemRepository rbacSystemRepository;
+
+    public void save(RbacSystemEntity systemEntity){
+        rbacSystemRepository.save(systemEntity);
+    }
+
+    public void delete(String ids){
+        String[] idArray =  ids.split(",");
+        for (String id:idArray){
+            if(StringUtils.isBlank(id)){
+                continue;
+            }
+            rbacSystemRepository.delete(Integer.parseInt(id));
+        }
+    }
+
     /**
      * 这里的service即casFilter
      * @param service
@@ -46,7 +62,7 @@ public class SystemService {
         }
         @Override
         public Predicate toPredicate(Root<RbacSystemEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-            if(StringUtils.isEmpty(condition)){
+            if(StringUtils.isBlank(condition)){
                 return criteriaQuery.getRestriction();
             }
             Path<String> name = root.get("name");

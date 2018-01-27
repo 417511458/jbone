@@ -15,16 +15,5 @@
         <module>jbone-sm-admin</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.majunwei</groupId>
-            <artifactId>jbone-common-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.majunwei</groupId>
-            <artifactId>jbone-common-boot</artifactId>
-        </dependency>
-    </dependencies>
-
 
 </project>

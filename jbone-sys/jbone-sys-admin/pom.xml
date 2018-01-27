@@ -67,10 +67,6 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.majunwei</groupId>
-            <artifactId>jbone-common-boot</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.majunwei</groupId>

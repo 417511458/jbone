@@ -245,7 +245,7 @@
                           animation: 'rotateX',
                           closeAnimation: 'rotateX',
                           title: false,
-                          content: '删除成功',
+                          content: '保存成功',
                           buttons: {
                               confirm: {
                                   text: '确认',
@@ -254,6 +254,8 @@
                           }
                       });
                       $table.bootstrapTable('refresh');
+                      $('#addSystem').modal("hide");
+                      document.getElementById("createForm").reset();
                   }
               },
               error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -277,8 +279,8 @@
 
       function actionFormatter(value, row, index) {
           return [
-              '<a href="javascript:void(0)" data-toggle="tooltip" title="编辑"><i class="fa fa-pencil-square-o"></i></a>　',
-              '<a href="javascript:void(0)" data-toggle="tooltip" title="删除"><i class="fa fa-times-circle"></i></a>'
+              '<a class="edit" href="javascript:void(0)" data-toggle="tooltip" title="编辑"><i class="fa fa-pencil-square-o"></i></a>　',
+              '<a class="remove" href="javascript:void(0)" data-toggle="tooltip" title="删除"><i class="fa fa-times-circle"></i></a>'
           ].join('');
       }
 
@@ -294,7 +296,7 @@
               });
           },
           'click .remove': function (e, value, row, index) {
-              commonDelete(row.name);
+              commonDelete(row.id);
           }
       };
       function detailFormatter(index, row) {
@@ -352,7 +354,7 @@
           } else {
               var ids = new Array();
               for (var i in rows) {
-                  ids.push(rows[i].name);
+                  ids.push(rows[i].id);
               }
               commonDelete(ids.join(","));
           }
@@ -362,16 +364,15 @@
               type: 'red',
               animationSpeed: 300,
               title: false,
-              content: '确认删除该用户吗？',
+              content: '确认删除该系统吗？',
               buttons: {
                   confirm: {
                       text: '确认',
                       btnClass: 'waves-effect waves-button',
                       action: function () {
-
                           $.ajax({
                               type: 'post',
-                              url: '/user/delete/' + ids,
+                              url: '/system/delete/' + ids,
                               success: function(result) {
                                   if (result.status != 0) {
                                       $.confirm({
