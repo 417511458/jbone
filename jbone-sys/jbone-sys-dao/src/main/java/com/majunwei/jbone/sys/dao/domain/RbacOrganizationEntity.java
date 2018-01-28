@@ -1,22 +1,25 @@
 package com.majunwei.jbone.sys.dao.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 @Table(name = "rbac_organization")
-public class RbacOrganizationEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+public class RbacOrganizationEntity implements Serializable {
     private int id;
     private Integer pid;
     private String name;
     private String description;
     private Timestamp addTime;
     private Timestamp updateTime;
-    private Integer version;
+    private int version;
     private List<RbacUserEntity> users;
 
     @Id
@@ -83,11 +86,11 @@ public class RbacOrganizationEntity {
 
     @Version
     @Column(name = "version")
-    public Integer getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 

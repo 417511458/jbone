@@ -1,15 +1,18 @@
 package com.majunwei.jbone.sys.dao.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 @Table(name = "rbac_user")
-public class RbacUserEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+public class RbacUserEntity implements Serializable {
     private int id;
     private String username;
     private String password;
@@ -21,7 +24,7 @@ public class RbacUserEntity {
     private int locked;
     private Timestamp addTime;
     private Timestamp updateTime;
-    private Integer version;
+    private int version;
     private List<RbacOrganizationEntity> organizations;
     private List<RbacRoleEntity> roles;
     private List<RbacPermissionEntity> permissions;
@@ -141,11 +144,11 @@ public class RbacUserEntity {
 
     @Version
     @Column(name = "version")
-    public Integer getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 

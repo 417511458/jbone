@@ -1,17 +1,20 @@
 package com.majunwei.jbone.sys.dao.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 @Table(name = "rbac_role")
-public class RbacRoleEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+public class RbacRoleEntity implements Serializable {
     private int id;
     private String name;
     private String title;
@@ -19,7 +22,7 @@ public class RbacRoleEntity {
     private long orders;
     private Timestamp addTime;
     private Timestamp updateTime;
-    private Integer version;
+    private int version;
     private List<RbacPermissionEntity> permissions;
     private List<RbacUserEntity> users;
     private List<RbacMenuEntity> menus;
@@ -98,11 +101,11 @@ public class RbacRoleEntity {
 
     @Version
     @Column(name = "version")
-    public Integer getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 

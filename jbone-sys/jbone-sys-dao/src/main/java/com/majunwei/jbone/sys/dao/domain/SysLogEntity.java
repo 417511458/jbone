@@ -1,9 +1,12 @@
 package com.majunwei.jbone.sys.dao.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "sys_log")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class SysLogEntity {
     private int id;
     private String description;

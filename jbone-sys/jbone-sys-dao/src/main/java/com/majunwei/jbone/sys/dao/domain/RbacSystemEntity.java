@@ -3,7 +3,6 @@ package com.majunwei.jbone.sys.dao.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,14 +11,11 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "rbac_system")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-public class RbacSystemEntity {
+public class RbacSystemEntity implements Serializable {
     private int id;
-    @NotBlank(message = "系统路径不能为空.")
     private String basepath;
     private Byte status;
-    @NotBlank(message = "系统名不能为空.")
     private String name;
-    @NotBlank(message = "系统标题不能为空.")
     private String title;
     private String description;
     private Long orders;

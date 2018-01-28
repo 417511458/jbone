@@ -97,8 +97,10 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 
 ![环境变量](doc/admin_properties.png)
 ## Jbone系统管理
+### 系统管理
 ![Jbone系统管理](doc/systemManager.png)
-
+### 用户管理
+![用户管理](doc/userManager.png)
 ## jbone功能和进度表
 ![进度](doc/jboneProcess.png)
 # jbone部署说明

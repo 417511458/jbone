@@ -6,10 +6,17 @@ import com.majunwei.jbone.sys.dao.domain.*;
 import com.majunwei.jbone.sys.dao.repository.RbacMenuRepository;
 import com.majunwei.jbone.sys.dao.repository.RbacSystemRepository;
 import com.majunwei.jbone.sys.dao.repository.RbacUserRepository;
+import com.majunwei.jbone.sys.service.model.user.CreateUserModel;
+import com.majunwei.jbone.sys.service.model.user.UpdateUserModel;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.*;
 import java.util.*;
 
 @Service
@@ -157,6 +164,54 @@ public class UserService {
         return false;
     }
 
+    public void save(CreateUserModel userModel){
+        RbacUserEntity userEntity = new RbacUserEntity();
+        BeanUtils.copyProperties(userModel,userEntity);
+        userRepository.save(userEntity);
+    }
 
+    public void update(UpdateUserModel userModel){
+        RbacUserEntity userEntity = userRepository.findOne(userModel.getId());
+        BeanUtils.copyProperties(userModel,userEntity);
+        userRepository.save(userEntity);
+    }
+
+    public void delete(String ids){
+        String[] idArray =  ids.split(",");
+        for (String id:idArray){
+            if(StringUtils.isBlank(id)){
+                continue;
+            }
+            userRepository.delete(Integer.parseInt(id));
+        }
+    }
+
+    public RbacUserEntity findById(int id){
+        return userRepository.getOne(id);
+    }
+
+    public Page<RbacUserEntity> findPage(String condition, Pageable pageable){
+        return userRepository.findAll(new UserSpecification(condition),pageable);
+    }
+
+
+    private class UserSpecification implements Specification<RbacUserEntity> {
+        private String condition;
+        public UserSpecification(String condition){
+            this.condition = condition;
+        }
+        @Override
+        public Predicate toPredicate(Root<RbacUserEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+            if(StringUtils.isBlank(condition)){
+                return criteriaQuery.getRestriction();
+            }
+            Path<String> username = root.get("username");
+            Path<String> realname = root.get("realname");
+            Path<String> phone = root.get("phone");
+            Path<String> email = root.get("email");
+            Predicate predicate = criteriaBuilder.or(criteriaBuilder.like(username,"%" + condition + "%"),criteriaBuilder.like(realname,"%" + condition + "%"),criteriaBuilder.like(phone,"%" + condition + "%"),criteriaBuilder.like(email,"%" + condition + "%"));
+            return predicate;
+        }
+    }
 
 }

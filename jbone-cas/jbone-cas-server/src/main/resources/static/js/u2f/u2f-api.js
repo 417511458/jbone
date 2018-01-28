@@ -200,7 +200,7 @@ u2f.getMessagePort = function(callback) {
                 u2f.getChromeRuntimePort_(callback);
             } else {
                 // chrome.runtime was available, but we couldn't message
-                // the extension directly, use iframe
+                // the extension directly, user iframe
                 u2f.getIframePort_(callback);
             }
         });
@@ -572,7 +572,7 @@ u2f.reqCounter_ = 0;
 u2f.callbackMap_ = {};
 
 /**
- * Creates or retrieves the MessagePort singleton to use.
+ * Creates or retrieves the MessagePort singleton to user.
  * @param {function((MessagePort|u2f.WrappedChromeRuntimePort_))} callback
  * @private
  */
@@ -719,7 +719,7 @@ u2f.sendRegisterRequest = function(appId, registerRequests, registeredKeys, call
 u2f.getApiVersion = function(callback, opt_timeoutSeconds) {
     u2f.getPortSingleton_(function(port) {
         // If we are using Android Google Authenticator or iOS client app,
-        // do not fire an intent to ask which JS API version to use.
+        // do not fire an intent to ask which JS API version to user.
         if (port.getPortType) {
             var apiVersion;
             switch (port.getPortType()) {

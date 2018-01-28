@@ -1,15 +1,19 @@
 package com.majunwei.jbone.sys.dao.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 @Table(name = "rbac_menu")
-public class RbacMenuEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+public class RbacMenuEntity implements Serializable {
     private int id;
     private Integer systemId;
     private Integer pid;
@@ -19,7 +23,7 @@ public class RbacMenuEntity {
     private Long orders;
     private Timestamp addTime;
     private Timestamp updateTime;
-    private Integer version;
+    private int version;
     private String icon;
     private List<RbacRoleEntity> roles;
     private List<RbacUserEntity> users;
@@ -119,14 +123,15 @@ public class RbacMenuEntity {
 
     @Version
     @Column(name = "version")
-    public Integer getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 
+    @JsonBackReference
     @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "menus")
     public List<RbacRoleEntity> getRoles() {
         return roles;
@@ -136,6 +141,7 @@ public class RbacMenuEntity {
         this.roles = roles;
     }
 
+    @JsonBackReference
     @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "menus")
     public List<RbacUserEntity> getUsers() {
         return users;

@@ -2,11 +2,11 @@ package com.majunwei.jbone.sys.admin.controller;
 
 import com.majunwei.jbone.common.ui.result.Result;
 import com.majunwei.jbone.common.utils.ResultUtils;
-import com.majunwei.jbone.sys.dao.domain.RbacSystemEntity;
-import com.majunwei.jbone.sys.service.SystemService;
+import com.majunwei.jbone.sys.dao.domain.RbacUserEntity;
+import com.majunwei.jbone.sys.service.UserService;
 import com.majunwei.jbone.sys.service.model.ListModel;
-import com.majunwei.jbone.sys.service.model.system.CreateSystemModel;
-import com.majunwei.jbone.sys.service.model.system.UpdateSystemModel;
+import com.majunwei.jbone.sys.service.model.user.CreateUserModel;
+import com.majunwei.jbone.sys.service.model.user.UpdateUserModel;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,16 +21,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
-@RequestMapping("system")
-public class SystemController {
+@RequestMapping("user")
+public class UserController {
 
     @Autowired
-    private SystemService systemService;
+    private UserService userService;
 
     @RequiresRoles("admin")
     @RequestMapping("/index")
     public String index(){
-        return "pages/system/index";
+        return "pages/user/index";
     }
 
     @RequiresRoles("admin")
@@ -39,36 +39,36 @@ public class SystemController {
     public Result list(ListModel listModel){
         PageRequest pageRequest = new PageRequest(listModel.getPageNumber()-1,listModel.getPageSize(), Sort.Direction.fromString(listModel.getSortOrder()),listModel.getSortName());
         //分页查找
-        Page<RbacSystemEntity> page = systemService.findPage(listModel.getSearchText(),pageRequest);
+        Page<RbacUserEntity> page = userService.findPage(listModel.getSearchText(),pageRequest);
         return ResultUtils.wrapSuccess(page.getTotalElements(),page.getContent());
     }
 
 
     @RequestMapping("/create")
     @ResponseBody
-    public Result create(@Validated CreateSystemModel createSystemModel, BindingResult bindingResult){
-        systemService.save(createSystemModel);
+    public Result create(@Validated CreateUserModel userModel, BindingResult bindingResult){
+        userService.save(userModel);
         return ResultUtils.wrapSuccess();
     }
 
     @RequestMapping("/update")
     @ResponseBody
-    public Result update(@Validated UpdateSystemModel updateSystemModel, BindingResult bindingResult){
-        systemService.update(updateSystemModel);
+    public Result update(@Validated UpdateUserModel userModel, BindingResult bindingResult){
+        userService.update(userModel);
         return ResultUtils.wrapSuccess();
     }
 
     @RequestMapping("/delete/{ids}")
     @ResponseBody
     public Result delete(@PathVariable("ids")String ids){
-        systemService.delete(ids);
+        userService.delete(ids);
         return ResultUtils.wrapSuccess();
     }
 
     @RequestMapping("/get/{id}")
     @ResponseBody
     public Result get(@PathVariable("id")String id){
-        RbacSystemEntity systemEntity = systemService.get(Integer.parseInt(id));
-        return ResultUtils.wrapSuccess(systemEntity);
+        RbacUserEntity userEntity = userService.findById(Integer.parseInt(id));
+        return ResultUtils.wrapSuccess(userEntity);
     }
 }
