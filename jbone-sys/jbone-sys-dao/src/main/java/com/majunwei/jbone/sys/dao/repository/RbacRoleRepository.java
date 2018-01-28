@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RbacRoleRepository extends JpaRepository<RbacRoleEntity,Integer>,JpaSpecificationExecutor<RbacRoleEntity> {
+
 }

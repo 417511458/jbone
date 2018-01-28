@@ -89,10 +89,6 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 
 ![系统内存分析](doc/admin_index.jpg)
 
-**对象分析**
-
-![对象分析](doc/admin_metrixs.png)
-
 **环境变量**
 
 ![环境变量](doc/admin_properties.png)
@@ -101,6 +97,8 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 ![Jbone系统管理](doc/systemManager.png)
 ### 用户管理
 ![用户管理](doc/userManager.png)
+### 角色管理
+![角色管理](doc/roleManager.png)
 ## jbone功能和进度表
 ![进度](doc/jboneProcess.png)
 # jbone部署说明
