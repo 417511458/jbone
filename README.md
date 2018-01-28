@@ -63,6 +63,8 @@ Spring Data Redis | 缓存框架 | [https://projects.spring.io/spring-data-redis
 Apache Shiro | 安全框架 | [http://shiro.apache.org/](http://shiro.apache.org/)
 thymeleaf-extras-shiro | thymeleaf的shiro标签 | [https://github.com/theborakompanioni/thymeleaf-extras-shiro](https://github.com/theborakompanioni/thymeleaf-extras-shiro)
 Apereo CAS | 单点登陆框架 | [https://github.com/apereo/cas](https://github.com/apereo/cas)
+Spring Validator | 后端验证框架 | [https://projects.spring.io/spring-framework/](https://projects.spring.io/spring-framework/)
+Hibernate Validator | Hibernate验证框架 | [http://hibernate.org/](http://hibernate.org/)
 Thymeleaf | 模板引擎  | [http://www.thymeleaf.org/](http://www.thymeleaf.org/)
 Maven | 项目构建管理  | [http://maven.apache.org/](http://maven.apache.org/)
 Redis | 分布式缓存数据库 | [https://redis.io/](https://redis.io/)
@@ -94,6 +96,9 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 **环境变量**
 
 ![环境变量](doc/admin_properties.png)
+## Jbone系统管理
+![Jbone系统管理](doc/systemManager.png)
+
 ## jbone功能和进度表
 ![进度](doc/jboneProcess.png)
 # jbone部署说明

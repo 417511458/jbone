@@ -2,7 +2,10 @@ package com.majunwei.jbone.sys.service;
 
 import com.majunwei.jbone.sys.dao.domain.RbacSystemEntity;
 import com.majunwei.jbone.sys.dao.repository.RbacSystemRepository;
+import com.majunwei.jbone.sys.service.model.system.CreateSystemModel;
+import com.majunwei.jbone.sys.service.model.system.UpdateSystemModel;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +13,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,7 +21,15 @@ public class SystemService {
     @Autowired
     private RbacSystemRepository rbacSystemRepository;
 
-    public void save(RbacSystemEntity systemEntity){
+    public void save(CreateSystemModel systemModel){
+        RbacSystemEntity systemEntity = new RbacSystemEntity();
+        BeanUtils.copyProperties(systemModel,systemEntity);
+        rbacSystemRepository.save(systemEntity);
+    }
+
+    public void update(UpdateSystemModel systemModel){
+        RbacSystemEntity systemEntity = rbacSystemRepository.findOne(systemModel.getId());
+        BeanUtils.copyProperties(systemModel,systemEntity);
         rbacSystemRepository.save(systemEntity);
     }
 
@@ -31,6 +41,10 @@ public class SystemService {
             }
             rbacSystemRepository.delete(Integer.parseInt(id));
         }
+    }
+
+    public RbacSystemEntity get(int id){
+        return rbacSystemRepository.getOne(id);
     }
 
     /**

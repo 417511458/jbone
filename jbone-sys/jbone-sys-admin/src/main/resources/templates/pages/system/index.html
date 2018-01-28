@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>用户管理</title>
+    <title>系统管理</title>
 
 
     <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon" />
@@ -14,7 +14,7 @@
   <div id="main">
       <div id="toolbar">
           <a class="btn  btn-primary" href="javascript:;" onclick="createAction()"><i class="fa fa-plus-square"></i>新增</a>
-          <a class="btn  btn-primary" href="javascript:;" onclick="updateAction()"><i class="fa fa-pencil-square-o"></i>修改</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction()"><i class="fa fa-times-circle"></i>删除</a>
       </div>
       <table id="table"></table>
@@ -30,6 +30,7 @@
               </div>
               <div class="modal-body">
                   <form id="createForm" action="/system/add" method="post" class="form-horizontal">
+                      <input id="id" name="id" th:type="hidden" />
                       <div class="form-group">
                           <label for="name" class="col-sm-3 control-label">系统名</label>
                           <div class="col-sm-8">
@@ -214,65 +215,30 @@
           }
           return '<span class="label label-success">未知</span>';
       }
+      var formUrl;
       // 新增
       function createAction() {
+          formUrl = '/system/create';
+          document.getElementById("createForm").reset();
           $('#addSystem').modal();
       }
 
       function doCreate(){
           $.ajax({
               type: 'post',
-              url: '/system/create',
+              url: formUrl,
               data: $('#createForm').serialize(),
               success: function(result) {
                   if (result.status != 0) {
-                      $.confirm({
-                          theme: 'dark',
-                          animation: 'rotateX',
-                          closeAnimation: 'rotateX',
-                          title: false,
-                          content: result.msg,
-                          buttons: {
-                              confirm: {
-                                  text: '确认',
-                                  btnClass: 'waves-effect waves-button waves-light'
-                              }
-                          }
-                      });
+                      failHandler(result);
                   } else {
-                      $.confirm({
-                          theme: 'light',
-                          animation: 'rotateX',
-                          closeAnimation: 'rotateX',
-                          title: false,
-                          content: '保存成功',
-                          buttons: {
-                              confirm: {
-                                  text: '确认',
-                                  btnClass: 'waves-effect waves-button waves-light'
-                              }
-                          }
-                      });
+                      successConfirm();
                       $table.bootstrapTable('refresh');
                       $('#addSystem').modal("hide");
                       document.getElementById("createForm").reset();
                   }
               },
-              error: function(XMLHttpRequest, textStatus, errorThrown) {
-                  $.confirm({
-                      theme: 'dark',
-                      animation: 'rotateX',
-                      closeAnimation: 'rotateX',
-                      title: false,
-                      content: textStatus,
-                      buttons: {
-                          confirm: {
-                              text: '确认',
-                              btnClass: 'waves-effect waves-button waves-light'
-                          }
-                      }
-                  });
-              }
+              error: errorHandler
           });
       }
 
@@ -286,71 +252,47 @@
 
       window.actionEvents = {
           'click .edit': function (e, value, row, index) {
-              updateDialog = $.dialog({
-                  animationSpeed: 300,
-                  title: '编辑用户',
-                  content: 'url:/user/update/' + row.id,
-                  onContentReady: function () {
-                      initMaterialInput();
-                  }
-              });
+              updateAction(row.id);
           },
           'click .remove': function (e, value, row, index) {
               commonDelete(row.id);
           }
       };
-      function detailFormatter(index, row) {
-          var html = [];
-          $.each(row, function (key, value) {
-              html.push('<p><b>' + key + ':</b> ' + value + '</p>');
-          });
-          return html.join('');
-      }
 
-      // 更新
-      var updateDialog;
-      function updateAction() {
+      function toUpdate(){
           var rows = $table.bootstrapTable('getSelections');
           if (rows.length != 1) {
-              $.confirm({
-                  title: false,
-                  content: '请选择一条记录！',
-                  autoClose: 'cancel|3000',
-                  backgroundDismiss: true,
-                  buttons: {
-                      cancel: {
-                          text: '取消',
-                          btnClass: 'waves-effect waves-button'
-                      }
-                  }
-              });
-          } else {
-              updateDialog = $.dialog({
-                  animationSpeed: 300,
-                  title: '编辑用户',
-                  content: 'url:/user/update/' + rows[0].id,
-                  onContentReady: function () {
-                      initMaterialInput();
-                  }
-              });
+              chooseConfirm();
+          }else{
+              var id = rows[0].id;
+              updateAction(id);
           }
+      }
+
+      function updateAction(id) {
+
+          formUrl = '/system/update';
+
+              $.ajax({
+                  type: 'post',
+                  url: '/system/get/' + id,
+                  success: function(result) {
+                      if (result.status != 0) {
+                          failHandler(result);
+                      } else {
+                          var data = result.data;
+                          loadData(data);
+                          $('#addSystem').modal("show");
+                      }
+                  },
+                  error: errorHandler
+              });
       }
       // 删除
       function deleteAction() {
           var rows = $table.bootstrapTable('getSelections');
           if (rows.length == 0) {
-              $.confirm({
-                  title: false,
-                  content: '请至少选择一条记录！',
-                  autoClose: 'cancel|3000',
-                  backgroundDismiss: true,
-                  buttons: {
-                      cancel: {
-                          text: '取消',
-                          btnClass: 'waves-effect waves-button'
-                      }
-                  }
-              });
+              chooseConfirm();
           } else {
               var ids = new Array();
               for (var i in rows) {
@@ -375,51 +317,13 @@
                               url: '/system/delete/' + ids,
                               success: function(result) {
                                   if (result.status != 0) {
-                                      $.confirm({
-                                          theme: 'dark',
-                                          animation: 'rotateX',
-                                          closeAnimation: 'rotateX',
-                                          title: false,
-                                          content: result.msg,
-                                          buttons: {
-                                              confirm: {
-                                                  text: '确认',
-                                                  btnClass: 'waves-effect waves-button waves-light'
-                                              }
-                                          }
-                                      });
+                                      failHandler(result);
                                   } else {
-                                      $.confirm({
-                                          theme: 'light',
-                                          animation: 'rotateX',
-                                          closeAnimation: 'rotateX',
-                                          title: false,
-                                          content: '删除成功',
-                                          buttons: {
-                                              confirm: {
-                                                  text: '确认',
-                                                  btnClass: 'waves-effect waves-button waves-light'
-                                              }
-                                          }
-                                      });
+                                      successConfirm();
                                       $table.bootstrapTable('refresh');
                                   }
                               },
-                              error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                  $.confirm({
-                                      theme: 'dark',
-                                      animation: 'rotateX',
-                                      closeAnimation: 'rotateX',
-                                      title: false,
-                                      content: textStatus,
-                                      buttons: {
-                                          confirm: {
-                                              text: '确认',
-                                              btnClass: 'waves-effect waves-button waves-light'
-                                          }
-                                      }
-                                  });
-                              }
+                              error: errorHandler
                           });
                       }
                   },
