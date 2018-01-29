@@ -54,8 +54,22 @@
 
   <!-- Control Sidebar -->
   <div th:replace="layout/control"></div>
+
+    <!-- 统一调用的模态框  -->
+    <div class="modal fade" role="dialog" id="myModal" aria-hidden="true"></div>
+    <!-- 模态框遮罩 -->
+    <div id='backdropId' class='modal-backdrop fade in' style='display:none;'></div>
+
 </div>
 <div th:replace="/layout/js :: #js"></div>
+
+<script type="text/javascript">
+    $(function () {
+        var dashboard = $("#dashboard");
+        addTabs({id: dashboard.attr("id"), title: dashboard.attr('title'), close: dashboard.attr("closeable"), url:dashboard.attr("url")});
+    });
+</script>
+
 </body>
 </html>
 

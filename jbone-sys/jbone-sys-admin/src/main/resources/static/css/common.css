@@ -18,3 +18,7 @@
 .nav-header .nav-tabs-custom{
     margin-bottom: 0px;
 }
+
+.nav-tabs-content{
+    : 0px;
+}
