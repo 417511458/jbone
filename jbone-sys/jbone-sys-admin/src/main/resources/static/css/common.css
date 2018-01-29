@@ -1,0 +1,20 @@
+.nav-tabs-custom>.nav-tabs>li.active{
+    border-bottom-color: #3c8dbc;
+}
+
+.nav-tabs-custom>.nav-tabs>li{
+    border-top: 0px;
+    border-bottom: 3px solid transparent;
+}
+
+.nav-header{
+    padding: 0px;
+}
+
+.nav-content{
+    padding: 0px;
+}
+
+.nav-header .nav-tabs-custom{
+    margin-bottom: 0px;
+}
