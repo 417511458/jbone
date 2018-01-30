@@ -6,6 +6,8 @@ import com.majunwei.jbone.sys.dao.domain.*;
 import com.majunwei.jbone.sys.dao.repository.RbacMenuRepository;
 import com.majunwei.jbone.sys.dao.repository.RbacSystemRepository;
 import com.majunwei.jbone.sys.dao.repository.RbacUserRepository;
+import com.majunwei.jbone.sys.dao.repository.RbacUserRoleRepository;
+import com.majunwei.jbone.sys.service.model.user.AssignRoleModel;
 import com.majunwei.jbone.sys.service.model.user.CreateUserModel;
 import com.majunwei.jbone.sys.service.model.user.UpdateUserModel;
 import org.apache.commons.lang3.StringUtils;
@@ -15,10 +17,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
 import java.util.*;
 
+@Transactional
 @Service
 public class UserService {
     @Autowired
@@ -29,6 +33,9 @@ public class UserService {
 
     @Autowired
     RbacMenuRepository menuRepository;
+
+    @Autowired
+    RbacUserRoleRepository userRoleRepository;
 
 
     public UserModel getUserDetailByNameAndServerName(String username, String serverName) {
@@ -188,6 +195,28 @@ public class UserService {
 
     public RbacUserEntity findById(int id){
         return userRepository.getOne(id);
+    }
+
+    /**
+     * 分配角色
+     *
+     * 1、全部删除
+     * 2、重新赋值
+     * @param assignRoleModel
+     */
+    public void assignRole(AssignRoleModel assignRoleModel){
+        userRoleRepository.deleteByUserId(assignRoleModel.getUserId());
+        List<RbacUserRoleEntity> userRoleEntities = new ArrayList<>();
+        if(assignRoleModel.getUserRole() != null && assignRoleModel.getUserRole().length > 0){
+            for (String id : assignRoleModel.getUserRole()){
+                int roleId = Integer.parseInt(id);
+                RbacUserRoleEntity userRoleEntity = new RbacUserRoleEntity();
+                userRoleEntity.setRoleId(roleId);
+                userRoleEntity.setUserId(assignRoleModel.getUserId());
+                userRoleEntities.add(userRoleEntity);
+            }
+            userRoleRepository.save(userRoleEntities);
+        }
     }
 
     public Page<RbacUserEntity> findPage(String condition, Pageable pageable){

@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.*;
+import java.util.List;
 
 @Service
 public class RoleService {
@@ -44,6 +45,10 @@ public class RoleService {
 
     public RbacRoleEntity get(int id){
         return roleRepository.getOne(id);
+    }
+
+    public List<RbacRoleEntity> findAll(){
+        return roleRepository.findAll();
     }
 
 

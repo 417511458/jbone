@@ -2,9 +2,12 @@ package com.majunwei.jbone.sys.admin.controller;
 
 import com.majunwei.jbone.common.ui.result.Result;
 import com.majunwei.jbone.common.utils.ResultUtils;
+import com.majunwei.jbone.sys.dao.domain.RbacRoleEntity;
 import com.majunwei.jbone.sys.dao.domain.RbacUserEntity;
+import com.majunwei.jbone.sys.service.RoleService;
 import com.majunwei.jbone.sys.service.UserService;
 import com.majunwei.jbone.sys.service.model.ListModel;
+import com.majunwei.jbone.sys.service.model.user.AssignRoleModel;
 import com.majunwei.jbone.sys.service.model.user.CreateUserModel;
 import com.majunwei.jbone.sys.service.model.user.UpdateUserModel;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -19,6 +22,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @Controller
 @RequestMapping("user")
@@ -26,6 +33,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
 
     @RequiresRoles("admin")
     @RequestMapping("/index")
@@ -70,5 +79,25 @@ public class UserController {
     public Result get(@PathVariable("id")String id){
         RbacUserEntity userEntity = userService.findById(Integer.parseInt(id));
         return ResultUtils.wrapSuccess(userEntity);
+    }
+
+    @RequestMapping("/toAssignRole/{id}")
+    @ResponseBody
+    public Result toAssignRole(@PathVariable("id")String id){
+        RbacUserEntity userEntity = userService.findById(Integer.parseInt(id));
+        List<RbacRoleEntity> userRoles = userEntity.getRoles();
+        List<RbacRoleEntity> allRoles = roleService.findAll();
+        Map<String,List<RbacRoleEntity>> map = new HashMap<>();
+        map.put("userRoles",userRoles);
+        map.put("allRoles",allRoles);
+
+        return ResultUtils.wrapSuccess(map);
+    }
+
+    @RequestMapping("/doAssignRole")
+    @ResponseBody
+    public Result doAssignRole(AssignRoleModel assignRoleModel){
+        userService.assignRole(assignRoleModel);
+        return ResultUtils.wrapSuccess();
     }
 }
