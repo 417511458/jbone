@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -17,7 +17,7 @@
           <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction()"><i class="fa fa-times-circle"></i>删除</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="assignRoleAction()"><i class="fa fa-user-plus"></i>分配角色</a>
-          <a class="btn  btn-primary" href="javascript:;" onclick=""><i class="fa fa-user-plus"></i>分配菜单</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="assignMenuAction()"><i class="fa fa-user-plus"></i>分配菜单</a>
           <a class="btn  btn-primary" href="javascript:;" onclick=""><i class="fa fa-user-plus"></i>分配权限</a>
       </div>
       <table id="table"></table>
@@ -221,6 +221,10 @@
               return '<span class="label label-warning">未知</span>';
           }
 
+          function assignMenuAction(){
+              openModal("分配菜单","/user/toAssignMenu");
+          }
+
           function assignRoleAction(){
               var rows = $table.bootstrapTable('getSelections');
               if (rows.length != 1) {
@@ -294,9 +298,7 @@
           var formUrl;
           // 新增
           function createAction() {
-              formUrl = '/user/create';
-              document.getElementById("createForm").reset();
-              $('#addModal').modal();
+              openModal("新增用户",'/user/toCreate');
           }
 
           function doCreate(){
@@ -378,7 +380,7 @@
               }
           }
           function commonDelete(ids){
-              $.confirm({
+              parent.$.confirm({
                   type: 'red',
                   animationSpeed: 300,
                   title: false,

@@ -20,5 +20,41 @@
 }
 
 .nav-tabs-content{
-    : 0px;
+    margin: 0px;
+}
+
+iframe#main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 50px;
+}
+.centered-modal.in {
+    display: flex !important;
+    padding: 0 !important;
+}
+.modal-dialog{
+    margin: auto;
+    padding: 0;
+}
+.modal-content {
+    height: 100%;
+    width: 100%;
+    display: table;
+    padding: 0px;
+}
+.modal-body {
+    height: 100%;
+    width: 100%;
+    /*display: table-row;*/
+}
+#modal-iframe {
+    height: 100%;
+    width: 100%;
+}
+
+.modal-form .form-group{
+    margin-bottom: 5px;
 }

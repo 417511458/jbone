@@ -53,6 +53,11 @@ public class UserController {
     }
 
 
+    @RequestMapping("/toCreate")
+    public String toCreate(){
+        return "pages/user/create";
+    }
+
     @RequestMapping("/create")
     @ResponseBody
     public Result create(@Validated CreateUserModel userModel, BindingResult bindingResult){
@@ -99,5 +104,11 @@ public class UserController {
     public Result doAssignRole(AssignRoleModel assignRoleModel){
         userService.assignRole(assignRoleModel);
         return ResultUtils.wrapSuccess();
+    }
+
+
+    @RequestMapping("toAssignMenu")
+    public String toAssignMenu(){
+        return "pages/user/assignMenu";
     }
 }

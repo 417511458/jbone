@@ -92,5 +92,12 @@
             <artifactId>thymeleaf-extras-shiro</artifactId>
             <version>1.2.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery-treegrid</artifactId>
+            <version>0.3.0</version>
+        </dependency>
+
     </dependencies>
 </project>

@@ -51,4 +51,5 @@ $(function () {
         id = $(this).attr("tabclose");
         closeTab(id);
     });
+
 });

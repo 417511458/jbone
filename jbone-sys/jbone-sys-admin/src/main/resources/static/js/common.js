@@ -15,6 +15,14 @@ $(function() {
 			$(this).parent().find('label').removeClass('active');
 		}
 	});
+
+	// 模态框关闭，清空iframe
+    if($("#parentModal")){
+        $("#parentModal").on('hidden.bs.modal', function () {
+            $('#modal-iframe').attr("src", "");
+        });
+    }
+
 });
 // 动态高度
 function getHeight() {
@@ -69,7 +77,7 @@ function loadData(obj){
 }
 
 function errorHandler(XMLHttpRequest, textStatus, errorThrown) {
-    $.confirm({
+    parent.$.confirm({
         theme: 'dark',
         animation: 'rotateX',
         closeAnimation: 'rotateX',
@@ -85,7 +93,7 @@ function errorHandler(XMLHttpRequest, textStatus, errorThrown) {
 }
 
 function failHandler(result) {
-    $.confirm({
+    parent.$.confirm({
         theme: 'dark',
         animation: 'rotateX',
         closeAnimation: 'rotateX',
@@ -101,7 +109,23 @@ function failHandler(result) {
 }
 
 function successConfirm(){
-    $.confirm({
+    parent.$.confirm({
+        theme: 'light',
+        animation: 'rotateX',
+        closeAnimation: 'rotateX',
+        title: false,
+        content: '操作成功',
+        buttons: {
+            confirm: {
+                text: '确认',
+                btnClass: 'waves-effect waves-button waves-light'
+            }
+        }
+    });
+}
+
+function childSuccessConfirm(){
+    parent.$.confirm({
         theme: 'light',
         animation: 'rotateX',
         closeAnimation: 'rotateX',
@@ -117,7 +141,7 @@ function successConfirm(){
 }
 
 function chooseConfirm(){
-    $.confirm({
+    parent.$.confirm({
         title: false,
         content: '请至少选择一条记录！',
         autoClose: 'cancel|3000',
@@ -129,4 +153,17 @@ function chooseConfirm(){
             }
         }
     });
+}
+
+
+function openModal(title,url){
+    parent.$("#modal-title").text(title);
+    parent.$("#modal-iframe").attr("src",url);
+    parent.$('#iframe-loading').show();
+    parent.$("#modal-iframe").on("load", function(){
+        parent.$('#iframe-loading').hide();
+    });
+
+    var dialog = parent.$('#parentModal');
+    dialog.modal();
 }

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>菜单管理</title>
+
+
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon" />
+  </head>
+  <body>
+  <div th:replace="/layout/css :: #css"></div>
+  <div id="main">
+      <div id="toolbar">
+          <a class="btn  btn-primary" href="javascript:;" onclick="createAction()"><i class="fa fa-plus-square"></i>新增</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction()"><i class="fa fa-times-circle"></i>删除</a>
+      </div>
+      <table id="table"></table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="addSystem" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">编辑系统</h4>
+              </div>
+              <div class="modal-body">
+                  <form id="createForm" action="/system/add" method="post" class="form-horizontal">
+                      <input id="id" name="id" th:type="hidden" />
+                      <div class="form-group">
+                          <label for="name" class="col-sm-3 control-label">系统名</label>
+                          <div class="col-sm-8">
+                              <input id="name" name="name" type="text" class="form-control" />
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="title" class="col-sm-3 control-label">系统标题</label>
+                          <div class="col-sm-8">
+                              <input id="title" name="title" type="text" class="form-control" />
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="basepath" class="col-sm-3 control-label">根路径</label>
+                          <div class="col-sm-8">
+                              <input id="basepath" name="basepath" type="text" class="form-control" />
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label  class="col-sm-3 control-label">系统状态</label>
+                          <div class="col-sm-8">
+                              <div class="radio">
+                                  <label class="radio-inline">
+                                      <input type="radio" name="status" id="status_nomal" value="1" checked="checked" />
+                                      正常
+                                  </label>
+                                  <label class="radio-inline">
+                                      <input type="radio" name="status" id="status_disable" value="-1" />
+                                      禁用
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="description" class="col-sm-3 control-label">系统简介</label>
+                          <div class="col-sm-8">
+                              <textarea id="description" name="description" class="form-control"/>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                  <button type="button" class="btn btn-primary" onclick="doCreate()">提交</button>
+              </div>
+          </div>
+      </div>
+  </div>
+<div th:replace="/layout/js :: #js"></div>
+
+  <script>
+      var $table = $('#table');
+      $(function() {
+          $(document).on('focus', 'input[type="text"]', function() {
+              $(this).parent().find('label').addClass('active');
+          }).on('blur', 'input[type="text"]', function() {
+              if ($(this).val() == '') {
+                  $(this).parent().find('label').removeClass('active');
+              }
+          });
+          // bootstrap table初始化
+          // http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
+          $table.bootstrapTable({
+              url: '/menu/list',
+              height: getHeight(),
+              striped: true,
+              search: true,
+              searchOnEnterKey: true,
+              showRefresh: true,
+              showToggle: true,
+              showColumns: true,
+              minimumCountColumns: 2,
+              showPaginationSwitch: true,
+              clickToSelect: true,
+              detailView: true,
+              detailFormatter: 'detailFormatter',
+              pagination: true,
+              paginationLoop: false,
+              classes: 'table table-hover table-no-bordered',
+              sidePagination: 'server',
+              //silentSort: false,
+              smartDisplay: false,
+              idField: 'id',
+              sortName: 'id',
+              sortOrder: 'desc',
+              escape: true,
+              searchOnEnterKey: true,
+              idField: 'systemId',
+              maintainSelected: true,
+              toolbar: '#toolbar',
+              queryParamsType : "undefined",
+              queryParams: function queryParams(params) {   //设置查询参数
+                  var param = {
+                      pageNumber: params.pageNumber,
+                      pageSize: params.pageSize,
+                      searchText:params.searchText,
+                      sortName : params.sortName,
+                      sortOrder:params.sortOrder
+                  };
+                  return param;
+              },
+
+              columns: [
+                  {field: 'state', checkbox: true},
+                  {field: 'name', title: '名称', sortable: true, halign: 'center',align:'center'},
+                  {field: 'status', title: '权限', sortable: true, halign: 'center',align:'center'},
+                  {field: 'action', title: '操作', halign: 'center', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
+              ]
+          }).on('all.bs.table', function (e, name, args) {
+              $('[data-toggle="tooltip"]').tooltip();
+              $('[data-toggle="popover"]').popover();
+          });
+      });
+
+      var formUrl;
+      // 新增
+      function createAction() {
+          formUrl = '/system/create';
+          document.getElementById("createForm").reset();
+          $('#addSystem').modal();
+      }
+
+      function doCreate(){
+          $.ajax({
+              type: 'post',
+              url: formUrl,
+              data: $('#createForm').serialize(),
+              success: function(result) {
+                  if (result.status != 0) {
+                      failHandler(result);
+                  } else {
+                      successConfirm();
+                      $table.bootstrapTable('refresh');
+                      $('#addSystem').modal("hide");
+                      document.getElementById("createForm").reset();
+                  }
+              },
+              error: errorHandler
+          });
+      }
+
+
+      function actionFormatter(value, row, index) {
+          return [
+              '<a class="edit" href="javascript:void(0)" data-toggle="tooltip" title="编辑"><i class="fa fa-pencil-square-o"></i></a>　',
+              '<a class="remove" href="javascript:void(0)" data-toggle="tooltip" title="删除"><i class="fa fa-times-circle"></i></a>'
+          ].join('');
+      }
+
+      window.actionEvents = {
+          'click .edit': function (e, value, row, index) {
+              updateAction(row.id);
+          },
+          'click .remove': function (e, value, row, index) {
+              commonDelete(row.id);
+          }
+      };
+
+      function toUpdate(){
+          var rows = $table.bootstrapTable('getSelections');
+          if (rows.length != 1) {
+              chooseConfirm();
+          }else{
+              var id = rows[0].id;
+              updateAction(id);
+          }
+      }
+
+      function updateAction(id) {
+
+          formUrl = '/system/update';
+
+              $.ajax({
+                  type: 'post',
+                  url: '/system/get/' + id,
+                  success: function(result) {
+                      if (result.status != 0) {
+                          failHandler(result);
+                      } else {
+                          var data = result.data;
+                          loadData(data);
+                          $('#addSystem').modal("show");
+                      }
+                  },
+                  error: errorHandler
+              });
+      }
+      // 删除
+      function deleteAction() {
+          var rows = $table.bootstrapTable('getSelections');
+          if (rows.length == 0) {
+              chooseConfirm();
+          } else {
+              var ids = new Array();
+              for (var i in rows) {
+                  ids.push(rows[i].id);
+              }
+              commonDelete(ids.join(","));
+          }
+      }
+      function commonDelete(ids){
+          $.confirm({
+              type: 'red',
+              animationSpeed: 300,
+              title: false,
+              content: '确认删除该系统吗？',
+              buttons: {
+                  confirm: {
+                      text: '确认',
+                      btnClass: 'waves-effect waves-button',
+                      action: function () {
+                          $.ajax({
+                              type: 'post',
+                              url: '/system/delete/' + ids,
+                              success: function(result) {
+                                  if (result.status != 0) {
+                                      failHandler(result);
+                                  } else {
+                                      successConfirm();
+                                      $table.bootstrapTable('refresh');
+                                  }
+                              },
+                              error: errorHandler
+                          });
+                      }
+                  },
+                  cancel: {
+                      text: '取消',
+                      btnClass: 'waves-effect waves-button'
+                  }
+              }
+          });
+      }
+  </script>
+  </body>
+  </html>

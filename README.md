@@ -65,7 +65,7 @@ thymeleaf-extras-shiro | thymeleaf的shiro标签 | [https://github.com/theborako
 Apereo CAS | 单点登陆框架 | [https://github.com/apereo/cas](https://github.com/apereo/cas)
 Spring Validator | 后端验证框架 | [https://projects.spring.io/spring-framework/](https://projects.spring.io/spring-framework/)
 Hibernate Validator | Hibernate验证框架 | [http://hibernate.org/](http://hibernate.org/)
-logbok | 一个通过注解自动生成get/set方法的类库 | [https://projectlombok.org/](https://projectlombok.org/)
+lombok | 一个通过注解自动生成get/set方法的类库 | [https://projectlombok.org/](https://projectlombok.org/)
 webjars | 以jars的形式管理前端静态资源 | [http://www.webjars.org/](http://www.webjars.org/)
 Thymeleaf | 模板引擎  | [http://www.thymeleaf.org/](http://www.thymeleaf.org/)
 Maven | 项目构建管理  | [http://maven.apache.org/](http://maven.apache.org/)
