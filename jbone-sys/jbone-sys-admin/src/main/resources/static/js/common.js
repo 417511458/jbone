@@ -171,10 +171,6 @@ function openModal(title,url){
     parent.$("#modal-title").text(title);
     parent.$("#modal-iframe").attr("src",url);
     parent.$('#iframe-loading').show();
-    parent.$("#modal-iframe").on("load", function(){
-        parent.$('#iframe-loading').hide();
-    });
-
     var dialog = parent.$('#parentModal');
     dialog.modal();
 }

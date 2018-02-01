@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,11 +50,23 @@ public class RoleController {
     }
 
 
+    @RequestMapping("/toCreate")
+    public String toCreate(){
+        return "pages/role/create";
+    }
+
     @RequestMapping("/create")
     @ResponseBody
     public Result create(@Validated CreateRoleModel roleModel, BindingResult bindingResult){
         roleService.save(roleModel);
         return ResultUtils.wrapSuccess();
+    }
+
+    @RequestMapping("/toUpdate/{id}")
+    public String toUpdate(@PathVariable("id")String id, ModelMap modelMap){
+        RbacRoleEntity roleEntity = roleService.get(Integer.parseInt(id));
+        modelMap.put("role",roleEntity);
+        return "pages/role/update";
     }
 
     @RequestMapping("/update")
@@ -72,7 +86,7 @@ public class RoleController {
     @RequestMapping("/get/{id}")
     @ResponseBody
     public Result get(@PathVariable("id")String id){
-        RbacRoleEntity userEntity = roleService.get(Integer.parseInt(id));
-        return ResultUtils.wrapSuccess(userEntity);
+        RbacRoleEntity roleEntity = roleService.get(Integer.parseInt(id));
+        return ResultUtils.wrapSuccess(roleEntity);
     }
 }
