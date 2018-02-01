@@ -13,9 +13,9 @@
   <div th:replace="/layout/css :: #css"></div>
   <div id="main">
       <div id="toolbar">
-          <a class="btn  btn-primary" href="javascript:;" onclick="createAction()"><i class="fa fa-plus-square"></i>新增</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="openModal('新增系统','/system/toCreate')"><i class="fa fa-plus-square"></i>新增</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
-          <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction()"><i class="fa fa-times-circle"></i>删除</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction('/system/delete/')"><i class="fa fa-times-circle"></i>删除</a>
       </div>
       <table id="table"></table>
   </div>
@@ -252,88 +252,20 @@
 
       window.actionEvents = {
           'click .edit': function (e, value, row, index) {
-              updateAction(row.id);
+              openModal('修改系统','/system/toUpdate/' + row.id);
           },
           'click .remove': function (e, value, row, index) {
-              commonDelete(row.id);
+              commonDelete('/system/delete/',row.id);
           }
       };
 
       function toUpdate(){
-          var rows = $table.bootstrapTable('getSelections');
-          if (rows.length != 1) {
-              chooseConfirm();
-          }else{
-              var id = rows[0].id;
-              updateAction(id);
+          var row = chooseOne();
+          if(row){
+              openModal('修改系统','/system/toUpdate/' + row.id);
           }
       }
 
-      function updateAction(id) {
-
-          formUrl = '/system/update';
-
-              $.ajax({
-                  type: 'post',
-                  url: '/system/get/' + id,
-                  success: function(result) {
-                      if (result.status != 0) {
-                          failHandler(result);
-                      } else {
-                          var data = result.data;
-                          loadData(data);
-                          $('#addSystem').modal("show");
-                      }
-                  },
-                  error: errorHandler
-              });
-      }
-      // 删除
-      function deleteAction() {
-          var rows = $table.bootstrapTable('getSelections');
-          if (rows.length == 0) {
-              chooseConfirm();
-          } else {
-              var ids = new Array();
-              for (var i in rows) {
-                  ids.push(rows[i].id);
-              }
-              commonDelete(ids.join(","));
-          }
-      }
-      function commonDelete(ids){
-          $.confirm({
-              type: 'red',
-              animationSpeed: 300,
-              title: false,
-              content: '确认删除该系统吗？',
-              buttons: {
-                  confirm: {
-                      text: '确认',
-                      btnClass: 'waves-effect waves-button',
-                      action: function () {
-                          $.ajax({
-                              type: 'post',
-                              url: '/system/delete/' + ids,
-                              success: function(result) {
-                                  if (result.status != 0) {
-                                      failHandler(result);
-                                  } else {
-                                      successConfirm();
-                                      $table.bootstrapTable('refresh');
-                                  }
-                              },
-                              error: errorHandler
-                          });
-                      }
-                  },
-                  cancel: {
-                      text: '取消',
-                      btnClass: 'waves-effect waves-button'
-                  }
-              }
-          });
-      }
   </script>
   </body>
   </html>

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,18 @@ public class SystemController {
     public Result create(@Validated CreateSystemModel createSystemModel, BindingResult bindingResult){
         systemService.save(createSystemModel);
         return ResultUtils.wrapSuccess();
+    }
+
+    @RequestMapping("/toCreate")
+    public String toCreate(){
+        return "pages/system/create";
+    }
+
+    @RequestMapping("/toUpdate/{id}")
+    public String toUpdate(@PathVariable("id")String id, ModelMap modelMap){
+        RbacSystemEntity systemEntity = systemService.get(Integer.parseInt(id));
+        modelMap.put("system",systemEntity);
+        return "pages/system/update";
     }
 
     @RequestMapping("/update")
