@@ -8,5 +8,10 @@ $(function () {
 });
 
 function closeModal(){
+    parent.$('#modalOpration').val("refresh");
+    parent.$('#parentModal').modal("hide");
+}
+
+function closeModalNotRefresh(){
     parent.$('#parentModal').modal("hide");
 }

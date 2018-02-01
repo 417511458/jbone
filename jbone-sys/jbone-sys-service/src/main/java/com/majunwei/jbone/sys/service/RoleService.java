@@ -3,6 +3,7 @@ package com.majunwei.jbone.sys.service;
 import com.majunwei.jbone.sys.dao.domain.RbacRoleEntity;
 import com.majunwei.jbone.sys.dao.repository.RbacRoleRepository;
 import com.majunwei.jbone.sys.service.model.role.CreateRoleModel;
+import com.majunwei.jbone.sys.service.model.role.SimpleRoleModel;
 import com.majunwei.jbone.sys.service.model.role.UpdateRoleModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -73,5 +75,19 @@ public class RoleService {
             Predicate predicate = criteriaBuilder.or(criteriaBuilder.like(name,"%" + condition + "%"),criteriaBuilder.like(title,"%" + condition + "%"));
             return predicate;
         }
+    }
+
+    public List<SimpleRoleModel> getSimpleModels(List<RbacRoleEntity> roleEntities){
+        List<SimpleRoleModel> result = new ArrayList<>();
+        if(roleEntities == null || roleEntities.isEmpty()){
+            return result;
+        }
+
+        for (RbacRoleEntity roleEntity : roleEntities){
+            SimpleRoleModel roleModel = new SimpleRoleModel();
+            BeanUtils.copyProperties(roleEntity,roleModel);
+            result.add(roleModel);
+        }
+        return result;
     }
 }

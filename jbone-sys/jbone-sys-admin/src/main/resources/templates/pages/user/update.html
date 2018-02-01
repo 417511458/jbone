@@ -35,41 +35,51 @@
         </div>
         <div class="form-group">
             <label  class="control-label">性别</label>
-                <div class="radio">
-                    <label class="radio-inline">
-                        <input type="radio" name="sex" value="1" checked="checked" />
-                        男
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="sex" value="0" />
-                        女
-                    </label>
-                </div>
+            <div class="radio">
+                <label class="radio-inline">
+                    <input type="radio" name="sex" value="1" checked="checked" />
+                    男
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="sex" value="0" />
+                    女
+                </label>
+            </div>
         </div>
         <div class="form-group">
             <label class="control-label">状态</label>
-                <div class="radio">
-                    <label class="radio-inline">
-                        <input type="radio" name="locked" value="0" checked="checked" />
-                        正常
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="locked" value="1" />
-                        锁定
-                    </label>
-                </div>
+            <div class="radio">
+                <label class="radio-inline">
+                    <input type="radio" name="locked" value="0" checked="checked" />
+                    正常
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="locked" value="1" />
+                    锁定
+                </label>
+            </div>
         </div>
-        <button type="button" class="btn btn-primary btn-block" onclick="doCreate()">保 存</button>
-    </form>
+            <button type="button" class="btn btn-primary btn-block" onclick="doCreate()">保 存</button>
+        </form>
+
+
 </div>
 
 <div th:replace="/layout/js :: #js"></div>
 <script type="text/javascript" th:src="@{/js/modalPage.js}"></script>
-<script>
+
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+        debugger;
+       var model = [[${userEntity}]];
+       loadData(model);
+    });
     function doCreate(){
         $.ajax({
             type: 'post',
-            url: '/user/create',
+            url: '/user/update',
             data: $('#createForm').serialize(),
             success: function(result) {
                 if (result.status != 0) {
@@ -82,6 +92,7 @@
             error: errorHandler
         });
     }
+    /*]]>*/
 </script>
 </body>
 </html>

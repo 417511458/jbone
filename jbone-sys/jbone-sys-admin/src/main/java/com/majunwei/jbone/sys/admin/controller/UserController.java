@@ -11,11 +11,14 @@ import com.majunwei.jbone.sys.service.model.user.AssignRoleModel;
 import com.majunwei.jbone.sys.service.model.user.CreateUserModel;
 import com.majunwei.jbone.sys.service.model.user.UpdateUserModel;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,6 +68,15 @@ public class UserController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequestMapping("/toUpdate/{id}")
+    public String toUpdate(@PathVariable("id")String id, ModelMap model){
+        RbacUserEntity userEntity = userService.findById(Integer.parseInt(id));
+        UpdateUserModel userModel = new UpdateUserModel();
+        BeanUtils.copyProperties(userEntity,userModel);
+        model.put("userEntity",userModel);
+        return "pages/user/update";
+    }
+
     @RequestMapping("/update")
     @ResponseBody
     public Result update(@Validated UpdateUserModel userModel, BindingResult bindingResult){
@@ -87,16 +99,12 @@ public class UserController {
     }
 
     @RequestMapping("/toAssignRole/{id}")
-    @ResponseBody
-    public Result toAssignRole(@PathVariable("id")String id){
+    public String toAssignRole(@PathVariable("id")String id,ModelMap modelMap){
         RbacUserEntity userEntity = userService.findById(Integer.parseInt(id));
-        List<RbacRoleEntity> userRoles = userEntity.getRoles();
-        List<RbacRoleEntity> allRoles = roleService.findAll();
-        Map<String,List<RbacRoleEntity>> map = new HashMap<>();
-        map.put("userRoles",userRoles);
-        map.put("allRoles",allRoles);
-
-        return ResultUtils.wrapSuccess(map);
+        modelMap.put("userRoles",roleService.getSimpleModels(userEntity.getRoles()));
+        modelMap.put("allRoles",roleService.getSimpleModels(roleService.findAll()));
+        modelMap.put("userId",id);
+        return "pages/user/assignRole";
     }
 
     @RequestMapping("/doAssignRole")

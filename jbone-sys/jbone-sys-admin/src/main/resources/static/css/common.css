@@ -55,6 +55,48 @@ iframe#main {
     width: 100%;
 }
 
+
+.modal-form{
+    width: 100%;
+}
+
 .modal-form .form-group{
     margin-bottom: 5px;
+    display: table;
+    position: relative;
+    border-collapse: separate;
+    width: 100%;
+}
+.modal-form .form-group col-sm-3{
+    width: 30%;
+}
+
+.modal-form .form-group col-sm-4{
+    width: 40%;
+}
+
+
+.modal-form .form-group .form-control {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+    display: table-cell;
+}
+
+.modal-form .form-group .control-label {
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1;
+    color: #555;
+    text-align: left;
+    display: table-cell;
+    white-space: nowrap;
+    vertical-align: middle;
+    width: 30%;
+}
+
+.dispersion{
+    margin-right: 5px;
 }

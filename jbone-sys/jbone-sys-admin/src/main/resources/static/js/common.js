@@ -18,8 +18,19 @@ $(function() {
 
 	// 模态框关闭，清空iframe
     if($("#parentModal")){
-        $("#parentModal").on('hidden.bs.modal', function () {
+        $("#parentModal").on('hidden.bs.modal', function (event) {
+            debugger;
+            //刷新tab页
+            var opration =$('#modalOpration').val();
+            if(opration == "refresh"){
+                $(".tab-pane.active").each(function(){
+                    debugger;
+                    var iframe = $(this).find("iframe");
+                    iframe.attr('src',iframe.attr('src'));
+                });
+            }
             $('#modal-iframe').attr("src", "");
+            $('#modalOpration').val("");
         });
     }
 
@@ -166,4 +177,63 @@ function openModal(title,url){
 
     var dialog = parent.$('#parentModal');
     dialog.modal();
+}
+
+// 删除
+function deleteAction(url) {
+    var rows = $table.bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        chooseConfirm();
+    } else {
+        var ids = new Array();
+        for (var i in rows) {
+            ids.push(rows[i].id);
+        }
+        commonDelete(url,ids.join(","));
+    }
+}
+
+function commonDelete(url,ids){
+    parent.$.confirm({
+        type: 'red',
+        animationSpeed: 300,
+        title: false,
+        content: '确认删除该记录吗？',
+        buttons: {
+            confirm: {
+                text: '确认',
+                btnClass: 'waves-effect waves-button',
+                action: function () {
+                    $.ajax({
+                        type: 'post',
+                        url: url + ids,
+                        success: function(result) {
+                            if (result.status != 0) {
+                                failHandler(result);
+                            } else {
+                                successConfirm();
+                                $table.bootstrapTable('refresh');
+                            }
+                        },
+                        error: errorHandler
+                    });
+                }
+            },
+            cancel: {
+                text: '取消',
+                btnClass: 'waves-effect waves-button'
+            }
+        }
+    });
+}
+
+//选择表格中的一条数据
+function chooseOne(){
+    var rows = $table.bootstrapTable('getSelections');
+    if (rows.length != 1) {
+        chooseConfirm();
+        return null;
+    }else{
+        return rows[0];
+    }
 }
