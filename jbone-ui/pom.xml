@@ -99,5 +99,12 @@
             <version>0.3.0</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>ztree</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+
     </dependencies>
 </project>

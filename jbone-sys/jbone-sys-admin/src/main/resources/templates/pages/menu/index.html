@@ -8,235 +8,174 @@
 
 
     <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon" />
+
+
+    <link rel="stylesheet" th:href="@{/webjars/ztree/3.5.0/css/zTreeStyle/zTreeStyle.css}" type="text/css" />
+
+
   </head>
   <body>
   <div th:replace="/layout/css :: #css"></div>
-  <div id="main">
-      <div id="toolbar">
-          <a class="btn  btn-primary" href="javascript:;" onclick="createAction()"><i class="fa fa-plus-square"></i>新增</a>
-          <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
-          <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction()"><i class="fa fa-times-circle"></i>删除</a>
-      </div>
-      <table id="table"></table>
-  </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="addSystem" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title">编辑系统</h4>
-              </div>
-              <div class="modal-body">
-                  <form id="createForm" action="/system/add" method="post" class="form-horizontal">
-                      <input id="id" name="id" th:type="hidden" />
-                      <div class="form-group">
-                          <label for="name" class="col-sm-3 control-label">系统名</label>
-                          <div class="col-sm-8">
-                              <input id="name" name="name" type="text" class="form-control" />
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="title" class="col-sm-3 control-label">系统标题</label>
-                          <div class="col-sm-8">
-                              <input id="title" name="title" type="text" class="form-control" />
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="basepath" class="col-sm-3 control-label">根路径</label>
-                          <div class="col-sm-8">
-                              <input id="basepath" name="basepath" type="text" class="form-control" />
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label  class="col-sm-3 control-label">系统状态</label>
-                          <div class="col-sm-8">
-                              <div class="radio">
-                                  <label class="radio-inline">
-                                      <input type="radio" name="status" id="status_nomal" value="1" checked="checked" />
-                                      正常
-                                  </label>
-                                  <label class="radio-inline">
-                                      <input type="radio" name="status" id="status_disable" value="-1" />
-                                      禁用
-                                  </label>
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="row">
+                  <div class="col-md-12">
+                      <select id="system" class="form-control" onchange="loadMenu()">
+                          <option value="0">请选择要维护的系统</option>
+                          <option th:each="system,systemStat : ${systemList}" th:value="${system.id}" th:text="${system.title}"></option>
+                      </select>
+                        <br />
+                      <div class="box box-primary">
+                          <div class="box-header ui-sortable-handle" style="cursor: move;">
+                              <h3 class="box-title">系统菜单</h3>
+                              <div class="box-tools pull right">
+                                      <div class="btn-group">
+                                          <a class="btn  btn-primary" href="javascript:;" onclick="toAddRootMenu()"><i class="fa fa-plus-square"></i>新增一级菜单</a>
+                                          <a class="btn  btn-primary" href="javascript:;" onclick="toAddMenu()"><i class="fa fa-plus-square"></i>新增下级菜单</a>
+                                          <a class="btn  btn-primary" href="javascript:;" onclick="toUpdateMenu()"><i class="fa fa-pencil-square-o"></i>修改</a>
+                                          <a class="btn  btn-primary" href="javascript:;" onclick="deleteMenu()"><i class="fa fa-times-circle"></i>删除</a>
+                                      </div>
                               </div>
                           </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="description" class="col-sm-3 control-label">系统简介</label>
-                          <div class="col-sm-8">
-                              <textarea id="description" name="description" class="form-control"/>
+                          <div class="box-body">
+                              <ul id="treeMenu" class="ztree" style="min-height: 300px;" data-title="1111" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></ul>
                           </div>
                       </div>
-                  </form>
+                  </div>
               </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                  <button type="button" class="btn btn-primary" onclick="doCreate()">提交</button>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-12">
+              <div class="box box-primary" id="menuDetail">
+                  <div class="box-header ui-sortable-handle" style="cursor: move;">
+                      <h3 class="box-title">菜单详情</h3>
+                  </div>
+                  <div class="box-body">
+                      <form id="createForm" method="post" class="form-horizontal">
+                          <div class="form-group">
+                              <label for="name" class="col-sm-3 control-label">名称</label>
+                              <div class="col-sm-8">
+                                  <input id="name" name="name" type="text" class="form-control" readonly="readonly" />
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="url" class="col-sm-3 control-label">路径</label>
+                              <div class="col-sm-8">
+                                  <input id="url" name="url" type="text" class="form-control" readonly="readonly" />
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="orders" class="col-sm-3 control-label">序号</label>
+                              <div class="col-sm-8">
+                                  <input id="orders" name="orders" type="text" class="form-control" readonly="readonly" />
+                              </div>
+                          </div>
+                      </form>
+                  </div>
               </div>
           </div>
       </div>
   </div>
+
 <div th:replace="/layout/js :: #js"></div>
-
+  <script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.core-3.5.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.excheck-3.5.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.exedit-3.5.min.js}"></script>
   <script>
-      var $table = $('#table');
-      $(function() {
-          $(document).on('focus', 'input[type="text"]', function() {
-              $(this).parent().find('label').addClass('active');
-          }).on('blur', 'input[type="text"]', function() {
-              if ($(this).val() == '') {
-                  $(this).parent().find('label').removeClass('active');
-              }
-          });
-          // bootstrap table初始化
-          // http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
-          $table.bootstrapTable({
-              url: '/menu/list',
-              height: getHeight(),
-              striped: true,
-              search: true,
-              searchOnEnterKey: true,
-              showRefresh: true,
-              showToggle: true,
-              showColumns: true,
-              minimumCountColumns: 2,
-              showPaginationSwitch: true,
-              clickToSelect: true,
-              detailView: true,
-              detailFormatter: 'detailFormatter',
-              pagination: true,
-              paginationLoop: false,
-              classes: 'table table-hover table-no-bordered',
-              sidePagination: 'server',
-              //silentSort: false,
-              smartDisplay: false,
-              idField: 'id',
-              sortName: 'id',
-              sortOrder: 'desc',
-              escape: true,
-              searchOnEnterKey: true,
-              idField: 'systemId',
-              maintainSelected: true,
-              toolbar: '#toolbar',
-              queryParamsType : "undefined",
-              queryParams: function queryParams(params) {   //设置查询参数
-                  var param = {
-                      pageNumber: params.pageNumber,
-                      pageSize: params.pageSize,
-                      searchText:params.searchText,
-                      sortName : params.sortName,
-                      sortOrder:params.sortOrder
-                  };
-                  return param;
-              },
-
-              columns: [
-                  {field: 'state', checkbox: true},
-                  {field: 'name', title: '名称', sortable: true, halign: 'center',align:'center'},
-                  {field: 'status', title: '权限', sortable: true, halign: 'center',align:'center'},
-                  {field: 'action', title: '操作', halign: 'center', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
-              ]
-          }).on('all.bs.table', function (e, name, args) {
-              $('[data-toggle="tooltip"]').tooltip();
-              $('[data-toggle="popover"]').popover();
-          });
-      });
-
-      var formUrl;
-      // 新增
-      function createAction() {
-          formUrl = '/system/create';
-          document.getElementById("createForm").reset();
-          $('#addSystem').modal();
-      }
-
-      function doCreate(){
-          $.ajax({
-              type: 'post',
-              url: formUrl,
-              data: $('#createForm').serialize(),
-              success: function(result) {
-                  if (result.status != 0) {
-                      failHandler(result);
-                  } else {
-                      successConfirm();
-                      $table.bootstrapTable('refresh');
-                      $('#addSystem').modal("hide");
-                      document.getElementById("createForm").reset();
-                  }
-              },
-              error: errorHandler
-          });
-      }
-
-
-      function actionFormatter(value, row, index) {
-          return [
-              '<a class="edit" href="javascript:void(0)" data-toggle="tooltip" title="编辑"><i class="fa fa-pencil-square-o"></i></a>　',
-              '<a class="remove" href="javascript:void(0)" data-toggle="tooltip" title="删除"><i class="fa fa-times-circle"></i></a>'
-          ].join('');
-      }
-
-      window.actionEvents = {
-          'click .edit': function (e, value, row, index) {
-              updateAction(row.id);
-          },
-          'click .remove': function (e, value, row, index) {
-              commonDelete(row.id);
+      /*<![CDATA[*/
+      function toAddRootMenu(){
+          var systemId = $("#system").val();
+          if(systemId == 0){
+              chooseConfirm("请选择系统");
+              return;
           }
-      };
 
-      function toUpdate(){
-          var rows = $table.bootstrapTable('getSelections');
-          if (rows.length != 1) {
-              chooseConfirm();
-          }else{
-              var id = rows[0].id;
-              updateAction(id);
-          }
+          var systemName = $("#system").find("option:selected").text();
+          openModal("新增一级菜单[" + systemName + "]","/menu/add/" + systemId);
       }
 
-      function updateAction(id) {
+      function toAddMenu(){
+          var systemId = $("#system").val();
+          if(systemId == 0){
+              chooseConfirm("请选择系统");
+              return;
+          }
+          debugger;
+          var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+          var nodes = treeObj.getSelectedNodes();
+          if(!nodes || nodes.length <= 0){
+              chooseConfirm("请选择菜单");
+              return;
+          }
 
-          formUrl = '/system/update';
+
+          var id = nodes[0].id;
+          var name = nodes[0].name;
+          openModal("新增子菜单[" + name + "]","/menu/addChild/" + id + "/" + systemId);
+      }
+
+      function loadMenu(){
+            var systemId = $("#system").val();
+            $("#treeMenu").html("");
+          $("#menuDetail").hide();
+            if(systemId == 0){
+                return;
+            }
 
               $.ajax({
                   type: 'post',
-                  url: '/system/get/' + id,
+                  url: '/menu/getTreeMenu/' + systemId,
                   success: function(result) {
                       if (result.status != 0) {
                           failHandler(result);
                       } else {
-                          var data = result.data;
-                          loadData(data);
-                          $('#addSystem').modal("show");
+                          debugger;
+                          var zNodes = result.data;
+                          $.fn.zTree.init($("#treeMenu"), treeSetting, zNodes);
                       }
                   },
                   error: errorHandler
               });
       }
-      // 删除
-      function deleteAction() {
-          var rows = $table.bootstrapTable('getSelections');
-          if (rows.length == 0) {
-              chooseConfirm();
-          } else {
-              var ids = new Array();
-              for (var i in rows) {
-                  ids.push(rows[i].id);
-              }
-              commonDelete(ids.join(","));
-          }
+
+      function treeOnClick(event, treeId, treeNode){
+          loadData(treeNode);
+          $("#menuDetail").show();
       }
-      function commonDelete(ids){
-          $.confirm({
+
+      var treeSetting = {
+          view: {
+              dblClickExpand: false
+          },
+          check: {
+              enable: false
+          },
+          callback: {
+              onClick: treeOnClick
+          },
+          data: {
+              key: {
+                  url: "xUrl"
+              }
+          }
+      };
+
+      function deleteMenu(){
+          var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+          var nodes = treeObj.getSelectedNodes();
+          if(!nodes || nodes.length <= 0){
+              chooseConfirm("请选择要删除的菜单");
+              return;
+          }
+
+          parent.$.confirm({
               type: 'red',
               animationSpeed: 300,
               title: false,
-              content: '确认删除该系统吗？',
+              content: '删除会级联删除子菜单，确认删除？',
               buttons: {
                   confirm: {
                       text: '确认',
@@ -244,13 +183,13 @@
                       action: function () {
                           $.ajax({
                               type: 'post',
-                              url: '/system/delete/' + ids,
+                              url: '/menu/delete/' + nodes[0].id,
                               success: function(result) {
                                   if (result.status != 0) {
                                       failHandler(result);
                                   } else {
                                       successConfirm();
-                                      $table.bootstrapTable('refresh');
+                                        loadMenu();
                                   }
                               },
                               error: errorHandler
@@ -263,7 +202,28 @@
                   }
               }
           });
+
       }
+
+      function toUpdateMenu(){
+          var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+          var nodes = treeObj.getSelectedNodes();
+          if(!nodes || nodes.length <= 0){
+              chooseConfirm("请选择要修改的菜单");
+              return;
+          }
+          var id = nodes[0].id;
+          var name = nodes[0].name;
+          openModal("修改菜单[" + name + "]","/menu/update/" + id);
+      }
+
+      function madalCallback(){
+            loadMenu();
+      }
+      $(function () {
+         $("#menuDetail").hide();
+      });
+      /*]]>*/
   </script>
   </body>
   </html>

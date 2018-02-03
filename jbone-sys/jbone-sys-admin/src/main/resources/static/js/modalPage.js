@@ -7,11 +7,15 @@ $(function () {
     // main.width(thiswidth);
 });
 
-function closeModal(){
-    parent.$('#modalOpration').val("refresh");
+function closeModal(operation){
+    var oper = "callback";
+    if(operation){
+        oper = operation;
+    }
+    parent.$('#modalOpration').val(oper);
     parent.$('#parentModal').modal("hide");
 }
 
 function closeModalNotRefresh(){
-    parent.$('#parentModal').modal("hide");
+    closeModal("");
 }

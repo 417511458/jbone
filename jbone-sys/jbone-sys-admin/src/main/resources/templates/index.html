@@ -66,32 +66,13 @@
         $("#modal-iframe").load(function(){
              debugger;
              var mainheight = $(this).contents().find("body").height();
-            // var mainwidth = $(this).contents().find("body").width()+30;
-            // $(this).height(mainheight);
-            // $(this).width(mainwidth);
 
             $(this).height(0);
-            // var mainheight =document.getElementById("modal-iframe").contentWindow.document.body.clientHeight;
-            // var mainwidth = document.getElementById("modal-iframe").contentWindow.document.body.scrollWidth;
-            // var mainheight =document.getElementById("modal-iframe").contentWindow.document.body.clientHeight;
-            // var mainwidth = document.getElementById("modal-iframe").contentWindow.document.body.clientWidth;
             $(this).height(mainheight);
-            // $(this).width(mainwidth);
 
             $('#iframe-loading').hide();
         });
     });
-
-    // function changeFrameHeight(){
-    //     debugger;
-    //     var ifm= $("#modal-iframe");
-    //     ifm.height(document.documentElement.clientHeight);
-    //     ifm.width(document.documentElement.clientWidth);
-    // }
-    //
-    // window.onresize=function(){
-    //     changeFrameHeight();
-    // }
 
 
 </script>

@@ -22,11 +22,16 @@ $(function() {
             debugger;
             //刷新tab页
             var opration =$('#modalOpration').val();
-            if(opration == "refresh"){
+            if(opration){
                 $(".tab-pane.active").each(function(){
                     debugger;
-                    var iframe = $(this).find("iframe");
-                    iframe.attr('src',iframe.attr('src'));
+                    //回调当前iframe中的方法
+                    var iframe = $(this).find("iframe")[0];
+                    if(opration == "refresh"){
+                        iframe.attr('src',iframe.attr('src'));
+                    }else if(opration == "callback"){
+                        iframe.contentWindow.madalCallback();
+                    }
                 });
             }
             $('#modal-iframe').attr("src", "");
@@ -151,10 +156,14 @@ function childSuccessConfirm(){
     });
 }
 
-function chooseConfirm(){
+function chooseConfirm(content){
+    var c = "请至少选择一条记录！";
+    if(content){
+        c = content;
+    }
     parent.$.confirm({
         title: false,
-        content: '请至少选择一条记录！',
+        content: c,
         autoClose: 'cancel|3000',
         backgroundDismiss: true,
         buttons: {

@@ -47,6 +47,10 @@ public class SystemService {
         return rbacSystemRepository.getOne(id);
     }
 
+    public List<RbacSystemEntity> findAll(){
+        return rbacSystemRepository.findAll();
+    }
+
     /**
      * 这里的service即casFilter
      * @param service

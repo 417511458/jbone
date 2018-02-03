@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface RbacMenuRepository extends JpaRepository<RbacMenuEntity,Integer>,JpaSpecificationExecutor<RbacMenuEntity> {
-    List<RbacMenuEntity> findByPidAndSystemId(int pid,int systemId);
+    List<RbacMenuEntity> findByPidAndSystemIdOrderByOrdersDesc(int pid,int systemId);
     @Query("select m from RbacMenuEntity m where (m.roles in (:roles) and m.users in (:users)) and m.pid = :pid")
     List<RbacMenuEntity> findByRolesInOrUsersInAndPidOrderByOrders(@Param("roles") List<RbacRoleEntity> roles, @Param("users") List<RbacUserEntity> users , @Param("pid") int pid);
 

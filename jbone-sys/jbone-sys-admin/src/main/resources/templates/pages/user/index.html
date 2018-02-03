@@ -12,7 +12,7 @@
   <body>
   <div th:replace="/layout/css :: #css"></div>
   <div id="main">
-      <div id="toolbar">
+      <div id="toolbar btn-group">
           <a class="btn  btn-primary" href="javascript:;" onclick="openModal('新增用户','/user/toCreate')"><i class="fa fa-plus-square"></i>新增</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction('/user/delete/')"><i class="fa fa-times-circle"></i>删除</a>
@@ -147,6 +147,9 @@
               }
           }
 
+      function madalCallback(){
+          $table.bootstrapTable('refresh');
+      }
       /*]]>*/
   </script>
   </body>
