@@ -165,7 +165,7 @@ public class RbacPermissionEntity implements Serializable {
     }
 
     @JsonBackReference
-    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "permissions")
+    @ManyToMany(fetch=FetchType.LAZY,mappedBy = "permissions")
     public List<RbacRoleEntity> getRoles() {
         return roles;
     }
@@ -175,7 +175,7 @@ public class RbacPermissionEntity implements Serializable {
     }
 
     @JsonBackReference
-    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "permissions")
+    @ManyToMany(fetch=FetchType.LAZY,mappedBy = "permissions")
     public List<RbacUserEntity> getUsers() {
         return users;
     }

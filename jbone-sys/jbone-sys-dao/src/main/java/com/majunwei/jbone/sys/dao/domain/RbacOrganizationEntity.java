@@ -95,7 +95,7 @@ public class RbacOrganizationEntity implements Serializable {
         this.version = version;
     }
 
-    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "organizations")
+    @ManyToMany(fetch=FetchType.LAZY,mappedBy = "organizations")
     public List<RbacUserEntity> getUsers() {
         return users;
     }

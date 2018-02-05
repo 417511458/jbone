@@ -3,8 +3,10 @@ package com.majunwei.jbone.sys.admin.controller;
 import com.majunwei.jbone.common.ui.result.Result;
 import com.majunwei.jbone.common.utils.ResultUtils;
 import com.majunwei.jbone.sys.dao.domain.RbacRoleEntity;
+import com.majunwei.jbone.sys.dao.domain.RbacSystemEntity;
 import com.majunwei.jbone.sys.dao.domain.RbacUserEntity;
 import com.majunwei.jbone.sys.service.RoleService;
+import com.majunwei.jbone.sys.service.SystemService;
 import com.majunwei.jbone.sys.service.UserService;
 import com.majunwei.jbone.sys.service.model.ListModel;
 import com.majunwei.jbone.sys.service.model.user.AssignRoleModel;
@@ -13,6 +15,7 @@ import com.majunwei.jbone.sys.service.model.user.UpdateUserModel;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Description;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -38,13 +41,17 @@ public class UserController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private SystemService systemService;
 
+    @Description("用户管理首页")
     @RequiresRoles("admin")
     @RequestMapping("/index")
     public String index(){
         return "pages/user/index";
     }
 
+    @Description("用户管理分页查询")
     @RequiresRoles("admin")
     @RequestMapping("/list")
     @ResponseBody
@@ -55,12 +62,13 @@ public class UserController {
         return ResultUtils.wrapSuccess(page.getTotalElements(),page.getContent());
     }
 
-
+    @Description("跳转至新增用户页面")
     @RequestMapping("/toCreate")
     public String toCreate(){
         return "pages/user/create";
     }
 
+    @Description("执行新增用户")
     @RequestMapping("/create")
     @ResponseBody
     public Result create(@Validated CreateUserModel userModel, BindingResult bindingResult){
@@ -68,6 +76,7 @@ public class UserController {
         return ResultUtils.wrapSuccess();
     }
 
+    @Description("跳转至更新用户页面")
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id")String id, ModelMap model){
         RbacUserEntity userEntity = userService.findById(Integer.parseInt(id));
@@ -77,6 +86,7 @@ public class UserController {
         return "pages/user/update";
     }
 
+    @Description("执行更新用户")
     @RequestMapping("/update")
     @ResponseBody
     public Result update(@Validated UpdateUserModel userModel, BindingResult bindingResult){
@@ -84,6 +94,7 @@ public class UserController {
         return ResultUtils.wrapSuccess();
     }
 
+    @Description("批量删除用户")
     @RequestMapping("/delete/{ids}")
     @ResponseBody
     public Result delete(@PathVariable("ids")String ids){
@@ -91,6 +102,7 @@ public class UserController {
         return ResultUtils.wrapSuccess();
     }
 
+    @Description("获取用户详情")
     @RequestMapping("/get/{id}")
     @ResponseBody
     public Result get(@PathVariable("id")String id){
@@ -98,6 +110,7 @@ public class UserController {
         return ResultUtils.wrapSuccess(userEntity);
     }
 
+    @Description("跳转至分配角色页面")
     @RequestMapping("/toAssignRole/{id}")
     public String toAssignRole(@PathVariable("id")String id,ModelMap modelMap){
         RbacUserEntity userEntity = userService.findById(Integer.parseInt(id));
@@ -107,6 +120,7 @@ public class UserController {
         return "pages/user/assignRole";
     }
 
+    @Description("执行分配角色")
     @RequestMapping("/doAssignRole")
     @ResponseBody
     public Result doAssignRole(AssignRoleModel assignRoleModel){
@@ -114,9 +128,12 @@ public class UserController {
         return ResultUtils.wrapSuccess();
     }
 
-
-    @RequestMapping("toAssignMenu")
-    public String toAssignMenu(){
+    @Description("跳转至分配菜单页面")
+    @RequestMapping("toAssignMenu/{userId}")
+    public String toAssignMenu(@PathVariable("userId")String userId,ModelMap modelMap){
+        List<RbacSystemEntity> systemEntities = systemService.findAll();
+        modelMap.put("systemList",systemEntities);
+        modelMap.put("userId",userId);
         return "pages/user/assignMenu";
     }
 }

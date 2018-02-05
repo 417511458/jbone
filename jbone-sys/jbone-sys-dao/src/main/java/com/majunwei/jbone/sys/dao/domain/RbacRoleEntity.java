@@ -110,7 +110,7 @@ public class RbacRoleEntity implements Serializable {
         this.version = version;
     }
 
-    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name = "rbac_role_permission",joinColumns = @JoinColumn(name = "role_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "permission_id",referencedColumnName = "id"))
     public List<RbacPermissionEntity> getPermissions() {
         return permissions;
@@ -121,7 +121,7 @@ public class RbacRoleEntity implements Serializable {
     }
 
     @JsonBackReference
-    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "roles")
+    @ManyToMany(fetch=FetchType.LAZY,mappedBy = "roles")
     public List<RbacUserEntity> getUsers() {
         return users;
     }
@@ -130,7 +130,7 @@ public class RbacRoleEntity implements Serializable {
         this.users = users;
     }
 
-    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name = "rbac_role_menu",joinColumns = @JoinColumn(name = "role_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "menu_id",referencedColumnName = "id"))
     public List<RbacMenuEntity> getMenus() {
         return menus;

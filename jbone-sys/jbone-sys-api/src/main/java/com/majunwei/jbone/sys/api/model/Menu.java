@@ -98,6 +98,6 @@ public class Menu implements Serializable,Comparable<Menu> {
 
     @Override
     public int compareTo(Menu o) {
-        return this.orders.compareTo(o.orders);
+        return o.orders.compareTo(this.orders);
     }
 }

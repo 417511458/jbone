@@ -17,7 +17,11 @@ public interface RbacMenuRepository extends JpaRepository<RbacMenuEntity,Integer
     @Query("select m from RbacMenuEntity m where (m.roles in (:roles) and m.users in (:users)) and m.pid = :pid")
     List<RbacMenuEntity> findByRolesInOrUsersInAndPidOrderByOrders(@Param("roles") List<RbacRoleEntity> roles, @Param("users") List<RbacUserEntity> users , @Param("pid") int pid);
 
-    List<RbacMenuEntity> findDistinctByRolesInAndPidAndSystemIdOrderByOrders(List<RbacRoleEntity> roles,int pid,int systemId);
+    List<RbacMenuEntity> findDistinctByRolesInAndPidAndSystemIdOrderByOrdersDesc(List<RbacRoleEntity> roles,int pid,int systemId);
 
-    List<RbacMenuEntity> findDistinctByUsersInAndPidAndSystemIdOrderByOrders(List<RbacUserEntity> users,int pid,int systemId);
+    List<RbacMenuEntity> findDistinctByUsersInAndPidAndSystemIdOrderByOrdersDesc(List<RbacUserEntity> users,int pid,int systemId);
+
+    List<RbacMenuEntity> findDistinctByRolesInAndPidOrderByOrdersDesc(List<RbacRoleEntity> roles,int pid);
+
+    List<RbacMenuEntity> findDistinctByUsersInAndPidOrderByOrdersDesc(List<RbacUserEntity> users,int pid);
 }

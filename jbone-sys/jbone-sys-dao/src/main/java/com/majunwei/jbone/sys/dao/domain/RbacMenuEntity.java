@@ -133,7 +133,7 @@ public class RbacMenuEntity implements Serializable {
     }
 
     @JsonBackReference
-    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "menus")
+    @ManyToMany(fetch=FetchType.LAZY,mappedBy = "menus")
     public List<RbacRoleEntity> getRoles() {
         return roles;
     }
@@ -143,7 +143,7 @@ public class RbacMenuEntity implements Serializable {
     }
 
     @JsonBackReference
-    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "menus")
+    @ManyToMany(fetch=FetchType.LAZY,mappedBy = "menus")
     public List<RbacUserEntity> getUsers() {
         return users;
     }

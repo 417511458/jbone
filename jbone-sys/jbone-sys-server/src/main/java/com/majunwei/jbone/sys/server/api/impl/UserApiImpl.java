@@ -42,40 +42,7 @@ public class UserApiImpl implements UserApi {
     }
     @RequestMapping("/getUserDetail")
     public UserModel getUserDetailByName(String username){
-        RbacUserEntity userEntity = userService.findByUserName(username);
-        UserModel userModel = new UserModel();
-        Set<String> permissions = new HashSet<>();
-        Set<String> roles = new HashSet<String>();
-        List<RbacPermissionEntity> permissionEntities =  userEntity.getPermissions();
-        List<RbacRoleEntity> roleEntities = userEntity.getRoles();
-        if(permissionEntities != null && !permissionEntities.isEmpty()){
-            for(RbacPermissionEntity permissionEntity : permissionEntities){
-                permissions.add(permissionEntity.getPermissionValue());
-            }
-        }
-
-        if(roleEntities != null && !roleEntities.isEmpty()){
-            for(RbacRoleEntity roleEntity : roleEntities){
-                roles.add(roleEntity.getName());
-
-                List<RbacPermissionEntity> rolePermissions =  userEntity.getPermissions();
-
-                if(rolePermissions != null && !roleEntities.isEmpty()){
-                    for(RbacPermissionEntity permissionEntity : rolePermissions){
-                        permissions.add(permissionEntity.getPermissionValue());
-                    }
-                }
-            }
-        }
-
-        BeanUtils.copyProperties(userEntity,userModel);
-
-        userModel.setPermissions(permissions);
-        userModel.setRoles(roles);
-        //不需要菜单信息
-        userModel.setMenus(null);
-
-        return userModel;
+        return userService.getUserDetailByNameAndServerName(username,null);
     }
 
 

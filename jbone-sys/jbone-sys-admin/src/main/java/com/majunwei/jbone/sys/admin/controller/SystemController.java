@@ -7,6 +7,7 @@ import com.majunwei.jbone.sys.service.SystemService;
 import com.majunwei.jbone.sys.service.model.ListModel;
 import com.majunwei.jbone.sys.service.model.system.CreateSystemModel;
 import com.majunwei.jbone.sys.service.model.system.UpdateSystemModel;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
