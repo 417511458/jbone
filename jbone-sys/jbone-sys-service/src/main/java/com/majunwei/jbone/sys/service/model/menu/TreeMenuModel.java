@@ -5,14 +5,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TreeMenuModel {
-    private int id;
-    private Integer systemId;
-    private int pid;
-    private String name;
-    private String url;
-    private String target;
-    private String icon;
-    private Long orders;
+public class TreeMenuModel extends MenuBaseInfoModel {
     private List<TreeMenuModel> children;
 }

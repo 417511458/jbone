@@ -113,7 +113,10 @@
           }
 
           function assignMenuAction(){
-              openModal("分配菜单","/user/toAssignMenu");
+              var row = chooseOne();
+              if (row) {
+                  openModal("分配菜单[" + row.realname + "]","/user/toAssignMenu/" + row.id);
+              }
           }
 
           function assignRoleAction(){

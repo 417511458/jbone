@@ -2,6 +2,7 @@ package com.majunwei.jbone.sys.admin.controller;
 
 import com.majunwei.jbone.common.ui.result.Result;
 import com.majunwei.jbone.common.utils.ResultUtils;
+import com.majunwei.jbone.sys.dao.domain.RbacMenuEntity;
 import com.majunwei.jbone.sys.dao.domain.RbacRoleEntity;
 import com.majunwei.jbone.sys.dao.domain.RbacSystemEntity;
 import com.majunwei.jbone.sys.dao.domain.RbacUserEntity;
@@ -9,6 +10,7 @@ import com.majunwei.jbone.sys.service.RoleService;
 import com.majunwei.jbone.sys.service.SystemService;
 import com.majunwei.jbone.sys.service.UserService;
 import com.majunwei.jbone.sys.service.model.ListModel;
+import com.majunwei.jbone.sys.service.model.user.AssignMenuModel;
 import com.majunwei.jbone.sys.service.model.user.AssignRoleModel;
 import com.majunwei.jbone.sys.service.model.user.CreateUserModel;
 import com.majunwei.jbone.sys.service.model.user.UpdateUserModel;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -134,6 +137,25 @@ public class UserController {
         List<RbacSystemEntity> systemEntities = systemService.findAll();
         modelMap.put("systemList",systemEntities);
         modelMap.put("userId",userId);
+
+        RbacUserEntity userEntity = userService.findById(Integer.parseInt(userId));
+        List<RbacMenuEntity> menuEntityList = userEntity.getMenus();
+        List<Integer> menuIds = new ArrayList<>();
+        if(menuEntityList != null && !menuEntityList.isEmpty()){
+            for (RbacMenuEntity menuEntity : menuEntityList){
+                menuIds.add(menuEntity.getId());
+            }
+        }
+        modelMap.put("menuIds",menuIds);
+
         return "pages/user/assignMenu";
+    }
+
+    @Description("执行分配菜单")
+    @RequestMapping("doAssignMenu")
+    @ResponseBody
+    public Result doAssignMenu(@Validated AssignMenuModel menuModel,BindingResult bindingResult){
+        userService.assignMenu(menuModel);
+        return ResultUtils.wrapSuccess();
     }
 }

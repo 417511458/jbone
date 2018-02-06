@@ -24,4 +24,6 @@ public interface RbacMenuRepository extends JpaRepository<RbacMenuEntity,Integer
     List<RbacMenuEntity> findDistinctByRolesInAndPidOrderByOrdersDesc(List<RbacRoleEntity> roles,int pid);
 
     List<RbacMenuEntity> findDistinctByUsersInAndPidOrderByOrdersDesc(List<RbacUserEntity> users,int pid);
+
+    List<RbacMenuEntity> findByIdIn(int[] ids);
 }

@@ -8,10 +8,7 @@ import com.majunwei.jbone.sys.dao.repository.RbacMenuRepository;
 import com.majunwei.jbone.sys.dao.repository.RbacSystemRepository;
 import com.majunwei.jbone.sys.dao.repository.RbacUserRepository;
 import com.majunwei.jbone.sys.dao.repository.RbacUserRoleRepository;
-import com.majunwei.jbone.sys.service.model.user.AssignRoleModel;
-import com.majunwei.jbone.sys.service.model.user.CreateUserModel;
-import com.majunwei.jbone.sys.service.model.user.UpdateUserModel;
-import com.majunwei.jbone.sys.service.model.user.UserBaseInfoModel;
+import com.majunwei.jbone.sys.service.model.user.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -244,6 +241,31 @@ public class UserService {
 
     public Page<RbacUserEntity> findPage(String condition, Pageable pageable){
         return userRepository.findAll(new UserSpecification(condition),pageable);
+    }
+
+    /**
+     * 分配菜单
+     * @param assignMenuModel
+     */
+    public void assignMenu(AssignMenuModel assignMenuModel){
+        //首先删除用户在该系统下的所有菜单
+        RbacUserEntity userEntity = this.findById(assignMenuModel.getUserId());
+        List<RbacMenuEntity> menuEntities = userEntity.getMenus();
+        if(menuEntities != null && !menuEntities.isEmpty()){
+            for (int i = 0;i < menuEntities.size(); i++){
+                RbacMenuEntity menuEntity = menuEntities.get(i);
+                if(menuEntity.getSystemId() == assignMenuModel.getSystemId()){
+                    menuEntities.remove(menuEntity);
+                    i--;
+                }
+            }
+        }
+
+        //然后插入用户菜单
+        if(assignMenuModel.getUserMenu() != null && assignMenuModel.getUserMenu().length > 0){
+            List<RbacMenuEntity> newMenus = menuRepository.findByIdIn(assignMenuModel.getUserMenu());
+            menuEntities.addAll(newMenus);
+        }
     }
 
 
