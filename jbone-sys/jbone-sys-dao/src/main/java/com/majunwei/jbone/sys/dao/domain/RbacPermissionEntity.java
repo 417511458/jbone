@@ -16,19 +16,16 @@ import java.util.List;
 public class RbacPermissionEntity implements Serializable {
     private int id;
     private int systemId;
-    private Integer pid;
     private String name;
-    private Byte type;
+    private int type;
     private String permissionValue;
-    private String uri;
-    private String icon;
-    private Byte status;
-    private Long orders;
+    private long orders;
     private Timestamp addTime;
     private Timestamp updateTime;
     private int version;
     private List<RbacRoleEntity> roles;
     private List<RbacUserEntity> users;
+    private int menuId;
 
     @Id
     @Column(name = "id")
@@ -41,7 +38,6 @@ public class RbacPermissionEntity implements Serializable {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "system_id")
     public int getSystemId() {
         return systemId;
@@ -51,17 +47,15 @@ public class RbacPermissionEntity implements Serializable {
         this.systemId = systemId;
     }
 
-    @Basic
-    @Column(name = "pid")
-    public Integer getPid() {
-        return pid;
+    @Column(name = "menu_id")
+    public int getMenuId() {
+        return menuId;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setMenuId(int menuId) {
+        this.menuId = menuId;
     }
 
-    @Basic
     @Column(name = "name")
     public String getName() {
         return name;
@@ -71,17 +65,15 @@ public class RbacPermissionEntity implements Serializable {
         this.name = name;
     }
 
-    @Basic
     @Column(name = "type")
-    public Byte getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    @Basic
     @Column(name = "permission_value")
     public String getPermissionValue() {
         return permissionValue;
@@ -91,48 +83,17 @@ public class RbacPermissionEntity implements Serializable {
         this.permissionValue = permissionValue;
     }
 
-    @Basic
-    @Column(name = "uri")
-    public String getUri() {
-        return uri;
-    }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    @Basic
-    @Column(name = "icon")
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    @Basic
-    @Column(name = "status")
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-
-    @Basic
     @Column(name = "orders")
-    public Long getOrders() {
+    public long getOrders() {
         return orders;
     }
 
-    public void setOrders(Long orders) {
+    public void setOrders(long orders) {
         this.orders = orders;
     }
 
     @CreationTimestamp
-    @Basic
     @Column(name = "add_time")
     public Timestamp getAddTime() {
         return addTime;
@@ -143,7 +104,6 @@ public class RbacPermissionEntity implements Serializable {
     }
 
     @UpdateTimestamp
-    @Basic
     @Column(name = "update_time")
     public Timestamp getUpdateTime() {
         return updateTime;
@@ -154,7 +114,6 @@ public class RbacPermissionEntity implements Serializable {
     }
 
     @Version
-    @Basic
     @Column(name = "version")
     public int getVersion() {
         return version;
