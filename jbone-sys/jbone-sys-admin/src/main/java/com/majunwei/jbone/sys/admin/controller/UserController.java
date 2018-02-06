@@ -10,10 +10,7 @@ import com.majunwei.jbone.sys.service.RoleService;
 import com.majunwei.jbone.sys.service.SystemService;
 import com.majunwei.jbone.sys.service.UserService;
 import com.majunwei.jbone.sys.service.model.ListModel;
-import com.majunwei.jbone.sys.service.model.user.AssignMenuModel;
-import com.majunwei.jbone.sys.service.model.user.AssignRoleModel;
-import com.majunwei.jbone.sys.service.model.user.CreateUserModel;
-import com.majunwei.jbone.sys.service.model.user.UpdateUserModel;
+import com.majunwei.jbone.sys.service.model.user.*;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +59,8 @@ public class UserController {
         PageRequest pageRequest = new PageRequest(listModel.getPageNumber()-1,listModel.getPageSize(), Sort.Direction.fromString(listModel.getSortOrder()),listModel.getSortName());
         //分页查找
         Page<RbacUserEntity> page = userService.findPage(listModel.getSearchText(),pageRequest);
-        return ResultUtils.wrapSuccess(page.getTotalElements(),page.getContent());
+        List<UserBaseInfoModel> list = userService.getUserBaseInfos(page.getContent());
+        return ResultUtils.wrapSuccess(page.getTotalElements(),list);
     }
 
     @Description("跳转至新增用户页面")

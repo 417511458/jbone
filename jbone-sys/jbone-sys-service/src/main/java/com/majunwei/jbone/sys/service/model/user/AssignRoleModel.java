@@ -8,5 +8,5 @@ import javax.validation.constraints.Min;
 public class AssignRoleModel {
     @Min(value = 1,message = "用户ID必须大于0")
     private int userId;
-    private String[] userRole;
+    private int[] userRole;
 }

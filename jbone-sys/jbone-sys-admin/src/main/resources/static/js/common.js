@@ -6,6 +6,7 @@ $(function() {
 		$('#table').bootstrapTable('resetView', {
 			height: getHeight()
 		});
+
 	});
 	// 设置input特效
 	$(document).on('focus', 'input[type="text"]', function() {

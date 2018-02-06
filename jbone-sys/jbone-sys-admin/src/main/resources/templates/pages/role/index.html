@@ -16,7 +16,7 @@
           <a class="btn  btn-primary" href="javascript:;" onclick="openModal('增加角色','/role/toCreate')"><i class="fa fa-plus-square"></i>新增</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction('/role/delete/')"><i class="fa fa-times-circle"></i>删除</a>
-          <a class="btn  btn-primary" href="javascript:;" onclick=""><i class="fa fa-user-plus"></i>分配菜单</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="assignMenuAction()"><i class="fa fa-user-plus"></i>分配菜单</a>
           <a class="btn  btn-primary" href="javascript:;" onclick=""><i class="fa fa-user-plus"></i>分配权限</a>
       </div>
       <table id="table"></table>
@@ -114,6 +114,13 @@
 
       function madalCallback(){
           $table.bootstrapTable('refresh');
+      }
+
+      function assignMenuAction(){
+          var row = chooseOne();
+          if (row) {
+              openModal("分配菜单[" + row.title + "]","/role/toAssignMenu/" + row.id);
+          }
       }
 
   </script>

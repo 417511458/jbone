@@ -39,7 +39,7 @@
                             </div>
                         </div>
                     <form id="asignMenuForm" method="post" class="form-horizontal modal-form">
-                        <input id="userId" name="userId" th:type="hidden" th:value="${userId}" />
+                        <input id="roleId" name="roleId" th:type="hidden" th:value="${roleId}" />
                         <input id="systemId" name="systemId" th:type="hidden" value="0" />
                     </form>
                 </div>
@@ -124,19 +124,19 @@
             return;
         }
         //初始化选中的内容
-        $("[name='userMenu']").remove();
+        $("[name='roleMenu']").remove();
         var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
         var nodes = treeObj.getCheckedNodes(true);
         if(nodes && nodes.length > 0){
             for(var i = 0;i < nodes.length; i++){
                 var node = nodes[i];
-                var menuInput = "<input name=\"userMenu\" type=\"hidden\" value=\"" + node.id + "\" />"
+                var menuInput = "<input name=\"roleMenu\" type=\"hidden\" value=\"" + node.id + "\" />"
                 $("#asignMenuForm").append(menuInput);
             }
         }
         $.ajax({
             type: 'post',
-            url: '/user/doAssignMenu',
+            url: '/role/doAssignMenu',
             data: $('#asignMenuForm').serialize(),
             success: function(result) {
                 if (result.status != 0) {

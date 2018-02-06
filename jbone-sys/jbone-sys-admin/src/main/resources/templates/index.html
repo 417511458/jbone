@@ -65,14 +65,18 @@
 
         $("#modal-iframe").load(function(){
              debugger;
-             var mainheight = $(this).contents().find("body").height();
-
-            $(this).height(0);
-            $(this).height(mainheight);
-
+            changeFrameSize();
             $('#iframe-loading').hide();
         });
     });
+
+    function changeFrameSize(){
+        debugger;
+        var mainheight = $("#modal-iframe").contents().find("body").height();
+
+        $("#modal-iframe").height(0);
+        $("#modal-iframe").height(mainheight);
+    }
 
 
 </script>

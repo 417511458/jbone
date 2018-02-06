@@ -1,19 +1,21 @@
 package com.majunwei.jbone.sys.service;
 
 import com.majunwei.jbone.common.exception.JboneException;
+import com.majunwei.jbone.common.ui.result.Result;
+import com.majunwei.jbone.common.utils.ResultUtils;
 import com.majunwei.jbone.sys.api.model.Menu;
 import com.majunwei.jbone.sys.api.model.UserModel;
 import com.majunwei.jbone.sys.dao.domain.*;
-import com.majunwei.jbone.sys.dao.repository.RbacMenuRepository;
-import com.majunwei.jbone.sys.dao.repository.RbacSystemRepository;
-import com.majunwei.jbone.sys.dao.repository.RbacUserRepository;
-import com.majunwei.jbone.sys.dao.repository.RbacUserRoleRepository;
+import com.majunwei.jbone.sys.dao.repository.*;
+import com.majunwei.jbone.sys.service.model.ListModel;
 import com.majunwei.jbone.sys.service.model.user.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,10 @@ public class UserService {
 
     @Autowired
     RbacUserRoleRepository userRoleRepository;
+
+    @Autowired
+    RbacRoleRepository roleRepository;
+
 
 
     /**
@@ -225,22 +231,18 @@ public class UserService {
      * @param assignRoleModel
      */
     public void assignRole(AssignRoleModel assignRoleModel){
-        userRoleRepository.deleteByUserId(assignRoleModel.getUserId());
-        List<RbacUserRoleEntity> userRoleEntities = new ArrayList<>();
-        if(assignRoleModel.getUserRole() != null && assignRoleModel.getUserRole().length > 0){
-            for (String id : assignRoleModel.getUserRole()){
-                int roleId = Integer.parseInt(id);
-                RbacUserRoleEntity userRoleEntity = new RbacUserRoleEntity();
-                userRoleEntity.setRoleId(roleId);
-                userRoleEntity.setUserId(assignRoleModel.getUserId());
-                userRoleEntities.add(userRoleEntity);
-            }
-            userRoleRepository.save(userRoleEntities);
-        }
+        RbacUserEntity userEntity = userRepository.findOne(assignRoleModel.getUserId());
+        List<RbacRoleEntity> roleEntities =roleRepository.findByIdIn(assignRoleModel.getUserRole());
+        userEntity.setRoles(roleEntities);
     }
 
-    public Page<RbacUserEntity> findPage(String condition, Pageable pageable){
-        return userRepository.findAll(new UserSpecification(condition),pageable);
+    /**
+     * 分页查询
+     * @return
+     */
+    public Page<RbacUserEntity> findPage(String condition,PageRequest pageRequest){
+        //分页查找
+        return userRepository.findAll(new UserSpecification(condition),pageRequest);
     }
 
     /**
@@ -290,5 +292,19 @@ public class UserService {
             return predicate;
         }
     }
+
+    public List<UserBaseInfoModel> getUserBaseInfos(List<RbacUserEntity> userEntities){
+        List<UserBaseInfoModel> userBaseInfoModelList = new ArrayList<>();
+        if(userEntities == null || userEntities.isEmpty()){
+            return userBaseInfoModelList;
+        }
+        for (RbacUserEntity userEntity : userEntities){
+            UserBaseInfoModel userBaseInfoModel = new UserBaseInfoModel();
+            BeanUtils.copyProperties(userEntity,userBaseInfoModel);
+            userBaseInfoModelList.add(userBaseInfoModel);
+        }
+        return userBaseInfoModelList;
+    }
+
 
 }

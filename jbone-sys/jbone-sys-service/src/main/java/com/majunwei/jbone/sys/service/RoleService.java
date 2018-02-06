@@ -1,7 +1,10 @@
 package com.majunwei.jbone.sys.service;
 
+import com.majunwei.jbone.sys.dao.domain.RbacMenuEntity;
 import com.majunwei.jbone.sys.dao.domain.RbacRoleEntity;
+import com.majunwei.jbone.sys.dao.repository.RbacMenuRepository;
 import com.majunwei.jbone.sys.dao.repository.RbacRoleRepository;
+import com.majunwei.jbone.sys.service.model.role.AssignMenuModel;
 import com.majunwei.jbone.sys.service.model.role.CreateRoleModel;
 import com.majunwei.jbone.sys.service.model.role.SimpleRoleModel;
 import com.majunwei.jbone.sys.service.model.role.UpdateRoleModel;
@@ -12,16 +15,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class RoleService {
 
     @Autowired
     private RbacRoleRepository roleRepository;
+    @Autowired
+    private RbacMenuRepository menuRepository;
 
     public void save(CreateRoleModel roleModel){
         RbacRoleEntity roleEntity = new RbacRoleEntity();
@@ -59,6 +66,30 @@ public class RoleService {
         return roleRepository.findAll(new RoleSpecification(condition),pageable);
     }
 
+    /**
+     * 分配菜单
+     * @param menuModel
+     */
+    public void assignMenu(AssignMenuModel menuModel){
+        //首先删除该系统下所有菜单
+        RbacRoleEntity roleEntity = roleRepository.findOne(menuModel.getRoleId());
+        List<RbacMenuEntity> menuEntities = roleEntity.getMenus();
+        if(menuEntities != null && !menuEntities.isEmpty()){
+            for (int i = 0;i < menuEntities.size(); i++){
+                RbacMenuEntity menuEntity = menuEntities.get(i);
+                if(menuEntity.getSystemId() == menuModel.getSystemId()){
+                    menuEntities.remove(menuEntity);
+                    i--;
+                }
+            }
+        }
+
+        //然后插入菜单
+        if(menuModel.getRoleMenu() != null && menuModel.getRoleMenu().length > 0){
+            List<RbacMenuEntity> newMenus = menuRepository.findByIdIn(menuModel.getRoleMenu());
+            menuEntities.addAll(newMenus);
+        }
+    }
 
     private class RoleSpecification implements Specification<RbacRoleEntity> {
         private String condition;
@@ -89,5 +120,11 @@ public class RoleService {
             result.add(roleModel);
         }
         return result;
+    }
+
+    public SimpleRoleModel getSimpleModel(RbacRoleEntity roleEntity){
+        SimpleRoleModel roleModel = new SimpleRoleModel();
+        BeanUtils.copyProperties(roleEntity,roleModel);
+        return roleModel;
     }
 }
