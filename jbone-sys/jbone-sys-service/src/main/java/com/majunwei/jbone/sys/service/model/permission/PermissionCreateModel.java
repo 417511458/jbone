@@ -10,6 +10,5 @@ public class PermissionCreateModel {
     private String name;
     private int type;
     private String permissionValue;
-    private long orders;
     private int menuId;
 }

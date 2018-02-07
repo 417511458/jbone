@@ -11,7 +11,6 @@ public class PermissionBaseInfoModel {
     private String name;
     private int type;
     private String permissionValue;
-    private long orders;
     private Timestamp addTime;
     private Timestamp updateTime;
     private int menuId;

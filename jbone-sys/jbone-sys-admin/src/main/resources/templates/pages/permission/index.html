@@ -13,7 +13,7 @@
   <div th:replace="/layout/css :: #css"></div>
   <div id="main">
       <div id="toolbar">
-          <a class="btn  btn-primary" href="javascript:;" onclick="openModal('增加角色','/permission/toCreate')"><i class="fa fa-plus-square"></i>新增</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="openModal('增加权限','/permission/toCreate')"><i class="fa fa-plus-square"></i>新增</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction('/permission/delete/')"><i class="fa fa-times-circle"></i>删除</a>
       </div>
@@ -88,7 +88,7 @@
 
       function typeFormatter(value, row, index) {
           if (value === 1) {
-              return '<span class="label label-primary">目录</span>';
+              return '<span class="label label-primary">功能</span>';
           }else if(value === 2){
               return '<span class="label label-success">菜单</span>';
           }else if(value === 3){
@@ -117,7 +117,7 @@
       function toUpdate(){
           var row = chooseOne();
           if(row){
-              openModal("修改角色",'/permission/toUpdate/' + row.id);
+              openModal("修改权限",'/permission/toUpdate/' + row.id);
           }
       }
 

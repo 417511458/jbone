@@ -3,8 +3,12 @@ package com.majunwei.jbone.sys.admin.controller;
 import com.majunwei.jbone.common.ui.result.Result;
 import com.majunwei.jbone.common.utils.ResultUtils;
 import com.majunwei.jbone.sys.dao.domain.RbacPermissionEntity;
+import com.majunwei.jbone.sys.dao.domain.RbacSystemEntity;
+import com.majunwei.jbone.sys.service.MenuService;
 import com.majunwei.jbone.sys.service.PermissionService;
+import com.majunwei.jbone.sys.service.SystemService;
 import com.majunwei.jbone.sys.service.model.ListModel;
+import com.majunwei.jbone.sys.service.model.menu.TreeMenuModel;
 import com.majunwei.jbone.sys.service.model.permission.PermissionBaseInfoModel;
 import com.majunwei.jbone.sys.service.model.permission.PermissionCreateModel;
 import com.majunwei.jbone.sys.service.model.permission.PermissionUpdateModel;
@@ -31,6 +35,10 @@ public class PermissionController {
 
     @Autowired
     private PermissionService permissionService;
+    @Autowired
+    private SystemService systemService;
+    @Autowired
+    private MenuService menuService;
 
     @Description("权限管理首页")
     @RequiresRoles("admin")
@@ -53,7 +61,9 @@ public class PermissionController {
 
     @Description("跳转至新增权限页面")
     @RequestMapping("/toCreate")
-    public String toCreate(){
+    public String toCreate(ModelMap modelMap){
+        List<RbacSystemEntity> systemEntities = systemService.findAll();
+        modelMap.put("systemList",systemEntities);
         return "pages/permission/create";
     }
 
@@ -68,7 +78,14 @@ public class PermissionController {
     @Description("跳转至更新权限页面")
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id")int id, ModelMap model){
-        model.put("permission",permissionService.getBaseInfo(id));
+        PermissionBaseInfoModel permissionBaseInfoModel = permissionService.getBaseInfo(id);
+        List<RbacSystemEntity> systemEntities = systemService.findAll();
+        model.put("systemList",systemEntities);
+        model.put("permission",permissionBaseInfoModel);
+        if(permissionBaseInfoModel.getMenuId() != 0){
+            TreeMenuModel menuModel = menuService.get(permissionBaseInfoModel.getMenuId());
+            model.put("menuModel",menuModel);
+        }
         return "pages/permission/update";
     }
 

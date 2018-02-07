@@ -19,7 +19,6 @@ public class RbacPermissionEntity implements Serializable {
     private String name;
     private int type;
     private String permissionValue;
-    private long orders;
     private Timestamp addTime;
     private Timestamp updateTime;
     private int version;
@@ -83,15 +82,6 @@ public class RbacPermissionEntity implements Serializable {
         this.permissionValue = permissionValue;
     }
 
-
-    @Column(name = "orders")
-    public long getOrders() {
-        return orders;
-    }
-
-    public void setOrders(long orders) {
-        this.orders = orders;
-    }
 
     @CreationTimestamp
     @Column(name = "add_time")
