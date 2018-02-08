@@ -17,29 +17,6 @@ $(function() {
 		}
 	});
 
-	// 模态框关闭，清空iframe
-    if($("#parentModal")){
-        $("#parentModal").on('hidden.bs.modal', function (event) {
-            debugger;
-            //刷新tab页
-            var opration =$('#modalOpration').val();
-            if(opration){
-                $(".tab-pane.active").each(function(){
-                    debugger;
-                    //回调当前iframe中的方法
-                    var iframe = $(this).find("iframe")[0];
-                    if(opration == "refresh"){
-                        iframe.attr('src',iframe.attr('src'));
-                    }else if(opration == "callback"){
-                        iframe.contentWindow.madalCallback();
-                    }
-                });
-            }
-            $('#modal-iframe').attr("src", "");
-            $('#modalOpration').val("");
-        });
-    }
-
 });
 // 动态高度
 function getHeight() {

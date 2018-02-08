@@ -10,6 +10,7 @@ import com.majunwei.jbone.sys.service.PermissionService;
 import com.majunwei.jbone.sys.service.RoleService;
 import com.majunwei.jbone.sys.service.SystemService;
 import com.majunwei.jbone.sys.service.model.ListModel;
+import com.majunwei.jbone.sys.service.model.common.AssignPermissionModel;
 import com.majunwei.jbone.sys.service.model.role.*;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,14 +134,16 @@ public class RoleController {
     public String toAssignPermission(@PathVariable("roleId")String roleId,ModelMap modelMap){
         List<RbacSystemEntity> systemEntities = systemService.findAll();
         modelMap.put("systemList",systemEntities);
-        modelMap.put("roleId",roleId);
+        modelMap.put("id",roleId);
 
         RbacRoleEntity roleEntity = roleService.get(Integer.parseInt(roleId));
         List<RbacPermissionEntity> rolePermissions = roleEntity.getPermissions();
 
-        modelMap.put("rolePermissions",permissionService.getBaseInfos(rolePermissions));
+        modelMap.put("permissions",permissionService.getBaseInfos(rolePermissions));
 
-        return "pages/role/assignPermission";
+        modelMap.put("commitUrl", "/role/doAssignPermission");
+
+        return "pages/common/assignPermission";
     }
 
     @Description("执行分配菜单")

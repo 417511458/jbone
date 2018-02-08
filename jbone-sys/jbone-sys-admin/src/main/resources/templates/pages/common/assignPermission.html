@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/webjars/ztree/3.5.0/css/zTreeStyle/zTreeStyle.css}" type="text/css" />
 
 </head>
-<body>
+<body style="position:relative;">
 <div th:replace="/layout/css :: #css"></div>
 
 <div class="container-fluid">
@@ -29,7 +29,7 @@
         </div>
 
         <input id="menuId" name="menuId" th:type="hidden" />
-        <input id="roleId" name="roleId" th:type="hidden" th:value="${roleId}" />
+        <input id="id" name="id" th:type="hidden" th:value="${id}" />
         <div class="box box-primary">
             <div class="box-header ui-sortable-handle" style="cursor: move;">
                 <h3 class="box-title">选择权限</h3>
@@ -43,7 +43,7 @@
         </div>
     </form>
 
-    <div id="menuContent" class="menuContent" style="display:none; position: absolute;z-index: 9999;background-color: aliceblue;border: 1px;min-height: 50px;">
+    <div id="menuContent" class="menuContent">
         <ul id="treeMenu" class="ztree" style="margin-top:0; width:250px;"></ul>
     </div>
 
@@ -128,13 +128,13 @@
     }
 
     function isContains(permission){
-        var rolePermissions = [[${rolePermissions}]];
-        if(!rolePermissions || rolePermissions.length <= 0){
+        var permissions = [[${permissions}]];
+        if(!permissions || permissions.length <= 0){
             return false;
         }
 
-        for(var i = 0;i < rolePermissions.length;i++){
-            var id = rolePermissions[i].id;
+        for(var i = 0;i < permissions.length;i++){
+            var id = permissions[i].id;
             if(id == permission.id){
                 return true;
             }
@@ -222,16 +222,17 @@
      * 执行分配权限
      * */
     function doAssign(){
-        var systemId = $("#system").val();
+        var systemId = $("#systemId").val();
 
         if(systemId == 0){
             chooseConfirm("请选择系统");
             return;
         }
+        var url = [[${commitUrl}]];
         //初始化选中的内容
         $.ajax({
             type: 'post',
-            url: '/role/doAssignPermission',
+            url: url,
             data: $('#assignForm').serialize(),
             success: function(result) {
                 if (result.status != 0) {

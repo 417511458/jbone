@@ -43,7 +43,6 @@ public class RbacSystemEntity implements Serializable {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "basepath")
     public String getBasepath() {
         return basepath;
@@ -53,7 +52,6 @@ public class RbacSystemEntity implements Serializable {
         this.basepath = basepath;
     }
 
-    @Basic
     @Column(name = "status")
     public Byte getStatus() {
         return status;
@@ -63,7 +61,6 @@ public class RbacSystemEntity implements Serializable {
         this.status = status;
     }
 
-    @Basic
     @Column(name = "name")
     public String getName() {
         return name;
@@ -73,7 +70,6 @@ public class RbacSystemEntity implements Serializable {
         this.name = name;
     }
 
-    @Basic
     @Column(name = "title")
     public String getTitle() {
         return title;
@@ -83,7 +79,6 @@ public class RbacSystemEntity implements Serializable {
         this.title = title;
     }
 
-    @Basic
     @Column(name = "description")
     public String getDescription() {
         return description;
@@ -93,7 +88,6 @@ public class RbacSystemEntity implements Serializable {
         this.description = description;
     }
 
-    @Basic
     @Column(name = "orders")
     public Long getOrders() {
         return orders;

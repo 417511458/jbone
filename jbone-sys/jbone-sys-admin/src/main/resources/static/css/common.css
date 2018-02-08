@@ -23,6 +23,15 @@
     margin: 0px;
 }
 
+.menuContent{
+    display:none;
+    position: absolute;
+    z-index: 9999;
+    background-color: aliceblue;
+    border: 1px solid #3c8dbc;
+    min-height: 50px;
+}
+
 iframe#main {
     position: absolute;
     top: 0;

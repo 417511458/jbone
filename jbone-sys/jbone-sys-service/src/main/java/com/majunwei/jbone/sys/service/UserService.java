@@ -1,21 +1,17 @@
 package com.majunwei.jbone.sys.service;
 
 import com.majunwei.jbone.common.exception.JboneException;
-import com.majunwei.jbone.common.ui.result.Result;
-import com.majunwei.jbone.common.utils.ResultUtils;
 import com.majunwei.jbone.sys.api.model.Menu;
 import com.majunwei.jbone.sys.api.model.UserModel;
 import com.majunwei.jbone.sys.dao.domain.*;
 import com.majunwei.jbone.sys.dao.repository.*;
-import com.majunwei.jbone.sys.service.model.ListModel;
+import com.majunwei.jbone.sys.service.model.common.AssignPermissionModel;
 import com.majunwei.jbone.sys.service.model.user.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +36,9 @@ public class UserService {
 
     @Autowired
     RbacRoleRepository roleRepository;
+
+    @Autowired
+    RbacPermissionRepository permissionRepository;
 
 
 
@@ -267,6 +266,31 @@ public class UserService {
         if(assignMenuModel.getUserMenu() != null && assignMenuModel.getUserMenu().length > 0){
             List<RbacMenuEntity> newMenus = menuRepository.findByIdIn(assignMenuModel.getUserMenu());
             menuEntities.addAll(newMenus);
+        }
+    }
+
+    /**
+     * 分配权限
+     * @param permissionModel
+     */
+    public void assignPermission(AssignPermissionModel permissionModel){
+        //首先删除该系统下所有菜单
+        RbacUserEntity userEntity = userRepository.findOne(permissionModel.getId());
+        List<RbacPermissionEntity> permissionEntities = userEntity.getPermissions();
+        if(permissionEntities != null && !permissionEntities.isEmpty()){
+            for (int i = 0;i < permissionEntities.size(); i++){
+                RbacPermissionEntity permissionEntity = permissionEntities.get(i);
+                if(permissionEntity.getSystemId() == permissionModel.getSystemId()){
+                    permissionEntities.remove(permissionEntity);
+                    i--;
+                }
+            }
+        }
+
+        //然后插入权限
+        if(permissionModel.getPermission() != null && permissionModel.getPermission().length > 0){
+            List<RbacPermissionEntity> newPermissions = permissionRepository.findByIdIn(permissionModel.getPermission());
+            permissionEntities.addAll(newPermissions);
         }
     }
 

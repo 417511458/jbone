@@ -11,7 +11,9 @@
 
 
     <link rel="stylesheet" th:href="@{/webjars/ztree/3.5.0/css/zTreeStyle/zTreeStyle.css}" type="text/css" />
-
+    <style type="text/css">
+        div#rMenu {position:absolute; visibility:hidden; top:0; background-color: #555;text-align: left;padding: 2px;}
+    </style>
 
   </head>
   <body>
@@ -19,36 +21,31 @@
 
   <div class="container-fluid">
       <div class="row">
-          <div class="col-md-12">
-              <div class="row">
                   <div class="col-md-12">
                       <select id="system" class="form-control" onchange="loadMenu()">
                           <option value="0">请选择要维护的系统</option>
                           <option th:each="system,systemStat : ${systemList}" th:value="${system.id}" th:text="${system.title}"></option>
                       </select>
-                        <br />
-                      <div class="box box-primary">
-                          <div class="box-header ui-sortable-handle" style="cursor: move;">
-                              <h3 class="box-title">系统菜单</h3>
-                              <div class="box-tools pull right">
-                                      <div class="btn-group">
-                                          <a class="btn  btn-primary" href="javascript:;" onclick="toAddRootMenu()"><i class="fa fa-plus-square"></i>新增一级菜单</a>
-                                          <a class="btn  btn-primary" href="javascript:;" onclick="toAddMenu()"><i class="fa fa-plus-square"></i>新增下级菜单</a>
-                                          <a class="btn  btn-primary" href="javascript:;" onclick="toUpdateMenu()"><i class="fa fa-pencil-square-o"></i>修改</a>
-                                          <a class="btn  btn-primary" href="javascript:;" onclick="deleteMenu()"><i class="fa fa-times-circle"></i>删除</a>
-                                      </div>
-                              </div>
-                          </div>
-                          <div class="box-body">
-                              <ul id="treeMenu" class="ztree" style="min-height: 300px;" data-title="1111" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></ul>
+                  </div>
+      </div>
+      <br />
+      <div class="row">
+          <div class="col-md-6">
+              <div class="box box-primary">
+                  <div class="box-header ui-sortable-handle" style="cursor: move;">
+                      <h3 class="box-title">系统菜单</h3>
+                      <div class="box-tools pull right">
+                          <div class="btn-group">
+                              <a class="btn  btn-primary" href="javascript:;" onclick="toAddRootMenu()"><i class="fa fa-plus-square"></i>新增一级菜单</a>
                           </div>
                       </div>
                   </div>
+                  <div class="box-body">
+                      <ul id="treeMenu" class="ztree" style="min-height: 300px;" data-title="1111" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></ul>
+                  </div>
               </div>
           </div>
-      </div>
-      <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
               <div class="box box-primary" id="menuDetail">
                   <div class="box-header ui-sortable-handle" style="cursor: move;">
                       <h3 class="box-title">菜单详情</h3>
@@ -79,13 +76,24 @@
           </div>
       </div>
   </div>
-
+  <div id="rMenu" class="dropdown">
+      <ul class="dropdown-menu">
+          <li><a href="javascript:;" onclick="toAddRootMenu();"><i class="fa fa-plus-square"></i>新增一级菜单</a></li>
+          <li><a href="javascript:;" onclick="toAddMenu();"><i class="fa fa-plus-square"></i>新增子菜单</a></li>
+          <li><a href="javascript:;" onclick="deleteMenu()"><i class="fa fa-times-circle"></i>删除</a></li>
+          <li><a href="javascript:;" onclick="toUpdateMenu()"><i class="fa fa-pencil-square-o"></i>修改</a></li>
+      </ul>
+  </div>
 <div th:replace="/layout/js :: #js"></div>
   <script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.core-3.5.min.js}"></script>
   <script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.excheck-3.5.min.js}"></script>
   <script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.exedit-3.5.min.js}"></script>
   <script>
       /*<![CDATA[*/
+
+      /**
+       * 添加一级菜单
+       * */
       function toAddRootMenu(){
           var systemId = $("#system").val();
           if(systemId == 0){
@@ -97,6 +105,9 @@
           openModal("新增一级菜单[" + systemName + "]","/menu/add/" + systemId);
       }
 
+      /**
+       * 添加菜单
+       * */
       function toAddMenu(){
           var systemId = $("#system").val();
           if(systemId == 0){
@@ -117,6 +128,9 @@
           openModal("新增子菜单[" + name + "]","/menu/addChild/" + id + "/" + systemId);
       }
 
+      /**
+       * 加载菜单
+       * */
       function loadMenu(){
             var systemId = $("#system").val();
             $("#treeMenu").html("");
@@ -135,6 +149,7 @@
                           debugger;
                           var zNodes = result.data;
                           $.fn.zTree.init($("#treeMenu"), treeSetting, zNodes);
+                          zTree = $.fn.zTree.getZTreeObj("treeMenu");
                       }
                   },
                   error: errorHandler
@@ -142,6 +157,13 @@
       }
 
       function treeOnClick(event, treeId, treeNode){
+          showMenuDetail(treeNode);
+      }
+
+      /**
+       * 展示菜单详情
+       * */
+      function showMenuDetail(treeNode){
           loadData(treeNode);
           $("#menuDetail").show();
       }
@@ -154,7 +176,8 @@
               enable: false
           },
           callback: {
-              onClick: treeOnClick
+              onClick: treeOnClick,
+              onRightClick: OnRightClick
           },
           data: {
               key: {
@@ -163,6 +186,47 @@
           }
       };
 
+      /**
+       * 菜单和右键菜单
+       * */
+      var zTree, rMenu;
+
+
+      /**
+       * 右键展示操作菜单
+       * */
+      function OnRightClick(event, treeId, treeNode) {
+          debugger;
+          if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
+              zTree.cancelSelectedNode();
+              showRMenu(event.clientX, event.clientY);
+          } else if (treeNode && !treeNode.noR) {
+              zTree.selectNode(treeNode);
+              showRMenu(event.clientX, event.clientY);
+          }
+          showMenuDetail(treeNode);
+
+      }
+
+      function showRMenu(x, y) {
+          $("#rMenu ul").show();
+
+          y += document.body.scrollTop;
+          x += document.body.scrollLeft;
+          rMenu.css({"top":y+"px", "left":x+"px", "visibility":"visible"});
+
+          $("body").bind("mousedown", onBodyMouseDown);
+      }
+
+      function onBodyMouseDown(event){
+          if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length>0)) {
+              rMenu.css({"visibility" : "hidden"});
+          }
+      }
+
+      /**
+       * 删除菜单
+       * */
       function deleteMenu(){
           var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
           var nodes = treeObj.getSelectedNodes();
@@ -205,6 +269,9 @@
 
       }
 
+      /**
+       * 编辑菜单
+       * */
       function toUpdateMenu(){
           var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
           var nodes = treeObj.getSelectedNodes();
@@ -220,8 +287,10 @@
       function madalCallback(){
             loadMenu();
       }
+
       $(function () {
          $("#menuDetail").hide();
+         rMenu = $("#rMenu");
       });
       /*]]>*/
   </script>

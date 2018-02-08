@@ -6,6 +6,7 @@ import com.majunwei.jbone.sys.dao.domain.RbacRoleEntity;
 import com.majunwei.jbone.sys.dao.repository.RbacMenuRepository;
 import com.majunwei.jbone.sys.dao.repository.RbacPermissionRepository;
 import com.majunwei.jbone.sys.dao.repository.RbacRoleRepository;
+import com.majunwei.jbone.sys.service.model.common.AssignPermissionModel;
 import com.majunwei.jbone.sys.service.model.role.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -98,7 +99,7 @@ public class RoleService {
      */
     public void assignPermission(AssignPermissionModel permissionModel){
         //首先删除该系统下所有菜单
-        RbacRoleEntity roleEntity = roleRepository.findOne(permissionModel.getRoleId());
+        RbacRoleEntity roleEntity = roleRepository.findOne(permissionModel.getId());
         List<RbacPermissionEntity> permissionEntities = roleEntity.getPermissions();
         if(permissionEntities != null && !permissionEntities.isEmpty()){
             for (int i = 0;i < permissionEntities.size(); i++){

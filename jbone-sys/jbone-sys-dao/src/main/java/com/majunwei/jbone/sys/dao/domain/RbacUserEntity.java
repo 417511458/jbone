@@ -41,7 +41,6 @@ public class RbacUserEntity implements Serializable {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "username")
     public String getUsername() {
         return username;
@@ -51,7 +50,6 @@ public class RbacUserEntity implements Serializable {
         this.username = username;
     }
 
-    @Basic
     @Column(name = "password")
     public String getPassword() {
         return password;
@@ -61,7 +59,6 @@ public class RbacUserEntity implements Serializable {
         this.password = password;
     }
 
-    @Basic
     @Column(name = "realname")
     public String getRealname() {
         return realname;
@@ -71,7 +68,6 @@ public class RbacUserEntity implements Serializable {
         this.realname = realname;
     }
 
-    @Basic
     @Column(name = "avatar")
     public String getAvatar() {
         return avatar;
@@ -81,7 +77,6 @@ public class RbacUserEntity implements Serializable {
         this.avatar = avatar;
     }
 
-    @Basic
     @Column(name = "phone")
     public String getPhone() {
         return phone;
@@ -91,7 +86,6 @@ public class RbacUserEntity implements Serializable {
         this.phone = phone;
     }
 
-    @Basic
     @Column(name = "email")
     public String getEmail() {
         return email;
@@ -101,7 +95,6 @@ public class RbacUserEntity implements Serializable {
         this.email = email;
     }
 
-    @Basic
     @Column(name = "sex")
     public int getSex() {
         return sex;
@@ -111,7 +104,6 @@ public class RbacUserEntity implements Serializable {
         this.sex = sex;
     }
 
-    @Basic
     @Column(name = "locked")
     public int getLocked() {
         return locked;
@@ -122,7 +114,6 @@ public class RbacUserEntity implements Serializable {
     }
 
     @CreationTimestamp
-    @Basic
     @Column(name = "add_time")
     public Timestamp getAddTime() {
         return addTime;
@@ -133,7 +124,6 @@ public class RbacUserEntity implements Serializable {
     }
 
     @UpdateTimestamp
-    @Basic
     @Column(name = "update_time")
     public Timestamp getUpdateTime() {
         return updateTime;

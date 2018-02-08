@@ -1,7 +1,5 @@
 package com.majunwei.jbone.sys.dao.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "rbac_permission")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class RbacPermissionEntity implements Serializable {
     private int id;
     private int systemId;
@@ -113,8 +110,8 @@ public class RbacPermissionEntity implements Serializable {
         this.version = version;
     }
 
-    @JsonBackReference
-    @ManyToMany(fetch=FetchType.LAZY,mappedBy = "permissions")
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name = "rbac_role_permission",joinColumns = @JoinColumn(name = "permission_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "role_id",referencedColumnName = "id"))
     public List<RbacRoleEntity> getRoles() {
         return roles;
     }
@@ -123,8 +120,8 @@ public class RbacPermissionEntity implements Serializable {
         this.roles = roles;
     }
 
-    @JsonBackReference
-    @ManyToMany(fetch=FetchType.LAZY,mappedBy = "permissions")
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name = "rbac_user_permission",joinColumns = @JoinColumn(name = "permission_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"))
     public List<RbacUserEntity> getUsers() {
         return users;
     }

@@ -2,14 +2,13 @@ package com.majunwei.jbone.sys.admin.controller;
 
 import com.majunwei.jbone.common.ui.result.Result;
 import com.majunwei.jbone.common.utils.ResultUtils;
-import com.majunwei.jbone.sys.dao.domain.RbacMenuEntity;
-import com.majunwei.jbone.sys.dao.domain.RbacRoleEntity;
-import com.majunwei.jbone.sys.dao.domain.RbacSystemEntity;
-import com.majunwei.jbone.sys.dao.domain.RbacUserEntity;
+import com.majunwei.jbone.sys.dao.domain.*;
+import com.majunwei.jbone.sys.service.PermissionService;
 import com.majunwei.jbone.sys.service.RoleService;
 import com.majunwei.jbone.sys.service.SystemService;
 import com.majunwei.jbone.sys.service.UserService;
 import com.majunwei.jbone.sys.service.model.ListModel;
+import com.majunwei.jbone.sys.service.model.common.AssignPermissionModel;
 import com.majunwei.jbone.sys.service.model.user.*;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.BeanUtils;
@@ -19,7 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -28,9 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Controller
@@ -43,6 +39,8 @@ public class UserController {
     private RoleService roleService;
     @Autowired
     private SystemService systemService;
+    @Autowired
+    private PermissionService permissionService;
 
     @Description("用户管理首页")
     @RequiresRoles("admin")
@@ -154,6 +152,31 @@ public class UserController {
     @ResponseBody
     public Result doAssignMenu(@Validated AssignMenuModel menuModel,BindingResult bindingResult){
         userService.assignMenu(menuModel);
+        return ResultUtils.wrapSuccess();
+    }
+
+    @Description("跳转至分配菜单页面")
+    @RequestMapping("toAssignPermission/{userId}")
+    public String toAssignPermission(@PathVariable("userId")String userId,ModelMap modelMap){
+        List<RbacSystemEntity> systemEntities = systemService.findAll();
+        modelMap.put("systemList",systemEntities);
+        modelMap.put("id",userId);
+
+        RbacUserEntity userEntity = userService.findById(Integer.parseInt(userId));
+        List<RbacPermissionEntity> permissions = userEntity.getPermissions();
+
+        modelMap.put("permissions",permissionService.getBaseInfos(permissions));
+
+        modelMap.put("commitUrl", "/user/doAssignPermission");
+
+        return "pages/common/assignPermission";
+    }
+
+    @Description("执行分配菜单")
+    @RequestMapping("doAssignPermission")
+    @ResponseBody
+    public Result doAssignPermission(@Validated AssignPermissionModel assignPermissionModel, BindingResult bindingResult){
+        userService.assignPermission(assignPermissionModel);
         return ResultUtils.wrapSuccess();
     }
 }
