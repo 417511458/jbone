@@ -3,15 +3,14 @@ package com.majunwei.jbone.sys.admin.controller;
 import com.majunwei.jbone.common.ui.result.Result;
 import com.majunwei.jbone.common.utils.ResultUtils;
 import com.majunwei.jbone.sys.dao.domain.RbacMenuEntity;
+import com.majunwei.jbone.sys.dao.domain.RbacPermissionEntity;
 import com.majunwei.jbone.sys.dao.domain.RbacRoleEntity;
 import com.majunwei.jbone.sys.dao.domain.RbacSystemEntity;
+import com.majunwei.jbone.sys.service.PermissionService;
 import com.majunwei.jbone.sys.service.RoleService;
 import com.majunwei.jbone.sys.service.SystemService;
 import com.majunwei.jbone.sys.service.model.ListModel;
-import com.majunwei.jbone.sys.service.model.role.AssignMenuModel;
-import com.majunwei.jbone.sys.service.model.role.CreateRoleModel;
-import com.majunwei.jbone.sys.service.model.role.SimpleRoleModel;
-import com.majunwei.jbone.sys.service.model.role.UpdateRoleModel;
+import com.majunwei.jbone.sys.service.model.role.*;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
@@ -39,6 +38,9 @@ public class RoleController {
 
     @Autowired
     private SystemService systemService;
+
+    @Autowired
+    private PermissionService permissionService;
 
     @RequiresRoles("admin")
     @RequestMapping("/index")
@@ -123,6 +125,29 @@ public class RoleController {
     @ResponseBody
     public Result doAssignMenu(@Validated AssignMenuModel menuModel, BindingResult bindingResult){
         roleService.assignMenu(menuModel);
+        return ResultUtils.wrapSuccess();
+    }
+
+    @Description("跳转至分配菜单页面")
+    @RequestMapping("toAssignPermission/{roleId}")
+    public String toAssignPermission(@PathVariable("roleId")String roleId,ModelMap modelMap){
+        List<RbacSystemEntity> systemEntities = systemService.findAll();
+        modelMap.put("systemList",systemEntities);
+        modelMap.put("roleId",roleId);
+
+        RbacRoleEntity roleEntity = roleService.get(Integer.parseInt(roleId));
+        List<RbacPermissionEntity> rolePermissions = roleEntity.getPermissions();
+
+        modelMap.put("rolePermissions",permissionService.getBaseInfos(rolePermissions));
+
+        return "pages/role/assignPermission";
+    }
+
+    @Description("执行分配菜单")
+    @RequestMapping("doAssignPermission")
+    @ResponseBody
+    public Result doAssignPermission(@Validated AssignPermissionModel assignPermissionModel, BindingResult bindingResult){
+        roleService.assignPermission(assignPermissionModel);
         return ResultUtils.wrapSuccess();
     }
 }

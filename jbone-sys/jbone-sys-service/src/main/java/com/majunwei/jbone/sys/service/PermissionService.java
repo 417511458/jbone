@@ -82,7 +82,21 @@ public class PermissionService {
         return permissionRepository.findAll(new PermissionSpecification(condition),pageRequest);
     }
 
-
+    /**
+     * 获取权限
+     * @param systemId
+     * @param menuId
+     * @return
+     */
+    public List<PermissionBaseInfoModel> getPermissions(int systemId,int menuId){
+        List<RbacPermissionEntity> permissionEntities = null;
+        if(menuId != 0){
+            permissionEntities = permissionRepository.findBySystemIdAndMenuId(systemId,menuId);
+        }else{
+            permissionEntities = permissionRepository.findBySystemId(systemId);
+        }
+        return getBaseInfos(permissionEntities);
+    }
 
     /**
      * 查询声明，用于模糊查询分页

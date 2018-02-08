@@ -111,4 +111,11 @@ public class PermissionController {
     public Result get(@PathVariable("id")int id){
         return ResultUtils.wrapSuccess(permissionService.getBaseInfo(id));
     }
+
+    @Description("获取权限")
+    @RequestMapping("/getPermissions/{systemId}/{menuId}")
+    @ResponseBody
+    public Result getPermissions(@PathVariable("systemId")int systemId,@PathVariable("menuId")int menuId){
+        return ResultUtils.wrapSuccess(permissionService.getPermissions(systemId,menuId));
+    }
 }
