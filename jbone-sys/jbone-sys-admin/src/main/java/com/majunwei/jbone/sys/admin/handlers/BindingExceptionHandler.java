@@ -18,9 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
+/**
+ * 处理绑定Model异常，使用Hibernate Validator作验证框架
+ */
 @Aspect
 @Component
-public class ExceptionHandler {
+public class BindingExceptionHandler {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 

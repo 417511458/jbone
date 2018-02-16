@@ -29,12 +29,13 @@ public class SystemController {
     @Autowired
     private SystemService systemService;
 
-    @RequiresRoles("admin")
+    @RequiresPermissions("sys:system:read")
     @RequestMapping("/index")
     public String index(){
         return "pages/system/index";
     }
 
+    @RequiresPermissions("sys:system:read")
     @RequiresRoles("admin")
     @RequestMapping("/list")
     @ResponseBody
@@ -45,7 +46,7 @@ public class SystemController {
         return ResultUtils.wrapSuccess(page.getTotalElements(),page.getContent());
     }
 
-
+    @RequiresPermissions("sys:system:create")
     @RequestMapping("/create")
     @ResponseBody
     public Result create(@Validated CreateSystemModel createSystemModel, BindingResult bindingResult){
@@ -53,11 +54,13 @@ public class SystemController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:system:create")
     @RequestMapping("/toCreate")
     public String toCreate(){
         return "pages/system/create";
     }
 
+//    @RequiresPermissions("sys:system:update")
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id")String id, ModelMap modelMap){
         RbacSystemEntity systemEntity = systemService.get(Integer.parseInt(id));
@@ -65,6 +68,7 @@ public class SystemController {
         return "pages/system/update";
     }
 
+    @RequiresPermissions("sys:system:update")
     @RequestMapping("/update")
     @ResponseBody
     public Result update(@Validated UpdateSystemModel updateSystemModel, BindingResult bindingResult){
@@ -72,6 +76,8 @@ public class SystemController {
         return ResultUtils.wrapSuccess();
     }
 
+
+    @RequiresPermissions("sys:system:delete")
     @RequestMapping("/delete/{ids}")
     @ResponseBody
     public Result delete(@PathVariable("ids")String ids){

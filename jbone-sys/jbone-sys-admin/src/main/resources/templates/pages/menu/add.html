@@ -25,7 +25,7 @@
         <div class="form-group">
             <label for="orders" class="col-sm-3 control-label">序号</label>
             <div class="col-sm-8">
-                <input id="orders" name="orders" type="text" class="form-control" />
+                <input id="orders" name="orders" type="text" class="form-control" value="0"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
             </div>
         </div>
         <br />

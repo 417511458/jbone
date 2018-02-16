@@ -46,6 +46,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <druid.version>1.1.6</druid.version>
         <lombok.version>1.16.20</lombok.version>
+        <fastjson.version>1.2.46</fastjson.version>
     </properties>
 
     <dependencies>
@@ -53,11 +54,15 @@
             <groupId>com.majunwei</groupId>
             <artifactId>jbone-common</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 

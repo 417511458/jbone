@@ -215,7 +215,7 @@ public class UserService {
      * @return
      */
     public RbacUserEntity findById(int id){
-        RbacUserEntity userEntity = userRepository.getOne(id);
+        RbacUserEntity userEntity = userRepository.findOne(id);
         if(userEntity == null){
             throw new JboneException("没有找到用户");
         }
