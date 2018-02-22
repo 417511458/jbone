@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jbone-sys-admin</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>jbone-sys-admin</name>
     <url>http://maven.apache.org</url>
@@ -78,4 +78,13 @@
             <artifactId>jbone-ui</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -51,10 +51,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.majunwei</groupId>
-            <artifactId>jbone-common</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
@@ -328,12 +324,6 @@
             <dependency>
                 <groupId>com.majunwei</groupId>
                 <artifactId>jbone-common</artifactId>
-                <version>${jbone.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.majunwei</groupId>
-                <artifactId>jbone-sys-api</artifactId>
                 <version>${jbone.version}</version>
             </dependency>
 

@@ -18,12 +18,6 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.6</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>com.github.lalyos</groupId>
             <artifactId>jfiglet</artifactId>
             <version>0.0.8</version>
