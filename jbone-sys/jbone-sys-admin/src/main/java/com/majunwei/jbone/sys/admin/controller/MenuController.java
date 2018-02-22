@@ -9,6 +9,7 @@ import com.majunwei.jbone.sys.service.SystemService;
 import com.majunwei.jbone.sys.service.model.menu.CreateMenuModel;
 import com.majunwei.jbone.sys.service.model.menu.TreeMenuModel;
 import com.majunwei.jbone.sys.service.model.menu.UpdateMenuModel;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,6 +30,7 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
+    @RequiresPermissions("sys:menu:read")
     @RequestMapping("index")
     public String index(ModelMap modelMap){
         List<RbacSystemEntity> systemEntities = systemService.findAll();
@@ -36,6 +38,7 @@ public class MenuController {
         return "pages/menu/index";
     }
 
+    @RequiresPermissions("sys:menu:read")
     @RequestMapping("getTreeMenu/{systemId}")
     @ResponseBody
     public Result getTreeMenu(@PathVariable("systemId")int systemId){
@@ -43,6 +46,7 @@ public class MenuController {
         return ResultUtils.wrapSuccess(menuModelList);
     }
 
+    @RequiresPermissions("sys:menu:create")
     @RequestMapping("add/{systemId}")
     public String toAdd(@PathVariable("systemId")int systemId,ModelMap modelMap){
         TreeMenuModel menuModel = new TreeMenuModel();
@@ -51,6 +55,7 @@ public class MenuController {
         return "pages/menu/add";
     }
 
+    @RequiresPermissions("sys:menu:create")
     @RequestMapping("addChild/{id}/{systemId}")
     public String toAddChild(@PathVariable("id")int id,@PathVariable("systemId")int systemId,ModelMap modelMap){
         TreeMenuModel menuModel = new TreeMenuModel();
@@ -60,6 +65,7 @@ public class MenuController {
         return "pages/menu/add";
     }
 
+    @RequiresPermissions("sys:menu:create")
     @RequestMapping("add")
     @ResponseBody
     public Result add(@Validated CreateMenuModel menuModel, BindingResult bindingResult){
@@ -67,6 +73,7 @@ public class MenuController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:menu:delete")
     @RequestMapping("delete/{id}")
     @ResponseBody
     public Result delete(@PathVariable("id")int id){
@@ -74,6 +81,7 @@ public class MenuController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:menu:update")
     @RequestMapping("update/{id}")
     public String toUpdate(@PathVariable("id")int id,ModelMap modelMap){
         TreeMenuModel menuModel = menuService.get(id);
@@ -81,6 +89,7 @@ public class MenuController {
         return "pages/menu/update";
     }
 
+    @RequiresPermissions("sys:menu:update")
     @RequestMapping("update")
     @ResponseBody
     public Result update(@Validated UpdateMenuModel menuModel,BindingResult bindingResult){

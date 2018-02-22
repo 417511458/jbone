@@ -12,6 +12,7 @@ import com.majunwei.jbone.sys.service.SystemService;
 import com.majunwei.jbone.sys.service.model.ListModel;
 import com.majunwei.jbone.sys.service.model.common.AssignPermissionModel;
 import com.majunwei.jbone.sys.service.model.role.*;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
@@ -43,13 +44,13 @@ public class RoleController {
     @Autowired
     private PermissionService permissionService;
 
-    @RequiresRoles("admin")
+    @RequiresPermissions("sys:role:read")
     @RequestMapping("/index")
     public String index(){
         return "pages/role/index";
     }
 
-    @RequiresRoles("admin")
+    @RequiresPermissions("sys:role:read")
     @RequestMapping("/list")
     @ResponseBody
     public Result list(ListModel listModel){
@@ -60,12 +61,13 @@ public class RoleController {
         return ResultUtils.wrapSuccess(page.getTotalElements(),list);
     }
 
-
+    @RequiresPermissions("sys:role:create")
     @RequestMapping("/toCreate")
     public String toCreate(){
         return "pages/role/create";
     }
 
+    @RequiresPermissions("sys:role:create")
     @RequestMapping("/create")
     @ResponseBody
     public Result create(@Validated CreateRoleModel roleModel, BindingResult bindingResult){
@@ -73,6 +75,7 @@ public class RoleController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:role:update")
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id")String id, ModelMap modelMap){
         RbacRoleEntity roleEntity = roleService.get(Integer.parseInt(id));
@@ -80,6 +83,7 @@ public class RoleController {
         return "pages/role/update";
     }
 
+    @RequiresPermissions("sys:role:update")
     @RequestMapping("/update")
     @ResponseBody
     public Result update(@Validated UpdateRoleModel roleModel, BindingResult bindingResult){
@@ -87,6 +91,7 @@ public class RoleController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:role:delete")
     @RequestMapping("/delete/{ids}")
     @ResponseBody
     public Result delete(@PathVariable("ids")String ids){
@@ -94,6 +99,7 @@ public class RoleController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:role:read")
     @RequestMapping("/get/{id}")
     @ResponseBody
     public Result get(@PathVariable("id")String id){
@@ -101,6 +107,7 @@ public class RoleController {
         return ResultUtils.wrapSuccess(roleEntity);
     }
 
+    @RequiresPermissions("sys:role:assignMenu")
     @Description("跳转至分配菜单页面")
     @RequestMapping("toAssignMenu/{roleId}")
     public String toAssignMenu(@PathVariable("roleId")String roleId,ModelMap modelMap){
@@ -121,6 +128,7 @@ public class RoleController {
         return "pages/role/assignMenu";
     }
 
+    @RequiresPermissions("sys:role:assignMenu")
     @Description("执行分配菜单")
     @RequestMapping("doAssignMenu")
     @ResponseBody
@@ -129,6 +137,7 @@ public class RoleController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:role:assignPermission")
     @Description("跳转至分配菜单页面")
     @RequestMapping("toAssignPermission/{roleId}")
     public String toAssignPermission(@PathVariable("roleId")String roleId,ModelMap modelMap){
@@ -146,6 +155,7 @@ public class RoleController {
         return "pages/common/assignPermission";
     }
 
+    @RequiresPermissions("sys:role:assignPermission")
     @Description("执行分配菜单")
     @RequestMapping("doAssignPermission")
     @ResponseBody

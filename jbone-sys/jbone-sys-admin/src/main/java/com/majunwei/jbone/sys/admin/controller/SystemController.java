@@ -36,7 +36,6 @@ public class SystemController {
     }
 
     @RequiresPermissions("sys:system:read")
-    @RequiresRoles("admin")
     @RequestMapping("/list")
     @ResponseBody
     public Result list(ListModel listModel){
@@ -60,7 +59,7 @@ public class SystemController {
         return "pages/system/create";
     }
 
-//    @RequiresPermissions("sys:system:update")
+    @RequiresPermissions("sys:system:update")
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id")String id, ModelMap modelMap){
         RbacSystemEntity systemEntity = systemService.get(Integer.parseInt(id));

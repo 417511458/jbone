@@ -12,6 +12,7 @@ import com.majunwei.jbone.sys.service.model.menu.TreeMenuModel;
 import com.majunwei.jbone.sys.service.model.permission.PermissionBaseInfoModel;
 import com.majunwei.jbone.sys.service.model.permission.PermissionCreateModel;
 import com.majunwei.jbone.sys.service.model.permission.PermissionUpdateModel;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
@@ -41,14 +42,14 @@ public class PermissionController {
     private MenuService menuService;
 
     @Description("权限管理首页")
-    @RequiresRoles("admin")
+    @RequiresPermissions("sys:permission:read")
     @RequestMapping("/index")
     public String index(){
         return "pages/permission/index";
     }
 
     @Description("权限管理分页查询")
-    @RequiresRoles("admin")
+    @RequiresPermissions("sys:permission:read")
     @RequestMapping("/list")
     @ResponseBody
     public Result list(ListModel listModel){
@@ -59,6 +60,7 @@ public class PermissionController {
         return ResultUtils.wrapSuccess(page.getTotalElements(),list);
     }
 
+    @RequiresPermissions("sys:permission:create")
     @Description("跳转至新增权限页面")
     @RequestMapping("/toCreate")
     public String toCreate(ModelMap modelMap){
@@ -67,6 +69,7 @@ public class PermissionController {
         return "pages/permission/create";
     }
 
+    @RequiresPermissions("sys:permission:create")
     @Description("执行新增权限")
     @RequestMapping("/create")
     @ResponseBody
@@ -75,6 +78,7 @@ public class PermissionController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:permission:update")
     @Description("跳转至更新权限页面")
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id")int id, ModelMap model){
@@ -89,6 +93,7 @@ public class PermissionController {
         return "pages/permission/update";
     }
 
+    @RequiresPermissions("sys:permission:update")
     @Description("执行更新权限")
     @RequestMapping("/update")
     @ResponseBody
@@ -97,6 +102,7 @@ public class PermissionController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:permission:delete")
     @Description("批量删除权限")
     @RequestMapping("/delete/{ids}")
     @ResponseBody
@@ -105,6 +111,7 @@ public class PermissionController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:permission:read")
     @Description("获取权限详情")
     @RequestMapping("/get/{id}")
     @ResponseBody
@@ -112,6 +119,7 @@ public class PermissionController {
         return ResultUtils.wrapSuccess(permissionService.getBaseInfo(id));
     }
 
+    @RequiresPermissions("sys:permission:read")
     @Description("获取权限")
     @RequestMapping("/getPermissions/{systemId}/{menuId}")
     @ResponseBody

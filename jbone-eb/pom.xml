@@ -18,4 +18,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.majunwei</groupId>
+            <artifactId>jbone-common</artifactId>
+        </dependency>
+    </dependencies>
 </project>

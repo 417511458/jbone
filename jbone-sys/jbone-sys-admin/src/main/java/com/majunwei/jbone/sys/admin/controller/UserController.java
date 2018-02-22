@@ -10,6 +10,7 @@ import com.majunwei.jbone.sys.service.UserService;
 import com.majunwei.jbone.sys.service.model.ListModel;
 import com.majunwei.jbone.sys.service.model.common.AssignPermissionModel;
 import com.majunwei.jbone.sys.service.model.user.*;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +44,14 @@ public class UserController {
     private PermissionService permissionService;
 
     @Description("用户管理首页")
-    @RequiresRoles("admin")
+    @RequiresPermissions("sys:user:read")
     @RequestMapping("/index")
     public String index(){
         return "pages/user/index";
     }
 
     @Description("用户管理分页查询")
-    @RequiresRoles("admin")
+    @RequiresPermissions("sys:user:read")
     @RequestMapping("/list")
     @ResponseBody
     public Result list(ListModel listModel){
@@ -61,12 +62,14 @@ public class UserController {
         return ResultUtils.wrapSuccess(page.getTotalElements(),list);
     }
 
+    @RequiresPermissions("sys:user:create")
     @Description("跳转至新增用户页面")
     @RequestMapping("/toCreate")
     public String toCreate(){
         return "pages/user/create";
     }
 
+    @RequiresPermissions("sys:user:create")
     @Description("执行新增用户")
     @RequestMapping("/create")
     @ResponseBody
@@ -75,6 +78,7 @@ public class UserController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:user:update")
     @Description("跳转至更新用户页面")
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id")String id, ModelMap model){
@@ -85,6 +89,7 @@ public class UserController {
         return "pages/user/update";
     }
 
+    @RequiresPermissions("sys:user:update")
     @Description("执行更新用户")
     @RequestMapping("/update")
     @ResponseBody
@@ -93,6 +98,7 @@ public class UserController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:user:delete")
     @Description("批量删除用户")
     @RequestMapping("/delete/{ids}")
     @ResponseBody
@@ -101,6 +107,7 @@ public class UserController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:user:read")
     @Description("获取用户详情")
     @RequestMapping("/get/{id}")
     @ResponseBody
@@ -109,6 +116,7 @@ public class UserController {
         return ResultUtils.wrapSuccess(userEntity);
     }
 
+    @RequiresPermissions("sys:user:assignRole")
     @Description("跳转至分配角色页面")
     @RequestMapping("/toAssignRole/{id}")
     public String toAssignRole(@PathVariable("id")String id,ModelMap modelMap){
@@ -119,6 +127,7 @@ public class UserController {
         return "pages/user/assignRole";
     }
 
+    @RequiresPermissions("sys:user:assignRole")
     @Description("执行分配角色")
     @RequestMapping("/doAssignRole")
     @ResponseBody
@@ -127,6 +136,7 @@ public class UserController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:user:assignMenu")
     @Description("跳转至分配菜单页面")
     @RequestMapping("toAssignMenu/{userId}")
     public String toAssignMenu(@PathVariable("userId")String userId,ModelMap modelMap){
@@ -147,6 +157,7 @@ public class UserController {
         return "pages/user/assignMenu";
     }
 
+    @RequiresPermissions("sys:user:assignMenu")
     @Description("执行分配菜单")
     @RequestMapping("doAssignMenu")
     @ResponseBody
@@ -155,6 +166,7 @@ public class UserController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:user:assignPermission")
     @Description("跳转至分配菜单页面")
     @RequestMapping("toAssignPermission/{userId}")
     public String toAssignPermission(@PathVariable("userId")String userId,ModelMap modelMap){
@@ -172,6 +184,7 @@ public class UserController {
         return "pages/common/assignPermission";
     }
 
+    @RequiresPermissions("sys:user:assignPermission")
     @Description("执行分配菜单")
     @RequestMapping("doAssignPermission")
     @ResponseBody
