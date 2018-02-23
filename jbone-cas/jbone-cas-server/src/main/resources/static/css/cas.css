@@ -282,11 +282,11 @@ Modals
 }
 
 #login {
-  padding: 30px;
-  background-color: #efefef;
-  border-radius: 4px;
-  overflow: hidden;
-  vertical-align: top;
+  /*padding: 30px;*/
+  /*background-color: #efefef;*/
+  /*border-radius: 4px;*/
+  /*overflow: hidden;*/
+  /*vertical-align: top;*/
 }
 
 #login .login-header {
@@ -325,11 +325,11 @@ Modals
   display: inline;
 }
 
-#login input[type=text], #login input[type=password] {
-  font-size: 1.82rem;
-  padding: 5px;
-  width: 100%;
-}
+/*#login input[type=text], #login input[type=password] {*/
+  /*font-size: 1.82rem;*/
+  /*padding: 5px;*/
+  /*width: 100%;*/
+/*}*/
 
 #login .btn-row {
   text-align: center;
