@@ -19,6 +19,7 @@
           <a class="btn  btn-primary" href="javascript:;" onclick="assignRoleAction()"><i class="fa fa-user-plus"></i>分配角色</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="assignMenuAction()"><i class="fa fa-user-plus"></i>分配菜单</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="assignPermissionAction()"><i class="fa fa-user-plus"></i>分配权限</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="assignOrganizationAction()"><i class="fa fa-user-plus"></i>组织机构</a>
       </div>
       <table id="table"></table>
   </div>
@@ -154,6 +155,13 @@
           var row = chooseOne();
           if (row) {
               openModal("分配权限[" + row.realname + "]","/user/toAssignPermission/" + row.id);
+          }
+      }
+
+      function assignOrganizationAction(){
+          var row = chooseOne();
+          if (row) {
+              openModal("分配组织机构[" + row.realname + "]","/user/toAssignOrganization/" + row.id);
           }
       }
 

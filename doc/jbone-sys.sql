@@ -37,7 +37,7 @@ CREATE TABLE `rbac_menu` (
   `version` int(10) DEFAULT NULL,
   `icon` varchar(100) DEFAULT NULL COMMENT '图标',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='系统菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='系统菜单表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `rbac_menu` (
 
 LOCK TABLES `rbac_menu` WRITE;
 /*!40000 ALTER TABLE `rbac_menu` DISABLE KEYS */;
-INSERT INTO `rbac_menu` VALUES (9,3,NULL,'','',NULL,NULL,'2018-02-02 07:42:18','2018-02-02 07:42:18',0,NULL),(10,3,0,'ffeeedf','asdf',NULL,111,'2018-02-02 07:49:57','2018-02-02 07:49:57',0,NULL),(13,3,10,'wef','wef',NULL,1111,'2018-02-02 07:57:11','2018-02-02 07:57:11',0,NULL),(14,3,10,'rrr','阿斯顿发',NULL,111,'2018-02-02 08:19:35','2018-02-02 08:19:35',0,NULL),(19,2,0,'23','123',NULL,123,'2018-02-02 08:46:59','2018-02-02 08:46:59',0,NULL),(21,3,0,'权限管理','#',NULL,1,'2018-02-02 08:46:59','2018-02-04 14:02:28',23,NULL),(22,3,21,'用户管理','/user/index',NULL,3,'2018-02-02 08:46:59','2018-02-02 08:46:59',0,NULL),(23,3,21,'角色管理','/role/index',NULL,2,'2018-02-02 08:46:59','2018-02-02 08:46:59',0,NULL),(24,3,21,'菜单管理','/menu/index',NULL,1,'2018-02-02 08:46:59','2018-02-02 08:46:59',0,NULL),(25,3,0,'系统管理','#',NULL,1,'2018-02-02 08:46:59','2018-02-04 14:02:28',23,NULL),(26,3,25,'系统管理','/system/index',NULL,1,'2018-02-02 08:46:59','2018-02-02 08:46:59',0,NULL),(27,3,10,'eef','ef',NULL,111,'2018-02-06 03:39:48','2018-02-06 03:39:48',0,NULL),(29,3,10,'1211111','124444',NULL,112111,'2018-02-06 03:40:01','2018-02-08 07:05:52',1,NULL),(30,3,21,'权限管理','/permission/index',NULL,0,'2018-02-06 08:53:24','2018-02-06 08:53:24',0,NULL);
+INSERT INTO `rbac_menu` VALUES (9,3,NULL,'','',NULL,NULL,'2018-02-02 07:42:18','2018-02-02 07:42:18',0,NULL),(10,3,0,'ffeeedf','asdf',NULL,111,'2018-02-02 07:49:57','2018-02-02 07:49:57',0,NULL),(13,3,10,'wef','wef',NULL,1111,'2018-02-02 07:57:11','2018-02-02 07:57:11',0,NULL),(14,3,10,'rrr','阿斯顿发',NULL,111,'2018-02-02 08:19:35','2018-02-02 08:19:35',0,NULL),(19,2,0,'23','123',NULL,123,'2018-02-02 08:46:59','2018-02-02 08:46:59',0,NULL),(21,3,0,'权限管理','#',NULL,1,'2018-02-02 08:46:59','2018-02-04 14:02:28',23,NULL),(22,3,21,'用户管理','/user/index',NULL,3,'2018-02-02 08:46:59','2018-02-02 08:46:59',0,NULL),(23,3,21,'角色管理','/role/index',NULL,2,'2018-02-02 08:46:59','2018-02-02 08:46:59',0,NULL),(24,3,21,'菜单管理','/menu/index',NULL,1,'2018-02-02 08:46:59','2018-02-02 08:46:59',0,NULL),(25,3,0,'系统管理','#',NULL,1,'2018-02-02 08:46:59','2018-02-04 14:02:28',23,NULL),(26,3,25,'系统管理','/system/index',NULL,1,'2018-02-02 08:46:59','2018-02-02 08:46:59',0,NULL),(27,3,10,'eef','ef',NULL,111,'2018-02-06 03:39:48','2018-02-06 03:39:48',0,NULL),(29,3,10,'1211111','124444',NULL,112111,'2018-02-06 03:40:01','2018-02-08 07:05:52',1,NULL),(30,3,21,'权限管理','/permission/index',NULL,0,'2018-02-06 08:53:24','2018-02-06 08:53:24',0,NULL),(31,3,21,'组织机构','/organization/index',NULL,0,'2018-02-23 08:15:06','2018-02-23 08:15:06',0,NULL);
 /*!40000 ALTER TABLE `rbac_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +66,7 @@ CREATE TABLE `rbac_organization` (
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `version` int(11) DEFAULT NULL COMMENT '版本号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='组织';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COMMENT='组织';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ CREATE TABLE `rbac_organization` (
 
 LOCK TABLES `rbac_organization` WRITE;
 /*!40000 ALTER TABLE `rbac_organization` DISABLE KEYS */;
-INSERT INTO `rbac_organization` VALUES (1,NULL,'总部','北京总部',NULL,NULL,0),(4,NULL,'河北分部','河北石家庄',NULL,NULL,0),(5,NULL,'河南分部','河南郑州',NULL,NULL,0),(6,NULL,'湖北分部','湖北武汉',NULL,NULL,0),(7,NULL,'湖南分部','湖南长沙',NULL,NULL,0);
+INSERT INTO `rbac_organization` VALUES (1,NULL,'总部','北京总部',NULL,NULL,0),(4,NULL,'河北分部','河北石家庄',NULL,NULL,0),(5,NULL,'河南分部','河南郑州',NULL,NULL,0),(6,NULL,'湖北分部','湖北武汉',NULL,NULL,0),(7,NULL,'湖南分部','湖南长沙',NULL,NULL,0),(12,0,'jbone集团','','2018-02-23 08:23:44','2018-02-23 08:23:44',0),(13,12,'北京分部','','2018-02-23 08:24:00','2018-02-23 08:24:00',0),(14,12,'山东分部','','2018-02-23 08:24:16','2018-02-23 08:24:16',0);
 /*!40000 ALTER TABLE `rbac_organization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,7 @@ CREATE TABLE `rbac_permission` (
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `version` int(11) DEFAULT NULL COMMENT '版本号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COMMENT='权限';
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COMMENT='权限';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +106,7 @@ CREATE TABLE `rbac_permission` (
 
 LOCK TABLES `rbac_permission` WRITE;
 /*!40000 ALTER TABLE `rbac_permission` DISABLE KEYS */;
-INSERT INTO `rbac_permission` VALUES (93,3,0,'系统管理-查看',1,'sys:system:read','2018-02-08 08:35:15','2018-02-08 08:37:48',1),(94,3,0,'系统管理-新增',1,'sys:system:create','2018-02-08 08:36:08','2018-02-08 08:38:11',1),(95,3,26,'系统管理-修改',1,'sys:system:update','2018-02-08 08:36:52','2018-02-08 08:36:52',0),(96,3,0,'系统管理-删除',1,'sys:system:delete','2018-02-08 08:39:14','2018-02-08 08:39:30',1),(97,3,0,'菜单管理-查看',1,'sys:menu:read','2018-02-22 13:47:08','2018-02-22 13:47:08',0),(98,3,0,'菜单管理-新增',1,'sys:menu:create','2018-02-22 13:47:39','2018-02-22 13:47:50',1),(99,3,0,'菜单管理-修改',1,'sys:menu:update','2018-02-22 13:48:21','2018-02-22 13:48:29',1),(100,3,0,'菜单管理-删除',1,'sys:menu:delete','2018-02-22 13:48:58','2018-02-22 13:48:58',0),(101,3,30,'权限管理-查看',1,'sys:permission:read','2018-02-22 13:49:57','2018-02-22 14:32:12',1),(102,3,30,'权限管理-新增',1,'sys:permission:create','2018-02-22 13:50:14','2018-02-22 14:32:02',1),(103,3,30,'权限管理-修改',1,'sys:permission:update','2018-02-22 13:50:31','2018-02-22 14:31:50',1),(104,3,30,'权限管理-删除',1,'sys:permission:delete','2018-02-22 13:50:59','2018-02-22 14:31:32',1),(105,3,0,'角色管理-查看',1,'sys:role:read','2018-02-22 13:51:48','2018-02-22 13:51:48',0),(106,3,0,'角色管理-新增',1,'sys:role:create','2018-02-22 13:52:12','2018-02-22 13:52:22',1),(107,3,0,'角色管理-修改',1,'sys:role:update','2018-02-22 13:57:26','2018-02-22 13:57:26',0),(108,3,23,'角色管理-删除',1,'sys:role:delete','2018-02-22 13:57:54','2018-02-22 14:34:59',1),(109,3,0,'角色管理-分配菜单',1,'sys:role:assignMenu','2018-02-22 13:58:17','2018-02-22 13:58:17',0),(110,3,0,'角色管理-分配权限',1,'sys:role:assignPermission','2018-02-22 13:58:40','2018-02-22 13:58:40',0),(111,3,0,'用户管理-查看',1,'sys:user:read','2018-02-22 13:59:09','2018-02-22 13:59:09',0),(112,3,0,'用户管理-新增',1,'sys:user:create','2018-02-22 13:59:25','2018-02-22 13:59:25',0),(113,3,0,'用户管理-修改',1,'sys:user:update','2018-02-22 13:59:40','2018-02-22 13:59:40',0),(114,3,0,'用户管理-删除',1,'sys:user:delete','2018-02-22 13:59:57','2018-02-22 13:59:57',0),(115,3,0,'用户管理-分配角色',1,'sys:user:assignRole','2018-02-22 14:00:18','2018-02-22 14:00:18',0),(116,3,0,'用户管理-分配菜单',1,'sys:user:assignMenu','2018-02-22 14:00:42','2018-02-22 14:00:42',0),(117,3,0,'用户管理-分配权限',1,'sys:user:assignPermission','2018-02-22 14:01:03','2018-02-22 14:01:03',0);
+INSERT INTO `rbac_permission` VALUES (93,3,0,'系统管理-查看',1,'sys:system:read','2018-02-08 08:35:15','2018-02-08 08:37:48',1),(94,3,0,'系统管理-新增',1,'sys:system:create','2018-02-08 08:36:08','2018-02-08 08:38:11',1),(95,3,26,'系统管理-修改',1,'sys:system:update','2018-02-08 08:36:52','2018-02-08 08:36:52',0),(96,3,0,'系统管理-删除',1,'sys:system:delete','2018-02-08 08:39:14','2018-02-08 08:39:30',1),(97,3,0,'菜单管理-查看',1,'sys:menu:read','2018-02-22 13:47:08','2018-02-22 13:47:08',0),(98,3,0,'菜单管理-新增',1,'sys:menu:create','2018-02-22 13:47:39','2018-02-22 13:47:50',1),(99,3,0,'菜单管理-修改',1,'sys:menu:update','2018-02-22 13:48:21','2018-02-22 13:48:29',1),(100,3,0,'菜单管理-删除',1,'sys:menu:delete','2018-02-22 13:48:58','2018-02-22 13:48:58',0),(101,3,30,'权限管理-查看',1,'sys:permission:read','2018-02-22 13:49:57','2018-02-22 14:32:12',1),(102,3,30,'权限管理-新增',1,'sys:permission:create','2018-02-22 13:50:14','2018-02-22 14:32:02',1),(103,3,30,'权限管理-修改',1,'sys:permission:update','2018-02-22 13:50:31','2018-02-22 14:31:50',1),(104,3,30,'权限管理-删除',1,'sys:permission:delete','2018-02-22 13:50:59','2018-02-22 14:31:32',1),(105,3,0,'角色管理-查看',1,'sys:role:read','2018-02-22 13:51:48','2018-02-22 13:51:48',0),(106,3,0,'角色管理-新增',1,'sys:role:create','2018-02-22 13:52:12','2018-02-22 13:52:22',1),(107,3,0,'角色管理-修改',1,'sys:role:update','2018-02-22 13:57:26','2018-02-22 13:57:26',0),(108,3,23,'角色管理-删除',1,'sys:role:delete','2018-02-22 13:57:54','2018-02-22 14:34:59',1),(109,3,0,'角色管理-分配菜单',1,'sys:role:assignMenu','2018-02-22 13:58:17','2018-02-22 13:58:17',0),(110,3,0,'角色管理-分配权限',1,'sys:role:assignPermission','2018-02-22 13:58:40','2018-02-22 13:58:40',0),(111,3,0,'用户管理-查看',1,'sys:user:read','2018-02-22 13:59:09','2018-02-22 13:59:09',0),(112,3,0,'用户管理-新增',1,'sys:user:create','2018-02-22 13:59:25','2018-02-22 13:59:25',0),(113,3,0,'用户管理-修改',1,'sys:user:update','2018-02-22 13:59:40','2018-02-22 13:59:40',0),(114,3,0,'用户管理-删除',1,'sys:user:delete','2018-02-22 13:59:57','2018-02-22 13:59:57',0),(115,3,0,'用户管理-分配角色',1,'sys:user:assignRole','2018-02-22 14:00:18','2018-02-22 14:00:18',0),(116,3,0,'用户管理-分配菜单',1,'sys:user:assignMenu','2018-02-22 14:00:42','2018-02-22 14:00:42',0),(117,3,0,'用户管理-分配权限',1,'sys:user:assignPermission','2018-02-22 14:01:03','2018-02-22 14:01:03',0),(118,3,31,'组织机构-查看',1,'sys:organization:read','2018-02-23 08:15:49','2018-02-23 08:15:49',0),(119,3,31,'组织机构-新增',1,'sys:organization:create','2018-02-23 08:16:24','2018-02-23 08:16:24',0),(120,3,31,'组织机构-修改',1,'sys:organization:update','2018-02-23 08:16:51','2018-02-23 08:16:51',0),(121,3,31,'组织机构-删除',1,'sys:organization:delete','2018-02-23 08:17:13','2018-02-23 08:17:13',0),(122,3,22,'用户管理-分配组织机构',1,'sys:user:assignOrganization','2018-02-23 08:52:41','2018-02-23 08:52:41',0);
 /*!40000 ALTER TABLE `rbac_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +127,7 @@ CREATE TABLE `rbac_role` (
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `version` int(11) DEFAULT '0' COMMENT '版本号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='角色';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +136,7 @@ CREATE TABLE `rbac_role` (
 
 LOCK TABLES `rbac_role` WRITE;
 /*!40000 ALTER TABLE `rbac_role` DISABLE KEYS */;
-INSERT INTO `rbac_role` VALUES (8,'sso','单点登录','单点登录',1,'2018-02-02 08:46:59','2018-02-02 08:46:59',1),(9,'serverAdministrator','服务管理员','服务管理员',1,'2018-02-02 08:46:59','2018-02-02 08:46:59',1),(10,'admin','系统管理员','系统管理员',1,'2018-02-02 08:46:59','2018-02-22 14:35:51',5);
+INSERT INTO `rbac_role` VALUES (8,'sso','单点登录','单点登录',1,'2018-02-02 08:46:59','2018-02-02 08:46:59',1),(9,'serverAdministrator','服务管理员','服务管理员',1,'2018-02-02 08:46:59','2018-02-02 08:46:59',1),(10,'admin','系统管理员','系统管理员',1,'2018-02-02 08:46:59','2018-02-23 08:52:53',8);
 /*!40000 ALTER TABLE `rbac_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +152,7 @@ CREATE TABLE `rbac_role_menu` (
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   `menu_id` int(11) DEFAULT NULL COMMENT '菜单ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='角色-菜单关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COMMENT='角色-菜单关系表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +161,7 @@ CREATE TABLE `rbac_role_menu` (
 
 LOCK TABLES `rbac_role_menu` WRITE;
 /*!40000 ALTER TABLE `rbac_role_menu` DISABLE KEYS */;
-INSERT INTO `rbac_role_menu` VALUES (31,10,21),(32,10,22),(33,10,23),(34,10,24),(35,10,25),(36,10,26),(37,10,30);
+INSERT INTO `rbac_role_menu` VALUES (38,10,21),(39,10,22),(40,10,23),(41,10,24),(42,10,25),(43,10,26),(44,10,30),(45,10,31);
 /*!40000 ALTER TABLE `rbac_role_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,7 +177,7 @@ CREATE TABLE `rbac_role_permission` (
   `role_id` int(10) unsigned NOT NULL COMMENT '角色编号',
   `permission_id` int(10) unsigned NOT NULL COMMENT '权限编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,7 +186,7 @@ CREATE TABLE `rbac_role_permission` (
 
 LOCK TABLES `rbac_role_permission` WRITE;
 /*!40000 ALTER TABLE `rbac_role_permission` DISABLE KEYS */;
-INSERT INTO `rbac_role_permission` VALUES (46,10,93),(47,10,94),(48,10,95),(49,10,96),(50,10,97),(51,10,98),(52,10,99),(53,10,100),(54,10,101),(55,10,102),(56,10,103),(57,10,104),(58,10,105),(59,10,106),(60,10,107),(61,10,108),(62,10,109),(63,10,110),(64,10,111),(65,10,112),(66,10,113),(67,10,114),(68,10,115),(69,10,116),(70,10,117);
+INSERT INTO `rbac_role_permission` VALUES (100,10,93),(101,10,94),(102,10,95),(103,10,96),(104,10,97),(105,10,98),(106,10,99),(107,10,100),(108,10,101),(109,10,102),(110,10,103),(111,10,104),(112,10,105),(113,10,106),(114,10,107),(115,10,108),(116,10,109),(117,10,110),(118,10,111),(119,10,112),(120,10,113),(121,10,114),(122,10,115),(123,10,116),(124,10,117),(125,10,118),(126,10,119),(127,10,120),(128,10,121),(129,10,122);
 /*!40000 ALTER TABLE `rbac_role_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +260,7 @@ CREATE TABLE `rbac_user` (
 
 LOCK TABLES `rbac_user` WRITE;
 /*!40000 ALTER TABLE `rbac_user` DISABLE KEYS */;
-INSERT INTO `rbac_user` VALUES (14,'test123','test','123','123','123fff','123',1,1,'2018-02-01 01:31:47','2018-02-22 14:08:10',1),(24,'jbone','jbone','渔樵','http://majunwei.com/logo.png','1','1',1,1,'2018-02-01 01:31:47','2018-02-08 09:54:52',15);
+INSERT INTO `rbac_user` VALUES (14,'test123','test','123','123','123fff','123',1,1,'2018-02-01 01:31:47','2018-02-22 14:08:10',1),(24,'jbone','jbone','渔樵','http://majunwei.com/logo.png','1','1',1,1,'2018-02-01 01:31:47','2018-02-23 09:06:24',17);
 /*!40000 ALTER TABLE `rbac_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,7 +301,7 @@ CREATE TABLE `rbac_user_organization` (
   `user_id` int(10) unsigned NOT NULL COMMENT '用户编号',
   `organization_id` int(10) unsigned NOT NULL COMMENT '组织编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COMMENT='用户组织关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COMMENT='用户组织关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -310,7 +310,7 @@ CREATE TABLE `rbac_user_organization` (
 
 LOCK TABLES `rbac_user_organization` WRITE;
 /*!40000 ALTER TABLE `rbac_user_organization` DISABLE KEYS */;
-INSERT INTO `rbac_user_organization` VALUES (19,1,1),(20,1,4),(21,1,5),(22,1,6),(23,1,7);
+INSERT INTO `rbac_user_organization` VALUES (19,1,1),(20,1,4),(21,1,5),(22,1,6),(23,1,7),(26,24,12),(27,24,13),(28,24,14);
 /*!40000 ALTER TABLE `rbac_user_organization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -409,4 +409,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-22 22:44:33
+-- Dump completed on 2018-02-23 17:07:51

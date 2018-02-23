@@ -20,6 +20,7 @@ public class RbacOrganizationEntity implements Serializable {
     private Timestamp updateTime;
     private int version;
     private List<RbacUserEntity> users;
+    private List<RbacOrganizationEntity> childOrganizations;
 
     @Id
     @Column(name = "id")
@@ -97,5 +98,15 @@ public class RbacOrganizationEntity implements Serializable {
 
     public void setUsers(List<RbacUserEntity> users) {
         this.users = users;
+    }
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "pid")
+    public List<RbacOrganizationEntity> getChildOrganizations() {
+        return childOrganizations;
+    }
+
+    public void setChildOrganizations(List<RbacOrganizationEntity> childOrganizations) {
+        this.childOrganizations = childOrganizations;
     }
 }

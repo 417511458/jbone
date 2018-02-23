@@ -40,6 +40,9 @@ public class UserService {
     @Autowired
     RbacPermissionRepository permissionRepository;
 
+    @Autowired
+    RbacOrganizationRepository organizationRepository;
+
 
 
     /**
@@ -292,6 +295,22 @@ public class UserService {
             List<RbacPermissionEntity> newPermissions = permissionRepository.findByIdIn(permissionModel.getPermission());
             permissionEntities.addAll(newPermissions);
         }
+    }
+
+    /**
+     * 分配组织机构
+     */
+    public void assignOrganization(AssignOrganizationModel assignOrganizationModel){
+        //首先删除用户在该系统下的所有菜单
+        RbacUserEntity userEntity = this.findById(assignOrganizationModel.getUserId());
+        List<RbacOrganizationEntity> organizationEntities = userEntity.getOrganizations();
+        organizationEntities.clear();
+        //然后插入用户菜单
+        if(assignOrganizationModel.getUserOrganization() != null && assignOrganizationModel.getUserOrganization().length > 0){
+            List<RbacOrganizationEntity> newOganizations = organizationRepository.findByIdIn(assignOrganizationModel.getUserOrganization());
+            organizationEntities.addAll(newOganizations);
+        }
+
     }
 
 

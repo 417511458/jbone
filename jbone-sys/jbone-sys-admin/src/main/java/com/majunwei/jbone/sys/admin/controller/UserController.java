@@ -166,6 +166,34 @@ public class UserController {
         return ResultUtils.wrapSuccess();
     }
 
+    @RequiresPermissions("sys:user:assignOrganization")
+    @Description("跳转至分配菜单页面")
+    @RequestMapping("toAssignOrganization/{userId}")
+    public String toOrganization(@PathVariable("userId")String userId,ModelMap modelMap){
+        modelMap.put("userId",userId);
+
+        RbacUserEntity userEntity = userService.findById(Integer.parseInt(userId));
+        List<RbacOrganizationEntity> organizationEntities = userEntity.getOrganizations();
+        List<Integer> organizationIds = new ArrayList<>();
+        if(organizationEntities != null && !organizationEntities.isEmpty()){
+            for (RbacOrganizationEntity organizationEntity : organizationEntities){
+                organizationIds.add(organizationEntity.getId());
+            }
+        }
+        modelMap.put("organizationIds",organizationIds);
+
+        return "pages/user/assignOrganization";
+    }
+
+    @RequiresPermissions("sys:user:assignOrganization")
+    @Description("执行分配组织机构")
+    @RequestMapping("doAssignOrganization")
+    @ResponseBody
+    public Result doAssignOrganization(@Validated AssignOrganizationModel organizationModel,BindingResult bindingResult){
+        userService.assignOrganization(organizationModel);
+        return ResultUtils.wrapSuccess();
+    }
+
     @RequiresPermissions("sys:user:assignPermission")
     @Description("跳转至分配菜单页面")
     @RequestMapping("toAssignPermission/{userId}")
