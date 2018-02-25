@@ -99,7 +99,14 @@ spring:
             name: Jbone CAS
             serviceBaseUrl: https://jbone-cas.majunwei.com:8443
           url: http://localhost:10002/
-
+    rabbitmq:
+        host: 127.0.0.1
+        port: 5672
+        username: guest
+        password: guest
+    sleuth:
+        sampler:
+            percentage: 1
 endpoints:
     enabled: true
     sensitive: false

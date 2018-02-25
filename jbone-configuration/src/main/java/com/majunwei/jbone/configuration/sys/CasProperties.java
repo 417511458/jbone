@@ -2,6 +2,7 @@ package com.majunwei.jbone.configuration.sys;
 
 import java.io.Serializable;
 import java.net.URLEncoder;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -47,7 +48,7 @@ public class CasProperties implements Serializable {
     /**
      * 权限过滤规则，限制需要CAS过滤的请求路径
      */
-    private Map<String,String> filterChainDefinition;
+    private LinkedHashMap<String,String> filterChainDefinition = new LinkedHashMap<String,String>();
 
     public String getCasServerUrl() {
         return casServerUrl;
@@ -89,11 +90,11 @@ public class CasProperties implements Serializable {
         this.casFilterUrlPattern = casFilterUrlPattern;
     }
 
-    public Map<String, String> getFilterChainDefinition() {
+    public LinkedHashMap<String, String> getFilterChainDefinition() {
         return filterChainDefinition;
     }
 
-    public void setFilterChainDefinition(Map<String, String> filterChainDefinition) {
+    public void setFilterChainDefinition(LinkedHashMap<String, String> filterChainDefinition) {
         this.filterChainDefinition = filterChainDefinition;
     }
 

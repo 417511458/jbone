@@ -1,44 +1,34 @@
-spring.application.name=jbone-sm-admin
+spring.application.name=jbone-sm-monitor
 
-server.port=10002
-# server.context-path=/jbone-sm-admin
+server.port=10003
 
 eureka.client.register-with-eureka=true
 eureka.client.fetch-registry=true
 eureka.client.service-url.defaultZone=http://localhost:10001/eureka
 
-turbine.app-config=JBONE-SYS-SERVER
-turbine.cluster-name-expression="default"
-turbine.combine-host-port=true
-
 eureka.instance.prefer-ip-address=true
 eureka.instance.instance-id=http://${spring.cloud.client.ipAddress}:${server.port}
 
-spring.boot.admin.context-path=/admin
-
 management.security.enabled=false
-#spring.boot.admin.routes.endpoints=env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
-#spring.boot.admin.turbine.clusters=default
-#spring.boot.admin.turbine.location=http://localhost:10002/turbine.stream
 
 #CAS服务地址
 jbone.cas.casServerUrl = https://jbone-cas.majunwei.com:8443/cas
 #当前系统地址
-jbone.cas.currentServerUrlPrefix = http://jbone-sm-admin.majunwei.com:10002
+jbone.cas.currentServerUrlPrefix = http://jbone-sm-monitor.majunwei.com:10003
 #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
 jbone.cas.casFilterUrlPattern = /cas
 #登录成功后的跳转路径，默认"/"
-jbone.cas.successUrl=/admin
+jbone.cas.successUrl=/zipkin
 #未授权的跳转路径，默认"/403"
 jbone.cas.unauthorizedUrl=/403
 #权限过滤规则
-jbone.cas.filterChainDefinition[/admin/**]=authc,roles[serverAdministrator]
+jbone.cas.filterChainDefinition[/zipkin/**]=authc,roles[serverAdministrator]
 jbone.cas.filterChainDefinition[/login]=anon
 jbone.cas.filterChainDefinition[/**]=anon
 #客户端Session失效时间，默认30分钟
 jbone.cas.clientSessionTimeout=180000
-#系统服务名称，要与Jbone-sys-server里的服务名一致
-jbone.sys.serverName=jbone-sm-admin
+#系统服务名称
+jbone.sys.serverName=jbone-sm-monitor
 #feign通讯协议，默认http://
 jbone.sys.serverProtoal=http://
 
@@ -57,3 +47,23 @@ info.domain=http://www.majunwei.com
 
 spring.redis.host=127.0.0.1
 spring.redis.port=6379
+
+
+# 调用链配置
+spring.sleuth.enabled=false
+zipkin.storage.type=mysql
+spring.datasource.schema[0]=classpath:/zipkin.sql
+#spring boot数据源配置
+spring.datasource.url=jdbc:mysql://localhost:3306/jbone_zipkin?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+spring.datasource.username=root
+spring.datasource.password=123
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.initialize=true
+spring.datasource.continue-on-error=true
+
+
+#rabbitmq配置
+spring.rabbitmq.host=localhost
+spring.rabbitmq.port=5672
+spring.rabbitmq.username=guest
+spring.rabbitmq.password=guest

@@ -13,6 +13,7 @@
     <modules>
         <module>jbone-sm-register</module>
         <module>jbone-sm-admin</module>
+        <module>jbone-sm-monitor</module>
     </modules>
 
 

@@ -94,6 +94,11 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 **环境变量**
 
 ![环境变量](doc/admin_properties.png)
+## 调用链跟踪
+### trace跟踪
+![trace](doc/sm_monitor_01.png)
+### 调用链
+![调用链](doc/sm_monitor_02.png)
 ## Jbone系统管理
 ### 系统管理
 ![Jbone系统管理](doc/systemManager.png)
