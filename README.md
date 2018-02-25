@@ -20,6 +20,7 @@ QQ群：547104190
 * jbone-sm : 服务管理模块
     * jbone-sm-admin : 服务管理系统，包括服务监控、服务管理等
     * jbone-sm-register : 服务注册中心，原则上所有服务都要注册进来
+    * jbone-sm-monitor : 服务监控系统，主要包含服务调用链分析和trace跟踪
 * jbone-sys : 系统管理模块
     * jbone-sys-admin ： 系统管理后台
     * jbone-sys-api : 系统服务对外接口定义
