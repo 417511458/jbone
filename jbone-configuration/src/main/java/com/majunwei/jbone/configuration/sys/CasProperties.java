@@ -122,6 +122,14 @@ public class CasProperties implements Serializable {
         }
     }
 
+    public String getEncodedLogoutUrl(){
+        try {
+            return casServerUrl + logoutUrl + "?service=" + URLEncoder.encode(currentServerUrlPrefix + casFilterUrlPattern, "utf-8");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public long getClientSessionTimeout() {
         return clientSessionTimeout;
     }
