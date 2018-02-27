@@ -1,5 +1,7 @@
 package com.majunwei.jbone.cas.client;
 
+import com.majunwei.jbone.cas.client.filter.JboneCasFilter;
+import com.majunwei.jbone.cas.client.filter.JboneLogoutFilter;
 import com.majunwei.jbone.cas.client.listener.JboneCasSessionListener;
 import com.majunwei.jbone.cas.client.realm.JboneCasRealm;
 import com.majunwei.jbone.cas.client.session.JboneCasSessionDao;
@@ -153,8 +155,8 @@ public class ShiroCasConfiguration {
      * CAS过滤器
      */
     @Bean(name = "casFilter")
-    public CasFilter getCasFilter(JboneConfiguration jboneConfiguration) {
-        CasFilter casFilter = new CasFilter();
+    public JboneCasFilter getCasFilter(JboneConfiguration jboneConfiguration,StringRedisTemplate redisTemplate) {
+        JboneCasFilter casFilter = new JboneCasFilter(redisTemplate);
         casFilter.setName("casFilter");
         casFilter.setEnabled(true);
         //失败后跳转到CAS登录页面
@@ -166,7 +168,7 @@ public class ShiroCasConfiguration {
      * ShiroFilter
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager, CasFilter casFilter,JboneConfiguration jboneConfiguration) {
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager, JboneCasFilter casFilter,JboneConfiguration jboneConfiguration,StringRedisTemplate redisTemplate) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
         // SecurityManager，Shiro安全管理器
@@ -182,7 +184,7 @@ public class ShiroCasConfiguration {
         filters.put("casFilter", casFilter);
 
         // 注销
-        LogoutFilter logoutFilter = new LogoutFilter();
+        JboneLogoutFilter logoutFilter = new JboneLogoutFilter(redisTemplate);
         logoutFilter.setRedirectUrl(jboneConfiguration.getCas().getEncodedLogoutUrl());
 
         filters.put("logout",logoutFilter);
