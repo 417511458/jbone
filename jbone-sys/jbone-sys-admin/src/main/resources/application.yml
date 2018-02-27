@@ -1,0 +1,107 @@
+spring:
+  application:
+    name: jbone-sys-admin
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  #rabbitmq配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  thymeleaf:
+    cache: false
+  jpa:
+    show-sql: true
+
+#服务
+server:
+  port: 20002
+
+#注册中心
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:10001/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: http://${spring.cloud.client.ipAddress}:${server.port}
+
+management:
+  security:
+    enabled: false
+
+#Jbone配置
+jbone:
+  cas:
+    #CAS服务地址
+    casServerUrl: https://jbone-cas.majunwei.com:8443/cas
+    #当前系统地址
+    currentServerUrlPrefix: http://jbone-sys-admin.majunwei.com:20002
+    #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
+    casFilterUrlPattern: /cas
+    #登录成功后的跳转路径，默认"/"
+    successUrl: /
+    #未授权的跳转路径，默认"/403"
+    unauthorizedUrl: /403
+    #客户端Session失效时间，默认30分钟
+    clientSessionTimeout: 180000
+    #权限过滤规则
+    filterChainDefinition:
+      /health: anon
+      /archaius: anon
+      /refresh: anon
+      /configprops: anon
+      /env/**: anon
+      /service-registry/**: anon
+      /auditevents: anon
+      /pause: anon
+      /dump: anon
+      /loggers/**: anon
+      /resume: anon
+      /metrics/**: anon
+      /channels: anon
+      /beans: anon
+      /mappings: anon
+      /autoconfig: anon
+      /trace: anon
+      /hystrix.stream/**: anon
+      /info: anon
+      /restart: anon
+      /heapdump: anon
+      /features: anon
+      /**: authc
+  #当前系统名，在系统管理里面对应的名字
+  sys:
+    serverName: jbone-sys-admin
+    jdbc:
+      url: jdbc:mysql://localhost:3306/jbone_sys?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+      username: root
+      password: 123
+      driverClassName: com.mysql.jdbc.Driver
+      maxActive: 10
+      initialSize: 2
+      maxWait: 10000
+  auth:
+    #授权服务名称，Jbone-sys-server注册的服务名
+    serverName: jbone-sys-server
+    #授权服务feign通讯协议，默认http://
+    serverProtocol: http://
+
+
+# info接口返回值
+info:
+  app:
+    java:
+      source: ${java.version}
+      target: ${java.version}
+    name: ${spring.application.name}
+  git:
+    url: https://github.com/417511458/jbone
+  gitee:
+    url: https://gitee.com/majunwei2017/jbone
+  domain: http://www.majunwei.com
+
