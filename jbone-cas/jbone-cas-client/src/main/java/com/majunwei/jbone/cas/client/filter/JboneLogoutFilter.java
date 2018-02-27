@@ -54,6 +54,8 @@ public class JboneLogoutFilter extends LogoutFilter {
                 //删除userId
                 redisTemplate.delete(JboneCasFilter.USERID_SESSION_PREFIX + userId);
             }
+            //删除当前用户session
+            redisTemplate.delete(JboneCasSessionDao.SESSION_KEY + sessionId);
         } catch (Exception e) {
             e.printStackTrace();
         }
