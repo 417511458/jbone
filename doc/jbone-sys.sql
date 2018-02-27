@@ -66,7 +66,7 @@ CREATE TABLE `rbac_organization` (
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `version` int(11) DEFAULT NULL COMMENT '版本号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COMMENT='组织';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COMMENT='组织';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +217,7 @@ CREATE TABLE `rbac_system` (
   `service_name` varchar(50) DEFAULT NULL COMMENT '服务名称',
   `service_theme_path` varchar(45) DEFAULT NULL COMMENT '服务皮肤路径',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='系统';
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='系统';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -226,7 +226,7 @@ CREATE TABLE `rbac_system` (
 
 LOCK TABLES `rbac_system` WRITE;
 /*!40000 ALTER TABLE `rbac_system` DISABLE KEYS */;
-INSERT INTO `rbac_system` VALUES (2,'http://jbone-sm-admin.majunwei:10002/jbone-sm-admin',1,'jbone-sm-admin','服务管理系统','服务管理系统',2,NULL,NULL,0,1,'http://jbone-sm-admin.majunwei.com:10002/cas111','http://localhost:20001/Jbone-sys-server/service/getTheme',10002,'Jbone服务管理系统，是基于Spring Cloud、Spring Boot Admin做的服务管理，包含服务健康检查、内存分析、JVM监控、垃圾回收、环境变量等监控和管理等功能',1,'Jbone服务管理系统','jbonesmadmin1'),(3,'http://jbone-sys-admin.majunwei:20002',1,'jbone-sys-admin','系统管理','系统管理',0,NULL,'2018-01-28 08:32:46',1,1,NULL,NULL,20002,NULL,1,NULL,NULL),(17,'test',-1,'测试系统','测试系统','ffffeeee',0,'2018-01-28 08:14:08','2018-01-28 08:30:59',2,0,NULL,NULL,0,NULL,0,NULL,NULL),(18,'qwe',1,'qwe','qwe','qwe',0,'2018-01-29 10:56:57','2018-01-29 10:56:57',0,0,NULL,NULL,0,NULL,0,NULL,NULL);
+INSERT INTO `rbac_system` VALUES (2,'http://jbone-sm-admin.majunwei:10002/jbone-sm-admin',1,'jbone-sm-admin','服务管理系统','服务管理系统',2,NULL,NULL,0,1,'http://jbone-sm-admin.majunwei.com:10002/cas111','http://localhost:20001/Jbone-sys-server/service/getTheme',10002,'Jbone服务管理系统，是基于Spring Cloud、Spring Boot Admin做的服务管理，包含服务健康检查、内存分析、JVM监控、垃圾回收、环境变量等监控和管理等功能',1,'Jbone服务管理系统','jbonesmadmin1'),(3,'http://jbone-sys-admin.majunwei:20002',1,'jbone-sys-admin','系统管理','系统管理',0,NULL,'2018-01-28 08:32:46',1,1,NULL,NULL,20002,NULL,1,NULL,NULL),(17,'test',-1,'测试系统','测试系统','ffffeeee',0,'2018-01-28 08:14:08','2018-01-28 08:30:59',2,0,NULL,NULL,0,NULL,0,NULL,NULL),(18,'qwe',1,'qwe','qwe','qwe',0,'2018-01-29 10:56:57','2018-01-29 10:56:57',0,0,NULL,NULL,0,NULL,0,NULL,NULL),(19,'http://jbone-sm-monitor.majunwei.com/10003',1,'jbone-sm-monitor','服务监控系统','服务监控系统',0,'2018-02-24 10:14:55','2018-02-24 10:14:55',0,0,NULL,NULL,0,NULL,0,NULL,NULL);
 /*!40000 ALTER TABLE `rbac_system` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,7 +240,7 @@ DROP TABLE IF EXISTS `rbac_user`;
 CREATE TABLE `rbac_user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '编号',
   `username` varchar(20) NOT NULL COMMENT '帐号',
-  `password` varchar(32) NOT NULL COMMENT '密码MD5(密码+盐)',
+  `password` varchar(100) NOT NULL COMMENT '密码MD5(密码+盐)',
   `realname` varchar(20) DEFAULT NULL COMMENT '姓名',
   `avatar` varchar(150) DEFAULT NULL COMMENT '头像',
   `phone` varchar(20) DEFAULT NULL COMMENT '电话',
@@ -251,7 +251,7 @@ CREATE TABLE `rbac_user` (
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `version` int(11) DEFAULT '0' COMMENT '版本号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COMMENT='用户';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COMMENT='用户';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,7 +260,7 @@ CREATE TABLE `rbac_user` (
 
 LOCK TABLES `rbac_user` WRITE;
 /*!40000 ALTER TABLE `rbac_user` DISABLE KEYS */;
-INSERT INTO `rbac_user` VALUES (14,'test123','test','123','123','123fff','123',1,1,'2018-02-01 01:31:47','2018-02-22 14:08:10',1),(24,'jbone','jbone','渔樵','http://majunwei.com/logo.png','1','1',1,1,'2018-02-01 01:31:47','2018-02-23 09:06:24',17);
+INSERT INTO `rbac_user` VALUES (14,'test123','test','123','123','123fff','123',1,1,'2018-02-01 01:31:47','2018-02-22 14:08:10',1),(24,'jbone','3378289682ebbc6d3ce8adeba389967f','渔樵','http://majunwei.com/logo.png','1','1',1,1,'2018-02-01 01:31:47','2018-02-23 09:06:24',17),(25,'test1','eedcca02294e4519f834984df8ec5939','test1','','111','',1,0,'2018-02-27 13:47:53','2018-02-27 13:59:54',3);
 /*!40000 ALTER TABLE `rbac_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,7 +351,7 @@ CREATE TABLE `rbac_user_role` (
   `user_id` int(10) unsigned NOT NULL COMMENT '用户编号',
   `role_id` int(10) DEFAULT NULL COMMENT '角色编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COMMENT='用户角色关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COMMENT='用户角色关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,7 +360,7 @@ CREATE TABLE `rbac_user_role` (
 
 LOCK TABLES `rbac_user_role` WRITE;
 /*!40000 ALTER TABLE `rbac_user_role` DISABLE KEYS */;
-INSERT INTO `rbac_user_role` VALUES (4,1,1),(5,1,2),(6,2,1),(7,2,2),(46,24,8),(47,24,9),(48,24,10);
+INSERT INTO `rbac_user_role` VALUES (4,1,1),(5,1,2),(6,2,1),(7,2,2),(46,24,8),(47,24,9),(48,24,10),(49,25,8),(50,25,9),(51,25,10);
 /*!40000 ALTER TABLE `rbac_user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -409,4 +409,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-23 17:07:51
+-- Dump completed on 2018-02-27 22:01:53

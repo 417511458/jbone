@@ -1,8 +1,11 @@
 package org.apereo.cas.web.realm;
 
+import com.majunwei.jbone.common.utils.PasswordUtils;
 import com.majunwei.jbone.sys.api.UserApi;
 import com.majunwei.jbone.sys.api.model.UserInfoModel;
 import com.majunwei.jbone.sys.api.model.UserModel;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.apereo.cas.services.RegisteredServiceAccessStrategyUtils;
 import org.apereo.cas.services.UnauthorizedServiceForPrincipalException;
 import org.apereo.cas.web.SpringManager;
@@ -45,7 +48,12 @@ public class JboneCasRealm extends AuthorizingRealm {
             throw new AuthenticationException("用户不存在");
         }
 
-        return new SimpleAuthenticationInfo(userInfoModel.getUsername(), userInfoModel.getPassword(), getName());
+        //密码加密，已用户登录名作为salt
+//        String newPassword = PasswordUtils.getMd5PasswordWithSalt(new String(userInfoModel.getPassword()),userInfoModel.getUsername());
+
+        ByteSource credentialsSalt = ByteSource.Util.bytes(userInfoModel.getUsername());
+
+        return new SimpleAuthenticationInfo(userInfoModel.getUsername(), userInfoModel.getPassword(),credentialsSalt, getName());
     }
 
 

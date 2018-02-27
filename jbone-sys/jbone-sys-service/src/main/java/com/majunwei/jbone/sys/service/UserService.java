@@ -1,6 +1,7 @@
 package com.majunwei.jbone.sys.service;
 
 import com.majunwei.jbone.common.exception.JboneException;
+import com.majunwei.jbone.common.utils.PasswordUtils;
 import com.majunwei.jbone.sys.api.model.Menu;
 import com.majunwei.jbone.sys.api.model.UserModel;
 import com.majunwei.jbone.sys.dao.domain.*;
@@ -182,6 +183,7 @@ public class UserService {
     public void save(CreateUserModel userModel){
         RbacUserEntity userEntity = new RbacUserEntity();
         BeanUtils.copyProperties(userModel,userEntity);
+        userEntity.setPassword(PasswordUtils.getMd5PasswordWithSalt(userEntity.getPassword(),userEntity.getUsername()));
         userRepository.save(userEntity);
     }
 
@@ -194,7 +196,14 @@ public class UserService {
         if(userEntity == null){
             throw new JboneException("没有找到用户");
         }
+
+        String password = userModel.getPassword();
+        //如果修改了密码，则重新加密
+        if(!password.equals(userEntity.getPassword())){
+            userModel.setPassword(PasswordUtils.getMd5PasswordWithSalt(password,userEntity.getUsername()));
+        }
         BeanUtils.copyProperties(userModel,userEntity);
+
         userRepository.save(userEntity);
     }
 
