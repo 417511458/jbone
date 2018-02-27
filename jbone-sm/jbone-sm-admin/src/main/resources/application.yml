@@ -1,0 +1,96 @@
+spring:
+  application:
+    name: jbone-sm-admin
+  redis:
+    host: 127.0.0.1
+    port: 6379
+#  boot:
+#    admin:
+#      context-path: /admin
+server:
+  port: 10002
+
+#注册中心
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:10001/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: http://${spring.cloud.client.ipAddress}:${server.port}
+
+turbine:
+  app-config: JBONE-SYS-SERVER
+  cluster-name-expression: "default"
+  combine-host-port: true
+
+management:
+  security:
+    enabled: false
+
+#CAS服务地址
+jbone:
+  cas:
+    casServerUrl: https://jbone-cas.majunwei.com:8443/cas
+    #当前系统地址
+    currentServerUrlPrefix: http://jbone-sm-admin.majunwei.com:10002
+    #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
+    casFilterUrlPattern: /cas
+    #登录成功后的跳转路径，默认"/"
+    successUrl: /
+    #未授权的跳转路径，默认"/403"
+    unauthorizedUrl: /403
+    clientSessionTimeout: 180000
+    #权限过滤规则
+    filterChainDefinition:
+      /health: anon
+      /archaius: anon
+      /refresh: anon
+      /configprops: anon
+      /env/**: anon
+      /service-registry/**: anon
+      /auditevents: anon
+      /pause: anon
+      /dump: anon
+      /loggers/**: anon
+      /resume: anon
+      /metrics/**: anon
+      /channels: anon
+      /beans: anon
+      /mappings: anon
+      /autoconfig: anon
+      /trace: anon
+      /hystrix.stream/**: anon
+      /info: anon
+      /restart: anon
+      /heapdump: anon
+      /features: anon
+      /**: authc
+
+  #系统服务名称
+  sys:
+    serverName: jbone-sm-admin
+    #feign通讯协议，默认http://
+    serverProtoal: http://
+
+  #授权
+  auth:
+    #授权服务名称，Jbone-sys-server注册的服务名
+    serverName: jbone-sys-server
+    #授权服务feign通讯协议，默认http://
+    serverProtocol: http://
+
+# info接口返回值
+info:
+  app:
+    java:
+      source: ${java.version}
+      target: ${java.version}
+    name: ${spring.application.name}
+  git:
+    url: https://github.com/417511458/jbone
+  gitee:
+    url: https://gitee.com/majunwei2017/jbone
+  domain: http://www.majunwei.com
