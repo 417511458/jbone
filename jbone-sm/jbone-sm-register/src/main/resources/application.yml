@@ -1,0 +1,34 @@
+server:
+  port: 10001
+
+spring:
+  application:
+    name: Jbone-sm-register
+
+management:
+  security:
+    enabled: false
+
+#注册中心
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:10001/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: http://${spring.cloud.client.ipAddress}:${server.port}
+
+# info接口返回值
+info:
+  app:
+    java:
+      source: ${java.version}
+      target: ${java.version}
+    name: ${spring.application.name}
+  git:
+    url: https://github.com/417511458/jbone
+  gitee:
+    url: https://gitee.com/majunwei2017/jbone
+  domain: http://www.majunwei.com

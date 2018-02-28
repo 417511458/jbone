@@ -12,6 +12,9 @@ spring:
     password: guest
   thymeleaf:
     cache: false
+    enabled: true
+  freemarker:
+    enabled: false
   jpa:
     show-sql: true
 
