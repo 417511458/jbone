@@ -67,7 +67,7 @@ jbone:
       /restart: anon
       /heapdump: anon
       /features: anon
-      /**: authc
+      /**: authc,roles[serverAdministrator]
 
   #系统服务名称
   sys:

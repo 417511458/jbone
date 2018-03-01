@@ -72,6 +72,10 @@ cas:
             # tgt有效期（会话超时时间）
             timeout:
                 maxTimeToLiveInSeconds: 28800
+  #单点登出
+  slo:
+    disabled: false
+    asynchronous: true
 spring:
     http:
         encoding:

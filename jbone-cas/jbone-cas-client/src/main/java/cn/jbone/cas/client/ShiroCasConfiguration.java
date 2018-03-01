@@ -4,11 +4,12 @@ import cn.jbone.cas.client.listener.JboneCasSessionListener;
 import cn.jbone.cas.client.realm.JboneCasRealm;
 import cn.jbone.cas.client.session.JboneCasSessionDao;
 import cn.jbone.cas.client.session.JboneCasSessionFactory;
-import cn.jbone.cas.client.filter.JboneCasFilter;
 import cn.jbone.cas.client.filter.JboneLogoutFilter;
 import cn.jbone.configuration.JboneConfiguration;
 import cn.jbone.sys.api.UserApi;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.cas.CasFilter;
 import org.apache.shiro.cas.CasSubjectFactory;
 import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.session.mgt.SessionFactory;
@@ -16,6 +17,7 @@ import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.slf4j.Logger;
@@ -139,13 +141,16 @@ public class ShiroCasConfiguration {
     private void loadShiroFilterChain(ShiroFilterFactoryBean shiroFilterFactoryBean,JboneConfiguration jboneConfiguration){
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
 
-        filterChainDefinitionMap.put(jboneConfiguration.getCas().getCasFilterUrlPattern(), "casFilter");// shiro集成cas后，首先添加该规则
+        filterChainDefinitionMap.put(jboneConfiguration.getCas().getCasFilterUrlPattern(), "casLogout,casFilter");// shiro集成cas后，首先添加该规则
         filterChainDefinitionMap.put("/logout","logout");
+        filterChainDefinitionMap.put("/casLogout","casLogout");
         //添加jbone.cas的配置规则
         if(jboneConfiguration.getCas().getFilterChainDefinition() != null){
             filterChainDefinitionMap.putAll(jboneConfiguration.getCas().getFilterChainDefinition());
         }
+        String common = filterChainDefinitionMap.get("/**");
 
+        filterChainDefinitionMap.put("/**","casLogout" + (StringUtils.isNotBlank(common) ? ("," + common) : ""));
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
     }
 
@@ -153,8 +158,8 @@ public class ShiroCasConfiguration {
      * CAS过滤器
      */
     @Bean(name = "casFilter")
-    public JboneCasFilter getCasFilter(JboneConfiguration jboneConfiguration,StringRedisTemplate redisTemplate) {
-        JboneCasFilter casFilter = new JboneCasFilter(redisTemplate);
+    public CasFilter getCasFilter(JboneConfiguration jboneConfiguration) {
+        CasFilter casFilter = new CasFilter();
         casFilter.setName("casFilter");
         casFilter.setEnabled(true);
         //失败后跳转到CAS登录页面
@@ -166,7 +171,7 @@ public class ShiroCasConfiguration {
      * ShiroFilter
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager, JboneCasFilter casFilter,JboneConfiguration jboneConfiguration,StringRedisTemplate redisTemplate) {
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager, CasFilter casFilter,JboneConfiguration jboneConfiguration,StringRedisTemplate redisTemplate,DefaultWebSessionManager sessionManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
         // SecurityManager，Shiro安全管理器
@@ -181,11 +186,14 @@ public class ShiroCasConfiguration {
         Map<String, Filter> filters = new HashMap<>();
         filters.put("casFilter", casFilter);
 
-        // 注销
-        JboneLogoutFilter logoutFilter = new JboneLogoutFilter(redisTemplate);
+        LogoutFilter logoutFilter = new LogoutFilter();
         logoutFilter.setRedirectUrl(jboneConfiguration.getCas().getEncodedLogoutUrl());
-
         filters.put("logout",logoutFilter);
+        // 注销
+        JboneLogoutFilter jboneLogoutFilter = new JboneLogoutFilter(redisTemplate);
+        jboneLogoutFilter.setSessionManager(sessionManager);
+        filters.put("casLogout",jboneLogoutFilter);
+
         shiroFilterFactoryBean.setFilters(filters);
 
         loadShiroFilterChain(shiroFilterFactoryBean,jboneConfiguration);
