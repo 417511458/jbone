@@ -1,13 +1,8 @@
 package org.apereo.cas.web.realm;
 
-import com.majunwei.jbone.common.utils.PasswordUtils;
-import com.majunwei.jbone.sys.api.UserApi;
-import com.majunwei.jbone.sys.api.model.UserInfoModel;
-import com.majunwei.jbone.sys.api.model.UserModel;
-import org.apache.shiro.crypto.hash.SimpleHash;
+import cn.jbone.sys.api.model.UserInfoModel;
+import cn.jbone.sys.api.model.UserModel;
 import org.apache.shiro.util.ByteSource;
-import org.apereo.cas.services.RegisteredServiceAccessStrategyUtils;
-import org.apereo.cas.services.UnauthorizedServiceForPrincipalException;
 import org.apereo.cas.web.SpringManager;
 import org.apereo.cas.web.rpc.sys.UserService;
 import org.apache.shiro.authc.*;
@@ -15,12 +10,9 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**

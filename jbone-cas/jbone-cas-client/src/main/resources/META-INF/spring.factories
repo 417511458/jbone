@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.majunwei.jbone.cas.client.ShiroCasConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.jbone.cas.client.ShiroCasConfiguration

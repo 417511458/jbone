@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.majunwei.jbone.configuration.JboneConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.jbone.configuration.JboneConfiguration

@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.majunwei</groupId>
+    <groupId>cn.jbone</groupId>
     <artifactId>jbone</artifactId>
     <version>1.0.0</version>
     <modules>
@@ -311,42 +311,42 @@
 
 
             <dependency>
-                <groupId>com.majunwei</groupId>
+                <groupId>cn.jbone</groupId>
                 <artifactId>jbone-sys-api</artifactId>
                 <version>${jbone.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.majunwei</groupId>
+                <groupId>cn.jbone</groupId>
                 <artifactId>jbone-configuration</artifactId>
                 <version>${jbone.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.majunwei</groupId>
+                <groupId>cn.jbone</groupId>
                 <artifactId>jbone-common</artifactId>
                 <version>${jbone.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.majunwei</groupId>
+                <groupId>cn.jbone</groupId>
                 <artifactId>jbone-sys-service</artifactId>
                 <version>${jbone.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.majunwei</groupId>
+                <groupId>cn.jbone</groupId>
                 <artifactId>jbone-sys-dao</artifactId>
                 <version>${jbone.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.majunwei</groupId>
+                <groupId>cn.jbone</groupId>
                 <artifactId>jbone-cas-client</artifactId>
                 <version>${jbone.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.majunwei</groupId>
+                <groupId>cn.jbone</groupId>
                 <artifactId>jbone-sys-api-feign</artifactId>
                 <version>${jbone.version}</version>
             </dependency>
@@ -358,7 +358,7 @@
             </dependency>
 
             <dependency>
-                <groupId>com.majunwei</groupId>
+                <groupId>cn.jbone</groupId>
                 <artifactId>jbone-ui</artifactId>
                 <version>${jbone.version}</version>
             </dependency>
