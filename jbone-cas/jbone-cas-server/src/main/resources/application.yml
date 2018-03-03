@@ -32,7 +32,7 @@ cas:
                 jpaLockingTimeout: 3600
                 healthQuery: select now()
                 isolateInternalQueries: false
-                url: jdbc:mysql://localhost:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+                url: jdbc:mysql://localhost:3306/cas_dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
                 failFastTimeout: 1
                 dialect: org.hibernate.dialect.MySQL5Dialect
                 leakThreshold: 10
@@ -42,7 +42,7 @@ cas:
                 defaultSchema: jbone_cas
                 user: root
                 ddlAuto: update
-                password: 123
+                password: adminto
                 autocommit: false
                 driverClass: com.mysql.jdbc.Driver
                 idleTimeout: 5000

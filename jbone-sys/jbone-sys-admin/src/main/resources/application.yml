@@ -83,7 +83,7 @@ jbone:
     jdbc:
       url: jdbc:mysql://localhost:3306/jbone_sys?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
       username: root
-      password: 123
+      password: adminto
       driverClassName: com.mysql.jdbc.Driver
       maxActive: 10
       initialSize: 2
