@@ -50,6 +50,7 @@ management:
     enabled: false
 
 
+
 jbone:
   #CAS服务地址
   cas:

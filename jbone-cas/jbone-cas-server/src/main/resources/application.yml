@@ -22,8 +22,35 @@ cas:
                 sensitive: true
   #使用json加载注册到CAS上的服务，还可以使用redis／rest等方式
   serviceRegistry:
-        json:
-            location: classpath:/services
+        initFromJson: false
+#        json:
+#            location: classpath:/services
+        jpa:
+            healthQuery: select now()
+            isolateInternalQueries: false
+            url: jdbc:mysql://localhost:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+            failFastTimeout: 1
+            dialect: org.hibernate.dialect.MySQL5Dialect
+            leakThreshold: 10
+            jpaLockingTgtEnabled: true
+            batchSize: 1
+            user: root
+            ddlAuto: none
+            password: 123
+            autocommit: false
+            driverClass: com.mysql.jdbc.Driver
+            idleTimeout: 5000
+            dataSourceName:
+            dataSourceProxy: false
+
+            properties.hibernate.hbm2ddl.auto: none
+            properties.hibernate.show_sql: true
+
+            pool.suspension: false
+            pool.minSize: 6
+            pool.maxSize: 18
+            pool.maxWait: 2000
+
   #票据持久化，用于分布式管理用户票据
   ticket:
         registry:
@@ -95,14 +122,14 @@ spring:
         proxy-target-class: true
     application:
         name: Jbone CAS
-    boot:
-        admin:
-          client:
-            managementUrl: https://jbone-cas.majunwei.com:8443/cas/status
-            prefer-ip: true
-            name: Jbone CAS
-            serviceBaseUrl: https://jbone-cas.majunwei.com:8443
-          url: http://localhost:10002/
+#    boot:
+#        admin:
+#          client:
+#            managementUrl: https://jbone-cas.majunwei.com:8443/cas/status
+#            prefer-ip: true
+#            name: Jbone CAS
+#            serviceBaseUrl: https://jbone-cas.majunwei.com:8443
+#          url: http://localhost:10002/
     rabbitmq:
         host: 127.0.0.1
         port: 5672
@@ -111,9 +138,9 @@ spring:
     sleuth:
         sampler:
             percentage: 1
-endpoints:
-    enabled: true
-    sensitive: false
+#endpoints:
+#    enabled: true
+#    sensitive: false
 #    restart:
 #        enabled: false
 #    shutdown:
@@ -121,17 +148,15 @@ endpoints:
 
 management:
     security:
-        enabled: true
+        enabled: false
         roles: ACTUATOR,ADMIN
         sessions: if_required
     context-path: /status
 security:
-  ignored[0]: /**
-#security:
-#    basic:
-#        authorize-mode: role
-#        enabled: false
-#       path: /cas/status/**
+  basic:
+    authorize-mode: none
+    enabled: false
+    path: /cas/status/**
 logging:
     config: classpath:log4j2.xml
 

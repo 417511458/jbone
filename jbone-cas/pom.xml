@@ -15,6 +15,7 @@
     <modules>
         <module>jbone-cas-client</module>
         <module>jbone-cas-server</module>
+        <module>jbone-cas-manager</module>
     </modules>
 
 </project>

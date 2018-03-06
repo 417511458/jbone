@@ -17,6 +17,7 @@ QQ群：547104190
 * jbone-cas : 用户单点登录模块
     * jbone-cas-client：客户端jar包，用于集成到需要CAS授权的系统
     * jbone-cas-server：CAS服务端，单独部署，用于完成单点登录、票据管理等
+    * jbone-cas-manager：CAS服务管理，用于管理授权服务等
 * jbone-sm : 服务管理模块
     * jbone-sm-admin : 服务管理系统，包括服务监控、服务管理等
     * jbone-sm-register : 服务注册中心，原则上所有服务都要注册进来
