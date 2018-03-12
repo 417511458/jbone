@@ -11,6 +11,8 @@ import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 
@@ -30,6 +32,8 @@ import org.springframework.context.annotation.Import;
 @Import(value = AopAutoConfiguration.class)
 @EnableConfigurationProperties(CasConfigurationProperties.class)
 @EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableDiscoveryClient
+@EnableCircuitBreaker
 public class CasManagementWebApplication {
     /**
      * Instantiates a new web application.

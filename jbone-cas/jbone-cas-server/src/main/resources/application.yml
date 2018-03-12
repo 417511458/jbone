@@ -10,10 +10,10 @@ cas:
         prefix: https://jbone-cas.majunwei.com:8443/cas
   adminPagesSecurity:
         ip: 127.0.0.1
-        loginUrl: https://jbone-cas.majunwei.com:8443/cas/login
-        service: https://jbone-cas.majunwei.com:8443/cas/status/dashboard
-        users: file:/etc/cas/config/adminusers.properties
-        adminRoles[0]: ROLE_ADMIN
+#        loginUrl: https://jbone-cas.majunwei.com:8443/cas/login
+#        service: https://jbone-cas.majunwei.com:8443/cas/status/dashboard
+#        users: file:/etc/cas/config/adminusers.properties
+#        adminRoles[0]: ROLE_ADMIN
         actuatorEndpointsEnabled: true
   monitor:
         endpoints:
@@ -23,8 +23,6 @@ cas:
   #使用json加载注册到CAS上的服务，还可以使用redis／rest等方式
   serviceRegistry:
         initFromJson: false
-#        json:
-#            location: classpath:/services
         jpa:
             healthQuery: select now()
             isolateInternalQueries: false
@@ -122,14 +120,6 @@ spring:
         proxy-target-class: true
     application:
         name: Jbone CAS
-#    boot:
-#        admin:
-#          client:
-#            managementUrl: https://jbone-cas.majunwei.com:8443/cas/status
-#            prefer-ip: true
-#            name: Jbone CAS
-#            serviceBaseUrl: https://jbone-cas.majunwei.com:8443
-#          url: http://localhost:10002/
     rabbitmq:
         host: 127.0.0.1
         port: 5672
@@ -149,14 +139,22 @@ spring:
 management:
     security:
         enabled: false
-        roles: ACTUATOR,ADMIN
-        sessions: if_required
+#        roles: ACTUATOR,ADMIN
+#        sessions: if_required
     context-path: /status
-security:
-  basic:
-    authorize-mode: none
-    enabled: false
-    path: /cas/status/**
+    ssl:
+      enabled: false
+security.basic.enabled: false
+#security:
+#  ignored:
+#    - /status/**
+#  basic:
+#    authorize-mode: none
+#    enabled: false
+#    path: /cas/status/**
+#  user:
+#    name: jbone
+#    password: jbone
 logging:
     config: classpath:log4j2.xml
 
@@ -164,6 +162,9 @@ eureka:
     client:
         service-url:
             defaultZone: http://localhost:10001/eureka/
+        metadata-map:
+            user.name: jbone
+            user.password: jbone
 ribbon:
     ConnectTimeout: 500
     ReadTimeout: 3000

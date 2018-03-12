@@ -7029,10 +7029,10 @@
             <version>3.0.7.RELEASE</version>
         </dependency>
 
-        <dependency>
-            <groupId>cn.jbone</groupId>
-            <artifactId>jbone-cas-client</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>cn.jbone</groupId>-->
+            <!--<artifactId>jbone-cas-client</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-common</artifactId>
@@ -7057,6 +7057,23 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-turbine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+        </dependency>
+
 
     </dependencies>
 
@@ -7070,4 +7087,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
