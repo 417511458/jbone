@@ -119,7 +119,7 @@ spring:
         auto: true
         proxy-target-class: true
     application:
-        name: Jbone CAS
+        name: Jbone-CAS
     rabbitmq:
         host: 127.0.0.1
         port: 5672
@@ -137,34 +137,33 @@ spring:
 #        enabled: false
 
 management:
-    security:
-        enabled: false
-#        roles: ACTUATOR,ADMIN
-#        sessions: if_required
+    security.enabled: false
     context-path: /status
-    ssl:
-      enabled: false
+    server.ssl.enabled: false
+
 security.basic.enabled: false
-#security:
-#  ignored:
-#    - /status/**
-#  basic:
-#    authorize-mode: none
-#    enabled: false
-#    path: /cas/status/**
-#  user:
-#    name: jbone
-#    password: jbone
+
 logging:
     config: classpath:log4j2.xml
-
 eureka:
     client:
+        enabled: true
         service-url:
             defaultZone: http://localhost:10001/eureka/
         metadata-map:
             user.name: jbone
             user.password: jbone
+        healthcheck.enabled: true
+    instance:
+      prefer-ip-address: true
+      instance-id: http://${spring.cloud.client.ipAddress}:${server.port}
+      statusPageUrl: ${cas.server.prefix}/status/info
+      healthCheckUrl: ${cas.server.prefix}/status/health
+      homePageUrl: ${cas.server.prefix}/
+      metadata-map:
+        management.context-path: /status
+        management:
+          context-path: /status
 ribbon:
     ConnectTimeout: 500
     ReadTimeout: 3000
@@ -174,3 +173,13 @@ feign:
             enabled: true
         response:
             enabled: true
+
+# eureka.client.serviceUrl.defaultZone=${EUREKA_SERVER_HOST:http://localhost:8761}/eureka/
+# eureka.client.enabled=true
+# eureka.instance.statusPageUrl=${cas.server.prefix}/status/info
+# eureka.instance.healthCheckUrl=${cas.server.prefix}/status/health
+# eureka.instance.homePageUrl=${cas.server.prefix}/
+# eureka.client.healthcheck.enabled=true
+
+# spring.cloud.config.discovery.enabled=false
+
