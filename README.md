@@ -180,12 +180,13 @@ keytool 错误: java.io.IOException: Keystore was tampered with, or password was
 4、配置tomcat SSL
 
 找到server.xml中配置SSL的位置，填写如下内容：
-
+```xml
 <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol" SSLEnabled="true"
                maxThreads="150" scheme="https" secure="true"
                clientAuth="false" sslProtocol="TLS"
                keystoreFile="/etc/cas/jbonekeystore"
                keystorePass="123456" />
+```
 
 注意：这里是tomcat8，其他版本的配置方式可能不同，主要表现在protocol属性上。
 
