@@ -186,7 +186,7 @@ keytool 错误: java.io.IOException: Keystore was tampered with, or password was
                clientAuth="false" sslProtocol="TLS"
                keystoreFile="/etc/cas/jbonekeystore"
                keystorePass="123456" />
-               
+
 注意：这里是tomcat8，其他版本的配置方式可能不同，主要表现在protocol属性上。
 
 5、将jbone-cas-server添加到tomcat中，可使用idea部署，或单独启动tomcat部署
