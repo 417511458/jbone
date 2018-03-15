@@ -146,9 +146,9 @@ public class CasManagementWebAppConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor());
-        registry.addInterceptor(casManagementSecurityInterceptor())
-                .addPathPatterns("/**").excludePathPatterns("/callback*", "/logout*", "/authorizationFailure");
+//        registry.addInterceptor(localeChangeInterceptor());
+//        registry.addInterceptor(casManagementSecurityInterceptor())
+//                .addPathPatterns("/**").excludePathPatterns("/callback*", "/logout*", "/authorizationFailure");
     }
 
     @Bean

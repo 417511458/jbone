@@ -14,14 +14,14 @@ spring:
     cache: false
     mode: HTML
     order: 1
-  context-path: /cas-management
+#  context-path: /cas-management
 cas:
   server:
         name: https://jbone-cas.majunwei.com:8443
         prefix: https://jbone-cas.majunwei.com:8443/cas
   mgmt:
       serverName: https://jbone-cas-manager.majunwei.com:${server.port}
-      userPropertiesFile: classpath:/user-details.properties
+#      userPropertiesFile: classpath:/user-details.properties
   serviceRegistry:
           initFromJson: false
           jpa:
@@ -111,7 +111,7 @@ jbone:
           /restart: anon
           /heapdump: anon
           /features: anon
-          /**: authc,roles[serverAdministrator]
+          /**: authc,roles[casAdministrator]
     clientSessionTimeout: 180000 #客户端Session失效时间，默认30分钟
   #系统配置
   sys:

@@ -2161,7 +2161,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.9.0</version>
-            
             <exclusions>
                 <exclusion>
                     <artifactId>logback-classic</artifactId>
@@ -7029,10 +7028,11 @@
             <version>3.0.7.RELEASE</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>cn.jbone</groupId>-->
-            <!--<artifactId>jbone-cas-client</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-cas-client</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-common</artifactId>
@@ -7074,6 +7074,30 @@
             <artifactId>spring-cloud-starter-feign</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-afterburner</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-jaxb-annotations -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+            <version>2.9.0</version>
+        </dependency>
 
     </dependencies>
 

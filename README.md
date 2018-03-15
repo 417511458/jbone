@@ -101,6 +101,8 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 ![trace](doc/sm_monitor_01.png)
 ### 调用链
 ![调用链](doc/sm_monitor_02.png)
+## CAS系统管理
+![CAS系统管理](doc/cas-manager.png)
 ## Jbone系统管理
 ### 系统管理
 ![Jbone系统管理](doc/systemManager.png)
@@ -121,7 +123,7 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 注意要在application.properties里修改自己到数据库用户名和密码
 ### jbone_sys
 创建数据库jbone_sys,并通过doc/jbone_sys.sql创建表和初始化数据；
-### jbone-cas
+### jbone_cas
 创建数据库jbone_cas,并通过doc/jbone_cas.sql创建表和初始化数据；
 ### jbone-zipkin（调用链使用）
 创建数据库jbone_zipkin,并通过doc/jbone_zipkin.sql创建表和初始化数据；
@@ -133,6 +135,8 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 127.0.0.1 jbone-sm-register.majunwei.com
 
 127.0.0.1 jbone-cas.majunwei.com
+
+127.0.0.1 jbone-cas-manager.majunwei.com
 
 127.0.0.1 jbone-sys-server.majunwei.com
 
@@ -209,12 +213,15 @@ jbone-sys-server
 
 jbone-sys-admin
 
-jbone-cas-server
+jbone-cas-server(tomcat中运行,https端口号8443)
+
+jbone-cas-manager(tomcat中运行,http端口号30002)
 
 ## 进入系统
 系统管理：http://jbone-sys-admin.majunwei.com:20002/
 服务管理：http://jbone-sm-admin.majunwei.com:10002/
 调用链：http://jbone-sm-monitor.majunwei.com:10003/
+CAS系统管理：http://jbone-cas-manager.majunwei.com:30002/
 
 默认用户名密码：jbone/jbone
 

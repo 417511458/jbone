@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- Specify the refresh internal in seconds. -->
 <Configuration monitorInterval="15">
+    <Properties>
+        <Property name="baseDir">/Users/majunwei/logs</Property>
+    </Properties>
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%highlight{%d %p [%c] - &lt;%m&gt;}%n"/>
         </Console>
-        <RollingFile name="cas-management" fileName="cas-management.log" append="true"
-                     filePattern="cas-management-%d{yyyy-MM-dd-HH}-%i.log.gz">
+        <RollingFile name="cas-management" fileName="${baseDir}/cas-management.log" append="true"
+                     filePattern="${baseDir}/cas-management-%d{yyyy-MM-dd-HH}-%i.log.gz">
             <PatternLayout pattern="%d %p [%c] - %m%n"/>
             <Policies>
                 <OnStartupTriggeringPolicy />
