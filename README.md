@@ -29,6 +29,7 @@ QQ群：547104190
     * jbone-sys-dao : 系统管理数据层
     * jbone-sys-service : 系统管理逻辑层
     * jbone-sys-server : 系统管理服务
+* jbone-tag ：全平台标签系统
 * jbone-cms ：内容管理模块
 * jbone-bpm : 工作流模块
 * jbone-common : 共用模块
