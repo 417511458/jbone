@@ -7165,7 +7165,7 @@
 
         <dependency>
             <groupId>org.apereo.cas</groupId>
-            <artifactId>cas-server-support-json-service-registry</artifactId>
+            <artifactId>cas-server-support-jpa-service-registry</artifactId>
             <version>${cas.version}</version>
         </dependency>
 
@@ -7224,6 +7224,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-eureka-client</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
 
     </dependencies>
 

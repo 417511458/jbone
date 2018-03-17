@@ -17,6 +17,7 @@
         <module>jbone-cms</module>
         <module>jbone-im</module>
         <module>jbone-ui</module>
+        <module>jbone-tag</module>
     </modules>
     <packaging>pom</packaging>
 

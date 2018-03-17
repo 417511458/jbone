@@ -18,9 +18,15 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:10001/eureka
+    metadata-map:
+      user.name: jbone
+      user.password: jbone
   instance:
     prefer-ip-address: true
     instance-id: http://${spring.cloud.client.ipAddress}:${server.port}
+    metadata-map:
+      user.name: jbone
+      user.password: jbone
 
 turbine:
   app-config: JBONE-SYS-SERVER

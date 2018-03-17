@@ -10,10 +10,10 @@ cas:
         prefix: https://jbone-cas.majunwei.com:8443/cas
   adminPagesSecurity:
         ip: 127.0.0.1
-        loginUrl: https://jbone-cas.majunwei.com:8443/cas/login
-        service: https://jbone-cas.majunwei.com:8443/cas/status/dashboard
-        users: file:/etc/cas/config/adminusers.properties
-        adminRoles[0]: ROLE_ADMIN
+#        loginUrl: https://jbone-cas.majunwei.com:8443/cas/login
+#        service: https://jbone-cas.majunwei.com:8443/cas/status/dashboard
+#        users: file:/etc/cas/config/adminusers.properties
+#        adminRoles[0]: ROLE_ADMIN
         actuatorEndpointsEnabled: true
   monitor:
         endpoints:
@@ -22,8 +22,33 @@ cas:
                 sensitive: true
   #使用json加载注册到CAS上的服务，还可以使用redis／rest等方式
   serviceRegistry:
-        json:
-            location: classpath:/services
+        initFromJson: false
+        jpa:
+            healthQuery: select now()
+            isolateInternalQueries: false
+            url: jdbc:mysql://localhost:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+            failFastTimeout: 1
+            dialect: org.hibernate.dialect.MySQL5Dialect
+            leakThreshold: 10
+            jpaLockingTgtEnabled: true
+            batchSize: 1
+            user: root
+            ddlAuto: none
+            password: 123
+            autocommit: false
+            driverClass: com.mysql.jdbc.Driver
+            idleTimeout: 5000
+            dataSourceName:
+            dataSourceProxy: false
+
+            properties.hibernate.hbm2ddl.auto: none
+            properties.hibernate.show_sql: true
+
+            pool.suspension: false
+            pool.minSize: 6
+            pool.maxSize: 18
+            pool.maxWait: 2000
+
   #票据持久化，用于分布式管理用户票据
   ticket:
         registry:
@@ -94,15 +119,7 @@ spring:
         auto: true
         proxy-target-class: true
     application:
-        name: Jbone CAS
-    boot:
-        admin:
-          client:
-            managementUrl: https://jbone-cas.majunwei.com:8443/cas/status
-            prefer-ip: true
-            name: Jbone CAS
-            serviceBaseUrl: https://jbone-cas.majunwei.com:8443
-          url: http://localhost:10002/
+        name: Jbone-CAS
     rabbitmq:
         host: 127.0.0.1
         port: 5672
@@ -111,34 +128,42 @@ spring:
     sleuth:
         sampler:
             percentage: 1
-endpoints:
-    enabled: true
-    sensitive: false
+#endpoints:
+#    enabled: true
+#    sensitive: false
 #    restart:
 #        enabled: false
 #    shutdown:
 #        enabled: false
 
 management:
-    security:
-        enabled: true
-        roles: ACTUATOR,ADMIN
-        sessions: if_required
+    security.enabled: false
     context-path: /status
-security:
-  ignored[0]: /**
-#security:
-#    basic:
-#        authorize-mode: role
-#        enabled: false
-#       path: /cas/status/**
+    server.ssl.enabled: false
+
+security.basic.enabled: false
+
 logging:
     config: classpath:log4j2.xml
-
 eureka:
     client:
+        enabled: true
         service-url:
             defaultZone: http://localhost:10001/eureka/
+        metadata-map:
+            user.name: jbone
+            user.password: jbone
+        healthcheck.enabled: true
+    instance:
+      prefer-ip-address: true
+      instance-id: http://${spring.cloud.client.ipAddress}:${server.port}
+      statusPageUrl: ${cas.server.prefix}/status/info
+      healthCheckUrl: ${cas.server.prefix}/status/health
+      homePageUrl: ${cas.server.prefix}/
+      metadata-map:
+        management.context-path: /status
+        management:
+          context-path: /status
 ribbon:
     ConnectTimeout: 500
     ReadTimeout: 3000
@@ -148,3 +173,13 @@ feign:
             enabled: true
         response:
             enabled: true
+
+# eureka.client.serviceUrl.defaultZone=${EUREKA_SERVER_HOST:http://localhost:8761}/eureka/
+# eureka.client.enabled=true
+# eureka.instance.statusPageUrl=${cas.server.prefix}/status/info
+# eureka.instance.healthCheckUrl=${cas.server.prefix}/status/health
+# eureka.instance.homePageUrl=${cas.server.prefix}/
+# eureka.client.healthcheck.enabled=true
+
+# spring.cloud.config.discovery.enabled=false
+

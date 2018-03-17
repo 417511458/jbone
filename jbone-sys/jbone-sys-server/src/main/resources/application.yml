@@ -4,17 +4,17 @@ server:
 spring:
   application:
     name: Jbone-sys-server
-    #rabbitmq配置
-    rabbitmq:
-      host: localhost
-      port: 5672
-      username: guest
-      password: guest
-    jpa:
-      show-sql: true
-    sleuth:
-      sampler:
-        percentage: 1
+  #rabbitmq配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  jpa:
+    show-sql: true
+  sleuth:
+    sampler:
+      percentage: 1
 #注册中心
 eureka:
   client:

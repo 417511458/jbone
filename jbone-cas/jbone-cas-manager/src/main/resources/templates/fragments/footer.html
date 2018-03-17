@@ -1,0 +1,32 @@
+<footer id="casmgmt-footer">
+    <div class="row">
+        <div class="col-sm-10">
+            <span th:text="#{footer.links}" />
+            <ul class="nav-campus-sites list-inline">
+                <li><a href="http://www.majunwei.com"
+                       rel="_blank">作者网站</a></li>
+
+                <li><a href="http://www.jbone.cn"
+                       rel="_blank">Jbone官网</a></li>
+
+                <li><a href="https://github.com/417511458/jbone"
+                       rel="_blank">github地址</a></li>
+
+                <li><a href="https://gitee.com/majunwei2017/jbone" rel="_blank">码云地址</a></li>
+            </ul>
+            <div class="copyright">
+                <p>
+                    <span th:utext="#{footer.copyright}" />
+                    <span th:utext="#{footer.poweredBy(${T(org.apereo.cas.util.CasVersion).getVersion()})}" />
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="jasig-link">
+                <a href="http://www.jbone.cn" _target="blank" title="Jbone官网">
+                    <img th:src="@{/images/logo_cas.png}" /></a>
+            </div>
+        </div>
+    </div>
+</footer>
+

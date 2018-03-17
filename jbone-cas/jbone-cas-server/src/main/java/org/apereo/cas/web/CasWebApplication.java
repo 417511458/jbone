@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.jersey.JerseyAutoConfiguration;
 import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
+import org.springframework.boot.autoconfigure.jooq.JooqAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -40,6 +41,7 @@ import java.util.Map;
                 GroovyTemplateAutoConfiguration.class,
                 JmxAutoConfiguration.class,
                 DataSourceAutoConfiguration.class,
+                JooqAutoConfiguration.class,
                 RedisAutoConfiguration.class,
                 MongoAutoConfiguration.class,
                 MongoDataAutoConfiguration.class,

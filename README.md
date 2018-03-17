@@ -17,6 +17,7 @@ QQ群：547104190
 * jbone-cas : 用户单点登录模块
     * jbone-cas-client：客户端jar包，用于集成到需要CAS授权的系统
     * jbone-cas-server：CAS服务端，单独部署，用于完成单点登录、票据管理等
+    * jbone-cas-manager：CAS服务管理，用于管理授权服务等
 * jbone-sm : 服务管理模块
     * jbone-sm-admin : 服务管理系统，包括服务监控、服务管理等
     * jbone-sm-register : 服务注册中心，原则上所有服务都要注册进来
@@ -28,6 +29,7 @@ QQ群：547104190
     * jbone-sys-dao : 系统管理数据层
     * jbone-sys-service : 系统管理逻辑层
     * jbone-sys-server : 系统管理服务
+* jbone-tag ：全平台标签系统
 * jbone-cms ：内容管理模块
 * jbone-bpm : 工作流模块
 * jbone-common : 共用模块
@@ -100,6 +102,8 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 ![trace](doc/sm_monitor_01.png)
 ### 调用链
 ![调用链](doc/sm_monitor_02.png)
+## CAS系统管理
+![CAS系统管理](doc/cas-manager.png)
 ## Jbone系统管理
 ### 系统管理
 ![Jbone系统管理](doc/systemManager.png)
@@ -118,22 +122,34 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 将代码clone下来并导入idea或eclipse；
 ## 创建数据库
 注意要在application.properties里修改自己到数据库用户名和密码
-### jbone-sys
-创建数据库jbone-sys,并通过doc/jbone-sys.sql创建表和初始化数据；
-### jbone-cas
-创建数据库jbone-cas（自动创建，不需要sql）;
+### jbone_sys
+创建数据库jbone_sys,并通过doc/jbone_sys.sql创建表和初始化数据；
+### jbone_cas
+创建数据库jbone_cas,并通过doc/jbone_cas.sql创建表和初始化数据；
+### jbone-zipkin（调用链使用）
+创建数据库jbone_zipkin,并通过doc/jbone_zipkin.sql创建表和初始化数据；
 ## 启动redis
 安装redis并在本地启动
+## 安装并启动RabbitMq(调用链使用)
+安装RabbitMq并在本地启动
 ## 配置域名
 127.0.0.1 jbone-sm-register.majunwei.com
 
 127.0.0.1 jbone-cas.majunwei.com
 
+127.0.0.1 jbone-cas-manager.majunwei.com
+
 127.0.0.1 jbone-sys-server.majunwei.com
+
+127.0.0.1 jbone-sys-admin.majunwei.com
 
 127.0.0.1 jbone-sm-admin.majunwei.com
 
-127.0.0.1 jbone-sys-admin.majunwei.com
+127.0.0.1 jbone-sm-monitor.majunwei.com
+
+
+
+
 ## 配置CAS证书
 1、生成证书
 sudo keytool -genkey -alias jbonekeystore -keyalg RSA -keystore /etc/cas/jbonekeystore
@@ -169,16 +185,17 @@ keytool 错误: java.io.IOException: Keystore was tampered with, or password was
 4、配置tomcat SSL
 
 找到server.xml中配置SSL的位置，填写如下内容：
-
+```xml
 <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol" SSLEnabled="true"
                maxThreads="150" scheme="https" secure="true"
                clientAuth="false" sslProtocol="TLS"
                keystoreFile="/etc/cas/jbonekeystore"
                keystorePass="123456" />
-               
+```
+
 注意：这里是tomcat8，其他版本的配置方式可能不同，主要表现在protocol属性上。
 
-5、将jbone-cas添加到tomcat中，启动tomcat
+5、将jbone-cas-server添加到tomcat中，可使用idea部署，或单独启动tomcat部署
 
 常见问题：
 
@@ -197,11 +214,17 @@ jbone-sys-server
 
 jbone-sys-admin
 
-jbone-cas-server
+jbone-cas-server(tomcat中运行,https端口号8443)
 
-## 进入系统管理
-在浏览器输入http://jbone-sys-admin.majunwei.com:20002/
-然后会跳转到cas登录页面，输入jbone/jbone就进入到管理页面了
+jbone-cas-manager(tomcat中运行,http端口号30002)
+
+## 进入系统
+系统管理：http://jbone-sys-admin.majunwei.com:20002/
+服务管理：http://jbone-sm-admin.majunwei.com:10002/
+调用链：http://jbone-sm-monitor.majunwei.com:10003/
+CAS系统管理：http://jbone-cas-manager.majunwei.com:30002/
+
+默认用户名密码：jbone/jbone
 
 # 关键开源技术介绍
 ## Spring Boot架构图

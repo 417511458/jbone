@@ -1,0 +1,120 @@
+spring:
+  application:
+    name: jbone-cas-manager
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  #rabbitmq配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  thymeleaf:
+    cache: false
+    mode: HTML
+    order: 1
+  context-path: /cas-management
+cas:
+  server:
+        name: https://jbone-cas.majunwei.com:8443
+        prefix: https://jbone-cas.majunwei.com:8443/cas
+  mgmt:
+    serverName: https://jbone-cas-manager.majunwei.com:${server.port}
+    userPropertiesFile: classpath:/user-details.properties
+  serviceRegistry:
+          initFromJson: false
+  #        json:
+  #            location: classpath:/services
+          jpa:
+              healthQuery: select now()
+              isolateInternalQueries: false
+              url: jdbc:mysql://localhost:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+              failFastTimeout: 1
+              dialect: org.hibernate.dialect.MySQL5Dialect
+              leakThreshold: 10
+              jpaLockingTgtEnabled: true
+              batchSize: 1
+              user: root
+              ddlAuto: none
+              password: 123
+              autocommit: false
+              driverClass: com.mysql.jdbc.Driver
+              idleTimeout: 5000
+              dataSourceName:
+              dataSourceProxy: false
+
+              properties.hibernate.hbm2ddl.auto: none
+              properties.hibernate.show_sql: true
+
+              pool.suspension: false
+              pool.minSize: 6
+              pool.maxSize: 18
+              pool.maxWait: 2000
+# 服务端口
+server:
+  port: 30002
+  context-parameters:
+    isLog4jAutoInitializationDisabled: true
+
+
+
+# 注册中心配置
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:10001/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: http://${spring.cloud.client.ipAddress}:${server.port}
+
+# 禁用管理安全策略
+management:
+  security:
+    enabled: false
+
+
+
+jbone:
+  #CAS服务地址
+  cas:
+    casServerUrl: https://jbone-cas.majunwei.com:8443/cas
+    #当前系统地址
+    currentServerUrlPrefix: http://jbone-cas-manager.majunwei.com:30002
+    #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
+    casFilterUrlPattern: /cas
+    #登录成功后的跳转路径，默认"/"
+    successUrl: /
+    #未授权的跳转路径，默认"/403"
+    unauthorizedUrl: /403
+    #权限过滤规则
+    filterChainDefinition:
+      /zipkin/**: authc,roles[serverAdministrator]
+      /**: anon
+      /login: anon
+    clientSessionTimeout: 180000 #客户端Session失效时间，默认30分钟
+  #系统配置
+  sys:
+    serverName: jbone-cas-manager
+    serverProtoal: http:// #feign通讯协议，默认http://
+  #授权配置
+  auth:
+    serverName: jbone-sys-server #授权服务名称，Jbone-sys-server注册的服务名
+    serverProtocol: http:// #授权服务feign通讯协议，默认http://
+
+# info接口返回值
+info:
+  app:
+    java:
+      source: ${java.version}
+      target: ${java.version}
+    name: ${spring.application.name}
+  git:
+    url: https://github.com/417511458/jbone
+  gitee:
+    url: https://gitee.com/majunwei2017/jbone
+  domain: http://www.majunwei.com
+
+
