@@ -88,12 +88,10 @@ jbone:
       maxActive: 10
       initialSize: 2
       maxWait: 10000
-  auth:
-    #授权服务名称，Jbone-sys-server注册的服务名
-    serverName: jbone-sys-server
-    #授权服务feign通讯协议，默认http://
-    serverProtocol: http://
-
+  #系统管理Feign调用配置
+  rpc.sysServer.feign:
+    protocol: http
+    name: jbone-sys-server
 
 # info接口返回值
 info:

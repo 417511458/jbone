@@ -7150,6 +7150,10 @@
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-sys-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-sys-api-feign</artifactId>
+        </dependency>
 
 
         <dependency>

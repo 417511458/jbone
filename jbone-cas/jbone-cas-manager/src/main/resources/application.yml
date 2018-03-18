@@ -117,10 +117,11 @@ jbone:
   sys:
     serverName: jbone-cas-manager
     serverProtoal: http:// #feign通讯协议，默认http://
-  #授权配置
-  auth:
-    serverName: jbone-sys-server #授权服务名称，Jbone-sys-server注册的服务名
-    serverProtocol: http:// #授权服务feign通讯协议，默认http://
+
+  #系统服务Feign调用配置
+  rpc.sysServer.feign:
+    protocol: http
+    name: jbone-sys-server
 
 # info接口返回值
 info:

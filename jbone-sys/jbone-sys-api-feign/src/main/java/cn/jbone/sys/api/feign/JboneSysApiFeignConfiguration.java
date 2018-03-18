@@ -24,7 +24,7 @@ public class JboneSysApiFeignConfiguration {
         UserApi userApi = Feign.builder().client(client)
                 .encoder(encoder)
                 .decoder(decoder).contract(new SpringMvcContract())
-                .target(UserApi.class, jboneConfiguration.getAuth().getServerProtocol() + jboneConfiguration.getAuth().getServerName().toUpperCase());
+                .target(UserApi.class, jboneConfiguration.getRpc().getSysServer().getFeign().getProtocol() + "://" + jboneConfiguration.getRpc().getSysServer().getFeign().getName().toUpperCase());
         return userApi;
     }
 }

@@ -2,7 +2,7 @@ package cn.jbone.sys.dao.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import cn.jbone.configuration.JboneConfiguration;
-import cn.jbone.configuration.sys.JdbcProperties;
+import cn.jbone.configuration.props.JdbcProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
