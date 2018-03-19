@@ -1,8 +1,8 @@
 package cn.jbone.configuration;
 
-import cn.jbone.configuration.sys.AuthProperties;
-import cn.jbone.configuration.sys.CasProperties;
-import cn.jbone.configuration.sys.SysProperties;
+import cn.jbone.configuration.props.CasProperties;
+import cn.jbone.configuration.props.RpcProperties;
+import cn.jbone.configuration.props.SysProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -28,9 +28,9 @@ public class JboneConfiguration {
     private CasProperties cas = new CasProperties();
 
     /**
-     * 授权服务
+     * 远程调用配置
      */
-    private AuthProperties auth = new AuthProperties();
+    private RpcProperties rpc = new RpcProperties();
 
 
     public SysProperties getSys() {
@@ -49,12 +49,12 @@ public class JboneConfiguration {
         this.cas = cas;
     }
 
-    public AuthProperties getAuth() {
-        return auth;
+    public RpcProperties getRpc() {
+        return rpc;
     }
 
-    public void setAuth(AuthProperties auth) {
-        this.auth = auth;
+    public void setRpc(RpcProperties rpc) {
+        this.rpc = rpc;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class JboneConfiguration {
         return "JboneConfiguration{" +
                 "sys=" + sys +
                 ", cas=" + cas +
-                ", auth=" + auth +
+                ", rpc=" + rpc +
                 '}';
     }
 

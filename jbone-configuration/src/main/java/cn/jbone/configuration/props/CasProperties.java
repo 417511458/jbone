@@ -1,9 +1,8 @@
-package cn.jbone.configuration.sys;
+package cn.jbone.configuration.props;
 
 import java.io.Serializable;
 import java.net.URLEncoder;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * CAS属性配置

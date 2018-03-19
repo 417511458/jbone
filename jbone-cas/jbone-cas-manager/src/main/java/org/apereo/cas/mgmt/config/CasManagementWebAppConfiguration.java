@@ -115,10 +115,10 @@ public class CasManagementWebAppConfiguration extends WebMvcConfigurerAdapter {
         return mapping;
     }
 
-    @Bean
-    public HandlerInterceptorAdapter casManagementSecurityInterceptor() {
-        return new CasManagementSecurityInterceptor(casManagementSecurityConfiguration);
-    }
+//    @Bean
+//    public HandlerInterceptorAdapter casManagementSecurityInterceptor() {
+//        return new CasManagementSecurityInterceptor(casManagementSecurityConfiguration);
+//    }
 
     @ConditionalOnMissingBean(name = "localeResolver")
     @Bean

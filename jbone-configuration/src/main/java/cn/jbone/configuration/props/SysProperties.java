@@ -1,4 +1,4 @@
-package cn.jbone.configuration.sys;
+package cn.jbone.configuration.props;
 
 import java.io.Serializable;
 
