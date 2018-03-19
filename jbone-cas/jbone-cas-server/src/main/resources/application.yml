@@ -1,5 +1,23 @@
+##
+# CAS Server Context Configuration
+#
 server:
-  port: 30001
+  context-path: /cas
+  port: 8443
+  ssl:
+    key-store: classpath:jbonekeystore
+    key-store-password: 123456
+    key-password: 123456
+  tomcat:
+    max-http-post-size: 2097152
+    basedir: build/tomcat
+    max-threads: 10
+    port-header: X-Forwarded-Port
+    protocol-header: X-Forwarded-Proto
+    protocol-header-https-value: https
+    remote-ip-header: X-FORWARDED-FOR
+    uri-encoding: UTF-8
+
 cas:
   authn:
         shiro:
@@ -186,3 +204,5 @@ jbone.rpc.sysServer.feign:
 
 # spring.cloud.config.discovery.enabled=false
 
+# 不允许静态用户
+staticAuthentication: false
