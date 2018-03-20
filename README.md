@@ -206,17 +206,21 @@ Open quote is expected for attribute "keystorePass" associated with an  element 
 ## 启动应用
 依次启动：
 
-jbone-sm-register
+1. jbone-sm-register
 
-jbone-sm-admin
+2. jbone-sm-admin
 
-jbone-sys-server
+3. jbone-sys-server
 
-jbone-sys-admin
+4. jbone-sys-admin
 
-jbone-cas-server(tomcat中运行,https端口号8443)
+5. jbone-cas-server (支持两种部署方式)
 
-jbone-cas-manager(tomcat中运行,http端口号30002)
+> 单独部署方式：在tomcat单独部署（https端口号8443）
+
+> SpringBootApp方式：将 `jbonekeystore` 放入 `resources` 目录下，直接运行 `CasWebApplication` 主程序
+
+6. jbone-cas-manager(tomcat中运行,http端口号30002)
 
 ## 进入系统
 系统管理：http://jbone-sys-admin.majunwei.com:20002/
