@@ -10,11 +10,16 @@ import java.util.UUID;
  */
 public class IdGenerator {
 
+    /**
+     * 生成指定类型的ID（target+timestamp+random）
+     * @param targetEnum 类型
+     * @return ID
+     */
     public static String getId(IdTargetEnum targetEnum){
         long time = new Date().getTime();
         Random random = new Random();
-        int rv = random.nextInt(99999);
-        DecimalFormat df=new DecimalFormat("00000");
+        int rv = random.nextInt(9999);
+        DecimalFormat df=new DecimalFormat("0000");
 
         String endVal = df.format(rv);
 
