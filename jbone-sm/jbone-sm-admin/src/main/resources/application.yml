@@ -29,7 +29,7 @@ eureka:
 
 turbine:
   app-config: JBONE-SYS-SERVER
-  cluster-name-expression: "default"
+  cluster-name-expression: new String('default')
   combine-host-port: true
 
 management:
