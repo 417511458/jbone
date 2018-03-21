@@ -81,9 +81,9 @@ jbone:
   sys:
     serverName: jbone-sys-admin
     jdbc:
-      url: jdbc:mysql://localhost:3306/jbone_sys?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
-      username: root
-      password: 123
+      url: jdbc:mysql://121.42.174.77:3306/jbone_sys?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+      username: jbone_sys
+      password: Jbone_sys_666
       driverClassName: com.mysql.jdbc.Driver
       maxActive: 10
       initialSize: 2
