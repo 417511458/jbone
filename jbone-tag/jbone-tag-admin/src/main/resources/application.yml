@@ -1,0 +1,91 @@
+spring:
+  application:
+    name: jbone-tag-admin
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+  thymeleaf:
+    cache: false
+    enabled: true
+  freemarker:
+    enabled: false
+  jpa:
+    show-sql: true
+server:
+  port: 40002
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:10001/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: http://${spring.cloud.client.ipAddress}:${server.port}
+management:
+  security:
+    enabled: false
+
+jbone:
+  cas:
+    casServiceUrl: http://jbone-cas.majunwei.com:8443/cas
+    currentServerUrlPrefix: http://jbone-tag-admin.majunwei.com:40002
+    casFilterUrlPattern: /cas
+    successUrl: /
+    unauthorizedUrl: /403
+    clientSessionTimeout: 180000
+    filterChainDefinition:
+      /health: anon
+      /archaius: anon
+      /refresh: anon
+      /configprops: anon
+      /env/**: anon
+      /service-registry/**: anon
+      /auditevents: anon
+      /pause: anon
+      /dump: anon
+      /loggers/**: anon
+      /resume: anon
+      /metrics/**: anon
+      /channels: anon
+      /beans: anon
+      /mappings: anon
+      /autoconfig: anon
+      /trace: anon
+      /hystrix.stream/**: anon
+      /info: anon
+      /restart: anon
+      /heapdump: anon
+      /features: anon
+      /**: authc
+
+  sys:
+    serverName: jbone-tag-admin
+    jdbc:
+      url: jdbc:mysql://127.0.0.1:3306/jbone_tag?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+      username: root
+      password: 123
+      driverClassName: com.mysql.jdbc.Driver
+      maxActive: 10
+      initialSize: 2
+      maxWait: 10000
+  rpc.sysServer.feign:
+    protocol: http
+    name: jbone-tag-server
+
+info:
+  app:
+    java:
+      source: ${java.version}
+      target: ${java.version}
+    name: ${spring.application.name}
+  git:
+    url: https://github.com/417511458/jbone
+  gitee:
+    url: https://gitee.com/majunwei2017/jbone
+  domain: http://www.majunwei.com
