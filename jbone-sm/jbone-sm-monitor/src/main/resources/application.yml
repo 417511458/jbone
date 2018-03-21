@@ -18,9 +18,9 @@ spring:
   datasource:
     schema:
      - classpath:/zipkin.sql
-    url: jdbc:mysql://localhost:3306/jbone_zipkin?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
-    username: root
-    password: 123
+    url: jdbc:mysql://121.42.174.77:3306/jbone_zipkin?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: jbone_zipkin
+    password: Jbone_zipkin_666
     driver-class-name: com.mysql.jdbc.Driver
     initialize: true
     continue-on-error: true
