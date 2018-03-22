@@ -4,6 +4,7 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+    password: jbone
   #rabbitmq配置
   rabbitmq:
     host: localhost

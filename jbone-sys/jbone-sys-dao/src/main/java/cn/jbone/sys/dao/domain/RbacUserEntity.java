@@ -25,6 +25,7 @@ public class RbacUserEntity implements Serializable {
     private Timestamp addTime;
     private Timestamp updateTime;
     private int version;
+    private String salt;
     private List<RbacOrganizationEntity> organizations;
     private List<RbacRoleEntity> roles;
     private List<RbacPermissionEntity> permissions;
@@ -111,6 +112,15 @@ public class RbacUserEntity implements Serializable {
 
     public void setLocked(int locked) {
         this.locked = locked;
+    }
+
+    @Column(name = "salt")
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     @CreationTimestamp

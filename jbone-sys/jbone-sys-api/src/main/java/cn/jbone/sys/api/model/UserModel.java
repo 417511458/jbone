@@ -17,6 +17,7 @@ public class UserModel implements Serializable {
     private String email;
     private int sex;
     private int locked;
+    private String salt;
     public Set<String> getPermissions() {
         return permissions;
     }
@@ -111,5 +112,13 @@ public class UserModel implements Serializable {
 
     public void setLocked(int locked) {
         this.locked = locked;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
