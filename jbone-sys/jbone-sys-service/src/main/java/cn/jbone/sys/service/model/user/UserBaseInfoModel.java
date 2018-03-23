@@ -15,6 +15,7 @@ public class UserBaseInfoModel {
     private String email;
     private int sex;
     private int locked;
+    private String salt;
     private Timestamp addTime;
     private Timestamp updateTime;
 }

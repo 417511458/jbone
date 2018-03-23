@@ -12,6 +12,7 @@ public class UserInfoModel implements Serializable {
     private String email;
     private int sex;
     private int locked;
+    private String salt;
 
     public int getId() {
         return id;
@@ -83,5 +84,13 @@ public class UserInfoModel implements Serializable {
 
     public void setLocked(int locked) {
         this.locked = locked;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

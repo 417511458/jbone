@@ -44,7 +44,7 @@ public class JboneCasRealm extends AuthorizingRealm {
         //密码加密，已用户登录名作为salt
 //        String newPassword = PasswordUtils.getMd5PasswordWithSalt(new String(userInfoModel.getPassword()),userInfoModel.getUsername());
 
-        ByteSource credentialsSalt = ByteSource.Util.bytes(userInfoModel.getData().getUsername());
+        ByteSource credentialsSalt = ByteSource.Util.bytes(userInfoModel.getData().getSalt());
 
         return new SimpleAuthenticationInfo(userInfoModel.getData().getUsername(), userInfoModel.getData().getPassword(),credentialsSalt, getName());
     }
