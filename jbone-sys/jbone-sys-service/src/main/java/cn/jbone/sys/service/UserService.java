@@ -183,7 +183,12 @@ public class UserService {
     public void save(CreateUserModel userModel){
         RbacUserEntity userEntity = new RbacUserEntity();
         BeanUtils.copyProperties(userModel,userEntity);
-        userEntity.setPassword(PasswordUtils.getMd5PasswordWithSalt(userEntity.getPassword(),userEntity.getUsername()));
+        //使用时间撮作为盐值
+        String salt = System.currentTimeMillis() + "";
+        userEntity.setSalt(salt);
+        userEntity.setPassword(PasswordUtils.getMd5PasswordWithSalt(userEntity.getPassword(),salt));
+
+
         userRepository.save(userEntity);
     }
 
@@ -197,12 +202,8 @@ public class UserService {
             throw new JboneException("没有找到用户");
         }
 
-        String password = userModel.getPassword();
-        //如果修改了密码，则重新加密
-        if(!password.equals(userEntity.getPassword())){
-            userModel.setPassword(PasswordUtils.getMd5PasswordWithSalt(password,userEntity.getUsername()));
-        }
-        BeanUtils.copyProperties(userModel,userEntity);
+        //不修改密码
+        BeanUtils.copyProperties(userModel,userEntity,"password");
 
         userRepository.save(userEntity);
     }

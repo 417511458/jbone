@@ -4,9 +4,7 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-#  boot:
-#    admin:
-#      context-path: /admin
+    password: jbone
 server:
   port: 10002
 
