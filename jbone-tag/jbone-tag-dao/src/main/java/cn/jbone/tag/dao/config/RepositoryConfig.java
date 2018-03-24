@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(entityManagerFactoryRef="entityManagerFactory",transactionManagerRef="transactionManager",basePackages= {"cn.jbone.sys.dao.repository"})
+@EnableJpaRepositories(entityManagerFactoryRef="entityManagerFactory",transactionManagerRef="transactionManager",basePackages= {"cn.jbone.tag.dao.repository"})
 public class RepositoryConfig {
 	@Autowired
     private JpaProperties jpaProperties;
@@ -38,7 +38,7 @@ public class RepositoryConfig {
         return builder
                 .dataSource(dataSource)
                 .properties(getVendorProperties(dataSource))
-                .packages("cn.jbone.sys.dao.domain") //设置实体类所在位置
+                .packages("cn.jbone.tag.dao.domain") //设置实体类所在位置
                 .persistenceUnit("PersistenceUnit")
                 .build();
     }

@@ -47,11 +47,11 @@ hystrix:
 jbone:
   #当前系统名，在系统管理里面对应的名字
   sys:
-    serverName: jbone-sys-admin
+    serverName: jbone-tag-admin
     jdbc:
-      url: jdbc:mysql://127.0.0.1:3306/jbone_tag?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
-      username: root
-      password: 123
+      url: jdbc:mysql://121.42.174.77:3306/jbone_tag?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+      username: jbone_tag
+      password: Jbone_tag_666
       driverClassName: com.mysql.jdbc.Driver
       maxActive: 10
       initialSize: 2

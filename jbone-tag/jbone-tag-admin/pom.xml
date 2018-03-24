@@ -88,10 +88,6 @@
             <artifactId>jbone-tag-service</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <dependency>
-            <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-service</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
