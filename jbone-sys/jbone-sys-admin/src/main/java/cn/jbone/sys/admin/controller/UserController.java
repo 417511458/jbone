@@ -219,4 +219,21 @@ public class UserController {
         userService.assignPermission(assignPermissionModel);
         return ResultUtils.wrapSuccess();
     }
+
+    @RequiresPermissions("sys:user:modifyPassword")
+    @Description("跳转至修改密码页面")
+    @RequestMapping("/toModifyPassword/{id}")
+    public String toModifyPassword(@PathVariable("id")String id, ModelMap modelMap){
+        modelMap.put("id",id);
+        return "pages/user/modifyPassword";
+    }
+
+    @RequiresPermissions("sys:user:modifyPassword")
+    @Description("执行修改密码")
+    @RequestMapping("/doModifyPassword")
+    @ResponseBody
+    public Result doModifyPassword(ModifyPasswordModel modifyPasswordModel){
+        userService.modifyPassword(modifyPasswordModel);
+        return ResultUtils.wrapSuccess();
+    }
 }
