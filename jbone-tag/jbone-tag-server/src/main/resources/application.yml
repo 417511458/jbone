@@ -1,0 +1,73 @@
+server:
+  port: 40001
+
+spring:
+  application:
+    name: Jbone-tag-server
+  #rabbitmq配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  jpa:
+    show-sql: true
+  sleuth:
+    sampler:
+      percentage: 1
+#注册中心
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:10001/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: http://${spring.cloud.client.ipAddress}:${server.port}
+
+management:
+  security:
+    enabled: false
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 200000
+        semaphore:
+          maxConcurrentRequests: 200
+  threadpool:
+    default:
+      coreSize: 100
+
+#Jbone配置
+jbone:
+  #当前系统名，在系统管理里面对应的名字
+  sys:
+    serverName: jbone-tag-admin
+    jdbc:
+      url: jdbc:mysql://121.42.174.77:3306/jbone_tag?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+      username: jbone_tag
+      password: Jbone_tag_666
+      driverClassName: com.mysql.jdbc.Driver
+      maxActive: 10
+      initialSize: 2
+      maxWait: 10000
+
+# info接口返回值
+info:
+  app:
+    java:
+      source: ${java.version}
+      target: ${java.version}
+    name: ${spring.application.name}
+  git:
+    url: https://github.com/417511458/jbone
+  gitee:
+    url: https://gitee.com/majunwei2017/jbone
+  domain: http://www.majunwei.com
+
+
