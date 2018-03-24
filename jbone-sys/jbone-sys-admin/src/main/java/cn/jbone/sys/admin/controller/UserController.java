@@ -232,7 +232,7 @@ public class UserController {
     @Description("执行修改密码")
     @RequestMapping("/doModifyPassword")
     @ResponseBody
-    public Result doModifyPassword(ModifyPasswordModel modifyPasswordModel){
+    public Result doModifyPassword(@Validated ModifyPasswordModel modifyPasswordModel, BindingResult bindingResult){
         userService.modifyPassword(modifyPasswordModel);
         return ResultUtils.wrapSuccess();
     }
