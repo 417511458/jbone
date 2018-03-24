@@ -359,5 +359,21 @@ public class UserService {
         return userBaseInfoModelList;
     }
 
+    /**
+     * 修改密码
+     * @param modifyPasswordModel
+     */
+    public void modifyPassword(ModifyPasswordModel modifyPasswordModel){
+        RbacUserEntity userEntity = userRepository.findOne(modifyPasswordModel.getId());
+        if(userEntity == null){
+            throw new JboneException("没有找到用户");
+        }
+        //使用时间撮作为盐值
+        String salt = System.currentTimeMillis() + "";
+        userEntity.setSalt(salt);
+        userEntity.setPassword(PasswordUtils.getMd5PasswordWithSalt(modifyPasswordModel.getPassword(),salt));
+        userRepository.save(userEntity);
+    }
+
 
 }
