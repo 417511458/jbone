@@ -20,6 +20,7 @@
           <a class="btn  btn-primary" href="javascript:;" onclick="assignMenuAction()"><i class="fa fa-user-plus"></i>分配菜单</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="assignPermissionAction()"><i class="fa fa-user-plus"></i>分配权限</a>
           <a class="btn  btn-primary" href="javascript:;" onclick="assignOrganizationAction()"><i class="fa fa-user-plus"></i>组织机构</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="modifyPassword()"><i class="fa fa-pencil-square-o"></i>修改密码</a>
       </div>
       <table id="table"></table>
   </div>
@@ -162,6 +163,13 @@
           var row = chooseOne();
           if (row) {
               openModal("分配组织机构[" + row.realname + "]","/user/toAssignOrganization/" + row.id);
+          }
+      }
+
+      function modifyPassword(){
+          var row = chooseOne();
+          if (row) {
+              openModal("修改密码[" + row.realname + "]","/user/toModifyPassword/" + row.id);
           }
       }
 
