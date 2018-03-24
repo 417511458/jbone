@@ -15,5 +15,5 @@ import org.springframework.stereotype.Repository;
 public interface TagInfoRepository extends JpaRepository<TagInfoEntity,Integer>, JpaSpecificationExecutor<TagInfoEntity>{
 
 
-
+    TagInfoEntity findByTagId(String tag_id);
 }

@@ -60,7 +60,7 @@ public class CreateTagModel implements Serializable{
     /**
      * 点击后的跳转链接，如jbone-cms.majunwei.com/topic/111。
      */
-    private String ClickTarget;
+    private String clickTarget;
 
     /**
      * 是否设置标签有效期，一旦新增，不能修改。

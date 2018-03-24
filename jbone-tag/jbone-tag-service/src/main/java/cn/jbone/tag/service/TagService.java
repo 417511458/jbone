@@ -9,9 +9,14 @@ import cn.jbone.tag.dao.repository.TagInfoRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -127,5 +132,94 @@ public class TagService {
         }
         BeanUtils.copyProperties(tagInfoEntity, tagModel);
         return tagModel;
+    }
+
+    /**
+     * 分页查询标签
+     * @param condition   条件
+     * @param pageRequest 分页封装
+     * @return 标签列表
+     * @author HoldDie
+     * @email holddie@163.com
+     * @date 2018/3/22 21:20
+     */
+    public Page<TagInfoEntity> findPage(String condition, PageRequest pageRequest) {
+        return tagInfoRepository.findAll(new TagSpecification(condition), pageRequest);
+    }
+
+    /**
+     * 实体转换
+     * @param tagInfoEntities 标签实体
+     * @return 标签列表
+     * @author HoldDie
+     * @email holddie@163.com
+     * @date 2018/3/22 21:39
+     */
+    public List<TagModel> getBaseInfos(List<TagInfoEntity> tagInfoEntities) {
+        List<TagModel> tagModelList = new ArrayList<TagModel>();
+        if (tagInfoEntities == null || tagInfoEntities.isEmpty()) {
+            return tagModelList;
+        }
+        for (TagInfoEntity taginfo :
+                tagInfoEntities) {
+            TagModel tagModel = new TagModel();
+            BeanUtils.copyProperties(taginfo, tagModel);
+            tagModelList.add(tagModel);
+        }
+        return tagModelList;
+    }
+
+    /**
+     * 根据标签ID查找标签
+     * @param tag_id 标签ID
+     * @return 标签
+     * @author HoldDie
+     * @email holddie@163.com
+     * @date 2018/3/22 21:49
+     */
+    public TagModel findByTagId(String tag_id) {
+        TagInfoEntity tagInfoEntity = null;
+        if (StringUtils.isNotEmpty(tag_id)) {
+            tagInfoEntity = tagInfoRepository.findByTagId(tag_id);
+        }
+        return getBaseInfo(tagInfoEntity);
+    }
+
+    /**
+     * 单体PO和VO转换
+     * @param tagInfoEntity 标签PO
+     * @return 标签实体
+     * @author HoldDie
+     * @email holddie@163.com
+     * @date 2018/3/22 21:48
+     */
+    private TagModel getBaseInfo(TagInfoEntity tagInfoEntity) {
+        TagModel tagModel = new TagModel();
+        BeanUtils.copyProperties(tagInfoEntity, tagModel);
+        return tagModel;
+    }
+
+    /**
+     * 声明查询，用户模糊查找标签名称
+     * @author HoldDie
+     * @version v1.0.0
+     * @email holddie@163.com
+     * @date 2018/3/22 21:33
+     */
+    private class TagSpecification implements Specification<TagInfoEntity> {
+        private String condition;
+
+        public TagSpecification(String condition) {
+            this.condition = condition;
+        }
+
+        public Predicate toPredicate(Root<TagInfoEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+            if (StringUtils.isBlank(condition)) {
+                return criteriaQuery.getRestriction();
+            }
+            Path<String> name = root.get("name");
+            Predicate predicate = criteriaBuilder.or(criteriaBuilder.like(name, "%" + condition + "%"));
+            return predicate;
+        }
     }
 }

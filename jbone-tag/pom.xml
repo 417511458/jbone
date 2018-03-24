@@ -18,6 +18,7 @@
         <module>jbone-tag-server</module>
         <module>jbone-tag-service</module>
         <module>jbone-tag-dao</module>
+        <module>jbone-tag-api-feign</module>
     </modules>
 
     <properties>

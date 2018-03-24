@@ -30,47 +30,63 @@ public class TagApiImpl implements TagApi {
     @Autowired
     private TagService tagService;
 
+
+    /**
+     * @see cn.jbone.tag.api.TagApi#batchGetTags(Set)
+     */
     public Result<List<TagModel>> batchGetTags(Set<String> tagIdList) {
         List<TagModel> tagModelList = null;
         try {
             tagModelList = tagService.batchGetTags(tagIdList);
 
-            if (tagModelList == null){
+            if (tagModelList == null) {
                 return Result.wrap404Error("tag is not found");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
         return new Result<List<TagModel>>(tagModelList);
     }
 
+
+    /**
+     * @see cn.jbone.tag.api.TagApi#GetTagsByPage(List, Integer, Integer)
+     */
     public Result<List<TagModel>> GetTagsByPage(List<Integer> targetList, Integer currentPage, Integer pageSize) {
         List<TagModel> tagModelList = null;
         try {
-            tagModelList = tagService.GetTagsByPage(targetList,currentPage,pageSize);
+            tagModelList = tagService.GetTagsByPage(targetList, currentPage, pageSize);
 
-            if (tagModelList == null){
+            if (tagModelList == null) {
                 return Result.wrap404Error("tag is not found");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
         return new Result<List<TagModel>>(tagModelList);
     }
 
+
+    /**
+     * @see cn.jbone.tag.api.TagApi#save(CreateTagModel)
+     */
     public Result save(CreateTagModel createTagModel) {
         try {
             tagService.save(createTagModel);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess();
     }
 
+
+    /**
+     * @see cn.jbone.tag.api.TagApi#update(UpdateTagModel)
+     */
     public Result update(UpdateTagModel updateTagModel) {
         try {
             tagService.update(updateTagModel);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess();
@@ -79,21 +95,25 @@ public class TagApiImpl implements TagApi {
     public Result delete(String ids) {
         try {
             tagService.delete(ids);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess();
     }
 
+
+    /**
+     * @see cn.jbone.tag.api.TagApi#findTagById(Integer)
+     */
     public Result<TagModel> findTagById(Integer id) {
         TagModel model = null;
         try {
             model = tagService.findTagById(id);
 
-            if (model == null){
+            if (model == null) {
                 return Result.wrap404Error("tag is not found");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
         return new Result<TagModel>(model);
