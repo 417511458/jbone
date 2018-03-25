@@ -51,7 +51,7 @@ QQ群：547104190
     * jbone-eb-logistics : 电商平台物流系统
     * jbone-eb-shopmanager : 电商平台店长管理后台
     * jbone-eb-consumer : 电商平台消费者个人中心
-    * jbone-eb-manager : 电商平台电商门户管理后台
+    * jbone-eb-manager : 电商平台电商门户管理后台 
 * jbone-pay : 支付平台模块
 * jbone-im : 即时通信模块
 * jbone-ui : 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。
