@@ -92,7 +92,7 @@ jbone:
   #系统管理Feign调用配置
   rpc.sysServer.feign:
     protocol: http
-    name: jbone-tag-server
+    name: jbone-sys-server
 
 # info接口返回值
 info:
