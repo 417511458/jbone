@@ -35,6 +35,23 @@ QQ群：547104190
 * jbone-common : 共用模块
 * jbone-configuration : 公共配置模块
 * jbone-eb : 电商平台模块
+    * jbone-eb-portal : 电商门户
+    * jbone-eb-shop : 店铺中心
+    * jbone-eb-item : 商品中心
+    * jbone-eb-trade: 交易中心
+    * jbone-eb-pay : 支付中心
+    * jbone-eb-category : 类目中心
+    * jbone-eb-collect : 收藏中心
+    * jbone-eb-comment : 评论中心
+    * jbone-eb-risk : 风控中心
+    * jbone-eb-search : 搜索引擎
+    * jbone-eb-recommend : 推荐引擎
+    * jbone-eb-card : 购物车
+    * jbone-eb-market : 营销中心
+    * jbone-eb-logistics : 物流系统
+    * jbone-eb-shopmanager : 店长管理后台
+    * jbone-eb-consumer : 消费者个人中心
+    * jbone-eb-manager : 电商门户管理后台
 * jbone-pay : 支付平台模块
 * jbone-im : 即时通信模块
 * jbone-ui : 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。
@@ -146,6 +163,8 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 127.0.0.1 jbone-sm-admin.majunwei.com
 
 127.0.0.1 jbone-sm-monitor.majunwei.com
+
+127.0.0.1 jbone-tag-admin.majunwei.com
 
 
 

@@ -12,6 +12,25 @@
 
     <name>jbone-eb</name>
     <url>http://maven.apache.org</url>
+    <modules>
+        <module>jbone-eb-portal</module>
+        <module>jbone-eb-shop</module>
+        <module>jbone-eb-item</module>
+        <module>jbone-eb-trade</module>
+        <module>jbone-eb-pay</module>
+        <module>jbone-eb-category</module>
+        <module>jbone-eb-collect</module>
+        <module>jbone-eb-comment</module>
+        <module>jbone-eb-risk</module>
+        <module>jbone-eb-search</module>
+        <module>jbone-eb-recommend</module>
+        <module>jbone-eb-card</module>
+        <module>jbone-eb-market</module>
+        <module>jbone-eb-logistics</module>
+        <module>jbone-eb-shopmanager</module>
+        <module>jbone-eb-consumer</module>
+        <module>jbone-eb-manager</module>
+    </modules>
     <description>电商平台</description>
 
     <properties>
