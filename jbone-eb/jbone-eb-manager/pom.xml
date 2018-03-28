@@ -8,10 +8,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jbone-eb-manager</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>jbone-eb-manager</name>
     <url>http://maven.apache.org</url>
+    <modules>
+        <module>jbone-em-manager-service</module>
+        <module>jbone-em-manager-admin</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,10 +23,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-common</artifactId>
         </dependency>
     </dependencies>
 </project>
