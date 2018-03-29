@@ -13,8 +13,6 @@
     <name>jbone-eb</name>
     <url>http://maven.apache.org</url>
     <modules>
-        <module>jbone-eb-portal</module>
-        <module>jbone-eb-shop</module>
         <module>jbone-eb-item</module>
         <module>jbone-eb-trade</module>
         <module>jbone-eb-pay</module>
@@ -29,7 +27,8 @@
         <module>jbone-eb-logistics</module>
         <module>jbone-eb-shopmanager</module>
         <module>jbone-eb-consumer</module>
-        <module>jbone-eb-manager</module>
+        <module>jbone-eb-manager-admin</module>
+        <module>jbone-eb-manager-service</module>
     </modules>
     <description>电商平台</description>
 
