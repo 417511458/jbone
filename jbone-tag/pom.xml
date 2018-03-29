@@ -12,11 +12,23 @@
 
     <name>jbone-tag</name>
     <url>http://maven.apache.org</url>
+    <modules>
+        <module>jbone-tag-admin</module>
+        <module>jbone-tag-api</module>
+        <module>jbone-tag-server</module>
+        <module>jbone-tag-service</module>
+        <module>jbone-tag-dao</module>
+        <module>jbone-tag-api-feign</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-common</artifactId>
+        </dependency>
     </dependencies>
 </project>

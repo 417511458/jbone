@@ -18,38 +18,35 @@ spring:
 #  context-path: /cas-management
 cas:
   server:
-        name: https://jbone-cas.majunwei.com:8443
-        prefix: https://jbone-cas.majunwei.com:8443/cas
+    name: https://jbone-cas.majunwei.com:8443
+    prefix: https://jbone-cas.majunwei.com:8443/cas
   mgmt:
-      serverName: https://jbone-cas-manager.majunwei.com:${server.port}
-#      userPropertiesFile: classpath:/user-details.properties
+    serverName: https://jbone-cas-manager.majunwei.com:${server.port}
   serviceRegistry:
-          initFromJson: false
-          jpa:
-              healthQuery: select now()
-              isolateInternalQueries: false
-              url: jdbc:mysql://121.42.174.77:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
-              failFastTimeout: 1
-              dialect: org.hibernate.dialect.MySQL5Dialect
-              leakThreshold: 10
-              jpaLockingTgtEnabled: true
-              batchSize: 1
-              user: jbone_cas
-              ddlAuto: none
-              password: Jbone_cas_666
-              autocommit: false
-              driverClass: com.mysql.jdbc.Driver
-              idleTimeout: 5000
-              dataSourceName:
-              dataSourceProxy: false
-
-              properties.hibernate.hbm2ddl.auto: none
-              properties.hibernate.show_sql: true
-
-              pool.suspension: false
-              pool.minSize: 6
-              pool.maxSize: 18
-              pool.maxWait: 2000
+    initFromJson: false
+    jpa:
+      healthQuery: select now()
+      isolateInternalQueries: false
+      url: jdbc:mysql://121.42.174.77:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+      failFastTimeout: 1
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      leakThreshold: 10
+      jpaLockingTgtEnabled: true
+      batchSize: 1
+      user: jbone_cas
+      ddlAuto: none
+      password: Jbone_cas_666
+      autocommit: false
+      driverClass: com.mysql.jdbc.Driver
+      idleTimeout: 5000
+      dataSourceName:
+      dataSourceProxy: false
+      properties.hibernate.hbm2ddl.auto: none
+      properties.hibernate.show_sql: true
+      pool.suspension: false
+      pool.minSize: 6
+      pool.maxSize: 18
+      pool.maxWait: 2000
 # 服务端口
 server:
   port: 30002
@@ -90,29 +87,29 @@ jbone:
     unauthorizedUrl: /403
     #权限过滤规则
     filterChainDefinition:
-          /health: anon
-          /archaius: anon
-          /refresh: anon
-          /configprops: anon
-          /env/**: anon
-          /service-registry/**: anon
-          /auditevents: anon
-          /pause: anon
-          /dump: anon
-          /loggers/**: anon
-          /resume: anon
-          /metrics/**: anon
-          /channels: anon
-          /beans: anon
-          /mappings: anon
-          /autoconfig: anon
-          /trace: anon
-          /hystrix.stream/**: anon
-          /info: anon
-          /restart: anon
-          /heapdump: anon
-          /features: anon
-          /**: authc,roles[casAdministrator]
+      /health: anon
+      /archaius: anon
+      /refresh: anon
+      /configprops: anon
+      /env/**: anon
+      /service-registry/**: anon
+      /auditevents: anon
+      /pause: anon
+      /dump: anon
+      /loggers/**: anon
+      /resume: anon
+      /metrics/**: anon
+      /channels: anon
+      /beans: anon
+      /mappings: anon
+      /autoconfig: anon
+      /trace: anon
+      /hystrix.stream/**: anon
+      /info: anon
+      /restart: anon
+      /heapdump: anon
+      /features: anon
+      /**: authc,roles[casAdministrator]
     clientSessionTimeout: 180000 #客户端Session失效时间，默认30分钟
   #系统配置
   sys:
