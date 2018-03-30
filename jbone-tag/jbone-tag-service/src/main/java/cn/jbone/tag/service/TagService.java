@@ -1,6 +1,8 @@
 package cn.jbone.tag.service;
 
 import cn.jbone.common.exception.JboneException;
+import cn.jbone.common.utils.IdGenerator;
+import cn.jbone.common.utils.IdTargetEnum;
 import cn.jbone.tag.api.model.CreateTagModel;
 import cn.jbone.tag.api.model.TagModel;
 import cn.jbone.tag.api.model.UpdateTagModel;

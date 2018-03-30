@@ -15,11 +15,6 @@ import java.sql.Timestamp;
 public class CreateTagModel implements Serializable{
 
     /**
-     * 唯一键索引，通过ID生成工具生成。
-     */
-    private String tag_id;
-
-    /**
      * 标签名
      */
     private String name;
@@ -46,7 +41,7 @@ public class CreateTagModel implements Serializable{
      * 0：不展示
      * 1：展示
      */
-    private Integer show;
+    private Integer isShow;
 
     /**
      * 标签图标
