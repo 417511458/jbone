@@ -22,7 +22,7 @@ public class TagModel implements Serializable{
     /**
      * 唯一键索引，通过ID生成工具生成。
      */
-    private String tagId;
+    private String tag_id;
 
     /**
      * 标签名
@@ -63,29 +63,29 @@ public class TagModel implements Serializable{
      * 1：CSS图标
      * 2：图片
      */
-    private String iconType;
+    private String icon_type;
 
     /**
      * 点击后的跳转链接，如jbone-cms.majunwei.com/topic/111。
      */
-    private String clickTarget;
+    private String click_target;
 
     /**
      * 是否设置标签有效期，一旦新增，不能修改。
      * 0：不设置有效期
      * 1：设置有效期
      */
-    private Integer timeValidity;
+    private Integer time_validity;
 
     /**
      * 当“timeValidity”为1时，改值必填，有效期的开始时间。
      */
-    private Timestamp startTime;
+    private Timestamp start_time;
 
     /**
      * 当“timeValidity”为1时，改值必填，有效期的结束时间。
      */
-    private Timestamp endTime;
+    private Timestamp end_time;
 
     /**
      * 预留扩展信息，json格式
@@ -100,6 +100,6 @@ public class TagModel implements Serializable{
     /**
      * 申请说明
      */
-    private String applyReason;
+    private String apply_reason;
 
 }

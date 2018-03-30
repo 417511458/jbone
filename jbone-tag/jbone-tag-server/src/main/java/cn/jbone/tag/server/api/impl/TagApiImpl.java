@@ -1,7 +1,6 @@
 package cn.jbone.tag.server.api.impl;
 
 import cn.jbone.common.rpc.Result;
-import cn.jbone.common.utils.ResultUtils;
 import cn.jbone.tag.api.TagApi;
 import cn.jbone.tag.api.model.CreateTagModel;
 import cn.jbone.tag.api.model.TagModel;
@@ -105,8 +104,8 @@ public class TagApiImpl implements TagApi {
     /**
      * @see cn.jbone.tag.api.TagApi#findTagById(Integer)
      */
-    public Result<TagModel> findTagById(Integer id) {
-        TagModel model = null;
+    public Result<UpdateTagModel> findTagById(Integer id) {
+        UpdateTagModel model = null;
         try {
             model = tagService.findTagById(id);
 
@@ -116,6 +115,6 @@ public class TagApiImpl implements TagApi {
         } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
-        return new Result<TagModel>(model);
+        return new Result<UpdateTagModel>(model);
     }
 }

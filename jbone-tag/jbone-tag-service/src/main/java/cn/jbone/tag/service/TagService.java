@@ -16,10 +16,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author HoldDie
@@ -74,9 +76,15 @@ public class TagService {
      * @email holddie@163.com
      * @date 2018/3/22 2:33
      */
-    public void save(CreateTagModel createTagModel) {
+    public void save(CreateTagModel createTagModel) throws ParseException {
         TagInfoEntity tagInfoEntity = new TagInfoEntity();
         BeanUtils.copyProperties(createTagModel, tagInfoEntity);
+        //todo 时间格式转化
+        String start_time = createTagModel.getTime_line().substring(0, 10);
+        String end_time = createTagModel.getTime_line().substring(13, 23);
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        tagInfoEntity.setStart_time(new Date(dateFormat.parse(start_time).getTime()));
+        tagInfoEntity.setEnd_time(new Date(dateFormat.parse(end_time).getTime()));
         tagInfoRepository.save(tagInfoEntity);
     }
 
@@ -124,13 +132,14 @@ public class TagService {
      * @email holddie@163.com
      * @date 2018/3/22 2:32
      */
-    public TagModel findTagById(Integer id) {
-        TagModel tagModel = null;
+    public UpdateTagModel findTagById(Integer id) {
+        UpdateTagModel tagModel = null;
         TagInfoEntity tagInfoEntity = tagInfoRepository.findOne(id);
         if (tagInfoEntity == null) {
             throw new JboneException("没有找到标签");
         }
         BeanUtils.copyProperties(tagInfoEntity, tagModel);
+        //todo 对于时间格式的转化
         return tagModel;
     }
 
@@ -171,16 +180,16 @@ public class TagService {
 
     /**
      * 根据标签ID查找标签
-     * @param tag_id 标签ID
+     * @param id 标签ID
      * @return 标签
      * @author HoldDie
      * @email holddie@163.com
      * @date 2018/3/22 21:49
      */
-    public TagModel findByTagId(String tag_id) {
+    public TagModel findById(String id) {
         TagInfoEntity tagInfoEntity = null;
-        if (StringUtils.isNotEmpty(tag_id)) {
-            tagInfoEntity = tagInfoRepository.findByTagId(tag_id);
+        if (StringUtils.isNotEmpty(id)) {
+            tagInfoEntity = tagInfoRepository.findById(Integer.parseInt(id));
         }
         return getBaseInfo(tagInfoEntity);
     }

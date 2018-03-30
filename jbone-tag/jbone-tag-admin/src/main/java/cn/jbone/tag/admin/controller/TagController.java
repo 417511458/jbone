@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
 import java.util.List;
 
 
@@ -56,7 +57,7 @@ public class TagController {
     @Description("跳转至更新标签页面")
     @RequestMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable("id")int id, ModelMap model){
-        TagModel tagModel = tagService.findTagById(id);
+        UpdateTagModel tagModel = tagService.findTagById(id);
         model.put("tagModel",tagModel);
         return "pages/tag/update";
     }
@@ -77,7 +78,7 @@ public class TagController {
     @Description("执行新增标签")
     @RequestMapping("/create")
     @ResponseBody
-    public Result create(@Validated CreateTagModel createTagModel, BindingResult bindingResult) {
+    public Result create(@Validated CreateTagModel createTagModel, BindingResult bindingResult) throws ParseException {
         tagService.save(createTagModel);
         return ResultUtils.wrapSuccess();
     }
@@ -111,10 +112,10 @@ public class TagController {
 
     @RequiresPermissions("tag:tagInfo:read")
     @Description("获取权限")
-    @RequestMapping("/getTags/{tag_id}")
+    @RequestMapping("/getTags/{id}")
     @ResponseBody
-    public Result getTags(@PathVariable("tag_id") String tag_id) {
-        return ResultUtils.wrapSuccess(tagService.findByTagId(tag_id));
+    public Result getTags(@PathVariable("id") String id) {
+        return ResultUtils.wrapSuccess(tagService.findById(id));
     }
 
 }

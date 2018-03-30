@@ -88,5 +88,5 @@ public interface TagApi {
      * @date 2018/3/22 0:32
      */
     @RequestMapping(value = "/findTagById")
-    Result<TagModel> findTagById(Integer id);
+    Result<UpdateTagModel> findTagById(Integer id);
 }
