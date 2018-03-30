@@ -30,13 +30,6 @@ public class TagInfoEntity implements Serializable {
     private int id;
 
     /**
-     * 唯一键索引，通过ID生成工具生成。
-     */
-    @Basic
-    @Column(name = "tag_id")
-    private String tag_id;
-
-    /**
      * 标签名
      */
     @Basic
@@ -70,8 +63,8 @@ public class TagInfoEntity implements Serializable {
      * 1：展示
      */
     @Basic
-    @Column(name = "show")
-    private Integer show;
+    @Column(name = "is_show")
+    private Integer isShow;
 
     /**
      * 标签图标

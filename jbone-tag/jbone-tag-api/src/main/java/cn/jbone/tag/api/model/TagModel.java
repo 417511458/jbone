@@ -51,7 +51,7 @@ public class TagModel implements Serializable{
      * 0：不展示
      * 1：展示
      */
-    private Integer show;
+    private Integer isShow;
 
     /**
      * 标签图标
