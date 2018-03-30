@@ -109,6 +109,12 @@ cas:
       # tgt有效期（会话超时时间）
       timeout:
         maxTimeToLiveInSeconds: 28800
+    st:
+      maxLength: 20
+      # ST使用次数
+      numberOfUses: 1
+      # ST有效期60S
+      timeToKillInSeconds: 60
   #单点登出
   slo:
     disabled: false
