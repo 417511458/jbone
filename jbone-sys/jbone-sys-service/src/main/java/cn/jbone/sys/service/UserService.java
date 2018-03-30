@@ -103,6 +103,9 @@ public class UserService {
             List<RbacMenuEntity> correctMenuList = new ArrayList<>();
 
             RbacSystemEntity systemEntity = systemRepository.findByName(serverName);
+            if(systemEntity == null){
+                return userModel;
+            }
             List<RbacUserEntity> userCondition = new ArrayList<>();
             userCondition.add(userEntity);
 
