@@ -42,23 +42,23 @@ public class TagController {
 
     @RequiresPermissions("tag:tagInfo:read")
     @RequestMapping("index")
-    public String index(ModelMap modelMap){
+    public String index(ModelMap modelMap) {
         return "pages/tag/index";
     }
 
     @RequiresPermissions("tag:tagInfo:create")
     @Description("跳转至新增标签页面")
     @RequestMapping("/toCreate")
-    public String toCreate(ModelMap modelMap){
+    public String toCreate(ModelMap modelMap) {
         return "pages/tag/create";
     }
 
     @RequiresPermissions("tag:tagInfo:update")
     @Description("跳转至更新标签页面")
     @RequestMapping("/toUpdate/{id}")
-    public String toUpdate(@PathVariable("id")int id, ModelMap model){
+    public String toUpdate(@PathVariable("id") int id, ModelMap model) {
         UpdateTagModel tagModel = tagService.findTagById(id);
-        model.put("tagModel",tagModel);
+        model.put("tagModel", tagModel);
         return "pages/tag/update";
     }
 
@@ -87,7 +87,7 @@ public class TagController {
     @Description("执行更新标签")
     @RequestMapping("/update")
     @ResponseBody
-    public Result update(@Validated UpdateTagModel updateTagModel, BindingResult bindingResult) {
+    public Result update(@Validated UpdateTagModel updateTagModel, BindingResult bindingResult) throws ParseException {
         tagService.update(updateTagModel);
         return ResultUtils.wrapSuccess();
     }
