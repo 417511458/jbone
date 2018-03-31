@@ -60,7 +60,7 @@ public class TagService {
      * @param targetList  标签类别
      * @param currentPage 当前页数
      * @param pageSize    页大小
-     * @return
+     * @return List<TagModel>
      * @author HoldDie
      * @email holddie@163.com
      * @date 2018/3/22 2:33
@@ -73,7 +73,7 @@ public class TagService {
     /**
      * 保存标签
      * @param createTagModel 创建页签
-     * @return
+     * @return void
      * @author HoldDie
      * @email holddie@163.com
      * @date 2018/3/22 2:33
@@ -81,7 +81,7 @@ public class TagService {
     public void save(CreateTagModel createTagModel) throws ParseException {
         TagInfoEntity tagInfoEntity = new TagInfoEntity();
         BeanUtils.copyProperties(createTagModel, tagInfoEntity);
-        //todo 时间格式转化
+        // 时间格式转化
         String start_time = createTagModel.getTime_line().substring(0, 10);
         String end_time = createTagModel.getTime_line().substring(13, 23);
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -93,25 +93,32 @@ public class TagService {
     /**
      * 更新标签
      * @param updateTagModel 更新页签
-     * @return
+     * @return void
      * @author HoldDie
      * @email holddie@163.com
      * @date 2018/3/22 2:33
      */
-    public void update(UpdateTagModel updateTagModel) {
+    public void update(UpdateTagModel updateTagModel) throws ParseException {
         TagInfoEntity tagInfoEntity = tagInfoRepository.findOne(updateTagModel.getId());
 
         if (tagInfoEntity == null) {
             throw new JboneException("没有找到标签");
         }
         BeanUtils.copyProperties(updateTagModel, tagInfoEntity);
+        // 时间格式转化
+        String start_time = updateTagModel.getTime_line().substring(0, 10);
+        String end_time = updateTagModel.getTime_line().substring(13, 23);
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        tagInfoEntity.setStart_time(new Date(dateFormat.parse(start_time).getTime()));
+        tagInfoEntity.setEnd_time(new Date(dateFormat.parse(end_time).getTime()));
+
         tagInfoRepository.save(tagInfoEntity);
     }
 
     /**
      * 批量删除标签
      * @param ids 主键
-     * @return
+     * @return void
      * @author HoldDie
      * @email holddie@163.com
      * @date 2018/3/22 2:33
@@ -135,13 +142,15 @@ public class TagService {
      * @date 2018/3/22 2:32
      */
     public UpdateTagModel findTagById(Integer id) {
-        UpdateTagModel tagModel = null;
+        UpdateTagModel tagModel = new UpdateTagModel();
         TagInfoEntity tagInfoEntity = tagInfoRepository.findOne(id);
         if (tagInfoEntity == null) {
             throw new JboneException("没有找到标签");
         }
         BeanUtils.copyProperties(tagInfoEntity, tagModel);
-        //todo 对于时间格式的转化
+        // 对于时间格式的转化
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        tagModel.setTime_line(dateFormat.format(tagInfoEntity.getStart_time()) + " - " + dateFormat.format(tagInfoEntity.getEnd_time()));
         return tagModel;
     }
 
@@ -220,7 +229,7 @@ public class TagService {
     private class TagSpecification implements Specification<TagInfoEntity> {
         private String condition;
 
-        public TagSpecification(String condition) {
+        TagSpecification(String condition) {
             this.condition = condition;
         }
 
