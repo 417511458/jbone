@@ -13,22 +13,66 @@
     <name>jbone-eb</name>
     <url>http://maven.apache.org</url>
     <modules>
-        <module>jbone-eb-item</module>
-        <module>jbone-eb-trade</module>
-        <module>jbone-eb-pay</module>
-        <module>jbone-eb-category</module>
-        <module>jbone-eb-collect</module>
-        <module>jbone-eb-comment</module>
         <module>jbone-eb-risk</module>
-        <module>jbone-eb-search</module>
-        <module>jbone-eb-recommend</module>
-        <module>jbone-eb-card</module>
-        <module>jbone-eb-market</module>
-        <module>jbone-eb-logistics</module>
-        <module>jbone-eb-shopmanager</module>
-        <module>jbone-eb-consumer</module>
         <module>jbone-eb-manager-admin</module>
-        <module>jbone-eb-manager-service</module>
+        <module>jbone-eb-manager-core</module>
+        <module>jbone-eb-item-core</module>
+        <module>jbone-eb-item-server</module>
+        <module>jbone-eb-item-api</module>
+        <module>jbone-eb-item-api-feign</module>
+        <module>jbone-eb-shop-core</module>
+        <module>jbone-eb-shop-api</module>
+        <module>jbone-eb-shop-server</module>
+        <module>jbone-eb-shop-api-feign</module>
+        <module>jbone-eb-category-core</module>
+        <module>jbone-eb-category-server</module>
+        <module>jbone-eb-category-api</module>
+        <module>jbone-eb-category-api-feign</module>
+        <module>jbone-eb-portal-core</module>
+        <module>jbone-eb-portal-server</module>
+        <module>jbone-eb-portal-api</module>
+        <module>jbone-eb-portal-api-feign</module>
+        <module>jbone-eb-portal-front</module>
+        <module>jbone-eb-collect-core</module>
+        <module>jbone-eb-collect-server</module>
+        <module>jbone-eb-collect-api</module>
+        <module>jbone-eb-collect-api-feign</module>
+        <module>jbone-eb-comment-core</module>
+        <module>jbone-eb-comment-server</module>
+        <module>jbone-eb-comment-api</module>
+        <module>jbone-eb-comment-api-feign</module>
+        <module>jbone-eb-card-core</module>
+        <module>jbone-eb-card-server</module>
+        <module>jbone-eb-card-api</module>
+        <module>jbone-eb-card-api-feign</module>
+        <module>jbone-eb-consumer-front</module>
+        <module>jbone-eb-consumer-core</module>
+        <module>jbone-eb-market-core</module>
+        <module>jbone-eb-market-server</module>
+        <module>jbone-eb-market-api</module>
+        <module>jbone-eb-market-api-feign</module>
+        <module>jbone-eb-logistics-core</module>
+        <module>jbone-eb-logistics-api</module>
+        <module>jbone-eb-logistics-api-feign</module>
+        <module>jbone-eb-logistics-server</module>
+        <module>jbone-eb-seller-core</module>
+        <module>jbone-eb-seller-front</module>
+        <module>jbone-eb-pay-core</module>
+        <module>jbone-eb-pay-server</module>
+        <module>jbone-eb-pay-api</module>
+        <module>jbone-eb-pay-api-feign</module>
+        <module>jbone-eb-recommend-core</module>
+        <module>jbone-eb-recommend-server</module>
+        <module>jbone-eb-recommend-api</module>
+        <module>jbone-eb-recommend-api-feign</module>
+        <module>jbone-eb-trade-core</module>
+        <module>jbone-eb-trade-server</module>
+        <module>jbone-eb-trade-api</module>
+        <module>jbone-eb-trade-api-feign</module>
+        <module>jbone-eb-search-core</module>
+        <module>jbone-eb-search-server</module>
+        <module>jbone-eb-search-api</module>
+        <module>jbone-eb-search-api-feign</module>
     </modules>
     <description>电商平台</description>
 

@@ -2,11 +2,11 @@ package cn.jbone.sys.admin.controller;
 
 import cn.jbone.common.ui.result.Result;
 import cn.jbone.common.utils.ResultUtils;
-import cn.jbone.sys.service.OrganizationService;
-import cn.jbone.sys.service.model.organization.CreateOrganizationModel;
-import cn.jbone.sys.service.model.organization.OrganizationBaseInfoModel;
-import cn.jbone.sys.service.model.organization.TreeOrganizationModel;
-import cn.jbone.sys.service.model.organization.UpdateOrganizationModel;
+import cn.jbone.sys.core.service.OrganizationService;
+import cn.jbone.sys.core.service.model.organization.CreateOrganizationModel;
+import cn.jbone.sys.core.service.model.organization.OrganizationBaseInfoModel;
+import cn.jbone.sys.core.service.model.organization.TreeOrganizationModel;
+import cn.jbone.sys.core.service.model.organization.UpdateOrganizationModel;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

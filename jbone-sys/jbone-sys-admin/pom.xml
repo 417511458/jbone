@@ -84,7 +84,8 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-service</artifactId>
+            <artifactId>jbone-sys-core</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>

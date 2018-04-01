@@ -26,8 +26,7 @@ QQ群：547104190
     * jbone-sys-admin ： 系统管理后台
     * jbone-sys-api : 系统服务对外接口定义
     * jbone-sys-api-feign : 基于Spring Cloud Feign的调用实现
-    * jbone-sys-dao : 系统管理数据层
-    * jbone-sys-service : 系统管理逻辑层
+    * jbone-sys-core : 系统管理核心
     * jbone-sys-server : 系统管理服务
 * jbone-tag ：全平台标签系统
 * jbone-cms ：内容管理模块
@@ -57,6 +56,8 @@ QQ群：547104190
 * jbone-ui : 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。
 ## 电商平台
 ![电商平台](doc/电商平台/电商功能架构图.png)
+### 部分数据结构
+![电商平台数据结构](doc/电商平台/数据库关系图.png)
 ## 非功能设计
 ### 可用性
 HA >=99.99%（无任何单点问题，对单点故障零容忍）
