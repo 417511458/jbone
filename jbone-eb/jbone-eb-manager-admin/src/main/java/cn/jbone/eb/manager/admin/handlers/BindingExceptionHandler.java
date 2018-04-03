@@ -27,7 +27,7 @@ public class BindingExceptionHandler {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Around("execution(cn.jbone.common.ui.result.Result cn.jbone.eb.manager.controller.*.*(..))")
+    @Around("execution(cn.jbone.common.ui.result.Result cn.jbone.eb.manager.admin.controller.*.*(..))")
     public Result doAround(ProceedingJoinPoint pjp) throws Throwable {
 
         BindingResult bindingResult = null;

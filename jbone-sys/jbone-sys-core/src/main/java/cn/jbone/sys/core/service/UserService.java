@@ -91,7 +91,7 @@ public class UserService {
 
 
 
-        BeanUtils.copyProperties(userEntity,userModel);
+        BeanUtils.copyProperties(userEntity,userModel,"menus");
         userModel.setPermissions(permissions);
         userModel.setRoles(roles);
 

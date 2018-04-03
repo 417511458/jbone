@@ -21,7 +21,7 @@ spring:
 
 #服务
 server:
-  port: 50002
+  port: 50001
 
 #注册中心
 eureka:
@@ -44,7 +44,7 @@ jbone:
     #CAS服务地址
     casServerUrl: https://jbone-cas.majunwei.com:8443/cas
     #当前系统地址
-    currentServerUrlPrefix: http://jbone-eb-manager.majunwei.com:20002
+    currentServerUrlPrefix: http://jbone-eb-manager.majunwei.com:50001
     #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
     casFilterUrlPattern: /cas
     #登录成功后的跳转路径，默认"/"
