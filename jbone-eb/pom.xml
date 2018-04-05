@@ -24,7 +24,6 @@
         <module>jbone-eb-shop-api</module>
         <module>jbone-eb-shop-server</module>
         <module>jbone-eb-shop-api-feign</module>
-        <module>jbone-eb-category-core</module>
         <module>jbone-eb-category-server</module>
         <module>jbone-eb-category-api</module>
         <module>jbone-eb-category-api-feign</module>
@@ -73,6 +72,7 @@
         <module>jbone-eb-search-server</module>
         <module>jbone-eb-search-api</module>
         <module>jbone-eb-search-api-feign</module>
+        <module>jbone-eb-category-core</module>
     </modules>
     <description>电商平台</description>
 
