@@ -14,8 +14,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-@EnableCircuitBreaker
 @EnableEurekaClient
+@EnableCircuitBreaker
 public class JboneTagAdminApplication {
     public static void main(String[] args) {
         new SpringApplicationBuilder(JboneTagAdminApplication.class).banner(new JboneTagAdminBanner()).logStartupInfo(true).run(args);
