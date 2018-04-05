@@ -20,11 +20,6 @@ public class TagModel implements Serializable{
     private int id;
 
     /**
-     * 唯一键索引，通过ID生成工具生成。
-     */
-    private String tag_id;
-
-    /**
      * 标签名
      */
     private String name;

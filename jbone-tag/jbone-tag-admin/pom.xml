@@ -71,6 +71,7 @@
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-cas-client</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
@@ -91,17 +92,19 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-api-feign</artifactId>
+            <artifactId>jbone-tag-api-feign</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-configuration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-tag-core</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

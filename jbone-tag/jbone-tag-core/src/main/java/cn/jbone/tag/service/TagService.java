@@ -1,8 +1,6 @@
 package cn.jbone.tag.service;
 
 import cn.jbone.common.exception.JboneException;
-import cn.jbone.common.utils.IdGenerator;
-import cn.jbone.common.utils.IdTargetEnum;
 import cn.jbone.tag.api.model.CreateTagModel;
 import cn.jbone.tag.api.model.TagModel;
 import cn.jbone.tag.api.model.UpdateTagModel;
@@ -13,17 +11,18 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author HoldDie
@@ -35,8 +34,12 @@ import java.util.*;
 @Service
 public class TagService {
 
+    private final TagInfoRepository tagInfoRepository;
+
     @Autowired
-    private TagInfoRepository tagInfoRepository;
+    public TagService(TagInfoRepository tagInfoRepository) {
+        this.tagInfoRepository = tagInfoRepository;
+    }
 
     /**
      * 根据标签号批量获取标签
@@ -46,13 +49,8 @@ public class TagService {
      * @email holddie@163.com
      * @date 2018/3/22 2:34
      */
-    public List<TagModel> batchGetTags(Set<String> tagIdList) {
-        List<TagModel> modelList = new LinkedList<TagModel>();
-        for (String tagId : tagIdList) {
-            //todo  根据标签查询
-//            TagInfoEntity tagInfoEntity = tagInfoRepository.findOne();
-        }
-        return null;
+    public List<TagInfoEntity> batchGetTags(List<Integer> tagIdList) {
+        return tagInfoRepository.findById(tagIdList);
     }
 
     /**
@@ -65,9 +63,9 @@ public class TagService {
      * @email holddie@163.com
      * @date 2018/3/22 2:33
      */
-    public List<TagModel> GetTagsByPage(List<Integer> targetList, Integer currentPage, Integer pageSize) {
-        //todo  复杂组合查询
-        return null;
+    public List<TagInfoEntity> GetTagsByPage(List<Integer> targetList, Integer currentPage, Integer pageSize) {
+        Pageable pageable = new PageRequest(currentPage,pageSize);
+        return tagInfoRepository.findByTarget(targetList,pageable);
     }
 
     /**
