@@ -82,10 +82,13 @@ jbone:
   sys:
     serverName: jbone-eb-manager
   #系统管理Feign调用配置
-  rpc.sysServer.feign:
-    protocol: http
-    name: jbone-sys-server
-
+  rpc:
+    sysServer.feign:
+      protocol: http
+      name: jbone-sys-server
+    ebPortalServer.feign:
+      protocol: http
+      name: jbone-eb-portal-server
 # info接口返回值
 info:
   app:
@@ -99,3 +102,6 @@ info:
     url: https://gitee.com/majunwei2017/jbone
   domain: http://www.majunwei.com
 
+feign:
+  httpclient:
+    enabled: true

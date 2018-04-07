@@ -2,7 +2,7 @@ package cn.jbone.eb.portal;
 
 import cn.jbone.common.boot.AbastractJboneBanner;
 
-public class JboneEbPortalBanner extends AbastractJboneBanner {
+public class JboneEbPortalServerBanner extends AbastractJboneBanner {
 
     @Override
     protected String getTitle() {

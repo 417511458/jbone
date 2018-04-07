@@ -38,7 +38,7 @@ public class ListResult extends Result {
         this.total = total;
     }
 
-    public Object getRows() {
+    public Collection getRows() {
         return rows;
     }
 

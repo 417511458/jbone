@@ -43,6 +43,14 @@ jbone:
   #当前系统名，在系统管理里面对应的名字
   sys:
     serverName: jbone-eb-portal-server
+    jdbc:
+      url: jdbc:mysql://121.42.174.77:3306/jbone_eb_portal?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+      username: jbone_eb_portal
+      password: Jbone_eb_portal_666
+      driverClassName: com.mysql.jdbc.Driver
+      maxActive: 10
+      initialSize: 2
+      maxWait: 10000
   #系统管理Feign调用配置
   rpc.sysServer.feign:
     protocol: http

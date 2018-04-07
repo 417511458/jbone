@@ -10,8 +10,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableCircuitBreaker
-public class JboneEbPortalApplication {
+public class JboneEbPortalServerApplication {
     public static void main(String[] args) {
-        new SpringApplicationBuilder(JboneEbPortalApplication.class).banner(new JboneEbPortalBanner()).run(args);
+        new SpringApplicationBuilder(JboneEbPortalServerApplication.class).banner(new JboneEbPortalServerBanner()).run(args);
     }
 }
