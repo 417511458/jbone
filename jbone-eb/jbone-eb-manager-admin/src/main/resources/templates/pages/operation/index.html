@@ -20,16 +20,18 @@
       <div>
           <form id="searchCondition">
             <input type="text" name="S_title_LIKE" />
-              <select id="S_type_EQUAL" name="S_type_EQUAL">
+              <select id="S_type_EQUAL" name="S_type_EQ">
                   <option value="-1">运营位类型</option>
                   <option value="1">大运营位</option>
                   <option value="2">小运营位</option>
               </select>
-              <select id="S_status_EQUAL" name="S_status_EQUAL">
+              <select id="S_status_EQUAL" name="S_status_EQ">
                   <option value="-1">全部</option>
                   <option value="1">正常</option>
                   <option value="0">禁用</option>
               </select>
+              <input id="S_addTime_GTOE" name="S_addTime_GTOE_Date" type="text"/>
+              <input id="S_addTime_LTOE" name="S_addTime_LTOE_Date" type="text"/>
           </form>
           <a class="btn btn-primary" href="javascript:;" onclick="doSearch()"><i class="fa fa-plus-square"></i>搜索</a>
       </div>
@@ -39,6 +41,14 @@
 <div th:replace="/layout/js :: #js"></div>
 
   <script>
+      $(function () {
+          $('#S_addTime_LTOE').datepicker({
+              autoclose: true
+          });
+          $('#S_addTime_GTOE').datepicker({
+              autoclose: true
+          });
+      })
       var $table = $('#table');
       $(function() {
           $(document).on('focus', 'input[type="text"]', function() {
