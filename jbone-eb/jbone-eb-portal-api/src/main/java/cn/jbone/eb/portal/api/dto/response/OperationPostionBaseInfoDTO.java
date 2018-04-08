@@ -11,6 +11,6 @@ public class OperationPostionBaseInfoDTO {
     private String title;
     private int status;
     private String operator;
-    private Timestamp addTimeFrom;
-    private Timestamp addTimeTo;
+    private Timestamp addTime;
+    private Timestamp updateTime;
 }

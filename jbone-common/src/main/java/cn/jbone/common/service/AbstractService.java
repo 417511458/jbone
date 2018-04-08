@@ -60,7 +60,7 @@ public class AbstractService<T> {
                         continue;
                     }
                     //基本数字类型且小于0，不作为查询条件
-                    if(root.get(filedName).getJavaType().isPrimitive() && ((long) condition.get(filedName)) < 0){
+                    if(root.get(filedName).getJavaType().isPrimitive() && (Long.parseLong(condition.get(key).toString())) < 0){
                         continue;
                     }
 
