@@ -1,4 +1,4 @@
-package cn.jbone.common.service.bo;
+package cn.jbone.common.service.vo;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import java.util.Map;
  * 查询列表model
  */
 @Data
-public class SearchListBO {
+public class SearchListVo {
 
     private int pageSize;
     private int pageNumber;

@@ -1,10 +1,9 @@
 package cn.jbone.common.service;
 
 
-import cn.jbone.common.service.bo.SearchListBO;
+import cn.jbone.common.api.dto.SearchListDTO;
 import cn.jbone.common.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,15 +24,15 @@ public class AbstractService<T> {
     /**
      * 获取搜索列表的通用Specification
      * key=S_filedName_pattern
-     * @param searchListBO
+     * @param searchListDTO
      * @return
      */
-    public Specification<T> getSearchListSpecification(SearchListBO searchListBO){
+    public Specification<T> getSearchListSpecification(SearchListDTO searchListDTO){
         return new Specification<T>() {
             @Override
             public Predicate toPredicate(Root<T> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
 
-                Map<String,Object> condition = searchListBO.getCondition();
+                Map<String,Object> condition = searchListDTO.getCondition();
                 if(condition == null || condition.isEmpty()){
                     return criteriaQuery.getRestriction();
                 }
@@ -110,15 +109,15 @@ public class AbstractService<T> {
 
     /**
      * 获取分页请求对象
-     * @param searchListBO
+     * @param searchListDTO
      * @return
      */
-    public PageRequest getPageRequest(SearchListBO searchListBO){
+    public PageRequest getPageRequest(SearchListDTO searchListDTO){
         PageRequest pageRequest = null;
-        if(StringUtils.isNotBlank(searchListBO.getSortName())){
-            pageRequest = new PageRequest(searchListBO.getPageNumber()-1,searchListBO.getPageSize(),Sort.Direction.fromString(searchListBO.getSortOrder()),searchListBO.getSortName());
+        if(StringUtils.isNotBlank(searchListDTO.getSortName())){
+            pageRequest = new PageRequest(searchListDTO.getPageNumber()-1,searchListDTO.getPageSize(),Sort.Direction.fromString(searchListDTO.getSortOrder()),searchListDTO.getSortName());
         }else {
-            pageRequest = new PageRequest(searchListBO.getPageNumber()-1,searchListBO.getPageSize());
+            pageRequest = new PageRequest(searchListDTO.getPageNumber()-1,searchListDTO.getPageSize());
         }
         return pageRequest;
     }

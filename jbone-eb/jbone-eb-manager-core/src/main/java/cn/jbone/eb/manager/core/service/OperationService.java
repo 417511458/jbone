@@ -1,14 +1,14 @@
 package cn.jbone.eb.manager.core.service;
 
-import cn.jbone.common.service.bo.SearchListBO;
-import cn.jbone.common.ui.result.ListResult;
-import cn.jbone.common.ui.result.Result;
-import cn.jbone.common.utils.BoDtoUtils;
-import cn.jbone.common.utils.ResultUtils;
-import cn.jbone.eb.manager.core.service.bo.operation.CreateOperationBO;
-import cn.jbone.eb.manager.core.service.bo.operation.UpdateOperationBO;
+import cn.jbone.common.service.vo.SearchListVo;
+import cn.jbone.common.utils.VoDtoUtils;
+import cn.jbone.eb.manager.core.service.vo.operation.CreateOperationVo;
+import cn.jbone.eb.manager.core.service.vo.operation.OperationBaseInfoVo;
+import cn.jbone.eb.manager.core.service.vo.operation.OperationPositionListVo;
+import cn.jbone.eb.manager.core.service.vo.operation.UpdateOperationVo;
 import cn.jbone.eb.portal.api.OperationPositionApi;
 import cn.jbone.eb.portal.api.dto.response.OperationPositionListByPageResponseDTO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,29 +18,33 @@ public class OperationService {
     @Autowired
     private OperationPositionApi operationPositionApi;
 
-    public ListResult findByPage(SearchListBO searchListBO){
-        cn.jbone.common.rpc.Result<OperationPositionListByPageResponseDTO> result = operationPositionApi.findByPage(BoDtoUtils.searchListBoToDTO(searchListBO));
+    public OperationPositionListVo findByPage(SearchListVo searchListVo){
+        cn.jbone.common.rpc.Result<OperationPositionListByPageResponseDTO> result = operationPositionApi.findByPage(VoDtoUtils.searchListVoToDTO(searchListVo));
         if(result != null && result.isSuccess()){
             OperationPositionListByPageResponseDTO responseDTO = result.getData();
-            return ResultUtils.wrapSuccess(responseDTO.getTotal(),responseDTO.getRows());
+            OperationPositionListVo listVo = new OperationPositionListVo();
+            BeanUtils.copyProperties(responseDTO,listVo);
+            return listVo;
         }
-        return ResultUtils.wrapListFail("获取数据失败");
+        return null;
     }
 
-    public Result create(CreateOperationBO createOperationBO){
-        return ResultUtils.wrapSuccess();
+
+
+    public void create(CreateOperationVo createOperationVo){
+
     }
 
-    public Result update(UpdateOperationBO updateOperationBO){
-        return ResultUtils.wrapSuccess();
+    public void update(UpdateOperationVo updateOperationVo){
+
     }
 
-    public Result delete(String ids){
-        return ResultUtils.wrapSuccess();
+    public void delete(String ids){
+
     }
 
-    public Result get(int id){
-        return ResultUtils.wrapSuccess();
+    public OperationBaseInfoVo get(int id){
+        return null;
     }
 
 }

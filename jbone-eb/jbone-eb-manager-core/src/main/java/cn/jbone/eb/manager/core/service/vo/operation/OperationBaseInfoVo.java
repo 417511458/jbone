@@ -1,9 +1,10 @@
-package cn.jbone.eb.manager.core.service.bo.operation;
+package cn.jbone.eb.manager.core.service.vo.operation;
 
 import lombok.Data;
 
 @Data
-public class CreateOperationBO {
+public class OperationBaseInfoVo {
+    private int id;
     private int type;
     private String title;
     private String imgUrl;

@@ -1,6 +1,8 @@
 package cn.jbone.eb.category.core.dao.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,6 +23,7 @@ public class BackCategoryPropertyEntity {
     private Timestamp addTime;
     private Timestamp updateTime;
     private int version;
+    private List<PublicValueEntity> publicValueEntities;
 
     @Id
     @Column(name = "id")
@@ -154,5 +157,15 @@ public class BackCategoryPropertyEntity {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "back_category_property_value",joinColumns = {@JoinColumn(name = "back_category_id",referencedColumnName = "back_category_id"),@JoinColumn(name = "property_id",referencedColumnName = "property_id")},inverseJoinColumns = @JoinColumn(name = "value_id",referencedColumnName = "id"))
+    public List<PublicValueEntity> getPublicValueEntities() {
+        return publicValueEntities;
+    }
+
+    public void setPublicValueEntities(List<PublicValueEntity> publicValueEntities) {
+        this.publicValueEntities = publicValueEntities;
     }
 }

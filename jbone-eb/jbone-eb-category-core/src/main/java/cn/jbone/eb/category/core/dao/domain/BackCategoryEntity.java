@@ -1,6 +1,8 @@
 package cn.jbone.eb.category.core.dao.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -20,6 +22,10 @@ public class BackCategoryEntity {
     private Timestamp addTime;
     private Timestamp updateTime;
     private int version;
+    private List<FrontCategoryEntity> frontCategoryEntities;
+    private List<BrandEntity> brandEntities;
+    private List<BackCategoryPropertyEntity> backCategoryPropertyEntities;
+    private List<IndustryEntity> industryEntities;
 
     @Id
     @Column(name = "id")
@@ -145,4 +151,43 @@ public class BackCategoryEntity {
         this.version = version;
     }
 
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name = "front_back_category_relation",joinColumns = @JoinColumn(name = "back_category_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "front_category_id",referencedColumnName = "id"))
+    public List<FrontCategoryEntity> getFrontCategoryEntities() {
+        return frontCategoryEntities;
+    }
+
+    public void setFrontCategoryEntities(List<FrontCategoryEntity> frontCategoryEntities) {
+        this.frontCategoryEntities = frontCategoryEntities;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "back_category_brand_relation",joinColumns = @JoinColumn(name = "back_category_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "brand_id",referencedColumnName = "id"))
+    public List<BrandEntity> getBrandEntities() {
+        return brandEntities;
+    }
+
+    public void setBrandEntities(List<BrandEntity> brandEntities) {
+        this.brandEntities = brandEntities;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "back_category_id")
+    public List<BackCategoryPropertyEntity> getBackCategoryPropertyEntities() {
+        return backCategoryPropertyEntities;
+    }
+
+    public void setBackCategoryPropertyEntities(List<BackCategoryPropertyEntity> backCategoryPropertyEntities) {
+        this.backCategoryPropertyEntities = backCategoryPropertyEntities;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "industry_back_category",joinColumns = @JoinColumn(name = "back_category_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "industry_id",referencedColumnName = "id"))
+    public List<IndustryEntity> getIndustryEntities() {
+        return industryEntities;
+    }
+
+    public void setIndustryEntities(List<IndustryEntity> industryEntities) {
+        this.industryEntities = industryEntities;
+    }
 }

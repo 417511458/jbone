@@ -7,7 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 @Entity
-@Table(name = "back_category_property_value", schema = "jbone_eb_category", catalog = "")
+@Table(name = "back_category_property_value")
 public class BackCategoryPropertyValueEntity {
     private int id;
     private int backCategoryId;

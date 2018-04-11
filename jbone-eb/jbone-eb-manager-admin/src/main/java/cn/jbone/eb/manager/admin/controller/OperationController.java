@@ -1,10 +1,12 @@
 package cn.jbone.eb.manager.admin.controller;
 
-import cn.jbone.common.service.bo.SearchListBO;
+import cn.jbone.common.service.vo.SearchListVo;
 import cn.jbone.common.ui.result.Result;
+import cn.jbone.common.utils.ResultUtils;
 import cn.jbone.eb.manager.core.service.OperationService;
-import cn.jbone.eb.manager.core.service.bo.operation.CreateOperationBO;
-import cn.jbone.eb.manager.core.service.bo.operation.UpdateOperationBO;
+import cn.jbone.eb.manager.core.service.vo.operation.CreateOperationVo;
+import cn.jbone.eb.manager.core.service.vo.operation.OperationPositionListVo;
+import cn.jbone.eb.manager.core.service.vo.operation.UpdateOperationVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,15 +34,17 @@ public class OperationController {
     @RequiresPermissions("eb:manager:operation:read")
     @RequestMapping("/list")
     @ResponseBody
-    public Result list(SearchListBO listBO){
-        return operationService.findByPage(listBO);
+    public Result list(SearchListVo listBO){
+        OperationPositionListVo listVo = operationService.findByPage(listBO);
+        return ResultUtils.wrapSuccess(listVo);
     }
 
     @RequiresPermissions("eb:manager:operation:create")
     @RequestMapping("/create")
     @ResponseBody
-    public Result create(@Validated CreateOperationBO createOperationBO, BindingResult bindingResult){
-        return operationService.create(createOperationBO);
+    public Result create(@Validated CreateOperationVo createOperationVo, BindingResult bindingResult){
+        operationService.create(createOperationVo);
+        return ResultUtils.wrapSuccess();
     }
 
     @RequiresPermissions("eb:manager:operation:create")
@@ -58,8 +62,9 @@ public class OperationController {
     @RequiresPermissions("eb:manager:operation:update")
     @RequestMapping("/update")
     @ResponseBody
-    public Result update(@Validated UpdateOperationBO updateOperationBO, BindingResult bindingResult){
-        return operationService.update(updateOperationBO);
+    public Result update(@Validated UpdateOperationVo updateOperationVo, BindingResult bindingResult){
+        operationService.update(updateOperationVo);
+        return ResultUtils.wrapSuccess();
     }
 
 
@@ -67,12 +72,13 @@ public class OperationController {
     @RequestMapping("/delete/{ids}")
     @ResponseBody
     public Result delete(@PathVariable("ids")String ids){
-        return operationService.delete(ids);
+        operationService.delete(ids);
+        return ResultUtils.wrapSuccess();
     }
 
     @RequestMapping("/get/{id}")
     @ResponseBody
     public Result get(@PathVariable("id")int id){
-        return operationService.get(id);
+        return ResultUtils.wrapSuccess(operationService.get(id));
     }
 }

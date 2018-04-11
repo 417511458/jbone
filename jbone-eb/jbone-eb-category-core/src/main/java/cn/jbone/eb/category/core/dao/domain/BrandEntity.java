@@ -1,6 +1,8 @@
 package cn.jbone.eb.category.core.dao.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -19,6 +21,7 @@ public class BrandEntity {
     private Timestamp addTime;
     private Timestamp updateTime;
     private int version;
+    private List<BackCategoryEntity> backCategoryEntities;
 
     @Id
     @Column(name = "id")
@@ -134,4 +137,13 @@ public class BrandEntity {
         this.version = version;
     }
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "back_category_brand_relation",joinColumns = @JoinColumn(name = "brand_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "back_category_id",referencedColumnName = "id"))
+    public List<BackCategoryEntity> getBackCategoryEntities() {
+        return backCategoryEntities;
+    }
+
+    public void setBackCategoryEntities(List<BackCategoryEntity> backCategoryEntities) {
+        this.backCategoryEntities = backCategoryEntities;
+    }
 }
