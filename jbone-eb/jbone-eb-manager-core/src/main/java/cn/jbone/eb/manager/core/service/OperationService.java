@@ -1,5 +1,6 @@
 package cn.jbone.eb.manager.core.service;
 
+import cn.jbone.common.rpc.Result;
 import cn.jbone.common.service.vo.SearchListVo;
 import cn.jbone.common.utils.VoDtoUtils;
 import cn.jbone.eb.manager.core.service.vo.operation.CreateOperationVo;
@@ -19,7 +20,7 @@ public class OperationService {
     private OperationPositionApi operationPositionApi;
 
     public OperationPositionListVo findByPage(SearchListVo searchListVo){
-        cn.jbone.common.rpc.Result<OperationPositionListByPageResponseDTO> result = operationPositionApi.findByPage(VoDtoUtils.searchListVoToDTO(searchListVo));
+        Result<OperationPositionListByPageResponseDTO> result = operationPositionApi.findByPage(VoDtoUtils.searchListVoToDTO(searchListVo));
         if(result != null && result.isSuccess()){
             OperationPositionListByPageResponseDTO responseDTO = result.getData();
             OperationPositionListVo listVo = new OperationPositionListVo();

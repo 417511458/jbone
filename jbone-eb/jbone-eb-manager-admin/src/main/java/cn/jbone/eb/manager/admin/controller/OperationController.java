@@ -36,7 +36,7 @@ public class OperationController {
     @ResponseBody
     public Result list(SearchListVo listBO){
         OperationPositionListVo listVo = operationService.findByPage(listBO);
-        return ResultUtils.wrapSuccess(listVo);
+        return ResultUtils.wrapSuccess(listVo.getTotal(),listVo.getRows());
     }
 
     @RequiresPermissions("eb:manager:operation:create")

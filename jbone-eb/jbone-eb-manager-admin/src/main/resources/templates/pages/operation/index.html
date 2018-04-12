@@ -11,32 +11,76 @@
   </head>
   <body>
   <div th:replace="/layout/css :: #css"></div>
-  <div id="main">
-      <div id="toolbar">
-          <a class="btn  btn-primary" href="javascript:;" onclick="openModal('新增运营位','/operation/toCreate')"><i class="fa fa-plus-square"></i>新增</a>
-          <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
-          <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction('/operation/delete/')"><i class="fa fa-times-circle"></i>删除</a>
+  <section class="content">
+      <div class="row">
+          <div id="col-md-12">
+              <div class="box intro-profile">
+                  <form id="searchCondition" class="form-horizontal update-check-form ">
+                      <div class="box-header with-border">
+                          <h3 class="box-title">查询条件</h3>
+
+                          <div class="box-tools">
+                              <a class="btn btn-primary" href="javascript:;" onclick="doSearch()"><i class="fa fa-plus-square"></i>搜索</a>
+                          </div>
+                      </div>
+                      <div class="col-sm-12">
+                          <div class="box-body col-sm-6">
+                              <div class="form-group">
+                                  <label class="col-sm-3 control-label condense-label">标题</label>
+                                  <div class="col-sm-8">
+                                      <input type="text" class="form-control" name="S_title_LIKE" id="S_title_LIKE" />
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-3 control-label condense-label">运营位类型</label>
+                                  <div class="col-sm-8">
+                                      <select id="S_type_EQUAL" name="S_type_EQ" class="form-control">
+                                          <option value="-1">运营位类型</option>
+                                          <option value="1">大运营位</option>
+                                          <option value="2">小运营位</option>
+                                      </select>
+                                  </div>
+                              </div>
+
+                          </div>
+                          <div class="box-body col-sm-6">
+                              <div class="form-group">
+                                  <label class="col-sm-3 control-label condense-label">状态</label>
+                                  <div class="col-sm-8">
+                                      <select id="S_status_EQUAL" name="S_status_EQ" class="form-control">
+                                          <option value="-1">全部</option>
+                                          <option value="1">正常</option>
+                                          <option value="0">禁用</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-3 control-label condense-label">创建时间</label>
+                                  <div class="col-sm-3">
+                                      <input id="S_addTime_GTOE" name="S_addTime_GTOE_Date" type="text" class="form-control"/>
+                                  </div>
+                                  <div class="col-sm-1">
+                                      -
+                                  </div>
+                                  <div class="col-sm-3">
+                                      <input id="S_addTime_LTOE" name="S_addTime_LTOE_Date" type="text" class="form-control"/>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+
+              </div>
+              <div id="toolbar">
+                  <a class="btn  btn-primary" href="javascript:;" onclick="openModal('新增运营位','/operation/toCreate')"><i class="fa fa-plus-square"></i>新增</a>
+                  <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
+                  <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction('/operation/delete/')"><i class="fa fa-times-circle"></i>删除</a>
+              </div>
+              <table id="table"></table>
+          </div>
       </div>
-      <div>
-          <form id="searchCondition">
-            <input type="text" name="S_title_LIKE" />
-              <select id="S_type_EQUAL" name="S_type_EQ">
-                  <option value="-1">运营位类型</option>
-                  <option value="1">大运营位</option>
-                  <option value="2">小运营位</option>
-              </select>
-              <select id="S_status_EQUAL" name="S_status_EQ">
-                  <option value="-1">全部</option>
-                  <option value="1">正常</option>
-                  <option value="0">禁用</option>
-              </select>
-              <input id="S_addTime_GTOE" name="S_addTime_GTOE_Date" type="text"/>
-              <input id="S_addTime_LTOE" name="S_addTime_LTOE_Date" type="text"/>
-          </form>
-          <a class="btn btn-primary" href="javascript:;" onclick="doSearch()"><i class="fa fa-plus-square"></i>搜索</a>
-      </div>
-      <table id="table"></table>
-  </div>
+  </section>
+
 
 <div th:replace="/layout/js :: #js"></div>
 
