@@ -168,6 +168,8 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 
 127.0.0.1 jbone-tag-admin.majunwei.com
 
+127.0.0.1 jbone-eb-manager.majunwei.com
+
 
 
 

@@ -9,6 +9,7 @@ import cn.jbone.eb.manager.core.service.vo.operation.OperationPositionListVo;
 import cn.jbone.eb.manager.core.service.vo.operation.UpdateOperationVo;
 import cn.jbone.eb.portal.api.OperationPositionApi;
 import cn.jbone.eb.portal.api.dto.response.OperationPositionListByPageResponseDTO;
+import cn.jbone.eb.portal.api.dto.response.OperationPositionRequestDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,22 +31,27 @@ public class OperationService {
         return null;
     }
 
-
-
     public void create(CreateOperationVo createOperationVo){
-
+        OperationPositionRequestDTO dto = new OperationPositionRequestDTO();
+        BeanUtils.copyProperties(createOperationVo,dto);
+        operationPositionApi.save(dto);
     }
 
     public void update(UpdateOperationVo updateOperationVo){
-
+        OperationPositionRequestDTO dto = new OperationPositionRequestDTO();
+        BeanUtils.copyProperties(updateOperationVo,dto);
+        operationPositionApi.save(dto);
     }
 
     public void delete(String ids){
-
+        operationPositionApi.delete(ids);
     }
 
-    public OperationBaseInfoVo get(int id){
-        return null;
+    public OperationBaseInfoVo get(Integer id){
+        OperationBaseInfoVo operationBaseInfoVo = new OperationBaseInfoVo();
+        OperationPositionRequestDTO dto = operationPositionApi.findById(id);
+        BeanUtils.copyProperties(dto,operationBaseInfoVo);
+        return operationBaseInfoVo;
     }
 
 }
