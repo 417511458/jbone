@@ -18,6 +18,9 @@ public interface OperationPositionApi {
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     void save(@RequestBody OperationPositionRequestDTO operationPositionRequestDTO);
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    void update(@RequestBody OperationPositionRequestDTO operationPositionRequestDTO);
+
     @RequestMapping(value = "/findById", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
     OperationPositionRequestDTO findById(@RequestBody Integer id);
 

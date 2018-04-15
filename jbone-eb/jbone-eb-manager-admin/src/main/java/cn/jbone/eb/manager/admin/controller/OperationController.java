@@ -76,6 +76,8 @@ public class OperationController {
     @RequestMapping("/update")
     @ResponseBody
     public Result update(@Validated UpdateOperationVo updateOperationVo, BindingResult bindingResult){
+        UserModel currentUser = (UserModel) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
+        updateOperationVo.setOperator(currentUser.getUsername());
         operationService.update(updateOperationVo);
         return ResultUtils.wrapSuccess();
     }

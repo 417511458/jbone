@@ -103,5 +103,13 @@ public class OperationPositionService extends AbstractService<OperationPositionE
         }
     }
 
-
+    /**
+     * 运营位更新
+     * @param dto 运营位信息载体
+     */
+    public void update(OperationPositionRequestDTO dto) {
+        OperationPositionEntity entity = operationPositionRepository.getOne(dto.getId());
+        BeanUtils.copyProperties(dto,entity);
+        operationPositionRepository.save(entity);
+    }
 }

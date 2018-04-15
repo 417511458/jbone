@@ -22,7 +22,7 @@ public class CreateOperationVo {
     private String linkUrl;
     @Length(max = 500,message = "运营描述最长不能超过500")
     private String description;
-    @Min(value = 0,message = "运营排序号不能为空")
+    @Min(value = 0,message = "运营排序号不能为空,且不能小于0")
     private int sortNum;
     private int status;
     private String operator;

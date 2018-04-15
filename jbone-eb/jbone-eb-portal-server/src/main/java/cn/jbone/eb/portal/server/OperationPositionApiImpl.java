@@ -35,6 +35,12 @@ public class OperationPositionApiImpl implements OperationPositionApi {
     }
 
     @Override
+    @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update(@RequestBody OperationPositionRequestDTO dto) {
+        operationPositionService.update(dto);
+    }
+
+    @Override
     @RequestMapping(value = "/findById", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
     public OperationPositionRequestDTO findById(@RequestBody Integer id) {
         OperationPositionRequestDTO dto = new OperationPositionRequestDTO();

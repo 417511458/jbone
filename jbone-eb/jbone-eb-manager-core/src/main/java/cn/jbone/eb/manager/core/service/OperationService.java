@@ -40,7 +40,7 @@ public class OperationService {
     public void update(UpdateOperationVo updateOperationVo){
         OperationPositionRequestDTO dto = new OperationPositionRequestDTO();
         BeanUtils.copyProperties(updateOperationVo,dto);
-        operationPositionApi.save(dto);
+        operationPositionApi.update(dto);
     }
 
     public void delete(String ids){
