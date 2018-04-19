@@ -1,6 +1,6 @@
 package cn.jbone.bpm.api.dto.response;
 
-import cn.jbone.bpm.api.ProcessInstanceStatusEnum;
+import cn.jbone.bpm.api.enums.ProcessInstanceStatusEnum;
 import lombok.Data;
 
 import java.util.Date;

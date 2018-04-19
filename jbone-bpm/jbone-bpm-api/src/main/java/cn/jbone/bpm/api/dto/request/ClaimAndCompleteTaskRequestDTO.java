@@ -1,6 +1,6 @@
 package cn.jbone.bpm.api.dto.request;
 
-import cn.jbone.bpm.api.AuditEnum;
+import cn.jbone.bpm.api.enums.TaskAuditEnum;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,7 +15,7 @@ public class ClaimAndCompleteTaskRequestDTO {
     private String processInstanceId;	//流程实例ID
     private String taskId;				//任务ID
     private String taskDefinitionKey;   //任务Key
-    private AuditEnum audit;				//审核意见(pass/reject)
+    private TaskAuditEnum audit;				//审核意见(pass/reject)
     private String reason;				//原因说明
     private String selectUser;			//指定下一步办理人
     private String operator;			//当前办理人
