@@ -12,9 +12,17 @@
 
     <name>jbone-bpm</name>
     <url>http://maven.apache.org</url>
+    <modules>
+        <module>jbone-bpm-api</module>
+        <module>jbone-bpm-api-feign</module>
+        <module>jbone-bpm-core</module>
+        <module>jbone-bpm-server</module>
+        <module>jbone-bpm-admin</module>
+    </modules>
     <description>流程平台</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <flowable.version>6.3.0</flowable.version>
     </properties>
 
     <dependencies>

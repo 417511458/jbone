@@ -2,11 +2,11 @@ package cn.jbone.sys.admin.controller;
 
 import cn.jbone.common.ui.result.Result;
 import cn.jbone.common.utils.ResultUtils;
-import cn.jbone.sys.dao.domain.RbacSystemEntity;
-import cn.jbone.sys.service.SystemService;
-import cn.jbone.sys.service.model.ListModel;
-import cn.jbone.sys.service.model.system.CreateSystemModel;
-import cn.jbone.sys.service.model.system.UpdateSystemModel;
+import cn.jbone.sys.core.dao.domain.RbacSystemEntity;
+import cn.jbone.sys.core.service.SystemService;
+import cn.jbone.sys.core.service.model.ListModel;
+import cn.jbone.sys.core.service.model.system.CreateSystemModel;
+import cn.jbone.sys.core.service.model.system.UpdateSystemModel;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

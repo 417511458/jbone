@@ -65,7 +65,7 @@
 
         var resizeClock;
         $("#modal-iframe").load(function(){
-            debugger;
+            // debugger;
             changeFrameSize();
             $('#iframe-loading').hide();
             resizeClock = setInterval("clock()",200);
@@ -85,12 +85,12 @@
         // 模态框关闭，清空iframe
         if($("#parentModal")){
             $("#parentModal").on('hidden.bs.modal', function (event) {
-                debugger;
+                // debugger;
                 //刷新tab页
                 var opration =$('#modalOpration').val();
                 if(opration){
                     $(".tab-pane.active").each(function(){
-                        debugger;
+                        // debugger;
                         //回调当前iframe中的方法
                         var iframe = $(this).find("iframe")[0];
                         if(opration == "refresh"){

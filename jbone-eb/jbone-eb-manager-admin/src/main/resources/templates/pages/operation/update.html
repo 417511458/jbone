@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>修改运营位</title>
+</head>
+<body>
+<div th:replace="/layout/css :: #css"></div>
+<div class="container-fluid" style="width: 400px;">
+    <form id="createForm" method="post" class="form-horizontal modal-form">
+        <input id="id" name="id" th:type="hidden" />
+        <div class="form-group">
+            <label class="col-sm-3 control-label">运营位类型</label>
+            <div class="col-sm-8">
+                <div class="radio">
+                    <label class="radio-inline">
+                        <input type="radio" name="type" id="type_large" value="1" checked="checked" />
+                        大运营位
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="type" id="type_small" value="2" />
+                        小运营位
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="title" class="col-sm-3 control-label">运营位标题</label>
+            <div class="col-sm-8">
+                <input id="title" name="title" type="text" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="imgUrl" class="col-sm-3 control-label">运营图URL</label>
+            <div class="col-sm-8">
+                <input id="imgUrl" name="imgUrl" type="text" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="linkUrl" class="col-sm-3 control-label">运营跳转链接</label>
+            <div class="col-sm-8">
+                <input id="linkUrl" name="linkUrl" type="text" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sortNum" class="col-sm-3 control-label">运营排序号</label>
+            <div class="col-sm-8">
+                <input id="sortNum" name="sortNum" type="number" min="0" value="0" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label  class="col-sm-3 control-label">状态</label>
+            <div class="col-sm-8">
+                <div class="radio">
+                    <label class="radio-inline">
+                        <input type="radio" name="status" id="status_nomal" value="1" checked="checked" />
+                        可用
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="status" id="status_disable" value="0" />
+                        不可用
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description" class="col-sm-3 control-label">运营描述</label>
+            <div class="col-sm-8">
+                <textarea id="description" name="description" class="form-control"/>
+            </div>
+        </div>
+        <br />
+        <button type="button" class="btn btn-primary btn-block" onclick="doCreate()">保 存</button>
+
+    </form>
+
+</div>
+
+<div th:replace="/layout/js :: #js"></div>
+<script type="text/javascript" th:src="@{/js/modalPage.js}"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+        debugger;
+        var model = [[${operationBaseInfoVo}]];
+        loadData(model);
+    });
+    function doCreate(){
+        $.ajax({
+            type: 'post',
+            url: '/operation/update',
+            data: $('#createForm').serialize(),
+            success: function(result) {
+                if (result.status != 0) {
+                    failHandler(result);
+                } else {
+                    successConfirm();
+                    closeModal();
+                }
+            },
+            error: errorHandler
+        });
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Jbone | 电商后台管理</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+  <div th:replace="/layout/css :: #css"></div>
+
+
+
+  <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon" />
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <div th:replace="layout/header"></div>
+  <!-- Left side column. contains the logo and sidebar -->
+  <div th:replace="layout/left"></div>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper ">
+    <!-- Main content -->
+    <section class="content-header nav-header">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs ui-sortable-handle nav-tabs-title">
+        </ul>
+      </div>
+    </section>
+
+    <section class="content nav-content">
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-12 connectedSortable">
+          <!-- Custom tabs (Charts with tabs)-->
+          <div class="nav-tabs-custom">
+            <!-- Tabs within a box -->
+            <div class="tab-content nav-tabs-content">
+              <!-- Morris chart - Sales -->
+            </div>
+            </div>
+        </section>
+      </div>
+      <!-- /.row (main row) -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <div th:replace="layout/footer"></div>
+
+  <!-- Control Sidebar -->
+  <div th:replace="layout/control"></div>
+
+</div>
+<div th:replace="/layout/js :: #js"></div>
+
+<script type="text/javascript">
+    $(function () {
+        var dashboard = $("#dashboard");
+        addTabs({id: dashboard.attr("id"), title: dashboard.attr('title'), close: dashboard.attr("closeable"), url:dashboard.attr("url")});
+
+        var resizeClock;
+        $("#modal-iframe").load(function(){
+            debugger;
+            changeFrameSize();
+            $('#iframe-loading').hide();
+            resizeClock = setInterval("clock()",200);
+        });
+
+        $("#modal-iframe").resize(function () {
+            alert("resize");
+            changeFrameSize();
+        });
+
+        $("#modal-iframe").scroll(function () {
+            alert("scroll");
+            changeFrameSize();
+        });
+
+
+        // 模态框关闭，清空iframe
+        if($("#parentModal")){
+            $("#parentModal").on('hidden.bs.modal', function (event) {
+                debugger;
+                //刷新tab页
+                var opration =$('#modalOpration').val();
+                if(opration){
+                    $(".tab-pane.active").each(function(){
+                        debugger;
+                        //回调当前iframe中的方法
+                        var iframe = $(this).find("iframe")[0];
+                        if(opration == "refresh"){
+                            iframe.attr('src',iframe.attr('src'));
+                        }else if(opration == "callback"){
+                            iframe.contentWindow.madalCallback();
+                        }
+                    });
+                }
+                $('#modal-iframe').attr("src", "");
+                $('#modalOpration').val("");
+
+                window.clearInterval(resizeClock);
+            });
+        }
+
+    });
+
+    function clock(){
+        changeFrameSize();
+    }
+
+    function changeFrameSize(){
+        var mainheight = $("#modal-iframe").contents().find("body").height();
+
+        $("#modal-iframe").height(0);
+        $("#modal-iframe").height(mainheight + 50);
+    }
+
+
+</script>
+
+
+  <input id="modalOpration" name="modalOpration" type="hidden" />
+
+  <div class="modal centered-modal" id="parentModal" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-from="close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><label id="modal-title"></label><span id="iframe-loading" class="text-muted small" style="display:none;margin-left:1em;">正在加载...</span></h4>
+        </div>
+        <div class="modal-body">
+          <iframe id="modal-iframe" src="" frameborder="no" scrolling="yes" allowtransparency="yes" ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>
+

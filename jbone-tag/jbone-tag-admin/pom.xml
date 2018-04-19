@@ -15,6 +15,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <thymeleaf.version>3.0.0.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.0.0</thymeleaf-layout-dialect.version>
     </properties>
 
     <dependencies>
@@ -67,6 +71,7 @@
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-cas-client</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
@@ -77,21 +82,41 @@
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-tag-service</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-ui</artifactId>
         </dependency>
+
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-tag-service</artifactId>
+            <artifactId>jbone-tag-api-feign</artifactId>
             <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-configuration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-tag-core</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.0.0</version>

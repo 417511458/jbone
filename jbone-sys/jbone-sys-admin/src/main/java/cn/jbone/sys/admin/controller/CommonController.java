@@ -2,7 +2,7 @@ package cn.jbone.sys.admin.controller;
 
 import cn.jbone.configuration.JboneConfiguration;
 import cn.jbone.sys.api.model.UserModel;
-import cn.jbone.sys.service.UserService;
+import cn.jbone.sys.core.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.ui.ModelMap;
 

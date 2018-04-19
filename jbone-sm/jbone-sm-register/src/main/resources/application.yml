@@ -12,8 +12,8 @@ management:
 #注册中心
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
+    register-with-eureka: true                                    # 作为客户端时开启
+    fetch-registry: false                                         # 作为客户端，并部署注册中心高可用时开启
     service-url:
       defaultZone: http://localhost:10001/eureka
   instance:

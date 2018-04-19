@@ -1,15 +1,15 @@
 package cn.jbone.sys.admin.controller;
 
-import cn.jbone.sys.dao.domain.*;
-import cn.jbone.sys.service.model.user.*;
+import cn.jbone.sys.core.dao.domain.*;
+import cn.jbone.sys.core.service.model.user.*;
 import cn.jbone.common.ui.result.Result;
 import cn.jbone.common.utils.ResultUtils;
-import cn.jbone.sys.service.PermissionService;
-import cn.jbone.sys.service.RoleService;
-import cn.jbone.sys.service.SystemService;
-import cn.jbone.sys.service.UserService;
-import cn.jbone.sys.service.model.ListModel;
-import cn.jbone.sys.service.model.common.AssignPermissionModel;
+import cn.jbone.sys.core.service.PermissionService;
+import cn.jbone.sys.core.service.RoleService;
+import cn.jbone.sys.core.service.SystemService;
+import cn.jbone.sys.core.service.UserService;
+import cn.jbone.sys.core.service.model.ListModel;
+import cn.jbone.sys.core.service.model.common.AssignPermissionModel;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
