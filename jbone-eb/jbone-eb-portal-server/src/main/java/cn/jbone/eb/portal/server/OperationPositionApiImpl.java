@@ -5,6 +5,7 @@ import cn.jbone.common.rpc.Result;
 import cn.jbone.eb.portal.api.OperationPositionApi;
 import cn.jbone.eb.portal.api.dto.response.OperationPositionListByPageResponseDTO;
 import cn.jbone.eb.portal.api.dto.response.OperationPositionRequestDTO;
+import cn.jbone.eb.portal.api.dto.response.OperationPositionResponceDTO;
 import cn.jbone.eb.portal.core.dao.domain.OperationPositionEntity;
 import cn.jbone.eb.portal.core.service.OperationPositionService;
 import org.springframework.beans.BeanUtils;
@@ -21,8 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class OperationPositionApiImpl implements OperationPositionApi {
     @Autowired
     private OperationPositionService operationPositionService;
+
     @Override
-    @RequestMapping(value = "/findByPage", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/findByPage", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Result<OperationPositionListByPageResponseDTO> findByPage(@RequestBody SearchListDTO searchListDTO) {
         OperationPositionListByPageResponseDTO responseDTO = operationPositionService.findByPage(searchListDTO);
         return new Result<OperationPositionListByPageResponseDTO>(responseDTO);
@@ -30,28 +32,47 @@ public class OperationPositionApiImpl implements OperationPositionApi {
 
     @Override
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void save(@RequestBody OperationPositionRequestDTO dto) {
-        operationPositionService.save(dto);
+    public Result<Void> save(@RequestBody OperationPositionRequestDTO dto) {
+        try {
+            operationPositionService.save(dto);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return new Result<>();
     }
 
     @Override
     @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody OperationPositionRequestDTO dto) {
-        operationPositionService.update(dto);
+    public Result<Void> update(@RequestBody OperationPositionRequestDTO dto) {
+        try {
+            operationPositionService.update(dto);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return new Result<>();
     }
 
     @Override
     @RequestMapping(value = "/findById", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public OperationPositionRequestDTO findById(@RequestBody Integer id) {
-        OperationPositionRequestDTO dto = new OperationPositionRequestDTO();
-        OperationPositionEntity operationPositionEntity = operationPositionService.findById(id);
-        BeanUtils.copyProperties(operationPositionEntity,dto);
-        return dto;
+    public Result<OperationPositionResponceDTO> findById(@RequestBody Integer id) {
+        OperationPositionResponceDTO responseDTO = new OperationPositionResponceDTO();
+        try {
+            OperationPositionEntity operationPositionEntity = operationPositionService.findById(id);
+            BeanUtils.copyProperties(operationPositionEntity, responseDTO);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return new Result<OperationPositionResponceDTO>(responseDTO);
     }
 
     @Override
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void delete(@RequestBody String ids) {
-        operationPositionService.delete(ids);
+    public Result<Void> delete(@RequestBody String ids) {
+        try {
+            operationPositionService.delete(ids);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return new Result<>();
     }
 }
