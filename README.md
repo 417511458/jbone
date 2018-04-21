@@ -152,24 +152,22 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 ## 安装并启动RabbitMq(调用链使用)
 安装RabbitMq并在本地启动
 ## 配置域名
+```javascript
 127.0.0.1 jbone-sm-register.majunwei.com
-
 127.0.0.1 jbone-cas.majunwei.com
-
-127.0.0.1 jbone-cas-manager.majunwei.com
-
 127.0.0.1 jbone-sys-server.majunwei.com
-
-127.0.0.1 jbone-sys-admin.majunwei.com
-
 127.0.0.1 jbone-sm-admin.majunwei.com
-
+127.0.0.1 jbone-sys-admin.majunwei.com
 127.0.0.1 jbone-sm-monitor.majunwei.com
-
+127.0.0.1 jbone-cas-manager.majunwei.com
 127.0.0.1 jbone-tag-admin.majunwei.com
-
+127.0.0.1 jbone-eb-portal.majunwei.com
 127.0.0.1 jbone-eb-manager.majunwei.com
-
+127.0.0.1 jbone-eb-consumer.majunwei.com
+127.0.0.1 jbone-eb-seller.majunwei.com
+127.0.0.1 jbone-bpm-admin.majunwei.com
+127.0.0.1 jbone-bpm-server.majunwei.com
+```
 
 
 
@@ -238,6 +236,7 @@ Open quote is expected for attribute "keystorePass" associated with an  element 
 4. jbone-sys-admin
 
 5. jbone-cas-server (支持两种部署方式)
+
 
 > 单独部署方式：在tomcat单独部署（https端口号8443）
 
