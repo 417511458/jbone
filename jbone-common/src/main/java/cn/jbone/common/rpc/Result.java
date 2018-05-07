@@ -65,6 +65,14 @@ public class Result<T> implements Serializable {
         return wrapError(STATUS_500,message);
     }
 
+    /**
+     * 系统错误
+     * @return
+     */
+    public static Result wrap500Error() {
+        return wrap500Error("系统错误");
+    }
+
 
     public static Result wrapSuccess() {
         return new Result();
