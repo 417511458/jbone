@@ -81,12 +81,6 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-tag-service</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.jbone</groupId>
             <artifactId>jbone-ui</artifactId>
         </dependency>
 
