@@ -2,8 +2,8 @@ package org.apereo.cas.web.realm;
 
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
-import cn.jbone.sys.api.model.UserInfoModel;
-import cn.jbone.sys.api.model.UserModel;
+import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;
+import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
 import org.apache.shiro.util.ByteSource;
 import org.apereo.cas.web.SpringManager;
 import org.apache.shiro.authc.*;
@@ -34,15 +34,18 @@ public class JboneCasRealm extends AuthorizingRealm {
         return userApi;
     }
 
+    /**
+     * 验证登录
+     * @param authcToken
+     * @return
+     * @throws AuthenticationException
+     */
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        Result<UserInfoModel> userInfoModel = getUserApi().getUserByName(token.getUsername());
+        Result<UserBaseInfoResponseDTO> userInfoModel = getUserApi().getUserByName(token.getUsername());
         if(userInfoModel == null || !userInfoModel.isSuccess() || userInfoModel.getData() == null){
             throw new AuthenticationException("用户不存在");
         }
-
-        //密码加密，已用户登录名作为salt
-//        String newPassword = PasswordUtils.getMd5PasswordWithSalt(new String(userInfoModel.getPassword()),userInfoModel.getUsername());
 
         ByteSource credentialsSalt = ByteSource.Util.bytes(userInfoModel.getData().getSalt());
 
@@ -50,9 +53,14 @@ public class JboneCasRealm extends AuthorizingRealm {
     }
 
 
+    /**
+     * 获取登录用户权限信息
+     * @param principals
+     * @return
+     */
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String userName = (String) principals.fromRealm(getName()).iterator().next();
-        Result<UserModel> userModel = getUserApi().getUserDetailByName(userName);
+        Result<UserInfoResponseDTO> userModel = getUserApi().getUserDetailByName(userName);
         Set<String> roles = userModel.getData().getRoles();
         Set<String> permissions = userModel.getData().getPermissions();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

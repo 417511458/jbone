@@ -297,6 +297,11 @@
             <artifactId>cas-server-webapp-init</artifactId>
             <version>${cas.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-pm</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.thymeleaf</groupId>
@@ -330,6 +335,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
