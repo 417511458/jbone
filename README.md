@@ -233,7 +233,7 @@ Open quote is expected for attribute "keystorePass" associated with an  element 
 - shell脚本： gencertCasKey.sh 待写
 
 进入到脚本所在路径：
-> jbone/jbone-cas/jbone-cas-server/src/main/resources/gencertCasKey.bat
+> jbone/jbone-cas/jbone-cas-server/src/main/resources/
 
 找到 `gencertCasKey.bat` 或 `gencertCasKey.sh`
 
