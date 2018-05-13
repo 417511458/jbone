@@ -1,10 +1,11 @@
 package cn.jbone.common.utils;
 
 public enum IdTargetEnum {
-    SHOP(100),   //店铺
-    ITEM(200),   //商品
-    CMS(300),    //文章
-    TAG(400);    //标签
+    SHOP(10),   //店铺
+    ITEM(20),   //商品
+    CMS(30),    //文章
+    TAG(40),    //标签
+    MAX(99);
 
     private int target;
 

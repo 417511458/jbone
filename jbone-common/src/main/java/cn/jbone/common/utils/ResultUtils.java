@@ -14,6 +14,10 @@ public class ResultUtils {
         return listResult;
     }
 
+    public static ListResult wrapListFail(String msg){
+        return new ListResult(ResultStatus.FAIL.getStatus(),msg);
+    }
+
     public static ModelResult wrapSuccess(Object data){
         return new ModelResult(ResultStatus.SUCCESS,data);
     }
@@ -29,6 +33,7 @@ public class ResultUtils {
     public static Result wrapFail(String msg){
         return new Result(ResultStatus.FAIL.getStatus(),msg);
     }
+
 
     public static Result wrapFail(int status,String msg){
         return new Result(status,msg);

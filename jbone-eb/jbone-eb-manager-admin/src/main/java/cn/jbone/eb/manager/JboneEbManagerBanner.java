@@ -6,6 +6,6 @@ public class JboneEbManagerBanner extends AbastractJboneBanner {
 
     @Override
     protected String getTitle() {
-        return "Jbone EB Manager";
+        return "Jbone B2BC Manager";
     }
 }

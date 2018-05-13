@@ -13,12 +13,11 @@
     <name>jbone-sys</name>
     <url>http://maven.apache.org</url>
     <modules>
-        <module>jbone-sys-dao</module>
-        <module>jbone-sys-service</module>
         <module>jbone-sys-api</module>
         <module>jbone-sys-server</module>
         <module>jbone-sys-admin</module>
         <module>jbone-sys-api-feign</module>
+        <module>jbone-sys-core</module>
     </modules>
 
     <properties>

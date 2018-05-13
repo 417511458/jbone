@@ -1,7 +1,7 @@
 package cn.jbone.sys.admin.controller;
 
 import cn.jbone.configuration.JboneConfiguration;
-import cn.jbone.sys.service.UserService;
+import cn.jbone.sys.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

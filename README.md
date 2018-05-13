@@ -26,8 +26,7 @@ QQ群：547104190
     * jbone-sys-admin ： 系统管理后台
     * jbone-sys-api : 系统服务对外接口定义
     * jbone-sys-api-feign : 基于Spring Cloud Feign的调用实现
-    * jbone-sys-dao : 系统管理数据层
-    * jbone-sys-service : 系统管理逻辑层
+    * jbone-sys-core : 系统管理核心
     * jbone-sys-server : 系统管理服务
 * jbone-tag ：全平台标签系统
 * jbone-cms ：内容管理模块
@@ -57,6 +56,8 @@ QQ群：547104190
 * jbone-ui : 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。
 ## 电商平台
 ![电商平台](doc/电商平台/电商功能架构图.png)
+### 部分数据结构
+![电商平台数据结构](doc/电商平台/数据库关系图.png)
 ## 非功能设计
 ### 可用性
 HA >=99.99%（无任何单点问题，对单点故障零容忍）
@@ -151,26 +152,25 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 ## 安装并启动RabbitMq(调用链使用)
 安装RabbitMq并在本地启动
 ## 配置域名
+```javascript
 127.0.0.1 jbone-sm-register.majunwei.com
-
 127.0.0.1 jbone-cas.majunwei.com
-
-127.0.0.1 jbone-cas-manager.majunwei.com
-
 127.0.0.1 jbone-sys-server.majunwei.com
-
-127.0.0.1 jbone-sys-admin.majunwei.com
-
 127.0.0.1 jbone-sm-admin.majunwei.com
-
 127.0.0.1 jbone-sm-monitor.majunwei.com
-
+127.0.0.1 jbone-cas-manager.majunwei.com
 127.0.0.1 jbone-tag-admin.majunwei.com
+127.0.0.1 jbone-eb-portal.majunwei.com
+127.0.0.1 jbone-eb-manager.majunwei.com
+127.0.0.1 jbone-eb-consumer.majunwei.com
+127.0.0.1 jbone-eb-seller.majunwei.com
+127.0.0.1 jbone-bpm-admin.majunwei.com
+127.0.0.1 jbone-bpm-server.majunwei.com
+```
+
+
 
 ## 配置CAS证书
-
-### 配置方式一
-
 1、生成证书
 sudo keytool -genkey -alias jbonekeystore -keyalg RSA -keystore /etc/cas/jbonekeystore
 
@@ -184,7 +184,7 @@ sudo keytool -export -file /etc/cas/jbonekeystore.crt -alias jbonekeystore -keys
 
 注意：这里输入到是上面设置的密码：123456
 
-3、导入证书到本地JDK（客户端认证）
+3、倒入证书到本地JDK（客户端认证）
 
 sudo keytool -import -keystore /Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/jre/lib/security/cacerts -file /etc/cas/jbonekeystore.crt -alias jbonekeystore
 
@@ -223,29 +223,6 @@ Open quote is expected for attribute "keystorePass" associated with an  element 
 
 原因有可能是配置的属性符号问题，比如中文的引号
 
-### 配置方式二：
-
-为了方便开发人员配置证书，我们提供了脚本形式的部署。
-
-- bat脚本： [gencertCasKey.bat](/jbone-cas/jbone-cas-server/src/main/resources/gencertCasKey.bat)
-- shell脚本： gencertCasKey.sh 待写
-
-
-进入到脚本所在路径：
-> jbone/jbone-cas/jbone-cas-server/src/main/resources/gencertCasKey.bat
-
-
-找到 `gencertCasKey.bat` 或 `gencertCasKey.sh`
-
-替换脚本中本地JDK密钥库路径
-
-```sh
-:: "设置JDK密钥库路径"
-set keystoreJDKPath="C:\devSpace\Java\jdk1.8.0_131\jre\lib\security\cacerts "
-```
-
-然后执行脚本，根据提示操作即可完成导入。
- 
 ## 启动应用
 依次启动：
 
@@ -266,13 +243,10 @@ set keystoreJDKPath="C:\devSpace\Java\jdk1.8.0_131\jre\lib\security\cacerts "
 6. jbone-cas-manager(tomcat中运行,http端口号30002)
 
 ## 进入系统
-
- 系统名称 | 地址 
- ---- | ------ 
- 系统管理 | http://jbone-sys-admin.majunwei.com:20002/) |
- 服务管理 | http://jbone-sm-admin.majunwei.com:10002/ |
- 调用链 | http://jbone-sm-monitor.majunwei.com:10003/ |
- CAS系统管理 | http://jbone-cas-manager.majunwei.com:30002/ |
+系统管理：http://jbone-sys-admin.majunwei.com:20002/
+服务管理：http://jbone-sm-admin.majunwei.com:10002/
+调用链：http://jbone-sm-monitor.majunwei.com:10003/
+CAS系统管理：http://jbone-cas-manager.majunwei.com:30002/
 
 默认用户名密码：jbone/jbone
 
