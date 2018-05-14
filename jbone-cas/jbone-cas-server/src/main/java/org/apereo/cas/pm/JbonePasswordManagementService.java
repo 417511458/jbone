@@ -2,9 +2,11 @@ package org.apereo.cas.pm;
 
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
+import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserSecurityQuestionsResponseDTO;
 import org.apereo.cas.CipherExecutor;
+import org.apereo.cas.authentication.Credential;
 import org.apereo.cas.configuration.model.support.pm.PasswordManagementProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,11 @@ public class JbonePasswordManagementService extends BasePasswordManagementServic
         this.userApi = userApi;
     }
 
+    /**
+     * 获取用户的邮件
+     * @param username
+     * @return
+     */
     @Override
     public String findEmail(String username) {
         Result<UserBaseInfoResponseDTO> userModelResult = userApi.getUserByName(username);
@@ -37,6 +44,11 @@ public class JbonePasswordManagementService extends BasePasswordManagementServic
         return null;
     }
 
+    /**
+     * 获取密保问题
+     * @param username
+     * @return
+     */
     @Override
     public Map<String, String> getSecurityQuestions(String username) {
         Map<String, String> securityQuestions = new LinkedHashMap<>();
@@ -48,5 +60,22 @@ public class JbonePasswordManagementService extends BasePasswordManagementServic
             }
         }
         return securityQuestions;
+    }
+
+    /**
+     * 执行更新
+     * @param c
+     * @param bean
+     * @return
+     * @throws InvalidPasswordException
+     */
+    @Override
+    public boolean changeInternal(Credential c, PasswordChangeBean bean) throws InvalidPasswordException {
+        ChangePasswordRequestDTO requestDTO = new ChangePasswordRequestDTO();
+        requestDTO.setUsername(c.getId());
+        requestDTO.setPassword(bean.getPassword());
+        requestDTO.setConfirmedPassword(bean.getConfirmedPassword());
+        Result<Void> result = userApi.changePassword(requestDTO);
+        return result.isSuccess();
     }
 }

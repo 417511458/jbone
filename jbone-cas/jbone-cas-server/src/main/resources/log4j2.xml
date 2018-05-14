@@ -214,7 +214,7 @@
         <AsyncLogger name="perfStatsLogger" level="info" additivity="false" includeLocation="true">
             <AppenderRef ref="casPerf"/>
         </AsyncLogger>
-        <AsyncLogger name="org.apereo.cas.web.flow" level="info" additivity="true" includeLocation="true">
+        <AsyncLogger name="org.apereo.cas.web.flow" level="debug" additivity="true" includeLocation="true">
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
         <AsyncLogger name="org.apereo.inspektr.audit.support" level="info" includeLocation="true">

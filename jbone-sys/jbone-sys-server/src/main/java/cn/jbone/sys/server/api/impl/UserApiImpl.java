@@ -2,6 +2,7 @@ package cn.jbone.sys.server.api.impl;
 
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
+import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserSecurityQuestionsResponseDTO;
@@ -11,7 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -86,5 +90,16 @@ public class UserApiImpl implements UserApi {
             return Result.wrap500Error(e.getMessage());
         }
         return new Result(responseDTOList);
+    }
+
+    @Override
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Result<Void> changePassword(@RequestBody ChangePasswordRequestDTO changePasswordRequestDTO) {
+        try {
+            userService.modifyPassword(changePasswordRequestDTO);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return new Result();
     }
 }

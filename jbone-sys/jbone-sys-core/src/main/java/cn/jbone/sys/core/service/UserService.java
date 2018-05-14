@@ -2,6 +2,7 @@ package cn.jbone.sys.core.service;
 
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.utils.PasswordUtils;
+import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.api.dto.response.MenuInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserSecurityQuestionsResponseDTO;
@@ -400,6 +401,23 @@ public class UserService {
             responseDTOList.add(responseDTO);
         }
         return responseDTOList;
+    }
+
+
+    /**
+     * 修改密码
+     * @param changePasswordRequestDTO
+     */
+    public void modifyPassword(ChangePasswordRequestDTO changePasswordRequestDTO){
+        RbacUserEntity userEntity = userRepository.findByUsername(changePasswordRequestDTO.getUsername());
+        if(userEntity == null){
+            throw new JboneException("没有找到用户");
+        }
+        //使用时间撮作为盐值
+        String salt = System.currentTimeMillis() + "";
+        userEntity.setSalt(salt);
+        userEntity.setPassword(PasswordUtils.getMd5PasswordWithSalt(changePasswordRequestDTO.getPassword(),salt));
+        userRepository.save(userEntity);
     }
 
 }

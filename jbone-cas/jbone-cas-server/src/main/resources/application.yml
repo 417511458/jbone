@@ -25,7 +25,7 @@ cas:
       location: classpath:shiro.ini
     pm:
       enabled: true
-      policyPattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,10}
+      #policyPattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d){8,10}
       reset:
         text: Reset your password with this link %s
         subject: Password Reset Request
