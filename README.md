@@ -169,9 +169,10 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 127.0.0.1 jbone-bpm-server.majunwei.com
 ```
 
-
-
 ## 配置CAS证书
+
+### 配置方式一
+
 1、生成证书
 sudo keytool -genkey -alias jbonekeystore -keyalg RSA -keystore /etc/cas/jbonekeystore
 
@@ -185,7 +186,7 @@ sudo keytool -export -file /etc/cas/jbonekeystore.crt -alias jbonekeystore -keys
 
 注意：这里输入到是上面设置的密码：123456
 
-3、倒入证书到本地JDK（客户端认证）
+3、导入证书到本地JDK（客户端认证）
 
 sudo keytool -import -keystore /Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/jre/lib/security/cacerts -file /etc/cas/jbonekeystore.crt -alias jbonekeystore
 
@@ -224,6 +225,27 @@ Open quote is expected for attribute "keystorePass" associated with an  element 
 
 原因有可能是配置的属性符号问题，比如中文的引号
 
+### 配置方式二：
+
+为了方便开发人员配置证书，我们提供了脚本形式的部署。
+
+- bat脚本： [gencertCasKey.bat](/jbone-cas/jbone-cas-server/src/main/resources/gencertCasKey.bat)
+- shell脚本： gencertCasKey.sh 待写
+
+进入到脚本所在路径：
+> jbone/jbone-cas/jbone-cas-server/src/main/resources/
+
+找到 `gencertCasKey.bat` 或 `gencertCasKey.sh`
+
+替换脚本中本地JDK密钥库路径
+
+```sh
+:: "设置JDK密钥库路径"
+set keystoreJDKPath="C:\devSpace\Java\jdk1.8.0_131\jre\lib\security\cacerts "
+```
+
+然后执行脚本，根据提示操作即可完成导入。
+
 ## 启动应用
 依次启动：
 
@@ -237,7 +259,6 @@ Open quote is expected for attribute "keystorePass" associated with an  element 
 
 5. jbone-cas-server (支持两种部署方式)
 
-
 > 单独部署方式：在tomcat单独部署（https端口号8443）
 
 > SpringBootApp方式：将 `jbonekeystore` 放入 `resources` 目录下，直接运行 `CasWebApplication` 主程序
@@ -245,10 +266,13 @@ Open quote is expected for attribute "keystorePass" associated with an  element 
 6. jbone-cas-manager(tomcat中运行,http端口号30002)
 
 ## 进入系统
-系统管理：http://jbone-sys-admin.majunwei.com:20002/
-服务管理：http://jbone-sm-admin.majunwei.com:10002/
-调用链：http://jbone-sm-monitor.majunwei.com:10003/
-CAS系统管理：http://jbone-cas-manager.majunwei.com:30002/
+
+ 系统名称 | 系统地址 
+ ---- | ------ 
+ 系统管理 | http://jbone-sys-admin.majunwei.com:20002/ |
+ 服务管理 | http://jbone-sm-admin.majunwei.com:10002/ |
+ 调用链 | http://jbone-sm-monitor.majunwei.com:10003/ |
+ CAS系统管理 | http://jbone-cas-manager.majunwei.com:30002/ |
 
 默认用户名密码：jbone/jbone
 
