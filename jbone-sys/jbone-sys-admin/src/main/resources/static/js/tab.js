@@ -1,7 +1,8 @@
 var addTabs = function (obj) {
     id ="tab_"+ obj.id;
 
-    $(".active").removeClass("active");
+    $(".nav-header .active").removeClass("active");
+    $(".nav-content .active").removeClass("active");
 
 //如果TAB不存在，创建一个新的TAB
     if (!$("#"+ id)[0]) {
@@ -44,7 +45,14 @@ var closeTab = function (id) {
 
 $(function () {
     $("[addtabs]").click(function () {
+        debugger;
         addTabs({id: $(this).attr("id"), title: $(this).attr('title'), close: $(this).attr("closeable"), url:$(this).attr("url")});
+        $(".sidebar-menu .treeview").removeClass("active");
+        $(".sidebar-menu .treeview-menu li").removeClass("active");
+        $(this).parent().addClass("active");
+        if($(this).parent().has("cmenu")){
+            $(this).parent().parent().parent().addClass("active");
+        }
     });
 
     $(".nav-tabs-title").on("click","[tabclose]", function (e) {
