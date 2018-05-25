@@ -33,8 +33,9 @@ var addTabs = function (obj) {
 };
 
 var closeTab = function (id) {
+    debugger;
 //如果关闭的是当前激活的TAB，激活他的前一个TAB
-    if ($("li.active").attr('id') =="tab_"+ id) {
+    if ($(".content-wrapper li.active").attr('id') =="tab_"+ id) {
         $("#tab_"+ id).prev().addClass('active');
         $("#"+ id).prev().addClass('active');
     }
