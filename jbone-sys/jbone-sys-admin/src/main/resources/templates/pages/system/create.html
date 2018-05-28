@@ -9,26 +9,19 @@
 <div class="container-fluid" style="width: 400px;">
     <form id="createForm" method="post" class="form-horizontal modal-form">
         <div class="form-group">
-            <label for="name" class="col-sm-3 control-label">系统名</label>
-            <div class="col-sm-8">
-                <input id="name" name="name" type="text" class="form-control" />
-            </div>
+            <label for="name" class="control-label">系统名</label>
+            <input id="name" name="name" type="text" class="form-control" />
         </div>
         <div class="form-group">
-            <label for="title" class="col-sm-3 control-label">系统标题</label>
-            <div class="col-sm-8">
-                <input id="title" name="title" type="text" class="form-control" />
-            </div>
+            <label for="title" class="control-label">系统标题</label>
+            <input id="title" name="title" type="text" class="form-control" />
         </div>
         <div class="form-group">
-            <label for="basepath" class="col-sm-3 control-label">根路径</label>
-            <div class="col-sm-8">
-                <input id="basepath" name="basepath" type="text" class="form-control" />
-            </div>
+            <label for="basepath" class="control-label">根路径</label>
+            <input id="basepath" name="basepath" type="text" class="form-control" />
         </div>
         <div class="form-group">
-            <label  class="col-sm-3 control-label">系统状态</label>
-            <div class="col-sm-8">
+            <label  class="control-label">系统状态</label>
                 <div class="radio">
                     <label class="radio-inline">
                         <input type="radio" name="status" id="status_nomal" value="1" checked="checked" />
@@ -39,13 +32,10 @@
                         禁用
                     </label>
                 </div>
-            </div>
         </div>
         <div class="form-group">
-            <label for="description" class="col-sm-3 control-label">系统简介</label>
-            <div class="col-sm-8">
-                <textarea id="description" name="description" class="form-control"/>
-            </div>
+            <label for="description" class="control-label">系统简介</label>
+            <textarea id="description" name="description" class="form-control"/>
         </div>
         <br />
         <button type="button" class="btn btn-primary btn-block" onclick="doCreate()">保 存</button>

@@ -10,15 +10,15 @@
     <form id="createForm" method="post" class="form-horizontal modal-form">
         <input id="id" name="id" th:type="hidden" th:value="${role.id}" />
         <div class="form-group">
-            <label for="name" class="col-sm-3 control-label">角色名</label>
+            <label for="name" class="control-label">角色名</label>
             <input id="name" name="name" type="text" class="form-control" th:value="${role.name}" />
         </div>
         <div class="form-group">
-            <label for="title" class="col-sm-3 control-label">标题</label>
+            <label for="title" class="control-label">标题</label>
             <input id="title" name="title" type="text" class="form-control" th:value="${role.title}" />
         </div>
         <div class="form-group">
-            <label for="description" class="col-sm-3 control-label">描述</label>
+            <label for="description" class="control-label">描述</label>
             <textarea id="description" name="description" type="" class="form-control" th:text="${role.description}" />
         </div>
 

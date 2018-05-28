@@ -6,21 +6,21 @@
     <link rel="stylesheet" th:href="@{/webjars/ztree/3.5.0/css/zTreeStyle/zTreeStyle.css}" type="text/css" />
 
 </head>
-<body style="position:relative;">
+<body>
 <div th:replace="/layout/css :: #css"></div>
 
 <div class="container-fluid">
     <form id="assignForm" method="post" class="form-inline modal-form">
 
         <div class="form-group">
-            <label for="systemId" class="col-sm-3 control-label">系统</label>
-            <select id="systemId" name="systemId" class="form-control" onchange="loadMenu();">
-                <option value="0">请选择系统</option>
-                <option th:each="system,systemStat : ${systemList}" th:value="${system.id}" th:text="${system.title}"></option>
-            </select>
+            <label for="systemId" class="control-label">系统</label>
+                <select id="systemId" name="systemId" class="form-control" onchange="loadMenu();">
+                    <option value="0">请选择系统</option>
+                    <option th:each="system,systemStat : ${systemList}" th:value="${system.id}" th:text="${system.title}"></option>
+                </select>
         </div>
         <div class="form-group">
-            <label for="menu" class="col-sm-3 control-label">菜单</label>
+            <label for="menu" class="control-label">菜单</label>
             <div class="input-group">
                 <input id="menu" name="menu" type="text" class="form-control" readonly="readonly" />
                 <a id="menuBtn" href="#" class="input-group-addon" onclick="showMenu(); return false;">选择</a>
