@@ -155,11 +155,16 @@ function chooseConfirm(content){
 
 
 function openModal(title,url){
+    debugger;
     parent.$("#modal-title").text(title);
-    parent.$("#modal-iframe").attr("src",url);
-    parent.$('#iframe-loading').show();
-    var dialog = parent.$('#parentModal');
-    dialog.modal();
+    parent.$("#modal-body").load(url,function(response,status,xhr){
+        debugger;
+        var dialog = parent.$('#parentModal');
+        dialog.modal();
+    });
+    // parent.$("#modal-iframe").attr("src",url);
+    // parent.$('#iframe-loading').show();
+
 }
 
 // 删除

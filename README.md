@@ -145,7 +145,7 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 创建数据库jbone_sys,并通过doc/jbone_sys.sql创建表和初始化数据；
 ### jbone_cas
 创建数据库jbone_cas,并通过doc/jbone_cas.sql创建表和初始化数据；
-### jbone-zipkin（调用链使用）
+### jbone_zipkin（调用链使用）
 创建数据库jbone_zipkin,并通过doc/jbone_zipkin.sql创建表和初始化数据；
 ## 启动redis
 安装redis并在本地启动
