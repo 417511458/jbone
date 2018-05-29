@@ -24,6 +24,7 @@ function closeModal(operation){
         });
     }
     $('#modalOpration').val("");
+
 }
 
 //关闭后既不刷新也不回调
