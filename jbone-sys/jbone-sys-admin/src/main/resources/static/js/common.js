@@ -160,11 +160,8 @@ function openModal(title,url){
     parent.$("#modal-body").load(url,function(response,status,xhr){
         debugger;
         var dialog = parent.$('#parentModal');
-        dialog.modal();
+        dialog.modal('show');
     });
-    // parent.$("#modal-iframe").attr("src",url);
-    // parent.$('#iframe-loading').show();
-
 }
 
 // 删除
