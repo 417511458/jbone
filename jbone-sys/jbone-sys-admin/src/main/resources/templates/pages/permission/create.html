@@ -25,6 +25,9 @@
                 <input id="menu" name="menu" type="text" class="form-control" readonly="readonly" />
                 <a id="menuBtn" href="#" class="input-group-addon" onclick="showMenu(); return false;">选择</a>
                 <a  href="#" class="input-group-addon" onclick="clearMenu(); return false;">清空</a>
+                <div id="menuContent" class="menuContent">
+                    <ul id="treeMenu" class="ztree" style="margin-top:0; width:250px;"></ul>
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -48,10 +51,6 @@
         <button type="button" class="btn btn-primary btn-block" onclick="doCreate()">保 存</button>
 
     </form>
-
-    <div id="menuContent" class="menuContent">
-        <ul id="treeMenu" class="ztree" style="margin-top:0; width:250px;"></ul>
-    </div>
 
 </div>
 
@@ -104,8 +103,7 @@
         }
 
         var menuObj = $("#menu");
-        var menuOffset = $("#menu").offset();
-        $("#menuContent").css({left:menuOffset.left + "px", top:menuOffset.top + menuObj.outerHeight() + "px"}).slideDown("fast");
+        $("#menuContent").css({'left' : "0px", 'top': menuObj.outerHeight() + "px"}).slideDown("fast");
         $("body").bind("mousedown", onBodyDown);
 
     }
