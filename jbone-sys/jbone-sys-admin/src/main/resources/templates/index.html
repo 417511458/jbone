@@ -47,8 +47,29 @@
       <!-- /.row (main row) -->
 
     </section>
+
+
+    <div class="box" id="formBox" style="display: none;">
+      <div class="box-header with-border">
+        <h3 class="box-title" id="formTitle"></h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" onclick="$('formBox').hide();"><i class="fa fa-times" onclick="$('formBox').hide();"></i></button>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-12" id="formContent">
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- /.content -->
   </div>
+
+
+
   <!-- /.content-wrapper -->
   <div th:replace="layout/footer"></div>
 

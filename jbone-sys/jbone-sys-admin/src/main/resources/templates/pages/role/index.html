@@ -10,7 +10,10 @@
     <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon" />
   </head>
   <body>
+
   <div th:replace="/layout/css :: #css"></div>
+  <div th:replace="/layout/js :: #js"></div>
+
   <div id="main">
       <div id="toolbar">
           <a class="btn  btn-primary" href="javascript:;" onclick="openModal('增加角色','/role/toCreate')"><i class="fa fa-plus-square"></i>新增</a>
@@ -20,11 +23,14 @@
           <a class="btn  btn-primary" href="javascript:;" onclick="assignPermissionAction()"><i class="fa fa-user-plus"></i>分配权限</a>
       </div>
       <table id="table"></table>
+      <div id="formContent"></div>
   </div>
 
-<div th:replace="/layout/js :: #js"></div>
 
-  <script>
+  <script type="text/javascript" th:src="@{/js/modalPage.js}"></script>
+  <script type="text/javascript" th:src="@{/js/role/role.js}"></script>
+
+  <script type="text/javascript">
       var $table = $('#table');
       $(function() {
           $(document).on('focus', 'input[type="text"]', function() {

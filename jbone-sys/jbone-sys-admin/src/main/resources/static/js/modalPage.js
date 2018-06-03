@@ -6,24 +6,34 @@ function closeModal(operation){
     if(operation){
         oper = operation;
     }
-    $('#modalOpration').val(oper);
-    $('#parentModal').modal("hide");
+
+    var modalOperation = $('#modalOpration');
+    var iframe =  $(".tab-pane.active iframe")[0];
+
+
+    //根据选项清空对应内容
+    var show_form_modal = $("input[name='show_form_modal']:checked").val();
+    if(show_form_modal == "2"){
+        $('#formBox').hide();
+        $("#formContent").html("");
+    }else if(show_form_modal == "1") {
+        $('#parentModal').modal("hide");
+        $("#modal-body").html("");
+    }
+
+    modalOperation.val(oper);
 
     //
-    var op =$('#modalOpration').val();
+    var op = modalOperation.val();
     if(op){
-        $(".tab-pane.active").each(function(){
-            debugger;
-            //回调当前iframe中的方法
-            var iframe = $(this).find("iframe")[0];
-            if(op == "refresh"){
-                iframe.attr('src',iframe.attr('src'));
-            }else if(op == "callback"){
-                iframe.contentWindow.madalCallback();
-            }
-        });
+        if(op == "refresh"){
+            iframe.attr('src',iframe.attr('src'));
+        }else if(op == "callback"){
+            iframe.contentWindow.madalCallback();
+        }
     }
-    $('#modalOpration').val("");
+
+    modalOperation.val("");
 
 }
 

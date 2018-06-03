@@ -5,8 +5,13 @@
     <title>新增角色</title>
 </head>
 <body>
+
+<script type="text/javascript" th:src="@{/js/modalPage.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/role/role.js}"></script>
+
 <div class="container-fluid" style="width: 400px;">
-    <form id="createForm" method="post" class="form-horizontal modal-form">
+    <form id="updateRoleForm" method="post" class="form-horizontal modal-form">
         <input id="id" name="id" th:type="hidden" th:value="${role.id}" />
         <div class="form-group">
             <label for="name" class="control-label">角色名</label>
@@ -22,31 +27,11 @@
         </div>
 
         <br />
-        <button type="button" class="btn btn-primary btn-block" onclick="doCreate()">保 存</button>
-
+        <button type="button" class="btn btn-primary btn-block" onclick="doUpdateRole()">保 存</button>
     </form>
-
 </div>
 
-<script type="text/javascript" th:src="@{/js/modalPage.js}"></script>
 
-<script>
-    function doCreate(){
-        $.ajax({
-            type: 'post',
-            url: '/role/update',
-            data: $('#createForm').serialize(),
-            success: function(result) {
-                if (result.status != 0) {
-                    failHandler(result);
-                } else {
-                    successConfirm();
-                    closeModal();
-                }
-            },
-            error: errorHandler
-        });
-    }
-</script>
+
 </body>
 </html>
