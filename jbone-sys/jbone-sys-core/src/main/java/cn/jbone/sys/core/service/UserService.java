@@ -251,7 +251,10 @@ public class UserService {
      */
     public void assignRole(AssignRoleModel assignRoleModel){
         RbacUserEntity userEntity = userRepository.findOne(assignRoleModel.getUserId());
-        List<RbacRoleEntity> roleEntities =roleRepository.findByIdIn(assignRoleModel.getUserRole());
+        List<RbacRoleEntity> roleEntities = null;
+        if(assignRoleModel.getUserRole() != null && assignRoleModel.getUserRole().length > 0){
+            roleEntities = roleRepository.findByIdIn(assignRoleModel.getUserRole());
+        }
         userEntity.setRoles(roleEntities);
     }
 
