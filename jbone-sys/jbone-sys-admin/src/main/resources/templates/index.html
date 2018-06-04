@@ -54,7 +54,7 @@
         <h3 class="box-title" id="formTitle"></h3>
 
         <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool" onclick="$('formBox').hide();"><i class="fa fa-times" onclick="$('formBox').hide();"></i></button>
+          <button type="button" class="btn btn-box-tool" onclick="hideForm()"><i class="fa fa-times"></i></button>
         </div>
       </div>
       <!-- /.box-header -->
@@ -84,6 +84,11 @@
         var dashboard = $("#dashboard");
         addTabs({id: dashboard.attr("id"), title: dashboard.attr('title'), close: dashboard.attr("closeable"), url:dashboard.attr("url")});
     });
+
+    function hideForm() {
+        debugger;
+        $("#formBox").hide();
+    }
 </script>
 
 

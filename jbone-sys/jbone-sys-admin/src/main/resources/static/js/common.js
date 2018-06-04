@@ -163,6 +163,7 @@ function openModal(title,url){
             debugger;
             var formBox = parent.$('#formBox');
             formBox.show();
+            parent.scroll(0,1000);
         });
     }else if(show_form_modal == "1"){
         parent.$("#modal-title").text(title);
