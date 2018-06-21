@@ -1,6 +1,8 @@
 package org.apereo.cas.pswd.config;
 
 import org.apereo.cas.configuration.CasConfigurationProperties;
+import org.apereo.cas.pswd.action.ChangePasswordAction;
+import org.apereo.cas.pswd.action.InitChangePasswordAction;
 import org.apereo.cas.web.flow.actions.CasDefaultFlowUrlHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -59,6 +61,7 @@ public class ChangePasswordConfiguration {
         return handler;
     }
 
+
     /**
      * 作为DispatchServlet和webflow的桥梁，调用Adapter
      * @return
@@ -96,4 +99,12 @@ public class ChangePasswordConfiguration {
         return builder.build();
     }
 
+
+    @Bean
+    public InitChangePasswordAction initChangePasswordAction(){
+        return new InitChangePasswordAction();
+    }
+
+    @Bean
+    public ChangePasswordAction changePasswordAction(){return new ChangePasswordAction();}
 }
