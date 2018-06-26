@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>新增菜单</title>
+</head>
+<body>
+<div th:replace="/layout/css :: #css"></div>
+<div class="container-fluid" style="width: 400px;">
+    <form id="createForm" method="post" class="form-horizontal modal-form">
+        <input id="pid" name="pid" th:type="hidden" th:value="${organizationModel.pid}" />
+        <div class="form-group">
+            <label for="name" class="control-label">名称</label>
+            <input id="name" name="name" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="description" class="control-label">描述</label>
+            <textarea id="description" name="description" class="form-control"/>
+        </div>
+        <br />
+        <button type="button" class="btn btn-primary btn-block" onclick="doCreate()">保 存</button>
+
+    </form>
+
+</div>
+
+<script type="text/javascript" th:src="@{/js/modalPage.js}"></script>
+
+<script>
+    function doCreate(){
+        $.ajax({
+            type: 'post',
+            url: '/organization/add',
+            data: $('#createForm').serialize(),
+            success: function(result) {
+                if (result.status != 0) {
+                    failHandler(result);
+                } else {
+                    successConfirm();
+                    closeModal();
+                }
+            },
+            error: errorHandler
+        });
+    }
+</script>
+</body>
+</html>

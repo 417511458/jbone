@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="control">
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li class="active"><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- Home tab content -->
+            <!-- /.tab-pane -->
+            <!-- Settings tab content -->
+            <div class="tab-pane active" id="control-sidebar-settings-tab">
+                <form method="post">
+                    <h3 class="control-sidebar-heading">表单展示方式</h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            弹出表单
+                            <input type="radio" name="show_form_modal" class="pull-right" checked="checked" value="1" />
+                        </label>
+                        <p>
+                            设置当前表单展示方式，选中后编辑内容时弹出对话框展示。
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            平铺表单
+                            <input type="radio" name="show_form_modal" class="pull-right" value="2" />
+                        </label>
+                        <p>
+                            设置当前表单展示方式，选中后编辑内容时平铺展示。
+                        </p>
+                    </div>
+
+                    <!-- /.form-group -->
+
+
+                </form>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Jbone | 系统管理</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+  <div th:replace="/layout/css :: #css"></div>
+
+
+
+  <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon" />
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <div th:replace="layout/header"></div>
+  <!-- Left side column. contains the logo and sidebar -->
+  <div th:replace="layout/left"></div>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper ">
+    <!-- Main content -->
+    <section class="content-header nav-header">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs ui-sortable-handle nav-tabs-title">
+        </ul>
+      </div>
+    </section>
+
+    <section class="content nav-content">
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-12 connectedSortable">
+          <!-- Custom tabs (Charts with tabs)-->
+          <div class="nav-tabs-custom">
+            <!-- Tabs within a box -->
+            <div class="tab-content nav-tabs-content">
+              <!-- Morris chart - Sales -->
+            </div>
+            </div>
+        </section>
+      </div>
+      <!-- /.row (main row) -->
+
+    </section>
+
+
+    <div class="box" id="formBox" style="display: none;">
+      <div class="box-header with-border">
+        <h3 class="box-title" id="formTitle"></h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" onclick="hideForm()"><i class="fa fa-times"></i></button>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-12" id="formContent">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.content -->
+  </div>
+
+
+
+  <!-- /.content-wrapper -->
+  <div th:replace="layout/footer"></div>
+
+  <!-- Control Sidebar -->
+  <div th:replace="layout/control"></div>
+
+</div>
+<div th:replace="/layout/js :: #js"></div>
+
+<script type="text/javascript">
+    $(function () {
+        var dashboard = $("#dashboard");
+        addTabs({id: dashboard.attr("id"), title: dashboard.attr('title'), close: dashboard.attr("closeable"), url:dashboard.attr("url")});
+    });
+
+    function hideForm() {
+        debugger;
+        $("#formBox").hide();
+    }
+</script>
+
+
+  <input id="modalOpration" name="modalOpration" type="hidden" />
+
+  <div class="modal centered-modal" id="parentModal" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-from="close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><label id="modal-title"></label></h4>
+        </div>
+        <div class="modal-body" id="modal-body">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>
+

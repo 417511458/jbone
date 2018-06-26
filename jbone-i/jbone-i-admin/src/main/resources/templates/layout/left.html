@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="left">
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img th:src="${user.avatar}" width="160" height="160" class="img-circle" alt="User Image"/>
+                </div>
+                <div class="pull-left info">
+                    <p th:text="${user.realname}">姓名</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                    <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">菜单导航</li>
+                <li class="treeview">
+                    <a href="javascript:void(0);" addtabs="/dashboard" url="/dashboard" id="dashboard" title="首页面板">
+                        <i class="fa fa-pie-chart"></i>
+                        <span>首页面板</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                </li>
+                <li th:each="menu,iterStat : ${user.menus}" class="treeview">
+                    <a th:href="${menu.url}">
+                        <i class="fa fa-pie-chart"></i>
+                        <span th:text="${menu.name}"></span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu" th:if="${not #lists.isEmpty(menu.childMenus)}" >
+                        <li th:each="cmenu : ${menu.childMenus}" class="cmenu">
+                            <a href="javascript:void(0);" th:attr="addtabs=${cmenu.url},id=${cmenu.id},title=${cmenu.name},url=${cmenu.url}" closeable="true"><i class="fa fa-circle-o"></i> <font th:text="${cmenu.name}"></font></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+</div>
+
+
+</body>
+</html>

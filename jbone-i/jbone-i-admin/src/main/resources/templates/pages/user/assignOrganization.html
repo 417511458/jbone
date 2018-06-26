@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>菜单管理</title>
+
+
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon" />
+
+
+    <link rel="stylesheet" th:href="@{/webjars/ztree/3.5.0/css/zTreeStyle/zTreeStyle.css}" type="text/css" />
+
+
+</head>
+<body style="min-height: 400px;">
+<div th:replace="/layout/css :: #css"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-header ui-sortable-handle" style="cursor: move;">
+                                <h3 class="box-title">组织机构</h3>
+                            </div>
+                            <div class="box-body">
+                                <ul id="treeMenu" class="ztree"></ul>
+                            </div>
+                            <div class="box-footer clearfix no-border">
+                                <button type="button" class="btn btn-primary btn-block" onclick="doAssign()">分 配</button>
+                            </div>
+                        </div>
+                    <form id="asignMenuForm" method="post" class="form-horizontal modal-form">
+                        <input id="userId" name="userId" th:type="hidden" th:value="${userId}" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/js/modalPage.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.core-3.5.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.excheck-3.5.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.exedit-3.5.min.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var treeSetting = {
+        check: {
+            enable: true
+        },
+        data: {
+            key: {
+                url: "xUrl"
+            }
+        }
+    };
+
+
+    function loadMenu(){
+        $.ajax({
+            type: 'post',
+            url: '/organization/getTreeOrganization',
+            success: function(result) {
+                if (result.status != 0) {
+                    failHandler(result);
+                } else {
+                    debugger;
+                    var zNodes = result.data;
+                    zNodes = checkedMenu(zNodes);
+                    $.fn.zTree.init($("#treeMenu"), treeSetting, zNodes);
+                }
+            },
+            error: errorHandler
+        });
+    }
+
+    function checkedMenu(zNodes){
+        debugger;
+        if(zNodes == null || zNodes.length <= 0){
+            return zNodes;
+        }
+
+        var organizationIds = [[${organizationIds}]];
+
+        if(organizationIds == null || organizationIds.length <= 0){
+            return zNodes;
+        }
+
+        for(var i = 0; i< zNodes.length;i++){
+            for (var j = 0;j < organizationIds.length;j++){
+                if(organizationIds[j]==zNodes[i].id){
+                    zNodes[i]["checked"] = true;
+                }
+            }
+            zNodes[i]["children"] = checkedMenu(zNodes[i]["children"]);
+        }
+        return zNodes;
+    }
+
+    function doAssign(){
+        //初始化选中的内容
+        $("[name='userOrganization']").remove();
+        var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+        var nodes = treeObj.getCheckedNodes(true);
+        if(nodes && nodes.length > 0){
+            for(var i = 0;i < nodes.length; i++){
+                var node = nodes[i];
+                var menuInput = "<input name=\"userOrganization\" type=\"hidden\" value=\"" + node.id + "\" />"
+                $("#asignMenuForm").append(menuInput);
+            }
+        }
+        $.ajax({
+            type: 'post',
+            url: '/user/doAssignOrganization',
+            data: $('#asignMenuForm').serialize(),
+            success: function(result) {
+                if (result.status != 0) {
+                    failHandler(result);
+                } else {
+                    successConfirm();
+                    closeModalNotRefresh();
+                }
+            },
+            error: errorHandler
+        });
+    }
+
+
+    $(function () {
+        loadMenu();
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

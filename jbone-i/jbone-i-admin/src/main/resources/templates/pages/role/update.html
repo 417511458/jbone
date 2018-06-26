@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>新增角色</title>
+</head>
+<body>
+
+<script type="text/javascript" th:src="@{/js/modalPage.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/role/role.js}"></script>
+
+<div class="container-fluid" style="width: 400px;">
+    <form id="updateRoleForm" method="post" class="form-horizontal modal-form">
+        <input id="id" name="id" th:type="hidden" th:value="${role.id}" />
+        <div class="form-group">
+            <label for="name" class="control-label">角色名</label>
+            <input id="name" name="name" type="text" class="form-control" th:value="${role.name}" />
+        </div>
+        <div class="form-group">
+            <label for="title" class="control-label">标题</label>
+            <input id="title" name="title" type="text" class="form-control" th:value="${role.title}" />
+        </div>
+        <div class="form-group">
+            <label for="description" class="control-label">描述</label>
+            <textarea id="description" name="description" type="" class="form-control" th:text="${role.description}" />
+        </div>
+
+        <br />
+        <button type="button" class="btn btn-primary btn-block" onclick="doUpdateRole()">保 存</button>
+    </form>
+</div>
+
+
+
+</body>
+</html>

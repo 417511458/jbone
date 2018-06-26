@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>分配角色</title>
+</head>
+<body>
+<div th:replace="/layout/css :: #css"></div>
+
+<div class="container-fluid" style="width: 400px;">
+    <form id="asignRoleForm" method="post" class="form-horizontal modal-form">
+        <input id="userId" name="userId" th:type="hidden" />
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="checkbox" id="userRole">
+                </div>
+            </div>
+        </div>
+        <br />
+        <button type="button" class="btn btn-primary btn-block" onclick="doAssign()">分 配</button>
+    </form>
+</div>
+
+<script type="text/javascript" th:src="@{/js/modalPage.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    $(function () {
+        debugger;
+        $("#userRole").html("");
+
+        var allRoles = [[${allRoles}]];
+        var userRoles = [[${userRoles}]];
+        for (var i = 0;i < allRoles.length;i++){
+            var roleId = allRoles[i].id;
+
+            var checkbox = '<label class="dispersion" data-toggle="tooltip" data-placement="bottom" title="' + allRoles[i].description + '"><input type="checkbox" name="userRole" value="' + allRoles[i].id + '" ';
+            if(isContains(userRoles,roleId)){
+                checkbox += ' checked="checked" ';
+            }
+            checkbox = checkbox + '/>' + allRoles[i].title + '</label>';
+
+            $("#userRole").append(checkbox);
+        }
+
+        var userId = [[${userId}]];
+        $("#userId").val(userId);
+
+    });
+
+    function isContains(roleArray,roleId){
+        if(!roleArray){
+            return false;
+        }
+
+        for(var i = 0;i < roleArray.length;i++){
+            var id = roleArray[i].id;
+            if(id == roleId){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function doAssign(){
+        $.ajax({
+            type: 'post',
+            url: '/user/doAssignRole',
+            data: $('#asignRoleForm').serialize(),
+            success: function(result) {
+                if (result.status != 0) {
+                    failHandler(result);
+                } else {
+                    successConfirm();
+                    closeModalNotRefresh();
+                }
+            },
+            error: errorHandler
+        });
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>新增用户</title>
+</head>
+<body>
+<div th:replace="/layout/css :: #css"></div>
+<div class="container-fluid" style="width: 400px;">
+    <form id="createForm" class="form-horizontal modal-form" role="form">
+        <input id="id" name="id" th:type="hidden" />
+        <div class="form-group">
+            <label for="username" class="control-label">用户名</label>
+            <input id="username" name="username" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="password" class="control-label">密码</label>
+            <input id="password" name="password" type="password" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="realname" class="control-label">真实姓名</label>
+            <input id="realname" name="realname" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="phone" class="control-label">电话</label>
+            <input id="phone" name="phone" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="email" class="control-label">邮件</label>
+            <input id="email" name="email" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="avatar" class="control-label">头像</label>
+            <input id="avatar" name="avatar" type="text" class="form-control"  />
+        </div>
+        <div class="form-group">
+            <label  class="control-label">性别</label>
+                <div class="radio">
+                    <label class="radio-inline">
+                        <input type="radio" name="sex" value="1" checked="checked" />
+                        男
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sex" value="0" />
+                        女
+                    </label>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">状态</label>
+                <div class="radio">
+                    <label class="radio-inline">
+                        <input type="radio" name="locked" value="0" checked="checked" />
+                        正常
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="locked" value="1" />
+                        锁定
+                    </label>
+                </div>
+        </div>
+        <button type="button" class="btn btn-primary btn-block" onclick="doCreate()">保 存</button>
+    </form>
+</div>
+
+<script type="text/javascript" th:src="@{/js/modalPage.js}"></script>
+<script>
+    function doCreate(){
+        $.ajax({
+            type: 'post',
+            url: '/user/create',
+            data: $('#createForm').serialize(),
+            success: function(result) {
+                if (result.status != 0) {
+                    failHandler(result);
+                } else {
+                    childSuccessConfirm();
+                    closeModal();
+                }
+            },
+            error: errorHandler
+        });
+    }
+</script>
+</body>
+</html>

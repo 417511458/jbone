@@ -221,7 +221,7 @@
             <AppenderRef ref="casAudit"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
-        <AsyncRoot level="error">
+        <AsyncRoot level="warn">
             <AppenderRef ref="casConsole"/>
         </AsyncRoot>
     </Loggers>

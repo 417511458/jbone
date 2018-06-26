@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>角色管理</title>
+
+
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon" />
+  </head>
+  <body>
+  <div th:replace="/layout/css :: #css"></div>
+  <div id="main">
+      <div id="toolbar">
+          <a class="btn  btn-primary" href="javascript:;" onclick="openModal('增加权限','/permission/toCreate')"><i class="fa fa-plus-square"></i>新增</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction('/permission/delete/')"><i class="fa fa-times-circle"></i>删除</a>
+      </div>
+      <table id="table"></table>
+  </div>
+
+<div th:replace="/layout/js :: #js"></div>
+
+  <script>
+      var $table = $('#table');
+      $(function() {
+          $(document).on('focus', 'input[type="text"]', function() {
+              $(this).parent().find('label').addClass('active');
+          }).on('blur', 'input[type="text"]', function() {
+              if ($(this).val() == '') {
+                  $(this).parent().find('label').removeClass('active');
+              }
+          });
+          // bootstrap table初始化
+          // http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
+          $table.bootstrapTable({
+              url: '/permission/list',
+              height: getHeight(),
+              striped: true,
+              search: true,
+              searchOnEnterKey: true,
+              showRefresh: true,
+              showToggle: true,
+              showColumns: true,
+              minimumCountColumns: 2,
+              showPaginationSwitch: true,
+              clickToSelect: true,
+              detailView: true,
+              detailFormatter: 'detailFormatter',
+              pagination: true,
+              paginationLoop: false,
+              classes: 'table table-hover table-no-bordered',
+              sidePagination: 'server',
+              smartDisplay: false,
+              idField: 'id',
+              sortName: 'id',
+              sortOrder: 'desc',
+              escape: true,
+              searchOnEnterKey: true,
+              maintainSelected: true,
+              toolbar: '#toolbar',
+              queryParamsType : "undefined",
+              queryParams: function queryParams(params) {   //设置查询参数
+                  var param = {
+                      pageNumber: params.pageNumber,
+                      pageSize: params.pageSize,
+                      searchText:params.searchText,
+                      sortName : params.sortName,
+                      sortOrder:params.sortOrder
+                  };
+                  return param;
+              },
+
+              columns: [
+                  {field: 'state', checkbox: true},
+                  {field: 'id', title: '权限ID', sortable: true, halign: 'center',align:'center'},
+                  {field: 'name', title: '权限名', sortable: true, halign: 'center',align:'center'},
+                  {field: 'permissionValue', title: '权限码', sortable: true, halign: 'center',align:'center'},
+                  {field: 'type', title: '权限类型', sortable: true, halign: 'center',align:'center',formatter: 'typeFormatter'},
+                  {field: 'action', title: '操作', halign: 'center', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
+              ]
+          }).on('all.bs.table', function (e, name, args) {
+              $('[data-toggle="tooltip"]').tooltip();
+              $('[data-toggle="popover"]').popover();
+          });
+      });
+
+      function typeFormatter(value, row, index) {
+          if (value === 1) {
+              return '<span class="label label-primary">功能</span>';
+          }else if(value === 2){
+              return '<span class="label label-success">菜单</span>';
+          }else if(value === 3){
+              return '<span class="label label-info">按钮</span>';
+          }
+          return '<span class="label label-default">未知</span>';
+      }
+
+
+      function actionFormatter(value, row, index) {
+          return [
+              '<a class="edit" href="javascript:void(0)" data-toggle="tooltip" title="编辑"><i class="fa fa-pencil-square-o"></i></a>　',
+              '<a class="remove" href="javascript:void(0)" data-toggle="tooltip" title="删除"><i class="fa fa-times-circle"></i></a>'
+          ].join('');
+      }
+
+      window.actionEvents = {
+          'click .edit': function (e, value, row, index) {
+              openModal("修改权限",'/permission/toUpdate/' + row.id);
+          },
+          'click .remove': function (e, value, row, index) {
+              commonDelete("/permission/delete/",row.id);
+          }
+      };
+
+      function toUpdate(){
+          var row = chooseOne();
+          if(row){
+              openModal("修改权限",'/permission/toUpdate/' + row.id);
+          }
+      }
+
+      function madalCallback(){
+          $table.bootstrapTable('refresh');
+      }
+
+  </script>
+  </body>
+  </html>
