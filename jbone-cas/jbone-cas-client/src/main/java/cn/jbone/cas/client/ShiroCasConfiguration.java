@@ -4,22 +4,26 @@ import cn.jbone.cas.client.listener.JboneCasSessionListener;
 import cn.jbone.cas.client.realm.JboneCasRealm;
 import cn.jbone.cas.client.session.JboneCasSessionDao;
 import cn.jbone.cas.client.session.JboneCasSessionFactory;
-import cn.jbone.cas.client.filter.JboneLogoutFilter;
 import cn.jbone.configuration.JboneConfiguration;
 import cn.jbone.sys.api.UserApi;
+import io.buji.pac4j.filter.CallbackFilter;
+import io.buji.pac4j.filter.LogoutFilter;
+import io.buji.pac4j.filter.SecurityFilter;
+import io.buji.pac4j.subject.Pac4jSubjectFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
-import org.apache.shiro.cas.CasFilter;
-import org.apache.shiro.cas.CasSubjectFactory;
 import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.session.mgt.SessionFactory;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.pac4j.cas.client.CasClient;
+import org.pac4j.cas.config.CasConfiguration;
+import org.pac4j.core.client.Clients;
+import org.pac4j.core.config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
@@ -44,12 +48,23 @@ public class ShiroCasConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(ShiroCasConfiguration.class);
 
+    @Bean
+    Config getConfig(JboneConfiguration jboneConfiguration){
+        CasConfiguration casConfiguration = new CasConfiguration(jboneConfiguration.getCas().getCasServerUrl()+jboneConfiguration.getCas().getLoginUrl(), jboneConfiguration.getCas().getCasServerUrl());
+        casConfiguration.setAcceptAnyProxy(true);
+
+        CasClient casClient = new CasClient(casConfiguration);
+        casClient.setCallbackUrl(jboneConfiguration.getCas().getCurrentServerUrlPrefix() + jboneConfiguration.getCas().getCasFilterUrlPattern() + "?client_name=CasClient");
+        casClient.setIncludeClientNameInCallbackUrl(false);
+
+        Clients clients = new Clients(jboneConfiguration.getCas().getCurrentServerUrlPrefix() + jboneConfiguration.getCas().getCasFilterUrlPattern() + "?client_name=CasClient", casClient);
+        Config config = new Config(clients);
+        return config;
+    }
 
     @Bean
     public JboneCasRealm getJboneCasRealm(EhCacheManager ehCacheManager, UserApi userApi, JboneConfiguration jboneConfiguration){
-        JboneCasRealm realm = new JboneCasRealm(ehCacheManager,userApi,jboneConfiguration.getSys().getServerName());
-        realm.setCasServerUrlPrefix(jboneConfiguration.getCas().getCasServerUrl());
-        realm.setCasService(jboneConfiguration.getCas().getCurrentServerUrlPrefix() + jboneConfiguration.getCas().getCasFilterUrlPattern());
+        JboneCasRealm realm = new JboneCasRealm(ehCacheManager, userApi, jboneConfiguration.getSys().getServerName());
         return realm;
     }
 
@@ -92,7 +107,7 @@ public class ShiroCasConfiguration {
         securityManager.setRealm(jboneCasRealm);
         //用户授权/认证信息Cache, 采用EhCache 缓存
         securityManager.setCacheManager(getEhCacheManager());
-        securityManager.setSubjectFactory(new CasSubjectFactory());
+        securityManager.setSubjectFactory(new Pac4jSubjectFactory());
         securityManager.setSessionManager(sessionManager);
 
         return securityManager;
@@ -112,7 +127,6 @@ public class ShiroCasConfiguration {
     @Bean(name = "sessionDao")
     public SessionDAO getSessionDao(StringRedisTemplate redisTemplate){
         JboneCasSessionDao sessionDao = new JboneCasSessionDao(redisTemplate);
-
         return sessionDao;
     }
 
@@ -125,8 +139,6 @@ public class ShiroCasConfiguration {
     public SessionFactory getSessionFactory(){
         return new JboneCasSessionFactory();
     }
-
-
 
     @Bean
     public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
@@ -141,62 +153,59 @@ public class ShiroCasConfiguration {
     private void loadShiroFilterChain(ShiroFilterFactoryBean shiroFilterFactoryBean,JboneConfiguration jboneConfiguration){
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
 
-        filterChainDefinitionMap.put(jboneConfiguration.getCas().getCasFilterUrlPattern(), "casLogout,casFilter");// shiro集成cas后，首先添加该规则
+        filterChainDefinitionMap.put(jboneConfiguration.getCas().getCasFilterUrlPattern(), "callback");// shiro集成cas后，首先添加该规则
         filterChainDefinitionMap.put("/logout","logout");
-        filterChainDefinitionMap.put("/casLogout","casLogout");
+//        filterChainDefinitionMap.put("/casLogout","casLogout");
         //添加jbone.cas的配置规则
         if(jboneConfiguration.getCas().getFilterChainDefinition() != null){
             filterChainDefinitionMap.putAll(jboneConfiguration.getCas().getFilterChainDefinition());
         }
         String common = filterChainDefinitionMap.get("/**");
-
-        filterChainDefinitionMap.put("/**","casLogout" + (StringUtils.isNotBlank(common) ? ("," + common) : ""));
+        filterChainDefinitionMap.put("/**", "security" + (StringUtils.isNotBlank(common) ? ("," + common) : ""));
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-    }
-
-    /**
-     * CAS过滤器
-     */
-    @Bean(name = "casFilter")
-    public CasFilter getCasFilter(JboneConfiguration jboneConfiguration) {
-        CasFilter casFilter = new CasFilter();
-        casFilter.setName("casFilter");
-        casFilter.setEnabled(true);
-        //失败后跳转到CAS登录页面
-        casFilter.setFailureUrl(jboneConfiguration.getCas().getEncodedLoginUrl()); // 我们选择认证失败后再打开登录页面
-        return casFilter;
     }
 
     /**
      * ShiroFilter
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager, CasFilter casFilter,JboneConfiguration jboneConfiguration,StringRedisTemplate redisTemplate,DefaultWebSessionManager sessionManager) {
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager, JboneConfiguration jboneConfiguration,StringRedisTemplate redisTemplate, DefaultWebSessionManager sessionManager, Config config) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
         // SecurityManager，Shiro安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        // Shiro登录页面，这里默认为CAS的登录页面：jbone-cas.majunwei.com/login?service=serviceurl
-        shiroFilterFactoryBean.setLoginUrl(jboneConfiguration.getCas().getEncodedLoginUrl());
-
-        shiroFilterFactoryBean.setSuccessUrl(jboneConfiguration.getCas().getSuccessUrl());
-        shiroFilterFactoryBean.setUnauthorizedUrl(jboneConfiguration.getCas().getUnauthorizedUrl());
+        // Shiro登录页面，这里默认为CAS的登录页面：/login?service=serviceurl
+//        shiroFilterFactoryBean.setLoginUrl(jboneConfiguration.getCas().getEncodedLoginUrl() + jboneConfiguration.getCas().getCasFilterUrlPattern() + "?client_name=CasClient");
+//        shiroFilterFactoryBean.setSuccessUrl(jboneConfiguration.getCas().getSuccessUrl());
+//        shiroFilterFactoryBean.setUnauthorizedUrl(jboneConfiguration.getCas().getUnauthorizedUrl());
         // 添加casFilter到shiroFilter中
         Map<String, Filter> filters = new HashMap<>();
-        filters.put("casFilter", casFilter);
+        CallbackFilter callbackFilter = new CallbackFilter();
+        callbackFilter.setConfig(config);
+        callbackFilter.setDefaultUrl(jboneConfiguration.getCas().getSuccessUrl());
+        filters.put("callback", callbackFilter);
 
         LogoutFilter logoutFilter = new LogoutFilter();
-        logoutFilter.setRedirectUrl(jboneConfiguration.getCas().getEncodedLogoutUrl());
-        filters.put("logout",logoutFilter);
+        logoutFilter.setConfig(config);
+        logoutFilter.setDefaultUrl(jboneConfiguration.getCas().getCurrentServerUrlPrefix());
+        logoutFilter.setCentralLogout(true);
+        logoutFilter.setLocalLogout(false);
+        filters.put("logout", logoutFilter);
+
         // 注销
-        JboneLogoutFilter jboneLogoutFilter = new JboneLogoutFilter(redisTemplate);
+        /*JboneLogoutFilter jboneLogoutFilter = new JboneLogoutFilter(redisTemplate);
         jboneLogoutFilter.setSessionManager(sessionManager);
-        filters.put("casLogout",jboneLogoutFilter);
+        filters.put("casLogout", jboneLogoutFilter);*/
+
+        SecurityFilter securityFilter = new SecurityFilter();
+        securityFilter.setConfig(config);
+        securityFilter.setClients("CasClient");
+        filters.put("security", securityFilter);
 
         shiroFilterFactoryBean.setFilters(filters);
 
-        loadShiroFilterChain(shiroFilterFactoryBean,jboneConfiguration);
+        loadShiroFilterChain(shiroFilterFactoryBean, jboneConfiguration);
         return shiroFilterFactoryBean;
     }
 

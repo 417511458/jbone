@@ -2,7 +2,6 @@ package cn.jbone.sys.api.dto.response;
 
 import lombok.Data;
 
-import javax.persistence.Column;
 import java.io.Serializable;
 
 @Data
