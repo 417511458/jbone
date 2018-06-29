@@ -1,7 +1,8 @@
 var addTabs = function (obj) {
     id ="tab_"+ obj.id;
 
-    $(".active").removeClass("active");
+    $(".nav-header .active").removeClass("active");
+    $(".nav-content .active").removeClass("active");
 
 //如果TAB不存在，创建一个新的TAB
     if (!$("#"+ id)[0]) {
@@ -32,8 +33,9 @@ var addTabs = function (obj) {
 };
 
 var closeTab = function (id) {
+    debugger;
 //如果关闭的是当前激活的TAB，激活他的前一个TAB
-    if ($("li.active").attr('id') =="tab_"+ id) {
+    if ($(".content-wrapper li.active").attr('id') =="tab_"+ id) {
         $("#tab_"+ id).prev().addClass('active');
         $("#"+ id).prev().addClass('active');
     }
@@ -44,7 +46,14 @@ var closeTab = function (id) {
 
 $(function () {
     $("[addtabs]").click(function () {
+        debugger;
         addTabs({id: $(this).attr("id"), title: $(this).attr('title'), close: $(this).attr("closeable"), url:$(this).attr("url")});
+        $(".sidebar-menu .treeview").removeClass("active");
+        $(".sidebar-menu .treeview-menu li").removeClass("active");
+        $(this).parent().addClass("active");
+        if($(this).parent().has("cmenu")){
+            $(this).parent().parent().parent().addClass("active");
+        }
     });
 
     $(".nav-tabs-title").on("click","[tabclose]", function (e) {

@@ -3,7 +3,7 @@ package cn.jbone.cas.client.realm;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
-import cn.jbone.sys.api.model.UserModel;
+import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -71,7 +71,7 @@ public class JboneCasRealm extends CasRealm {
                     /**
                      * 将用户对象保存为身份信息，用于系统获取用户信息
                      */
-                    Result<UserModel> userModel = userApi.getUserDetailByNameAndServerName(userId,serverName);
+                    Result<UserInfoResponseDTO> userModel = userApi.getUserDetailByNameAndServerName(userId,serverName);
                     if(!userModel.isSuccess() || userModel.getData() ==null ){
                         throw new JboneException("user is not found.");
                     }
@@ -96,7 +96,7 @@ public class JboneCasRealm extends CasRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         logger.info("##################加载Shiro权限认证##################");
 
-        UserModel userModel = (UserModel)super.getAvailablePrincipal(principalCollection);
+        UserInfoResponseDTO userModel = (UserInfoResponseDTO)super.getAvailablePrincipal(principalCollection);
         Set<String> roles = userModel.getRoles();
         Set<String> permissions = userModel.getPermissions();
 

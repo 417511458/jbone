@@ -1,9 +1,9 @@
-package cn.jbone.sys.api.model;
+package cn.jbone.sys.api.dto.response;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Menu implements Serializable,Comparable<Menu> {
+public class MenuInfoResponseDTO implements Serializable,Comparable<MenuInfoResponseDTO> {
     private int id;
     private Integer systemId;
     private Integer pid;
@@ -13,7 +13,7 @@ public class Menu implements Serializable,Comparable<Menu> {
     private Long orders;
     private Integer version;
     private String icon;
-    private List<Menu> childMenus;
+    private List<MenuInfoResponseDTO> childMenus;
 
     public int getId() {
         return id;
@@ -79,11 +79,11 @@ public class Menu implements Serializable,Comparable<Menu> {
         this.version = version;
     }
 
-    public List<Menu> getChildMenus() {
+    public List<MenuInfoResponseDTO> getChildMenus() {
         return childMenus;
     }
 
-    public void setChildMenus(List<Menu> childMenus) {
+    public void setChildMenus(List<MenuInfoResponseDTO> childMenus) {
         this.childMenus = childMenus;
     }
 
@@ -96,7 +96,7 @@ public class Menu implements Serializable,Comparable<Menu> {
     }
 
     @Override
-    public int compareTo(Menu o) {
+    public int compareTo(MenuInfoResponseDTO o) {
         return o.orders.compareTo(this.orders);
     }
 }

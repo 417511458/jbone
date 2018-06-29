@@ -13,7 +13,7 @@
 
     <name>jbone-bpm-core</name>
     <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <url>http://www.jbone.cn</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -53,6 +53,7 @@
             <artifactId>jbone-bpm-api</artifactId>
             <version>1.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.flowable</groupId>
             <artifactId>flowable-spring-boot-starter</artifactId>
@@ -62,6 +63,11 @@
             <groupId>org.flowable</groupId>
             <artifactId>flowable-spring-boot-starter-actuator</artifactId>
             <version>${flowable.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-sys-api-feign</artifactId>
         </dependency>
     </dependencies>
 

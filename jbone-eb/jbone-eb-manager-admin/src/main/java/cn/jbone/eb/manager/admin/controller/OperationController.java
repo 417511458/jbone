@@ -8,7 +8,7 @@ import cn.jbone.eb.manager.core.service.vo.operation.CreateOperationVo;
 import cn.jbone.eb.manager.core.service.vo.operation.OperationBaseInfoVo;
 import cn.jbone.eb.manager.core.service.vo.operation.OperationPositionListVo;
 import cn.jbone.eb.manager.core.service.vo.operation.UpdateOperationVo;
-import cn.jbone.sys.api.model.UserModel;
+import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ public class OperationController {
     @RequestMapping("/create")
     @ResponseBody
     public Result create(@Validated CreateOperationVo createOperationVo, BindingResult bindingResult){
-        UserModel currentUser = (UserModel) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
+        UserInfoResponseDTO currentUser = (UserInfoResponseDTO) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
         createOperationVo.setOperator(currentUser.getUsername());
         operationService.create(createOperationVo);
         return ResultUtils.wrapSuccess();
@@ -76,7 +76,7 @@ public class OperationController {
     @RequestMapping("/update")
     @ResponseBody
     public Result update(@Validated UpdateOperationVo updateOperationVo, BindingResult bindingResult){
-        UserModel currentUser = (UserModel) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
+        UserInfoResponseDTO currentUser = (UserInfoResponseDTO) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
         updateOperationVo.setOperator(currentUser.getUsername());
         operationService.update(updateOperationVo);
         return ResultUtils.wrapSuccess();

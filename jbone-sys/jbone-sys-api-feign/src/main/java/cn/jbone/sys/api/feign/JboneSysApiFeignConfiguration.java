@@ -6,6 +6,7 @@ import feign.Client;
 import feign.Feign;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
+import feign.hystrix.HystrixFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.feign.FeignClientsConfiguration;
 import org.springframework.cloud.netflix.feign.support.SpringMvcContract;
@@ -21,10 +22,16 @@ public class JboneSysApiFeignConfiguration {
 
     @Bean
     public UserApi getUserApi(Decoder decoder, Encoder encoder, Client client){
-        UserApi userApi = Feign.builder().client(client)
+        UserApi userApi = HystrixFeign.builder().client(client)
                 .encoder(encoder)
                 .decoder(decoder).contract(new SpringMvcContract())
-                .target(UserApi.class, jboneConfiguration.getRpc().getSysServer().getFeign().getProtocol() + "://" + jboneConfiguration.getRpc().getSysServer().getFeign().getName().toUpperCase());
+                .target(UserApi.class, jboneConfiguration.getRpc().getSysServer().getFeign().getProtocol() + "://" + jboneConfiguration.getRpc().getSysServer().getFeign().getName().toUpperCase(),getUserApiFallbackFactory());
         return userApi;
     }
+
+    @Bean
+    public UserApiFallbackFactory getUserApiFallbackFactory(){
+        return new UserApiFallbackFactory();
+    }
+
 }

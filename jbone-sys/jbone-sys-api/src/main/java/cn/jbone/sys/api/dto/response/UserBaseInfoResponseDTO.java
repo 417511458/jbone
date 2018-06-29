@@ -1,8 +1,8 @@
-package cn.jbone.sys.api.model;
+package cn.jbone.sys.api.dto.response;
 
 import java.io.Serializable;
 
-public class UserInfoModel implements Serializable {
+public class UserBaseInfoResponseDTO implements Serializable {
     private int id;
     private String username;
     private String password;

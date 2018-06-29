@@ -112,7 +112,8 @@ public class JboneLogoutFilter extends AdviceFilter {
                     }
                     session.stop();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.warn(e.getMessage());
+//                    e.printStackTrace();
                 }
             }
             redisTemplate.delete(TOKEN_PREFIX + token);

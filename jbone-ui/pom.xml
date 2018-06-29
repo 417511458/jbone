@@ -114,5 +114,7 @@
             <artifactId>github-com-macek-jquery-serialize-object</artifactId>
             <version>2.5.0</version>
         </dependency>
+
+
     </dependencies>
 </project>

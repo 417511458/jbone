@@ -1,13 +1,14 @@
-package cn.jbone.sys.api.model;
+package cn.jbone.sys.api.dto.response;
+
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-public class UserModel implements Serializable {
+public class UserInfoResponseDTO implements Serializable {
     private Set<String> permissions;
     private Set<String> roles;
-    private List<Menu> menus;
+    private List<MenuInfoResponseDTO> menus;
     private int id;
     private String username;
     private String password;
@@ -34,11 +35,11 @@ public class UserModel implements Serializable {
         this.roles = roles;
     }
 
-    public List<Menu> getMenus() {
+    public List<MenuInfoResponseDTO> getMenus() {
         return menus;
     }
 
-    public void setMenus(List<Menu> menus) {
+    public void setMenus(List<MenuInfoResponseDTO> menus) {
         this.menus = menus;
     }
 

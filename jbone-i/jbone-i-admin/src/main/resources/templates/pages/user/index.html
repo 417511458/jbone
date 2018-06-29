@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>用户管理</title>
+
+
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon" />
+  </head>
+  <body>
+  <div th:replace="/layout/css :: #css"></div>
+  <div id="main">
+      <div id="toolbar btn-group">
+          <a class="btn  btn-primary" href="javascript:;" onclick="openModal('新增用户','/user/toCreate')"><i class="fa fa-plus-square"></i>新增</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="toUpdate()"><i class="fa fa-pencil-square-o"></i>修改</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="deleteAction('/user/delete/')"><i class="fa fa-times-circle"></i>删除</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="assignRoleAction()"><i class="fa fa-user-plus"></i>分配角色</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="assignMenuAction()"><i class="fa fa-user-plus"></i>分配菜单</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="assignPermissionAction()"><i class="fa fa-user-plus"></i>分配权限</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="assignOrganizationAction()"><i class="fa fa-user-plus"></i>组织机构</a>
+          <a class="btn  btn-primary" href="javascript:;" onclick="modifyPassword()"><i class="fa fa-pencil-square-o"></i>修改密码</a>
+      </div>
+      <table id="table"></table>
+  </div>
+
+<div th:replace="/layout/js :: #js"></div>
+
+  <script type="text/javascript">
+      /*<![CDATA[*/
+          var $table = $('#table');
+          $(function() {
+              $(document).on('focus', 'input[type="text"]', function() {
+                  $(this).parent().find('label').addClass('active');
+              }).on('blur', 'input[type="text"]', function() {
+                  if ($(this).val() == '') {
+                      $(this).parent().find('label').removeClass('active');
+                  }
+              });
+              // bootstrap table初始化
+              // http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
+              $table.bootstrapTable({
+                  url: '/user/list',
+                  height: getHeight(),
+                  striped: true,
+                  search: true,
+                  searchOnEnterKey: true,
+                  showRefresh: true,
+                  showToggle: true,
+                  showColumns: true,
+                  minimumCountColumns: 2,
+                  showPaginationSwitch: true,
+                  clickToSelect: true,
+                  detailView: true,
+                  detailFormatter: 'detailFormatter',
+                  pagination: true,
+                  paginationLoop: false,
+                  classes: 'table table-hover table-no-bordered',
+                  sidePagination: 'server',
+                  //silentSort: false,
+                  smartDisplay: false,
+                  idField: 'id',
+                  sortName: 'id',
+                  sortOrder: 'desc',
+                  escape: true,
+                  searchOnEnterKey: true,
+                  maintainSelected: true,
+                  toolbar: '#toolbar',
+                  queryParamsType : "undefined",
+                  queryParams: function queryParams(params) {   //设置查询参数
+                      var param = {
+                          pageNumber: params.pageNumber,
+                          pageSize: params.pageSize,
+                          searchText:params.searchText,
+                          sortName : params.sortName,
+                          sortOrder:params.sortOrder
+                      };
+                      return param;
+                  },
+
+                  columns: [
+                      {field: 'state', checkbox: true},
+                      {field: 'id', title: '用户ID', sortable: true, halign: 'center',align:'center'},
+                      {field: 'username', title: '用户名', sortable: true, halign: 'center',align:'center'},
+                      {field: 'realname', title: '真实名字', sortable: true, halign: 'center',align:'center'},
+                      {field: 'phone', title: '电话', sortable: true, halign: 'center',align:'center'},
+                      {field: 'email', title: '邮件', sortable: true, halign: 'center',align:'center'},
+                      {field: 'locked', title: '状态', sortable: true, halign: 'center',align:'center',formatter:'statusFormatter'},
+                      {field: 'sex', title: '性别', sortable: true, halign: 'center',align:'center',formatter:'sexFormatter'},
+                      {field: 'action', title: '操作', halign: 'center', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
+                  ]
+              }).on('all.bs.table', function (e, name, args) {
+                  $('[data-toggle="tooltip"]').tooltip();
+                  $('[data-toggle="popover"]').popover();
+              });
+          });
+
+          function statusFormatter(value, row, index) {
+              if (value === 1) {
+                  return '<span class="label label-default">锁定</span>';
+              }else if(value === 0){
+                  return '<span class="label label-success">正常</span>';
+              }
+              return '<span class="label label-warning">未知</span>';
+          }
+
+          function sexFormatter(value, row, index) {
+              if (value === 1) {
+                  return '<span class="label label-success">男</span>';
+              }else if(value === 0){
+                  return '<span class="label label-danger">女</span>';
+              }
+              return '<span class="label label-warning">未知</span>';
+          }
+
+          function assignMenuAction(){
+              var row = chooseOne();
+              if (row) {
+                  openModal("分配菜单[" + row.realname + "]","/user/toAssignMenu/" + row.id);
+              }
+          }
+
+          function assignRoleAction(){
+              var row = chooseOne();
+              if (row) {
+                  openModal("分配角色[" + row.realname + "]","/user/toAssignRole/" + row.id);
+              }
+          }
+
+
+          function actionFormatter(value, row, index) {
+              return [
+                  '<a class="edit" href="javascript:void(0)" data-toggle="tooltip" title="编辑"><i class="fa fa-pencil-square-o"></i></a>　',
+                  '<a class="remove" href="javascript:void(0)" data-toggle="tooltip" title="删除"><i class="fa fa-times-circle"></i></a>'
+              ].join('');
+          }
+
+          window.actionEvents = {
+              'click .edit': function (e, value, row, index) {
+                  openModal("修改用户",'/user/toUpdate/' + row.id);
+              },
+              'click .remove': function (e, value, row, index) {
+                  commonDelete("/user/delete/",row.id);
+              }
+          };
+
+          function toUpdate(){
+              var row = chooseOne();
+              if (row) {
+                  openModal("修改用户",'/user/toUpdate/' + row.id);
+              }
+          }
+
+      function assignPermissionAction(){
+          var row = chooseOne();
+          if (row) {
+              openModal("分配权限[" + row.realname + "]","/user/toAssignPermission/" + row.id);
+          }
+      }
+
+      function assignOrganizationAction(){
+          var row = chooseOne();
+          if (row) {
+              openModal("分配组织机构[" + row.realname + "]","/user/toAssignOrganization/" + row.id);
+          }
+      }
+
+      function modifyPassword(){
+          var row = chooseOne();
+          if (row) {
+              openModal("修改密码[" + row.realname + "]","/user/toModifyPassword/" + row.id);
+          }
+      }
+
+      function madalCallback(){
+          $table.bootstrapTable('refresh');
+      }
+      /*]]>*/
+  </script>
+  </body>
+  </html>

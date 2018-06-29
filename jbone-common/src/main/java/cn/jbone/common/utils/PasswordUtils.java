@@ -10,6 +10,6 @@ public class PasswordUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(PasswordUtils.getMd5PasswordWithSalt("1","1").length());
+        System.out.println(PasswordUtils.getMd5PasswordWithSalt("jbone","1521896490652"));
     }
 }

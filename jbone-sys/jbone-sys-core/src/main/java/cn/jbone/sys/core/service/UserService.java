@@ -2,8 +2,10 @@ package cn.jbone.sys.core.service;
 
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.utils.PasswordUtils;
-import cn.jbone.sys.api.model.Menu;
-import cn.jbone.sys.api.model.UserModel;
+import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
+import cn.jbone.sys.api.dto.response.MenuInfoResponseDTO;
+import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
+import cn.jbone.sys.api.dto.response.UserSecurityQuestionsResponseDTO;
 import cn.jbone.sys.core.dao.domain.*;
 import cn.jbone.sys.core.dao.repository.*;
 import cn.jbone.sys.core.service.model.common.AssignPermissionModel;
@@ -44,6 +46,8 @@ public class UserService {
     @Autowired
     RbacOrganizationRepository organizationRepository;
 
+    @Autowired
+    RbacUserSecurityQuestionsRepository userSecurityQuestionsRepository;
 
 
     /**
@@ -57,8 +61,8 @@ public class UserService {
      * @param serverName 服务名
      * @return 用户详细信息
      */
-    public UserModel getUserDetailByNameAndServerName(String username, String serverName) {
-        UserModel userModel = new UserModel();
+    public UserInfoResponseDTO getUserDetailByNameAndServerName(String username, String serverName) {
+        UserInfoResponseDTO userModel = new UserInfoResponseDTO();
         Set<String> permissions = new HashSet<String>();
         Set<String> roles = new HashSet<String>();
 
@@ -99,7 +103,7 @@ public class UserService {
         //如果不包含服务名，则不加载菜单信息
         if(!StringUtils.isBlank(serverName)){
             //解析前用户拥有的菜单
-            List<Menu> menuList = new ArrayList<>();
+            List<MenuInfoResponseDTO> menuList = new ArrayList<>();
             List<RbacMenuEntity> correctMenuList = new ArrayList<>();
 
             RbacSystemEntity systemEntity = systemRepository.findByName(serverName);
@@ -116,7 +120,7 @@ public class UserService {
             correctMenuList.addAll(userMenus);
 
             for (RbacMenuEntity menuEntity : correctMenuList){
-                Menu menu = new Menu();
+                MenuInfoResponseDTO menu = new MenuInfoResponseDTO();
                 BeanUtils.copyProperties(menuEntity,menu);
                 if(isContains(menuList,menu)){
                     continue;
@@ -128,9 +132,9 @@ public class UserService {
                 childMenus.addAll(childUserMenus);
 
                 if(!childMenus.isEmpty()){
-                    List<Menu> childMenuList = new ArrayList<>();
+                    List<MenuInfoResponseDTO> childMenuList = new ArrayList<>();
                     for (RbacMenuEntity childMenuEntity : childMenus){
-                        Menu childMenu = new Menu();
+                        MenuInfoResponseDTO childMenu = new MenuInfoResponseDTO();
                         BeanUtils.copyProperties(childMenuEntity,childMenu);
                         if(isContains(childMenuList,childMenu)){
                             continue;
@@ -170,8 +174,8 @@ public class UserService {
 
 
 
-    private boolean isContains(List<Menu> menuEntities,Menu menu){
-        for (Menu rbacMenuEntity : menuEntities){
+    private boolean isContains(List<MenuInfoResponseDTO> menuEntities, MenuInfoResponseDTO menu){
+        for (MenuInfoResponseDTO rbacMenuEntity : menuEntities){
             if(menu.getId() == rbacMenuEntity.getId()){
                 return true;
             }
@@ -247,7 +251,10 @@ public class UserService {
      */
     public void assignRole(AssignRoleModel assignRoleModel){
         RbacUserEntity userEntity = userRepository.findOne(assignRoleModel.getUserId());
-        List<RbacRoleEntity> roleEntities =roleRepository.findByIdIn(assignRoleModel.getUserRole());
+        List<RbacRoleEntity> roleEntities = null;
+        if(assignRoleModel.getUserRole() != null && assignRoleModel.getUserRole().length > 0){
+            roleEntities = roleRepository.findByIdIn(assignRoleModel.getUserRole());
+        }
         userEntity.setRoles(roleEntities);
     }
 
@@ -378,5 +385,42 @@ public class UserService {
         userRepository.save(userEntity);
     }
 
+    /**
+     * 获取用户安全问题
+     * @param username
+     * @return
+     */
+    public List<UserSecurityQuestionsResponseDTO> findUserSecurityQuestions(String username){
+        UserBaseInfoModel userBaseInfoModel = findByUserName(username);
+        int userId = userBaseInfoModel.getId();
+        List<RbacUserSecurityQuestionsEntity> list = userSecurityQuestionsRepository.findByUserId(userId);
+        if(list == null || list.isEmpty()){
+            return null;
+        }
+        List<UserSecurityQuestionsResponseDTO> responseDTOList = new ArrayList<>();
+        for(RbacUserSecurityQuestionsEntity entity:list){
+            UserSecurityQuestionsResponseDTO responseDTO = new UserSecurityQuestionsResponseDTO();
+            BeanUtils.copyProperties(entity,responseDTO);
+            responseDTOList.add(responseDTO);
+        }
+        return responseDTOList;
+    }
+
+
+    /**
+     * 修改密码
+     * @param changePasswordRequestDTO
+     */
+    public void modifyPassword(ChangePasswordRequestDTO changePasswordRequestDTO){
+        RbacUserEntity userEntity = userRepository.findByUsername(changePasswordRequestDTO.getUsername());
+        if(userEntity == null){
+            throw new JboneException("没有找到用户");
+        }
+        //使用时间撮作为盐值
+        String salt = System.currentTimeMillis() + "";
+        userEntity.setSalt(salt);
+        userEntity.setPassword(PasswordUtils.getMd5PasswordWithSalt(changePasswordRequestDTO.getPassword(),salt));
+        userRepository.save(userEntity);
+    }
 
 }

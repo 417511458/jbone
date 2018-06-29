@@ -23,6 +23,17 @@ cas:
     shiro:
       requiredRoles: sso
       location: classpath:shiro.ini
+    pm:
+      enabled: true
+      #policyPattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d){8,10}
+      reset:
+        text: Reset your password with this link %s
+        subject: Password Reset Request
+        from: jbone666@163.com
+        expirationMinutes: 1
+        emailAttribute: mail
+        securityQuestionsEnabled: true
+        autoLogin: false
   server:
     name: https://jbone-cas.majunwei.com:8443
     prefix: https://jbone-cas.majunwei.com:8443/cas
@@ -145,6 +156,14 @@ spring:
   sleuth:
     sampler:
       percentage: 1
+  mail:
+    host: smtp.163.com
+    ##port: 25
+    username: jbone666@163.com
+    password: jbonesq2018
+    testConnection: true
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
 
 management:
   security.enabled: false
