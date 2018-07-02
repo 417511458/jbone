@@ -2,7 +2,6 @@ package org.apereo.cas.mgmt.config;
 
 import org.apereo.cas.configuration.CasConfigurationProperties;
 import org.apereo.cas.mgmt.CasManagementUtils;
-import org.apereo.cas.mgmt.authentication.CasUserProfileFactory;
 import org.pac4j.cas.client.direct.DirectCasClient;
 import org.pac4j.cas.config.CasConfiguration;
 import org.pac4j.core.authorization.authorizer.Authorizer;
@@ -102,10 +101,4 @@ public class CasManagementAuthenticationConfiguration {
         return cfg;
     }
 
-    @ConditionalOnMissingBean(name = "casUserProfileFactory")
-    @Bean
-    @RefreshScope
-    public CasUserProfileFactory casUserProfileFactory() {
-        return new CasUserProfileFactory(casProperties);
-    }
 }

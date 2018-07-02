@@ -3263,10 +3263,6 @@
                     <groupId>org.springframework</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>tomcat-embed-core</artifactId>
-                    <groupId>org.apache.tomcat.embed</groupId>
-                </exclusion>
-                <exclusion>
                     <artifactId>logback-core</artifactId>
                     <groupId>ch.qos.logback</groupId>
                 </exclusion>
@@ -3287,20 +3283,12 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>tomcat-embed-websocket</artifactId>
-                    <groupId>org.apache.tomcat.embed</groupId>
-                </exclusion>
-                <exclusion>
                     <artifactId>spring-boot-starter-actuator</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
                 <exclusion>
                     <artifactId>spring-core</artifactId>
                     <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>tomcat-embed-el</artifactId>
-                    <groupId>org.apache.tomcat.embed</groupId>
                 </exclusion>
                 <exclusion>
                     <artifactId>jackson-annotations</artifactId>
@@ -3324,14 +3312,6 @@
                 </exclusion>
                 <exclusion>
                     <artifactId>spring-boot-starter-logging</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-webmvc</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
