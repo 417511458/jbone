@@ -221,6 +221,10 @@
             <AppenderRef ref="casAudit"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
+        <AsyncLogger name="org.pac4j" level="debug" additivity="false">
+            <AppenderRef ref="casConsole"/>
+            <AppenderRef ref="casFile"/>
+        </AsyncLogger>
         <AsyncRoot level="warn">
             <AppenderRef ref="casConsole"/>
         </AsyncRoot>

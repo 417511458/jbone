@@ -89,7 +89,7 @@ cas:
         defaultCatalog:
         defaultSchema: jbone_cas
         user: jbone_cas
-        ddlAuto: update
+        ddlAuto: none
         password: Jbone_cas_666
         autocommit: false
         driverClass: com.mysql.jdbc.Driver
@@ -98,7 +98,7 @@ cas:
         dataSourceProxy: false
 
         # Hibernate-specific properties (i.e. `hibernate.globally_quoted_identifiers`)
-        properties.hibernate.hbm2ddl.auto: update
+        properties.hibernate.hbm2ddl.auto: none
         properties.hibernate.show_sql: true
 
         pool.suspension: false
