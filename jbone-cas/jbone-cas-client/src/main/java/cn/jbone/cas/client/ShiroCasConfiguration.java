@@ -1,6 +1,7 @@
 package cn.jbone.cas.client;
 
 import cn.jbone.cas.client.listener.JboneCasSessionListener;
+import cn.jbone.cas.client.pac4j.session.JboneSessionStore;
 import cn.jbone.cas.client.realm.JboneCasRealm;
 import cn.jbone.cas.client.session.JboneCasSessionDao;
 import cn.jbone.cas.client.session.JboneCasSessionFactory;
@@ -49,7 +50,7 @@ public class ShiroCasConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ShiroCasConfiguration.class);
 
     @Bean
-    Config getConfig(JboneConfiguration jboneConfiguration){
+    Config getConfig(JboneConfiguration jboneConfiguration,JboneSessionStore sessionStore){
         CasConfiguration casConfiguration = new CasConfiguration(jboneConfiguration.getCas().getCasServerUrl()+jboneConfiguration.getCas().getLoginUrl(), jboneConfiguration.getCas().getCasServerUrl());
         casConfiguration.setAcceptAnyProxy(true);
 
@@ -59,7 +60,14 @@ public class ShiroCasConfiguration {
 
         Clients clients = new Clients(jboneConfiguration.getCas().getCurrentServerUrlPrefix() + jboneConfiguration.getCas().getCasFilterUrlPattern() + "?client_name=CasClient", casClient);
         Config config = new Config(clients);
+        config.setSessionStore(sessionStore);
+
         return config;
+    }
+
+    @Bean
+    JboneSessionStore getJboneSessionStore(){
+        return new JboneSessionStore();
     }
 
     @Bean
@@ -155,7 +163,8 @@ public class ShiroCasConfiguration {
 
         filterChainDefinitionMap.put(jboneConfiguration.getCas().getCasFilterUrlPattern(), "callback");// shiro集成cas后，首先添加该规则
         filterChainDefinitionMap.put("/logout","logout");
-//        filterChainDefinitionMap.put("/casLogout","casLogout");
+        filterChainDefinitionMap.put("/casLogout","logout");
+
         //添加jbone.cas的配置规则
         if(jboneConfiguration.getCas().getFilterChainDefinition() != null){
             filterChainDefinitionMap.putAll(jboneConfiguration.getCas().getFilterChainDefinition());
@@ -188,7 +197,7 @@ public class ShiroCasConfiguration {
 
         LogoutFilter logoutFilter = new LogoutFilter();
         logoutFilter.setConfig(config);
-        logoutFilter.setDefaultUrl(jboneConfiguration.getCas().getCurrentServerUrlPrefix());
+        logoutFilter.setDefaultUrl(jboneConfiguration.getCas().getCurrentServerUrlPrefix() + jboneConfiguration.getCas().getCasFilterUrlPattern() + "?client_name=CasClient");
         logoutFilter.setCentralLogout(true);
         logoutFilter.setLocalLogout(false);
         filters.put("logout", logoutFilter);

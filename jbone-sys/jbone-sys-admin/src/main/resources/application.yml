@@ -48,7 +48,7 @@ jbone:
     #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
     casFilterUrlPattern: /cas
     #登录成功后的跳转路径，默认"/"
-    successUrl: /
+    successUrl: http://jbone-sys-admin.majunwei.com:20002/
     #未授权的跳转路径，默认"/403"
     unauthorizedUrl: /403
     #客户端Session失效时间，默认30分钟
@@ -107,3 +107,15 @@ info:
     url: https://gitee.com/majunwei2017/jbone
   domain: http://www.majunwei.com
 
+# 启用超时设置
+hystrix.command.default.execution.timeout.enabled: true
+# 熔断时间为10S
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
+# 使用线程隔离熔断
+hystrix.command.default.execution.isolation.strategy: THREAD
+# 核心线程数100
+hystrix.threadpool.default.coreSize: 100
+# 超时时熔断
+hystrix.command.default.execution.isolation.thread.interruptOnTimeout: true
+# 取消时是否熔断
+hystrix.command.default.execution.isolation.thread.interruptOnCancel: false
