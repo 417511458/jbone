@@ -1,6 +1,7 @@
 package cn.jbone.cas.client;
 
 import cn.jbone.cas.client.listener.JboneCasSessionListener;
+import cn.jbone.cas.client.pac4j.handler.JboneCasLogoutHandler;
 import cn.jbone.cas.client.pac4j.session.JboneSessionStore;
 import cn.jbone.cas.client.realm.JboneCasRealm;
 import cn.jbone.cas.client.session.JboneCasSessionDao;
@@ -50,9 +51,10 @@ public class ShiroCasConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ShiroCasConfiguration.class);
 
     @Bean
-    Config getConfig(JboneConfiguration jboneConfiguration,JboneSessionStore sessionStore){
+    Config getConfig(JboneConfiguration jboneConfiguration,JboneSessionStore sessionStore,JboneCasLogoutHandler jboneCasLogoutHandler){
         CasConfiguration casConfiguration = new CasConfiguration(jboneConfiguration.getCas().getCasServerUrl()+jboneConfiguration.getCas().getLoginUrl(), jboneConfiguration.getCas().getCasServerUrl());
         casConfiguration.setAcceptAnyProxy(true);
+        casConfiguration.setLogoutHandler(jboneCasLogoutHandler);
 
         CasClient casClient = new CasClient(casConfiguration);
         casClient.setCallbackUrl(jboneConfiguration.getCas().getCurrentServerUrlPrefix() + jboneConfiguration.getCas().getCasFilterUrlPattern() + "?client_name=CasClient");
@@ -70,6 +72,12 @@ public class ShiroCasConfiguration {
         return new JboneSessionStore();
     }
 
+    @Bean
+    JboneCasLogoutHandler getJboneCasLogoutHandler(){
+        JboneCasLogoutHandler handler = new JboneCasLogoutHandler();
+        handler.setDestroySession(true);
+        return handler;
+    }
     @Bean
     public JboneCasRealm getJboneCasRealm(EhCacheManager ehCacheManager, UserApi userApi, JboneConfiguration jboneConfiguration){
         JboneCasRealm realm = new JboneCasRealm(ehCacheManager, userApi, jboneConfiguration.getSys().getServerName());
@@ -199,7 +207,7 @@ public class ShiroCasConfiguration {
         logoutFilter.setConfig(config);
         logoutFilter.setDefaultUrl(jboneConfiguration.getCas().getCurrentServerUrlPrefix() + jboneConfiguration.getCas().getCasFilterUrlPattern() + "?client_name=CasClient");
         logoutFilter.setCentralLogout(true);
-        logoutFilter.setLocalLogout(false);
+        logoutFilter.setLocalLogout(true);//销毁本地
         filters.put("logout", logoutFilter);
 
         // 注销
