@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.session.mgt.SessionFactory;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -73,11 +74,13 @@ public class ShiroCasConfiguration {
     }
 
     @Bean
-    JboneCasLogoutHandler getJboneCasLogoutHandler(){
-        JboneCasLogoutHandler handler = new JboneCasLogoutHandler();
+    JboneCasLogoutHandler getJboneCasLogoutHandler(SessionManager sessionManager,StringRedisTemplate stringRedisTemplate){
+        JboneCasLogoutHandler handler = new JboneCasLogoutHandler(stringRedisTemplate);
         handler.setDestroySession(true);
+        handler.setSessionManager(sessionManager);
         return handler;
     }
+
     @Bean
     public JboneCasRealm getJboneCasRealm(EhCacheManager ehCacheManager, UserApi userApi, JboneConfiguration jboneConfiguration){
         JboneCasRealm realm = new JboneCasRealm(ehCacheManager, userApi, jboneConfiguration.getSys().getServerName());
@@ -196,6 +199,7 @@ public class ShiroCasConfiguration {
 //        shiroFilterFactoryBean.setLoginUrl(jboneConfiguration.getCas().getEncodedLoginUrl() + jboneConfiguration.getCas().getCasFilterUrlPattern() + "?client_name=CasClient");
 //        shiroFilterFactoryBean.setSuccessUrl(jboneConfiguration.getCas().getSuccessUrl());
 //        shiroFilterFactoryBean.setUnauthorizedUrl(jboneConfiguration.getCas().getUnauthorizedUrl());
+
         // 添加casFilter到shiroFilter中
         Map<String, Filter> filters = new HashMap<>();
         CallbackFilter callbackFilter = new CallbackFilter();
