@@ -1,5 +1,6 @@
 package cn.jbone.cas.client.pac4j.handler;
 
+import cn.jbone.cas.client.session.JboneSessionTicketStore;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -7,11 +8,8 @@ import org.pac4j.cas.logout.DefaultCasLogoutHandler;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.context.session.SessionStore;
 import org.pac4j.core.profile.ProfileManager;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 
 import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Jbone单点登出
@@ -19,12 +17,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class JboneCasLogoutHandler<C extends WebContext> extends DefaultCasLogoutHandler<C> {
 
-    private String TOKEN_PREFIX = "token_";
 
-    private StringRedisTemplate redisTemplate;
-    public JboneCasLogoutHandler(StringRedisTemplate redisTemplate){
-        this.redisTemplate = redisTemplate;
+    public JboneCasLogoutHandler(JboneSessionTicketStore sessionTicketStore){
+        this.sessionTicketStore = sessionTicketStore;
     }
+    private JboneSessionTicketStore sessionTicketStore;
+
 
     private SessionManager sessionManager;
 
@@ -42,10 +40,7 @@ public class JboneCasLogoutHandler<C extends WebContext> extends DefaultCasLogou
             logger.error("No session store available for this web context");
         } else {
             String sessionId = sessionStore.getOrCreateSessionId(context);
-            ValueOperations<String,String> valueOperations = redisTemplate.opsForValue();
-            valueOperations.set(TOKEN_PREFIX + ticket,sessionId);
-            redisTemplate.expire(TOKEN_PREFIX + ticket,8, TimeUnit.HOURS);
-            logger.info("save ticket and session[ticket:{},sessionId:{}]",ticket,sessionId);
+            sessionTicketStore.store(sessionId,ticket);
         }
 
     }
@@ -69,8 +64,7 @@ public class JboneCasLogoutHandler<C extends WebContext> extends DefaultCasLogou
         ProfileManager manager = new ProfileManager(context);
         manager.logout();
 
-        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        Serializable sessionId = valueOperations.get(TOKEN_PREFIX + ticket);
+        Serializable sessionId = sessionTicketStore.getSessionId(ticket);
         if (sessionId != null) {
             try {
                 Session session = sessionManager.getSession(new DefaultSessionKey(sessionId));
@@ -79,6 +73,6 @@ public class JboneCasLogoutHandler<C extends WebContext> extends DefaultCasLogou
                 logger.warn(e.getMessage());
             }
         }
-        redisTemplate.delete(TOKEN_PREFIX + ticket);
+        sessionTicketStore.deleteByTicket(ticket);
     }
 }

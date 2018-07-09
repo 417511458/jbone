@@ -2,12 +2,13 @@ package cn.jbone.cas.client;
 
 import cn.jbone.cas.client.listener.JboneCasSessionListener;
 import cn.jbone.cas.client.pac4j.handler.JboneCasLogoutHandler;
-import cn.jbone.cas.client.pac4j.session.JboneSessionStore;
 import cn.jbone.cas.client.realm.JboneCasRealm;
 import cn.jbone.cas.client.session.JboneCasSessionDao;
 import cn.jbone.cas.client.session.JboneCasSessionFactory;
+import cn.jbone.cas.client.session.JboneSessionTicketStore;
 import cn.jbone.configuration.JboneConfiguration;
 import cn.jbone.sys.api.UserApi;
+import io.buji.pac4j.context.ShiroSessionStore;
 import io.buji.pac4j.filter.CallbackFilter;
 import io.buji.pac4j.filter.LogoutFilter;
 import io.buji.pac4j.filter.SecurityFilter;
@@ -52,7 +53,7 @@ public class ShiroCasConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ShiroCasConfiguration.class);
 
     @Bean
-    Config getConfig(JboneConfiguration jboneConfiguration,JboneSessionStore sessionStore,JboneCasLogoutHandler jboneCasLogoutHandler){
+    Config getConfig(JboneConfiguration jboneConfiguration,ShiroSessionStore sessionStore,JboneCasLogoutHandler jboneCasLogoutHandler){
         CasConfiguration casConfiguration = new CasConfiguration(jboneConfiguration.getCas().getCasServerUrl()+jboneConfiguration.getCas().getLoginUrl(), jboneConfiguration.getCas().getCasServerUrl());
         casConfiguration.setAcceptAnyProxy(true);
         casConfiguration.setLogoutHandler(jboneCasLogoutHandler);
@@ -69,13 +70,21 @@ public class ShiroCasConfiguration {
     }
 
     @Bean
-    JboneSessionStore getJboneSessionStore(){
-        return new JboneSessionStore();
+    ShiroSessionStore getJboneSessionStore(){
+        return new ShiroSessionStore();
     }
 
     @Bean
-    JboneCasLogoutHandler getJboneCasLogoutHandler(SessionManager sessionManager,StringRedisTemplate stringRedisTemplate){
-        JboneCasLogoutHandler handler = new JboneCasLogoutHandler(stringRedisTemplate);
+    JboneSessionTicketStore getSessionTicketStore(StringRedisTemplate stringRedisTemplate,JboneConfiguration jboneConfiguration){
+        JboneSessionTicketStore sessionTicketStore = new JboneSessionTicketStore();
+        sessionTicketStore.setRedisTemplate(stringRedisTemplate);
+        sessionTicketStore.setTimeout(jboneConfiguration.getCas().getClientSessionTimeout());
+        return sessionTicketStore;
+    }
+
+    @Bean
+    JboneCasLogoutHandler getJboneCasLogoutHandler(SessionManager sessionManager,JboneSessionTicketStore sessionTicketStore){
+        JboneCasLogoutHandler handler = new JboneCasLogoutHandler(sessionTicketStore);
         handler.setDestroySession(true);
         handler.setSessionManager(sessionManager);
         return handler;
@@ -144,10 +153,12 @@ public class ShiroCasConfiguration {
     }
 
     @Bean(name = "sessionDao")
-    public SessionDAO getSessionDao(StringRedisTemplate redisTemplate){
+    public SessionDAO getSessionDao(StringRedisTemplate redisTemplate,JboneSessionTicketStore sessionTicketStore){
         JboneCasSessionDao sessionDao = new JboneCasSessionDao(redisTemplate);
+        sessionDao.setSessionTicketStore(sessionTicketStore);
         return sessionDao;
     }
+
 
     @Bean(name = "sessionListener")
     public SessionListener getSessionListener(){
@@ -174,7 +185,6 @@ public class ShiroCasConfiguration {
 
         filterChainDefinitionMap.put(jboneConfiguration.getCas().getCasFilterUrlPattern(), "callback");// shiro集成cas后，首先添加该规则
         filterChainDefinitionMap.put("/logout","logout");
-        filterChainDefinitionMap.put("/casLogout","logout");
 
         //添加jbone.cas的配置规则
         if(jboneConfiguration.getCas().getFilterChainDefinition() != null){
@@ -213,11 +223,6 @@ public class ShiroCasConfiguration {
         logoutFilter.setCentralLogout(true);
         logoutFilter.setLocalLogout(true);//销毁本地
         filters.put("logout", logoutFilter);
-
-        // 注销
-        /*JboneLogoutFilter jboneLogoutFilter = new JboneLogoutFilter(redisTemplate);
-        jboneLogoutFilter.setSessionManager(sessionManager);
-        filters.put("casLogout", jboneLogoutFilter);*/
 
         SecurityFilter securityFilter = new SecurityFilter();
         securityFilter.setConfig(config);
