@@ -27,7 +27,7 @@ public class CasProperties implements Serializable {
     /**
      * CASFilter
      */
-    private String casFilterUrlPattern = "/shiro-cas";
+    private String casFilterUrlPattern = "/cas";
 
     /**
      * 成功后跳转的默认路径
@@ -115,7 +115,7 @@ public class CasProperties implements Serializable {
 
     public String getEncodedLoginUrl(){
         try {
-            return casServerUrl + loginUrl + "?service=" + URLEncoder.encode(currentServerUrlPrefix + casFilterUrlPattern, "utf-8");
+            return casServerUrl + loginUrl + "?service=" + URLEncoder.encode(currentServerUrlPrefix + casFilterUrlPattern + "?client_name=CasClient", "utf-8");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

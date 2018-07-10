@@ -206,9 +206,9 @@ public class ShiroCasConfiguration {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         // Shiro登录页面，这里默认为CAS的登录页面：/login?service=serviceurl
-//        shiroFilterFactoryBean.setLoginUrl(jboneConfiguration.getCas().getEncodedLoginUrl() + jboneConfiguration.getCas().getCasFilterUrlPattern() + "?client_name=CasClient");
-//        shiroFilterFactoryBean.setSuccessUrl(jboneConfiguration.getCas().getSuccessUrl());
-//        shiroFilterFactoryBean.setUnauthorizedUrl(jboneConfiguration.getCas().getUnauthorizedUrl());
+        shiroFilterFactoryBean.setLoginUrl(jboneConfiguration.getCas().getEncodedLoginUrl());
+        shiroFilterFactoryBean.setSuccessUrl(jboneConfiguration.getCas().getSuccessUrl());
+        shiroFilterFactoryBean.setUnauthorizedUrl(jboneConfiguration.getCas().getUnauthorizedUrl());
 
         // 添加casFilter到shiroFilter中
         Map<String, Filter> filters = new HashMap<>();

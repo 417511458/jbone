@@ -1,6 +1,7 @@
 package cn.jbone.cas.client.pac4j.handler;
 
 import cn.jbone.cas.client.session.JboneSessionTicketStore;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -40,9 +41,10 @@ public class JboneCasLogoutHandler<C extends WebContext> extends DefaultCasLogou
             logger.error("No session store available for this web context");
         } else {
             String sessionId = sessionStore.getOrCreateSessionId(context);
-            sessionTicketStore.store(sessionId,ticket);
+            if(StringUtils.isNotBlank(sessionId)){
+                sessionTicketStore.store(sessionId,ticket);
+            }
         }
-
     }
 
     /**

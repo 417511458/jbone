@@ -105,3 +105,16 @@ info:
 feign:
   httpclient:
     enabled: true
+
+# 启用超时设置
+hystrix.command.default.execution.timeout.enabled: true
+# 熔断时间为10S
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
+# 使用线程隔离熔断
+hystrix.command.default.execution.isolation.strategy: THREAD
+# 核心线程数100
+hystrix.threadpool.default.coreSize: 100
+# 超时时熔断
+hystrix.command.default.execution.isolation.thread.interruptOnTimeout: true
+# 取消时是否熔断
+hystrix.command.default.execution.isolation.thread.interruptOnCancel: false
