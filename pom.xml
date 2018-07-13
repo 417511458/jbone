@@ -19,6 +19,7 @@
         <module>jbone-ui</module>
         <module>jbone-tag</module>
         <module>jbone-i</module>
+        <module>jbone-errors</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -365,6 +366,11 @@
                 <version>${jbone.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>cn.jbone</groupId>
+                <artifactId>jbone-errors</artifactId>
+                <version>${jbone.version}</version>
+            </dependency>
         </dependencies>
 
 

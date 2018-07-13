@@ -1,6 +1,7 @@
 package cn.jbone.tag;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -13,7 +14,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  * @date 2018/3/21 22:15
  */
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(exclude=ErrorMvcAutoConfiguration.class)
 @EnableEurekaClient
 @EnableCircuitBreaker
 public class JboneTagAdminApplication {

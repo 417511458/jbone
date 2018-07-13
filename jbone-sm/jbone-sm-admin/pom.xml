@@ -106,6 +106,10 @@
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-errors</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -88,6 +88,12 @@
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-ui</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-errors</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

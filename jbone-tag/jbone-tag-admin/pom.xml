@@ -96,6 +96,11 @@
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-errors</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
