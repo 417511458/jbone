@@ -14,7 +14,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  * @date 2018/3/21 22:15
  */
 @EnableDiscoveryClient
-@SpringBootApplication(exclude=ErrorMvcAutoConfiguration.class)
+@SpringBootApplication
 @EnableEurekaClient
 @EnableCircuitBreaker
 public class JboneTagAdminApplication {
