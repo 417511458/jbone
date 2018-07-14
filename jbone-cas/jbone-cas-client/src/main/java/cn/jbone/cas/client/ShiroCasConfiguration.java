@@ -37,11 +37,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Shiro集成Cas配置
@@ -114,6 +112,8 @@ public class ShiroCasConfiguration {
         filterRegistration.addInitParameter("targetFilterLifecycle", "true");
         filterRegistration.setEnabled(true);
         filterRegistration.addUrlPatterns("/*");
+        filterRegistration.setDispatcherTypes(EnumSet.allOf(DispatcherType.class));
+
         return filterRegistration;
     }
 
@@ -184,7 +184,7 @@ public class ShiroCasConfiguration {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
 
         filterChainDefinitionMap.put(jboneConfiguration.getCas().getCasFilterUrlPattern(), "callback");// shiro集成cas后，首先添加该规则
-        filterChainDefinitionMap.put("/logout","logout");
+        filterChainDefinitionMap.put(jboneConfiguration.getCas().getLogoutUrl(),"logout");
 
         //添加jbone.cas的配置规则
         if(jboneConfiguration.getCas().getFilterChainDefinition() != null){

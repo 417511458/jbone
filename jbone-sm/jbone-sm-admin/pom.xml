@@ -15,18 +15,19 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <bootadmin.version>1.5.4</bootadmin.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-server</artifactId>
-            <version>1.5.4</version>
+            <version>${bootadmin.version}</version>
         </dependency>
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-server-ui</artifactId>
-            <version>1.5.4</version>
+            <version>${bootadmin.version}</version>
         </dependency>
         <dependency>
             <groupId>de.codecentric</groupId>
@@ -36,20 +37,22 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>1.5.4</version>
+            <version>${bootadmin.version}</version>
         </dependency>
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-server-ui-hystrix</artifactId>
-            <version>1.5.4</version>
+            <version>${bootadmin.version}</version>
         </dependency>
         <!-- end::dependency-ui-hystrix[] -->
         <!-- tag::dependency-ui-turbine[] -->
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-server-ui-turbine</artifactId>
-            <version>1.5.4</version>
+            <version>${bootadmin.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-commons -->
+
         <!-- end::dependency-ui-turbine[] -->
         <dependency>
             <groupId>org.jolokia</groupId>

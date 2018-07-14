@@ -5,8 +5,13 @@ spring:
     host: 127.0.0.1
     port: 6379
     password: jbone
-server:
-  port: 10002
+  cloud:
+    config:
+    enabled: false
+
+server.port: 10002
+
+spring.boot.admin.context-path: /admin
 
 #注册中心
 eureka:
@@ -15,24 +20,15 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:10001/eureka
-    metadata-map:
-      user.name: jbone
-      user.password: jbone
   instance:
     prefer-ip-address: true
     instance-id: http://${spring.cloud.client.ipAddress}:${server.port}
-    metadata-map:
-      user.name: jbone
-      user.password: jbone
 
-turbine:
-  app-config: JBONE-SYS-SERVER
-  cluster-name-expression: new String('default')
-  combine-host-port: true
-
-management:
-  security:
-    enabled: false
+management.security.enabled: false
+spring.boot.admin.routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+spring.boot.admin.turbine:
+  clusters: default
+  location: turbine
 
 #CAS服务地址
 jbone:
@@ -43,7 +39,8 @@ jbone:
     #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
     casFilterUrlPattern: /cas
     #登录成功后的跳转路径，默认"/"
-    successUrl: /
+    successUrl: /admin/
+    logoutUrl: /admin/logout
     #未授权的跳转路径，默认"/403"
     unauthorizedUrl: /403
     clientSessionTimeout: 180000
@@ -71,7 +68,9 @@ jbone:
       /restart: anon
       /heapdump: anon
       /features: anon
-      /**: authc,roles[serverAdministrator]
+      /admin/**: authc,roles[serverAdministrator]
+#      /**: anon
+#      /login: anon
 
   #系统服务名称
   sys:
