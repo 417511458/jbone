@@ -50,6 +50,12 @@ management:
   security:
     enabled: false
 
+# 配置Eureka中的serviceId列表，表明监控哪些服务
+turbine.appConfig: jbone-sys-admin,jbone-sys-server,jbone-tag-admin,jbone-cas,jbone-cas-manager,jbone-sm-monitor
+#指定聚合哪些集群，多个使用","分割，默认为default
+turbine.aggregator.clusterConfig: default
+#clusterNameExpression指定集群名称，默认表达式appName；此时：turbine.aggregator.clusterConfig需要配置想要监控的应用名称；2. 当clusterNameExpression: default时，turbine.aggregator.clusterConfig可以不写，因为默认就是default
+turbine.clusterNameExpression: new String("default")
 
 
 jbone:
@@ -66,6 +72,29 @@ jbone:
     unauthorizedUrl: /403
     #权限过滤规则
     filterChainDefinition:
+      /health: anon
+      /archaius: anon
+      /refresh: anon
+      /configprops: anon
+      /env/**: anon
+      /service-registry/**: anon
+      /auditevents: anon
+      /pause: anon
+      /dump: anon
+      /loggers/**: anon
+      /resume: anon
+      /metrics/**: anon
+      /channels: anon
+      /beans: anon
+      /mappings: anon
+      /autoconfig: anon
+      /trace: anon
+      /hystrix.stream/**: anon
+      /info: anon
+      /restart: anon
+      /heapdump: anon
+      /features: anon
+      /turbine.stream: anon
       /zipkin/**: authc,roles[serverAdministrator]
       /**: anon
       /login: anon

@@ -24,11 +24,17 @@ eureka:
     prefer-ip-address: true
     instance-id: http://${spring.cloud.client.ipAddress}:${server.port}
 
+
 management.security.enabled: false
+
 spring.boot.admin.routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+
+# turbine监控配置
+# clusters是指监控的集群
+# location是turbine服务的ID，Jbone中使用jbone-sm-monitor作为turbine监控服务
 spring.boot.admin.turbine:
   clusters: default
-  location: turbine
+  location: jbone-sm-monitor
 
 #CAS服务地址
 jbone:
@@ -68,6 +74,7 @@ jbone:
       /restart: anon
       /heapdump: anon
       /features: anon
+      /turbine.stream: anon
       /admin/**: authc,roles[serverAdministrator]
 #      /**: anon
 #      /login: anon
