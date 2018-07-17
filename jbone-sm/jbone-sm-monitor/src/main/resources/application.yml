@@ -34,6 +34,8 @@ zipkin:
 server:
   port: 10003
 
+turbine.stream.port: 10004
+
 # 注册中心配置
 eureka:
   client:
@@ -51,11 +53,11 @@ management:
     enabled: false
 
 # 配置Eureka中的serviceId列表，表明监控哪些服务
-turbine.appConfig: jbone-sys-admin,jbone-sys-server,jbone-tag-admin,jbone-cas,jbone-cas-manager,jbone-sm-monitor
+#turbine.appConfig: jbone-sys-admin,jbone-sys-server,jbone-tag-admin,jbone-cas,jbone-cas-manager,jbone-sm-monitor
 #指定聚合哪些集群，多个使用","分割，默认为default
-turbine.aggregator.clusterConfig: default
+#turbine.aggregator.clusterConfig: default
 #clusterNameExpression指定集群名称，默认表达式appName；此时：turbine.aggregator.clusterConfig需要配置想要监控的应用名称；2. 当clusterNameExpression: default时，turbine.aggregator.clusterConfig可以不写，因为默认就是default
-turbine.clusterNameExpression: new String("default")
+#turbine.clusterNameExpression: new String("default")
 
 
 jbone:

@@ -33,8 +33,8 @@ spring.boot.admin.routes.endpoints: env,metrics,dump,jolokia,info,configprops,tr
 # clusters是指监控的集群
 # location是turbine服务的ID，Jbone中使用jbone-sm-monitor作为turbine监控服务
 spring.boot.admin.turbine:
-  clusters: default
-  location: jbone-sm-monitor
+#  clusters: default
+  location: http://jbone-sm-monitor.majunwei.com:10004/
 
 #CAS服务地址
 jbone:
