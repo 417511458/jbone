@@ -116,6 +116,9 @@ http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jb
 **环境变量**
 
 ![环境变量](doc/admin_properties.png)
+
+**Hystrix流量和熔断监控**
+![Hystrix流量和熔断监控](doc/hystrix监控.png)
 ## 调用链跟踪
 ### trace跟踪
 ![trace](doc/sm_monitor_01.png)
