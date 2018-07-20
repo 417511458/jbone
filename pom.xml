@@ -371,6 +371,13 @@
                 <artifactId>jbone-errors</artifactId>
                 <version>${jbone.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>cn.jbone</groupId>
+                <artifactId>jbone-sm-monitor-publisher</artifactId>
+                <version>${jbone.version}</version>
+            </dependency>
+
         </dependencies>
 
 

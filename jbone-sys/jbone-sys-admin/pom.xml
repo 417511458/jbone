@@ -100,6 +100,11 @@
             <artifactId>jbone-errors</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-sm-monitor-publisher</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

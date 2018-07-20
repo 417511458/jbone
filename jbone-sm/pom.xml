@@ -14,6 +14,7 @@
         <module>jbone-sm-register</module>
         <module>jbone-sm-admin</module>
         <module>jbone-sm-monitor</module>
+        <module>jbone-sm-monitor-publisher</module>
     </modules>
 
 
