@@ -86,15 +86,11 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
             message = "对不起，没有权限!";
         }
         Result result = ResultUtils.wrapFail(message);
-        PrintWriter pw = null;
-        try {
-            pw=response.getWriter();
+        try(PrintWriter pw =response.getWriter()){
             pw.write(JSON.toJSONString(result));
             pw.flush();
         } catch (Exception e) {
             e.printStackTrace();
-        }finally{
-            pw.close();
         }
         empty.clear();
         return empty;
