@@ -19,8 +19,8 @@ public class ProcessInstanceListVo {
     private String sort;                //排序规则
 
 
-    public static String ACTIVE_STATUS = "active";
-    public static String STOP_STATUS = "stop";
-    public static String SORT_ASC = "asc";  //正序
-    public static String SORT_DESC = "desc"; //倒叙
+    public static final String ACTIVE_STATUS = "active";
+    public static final String STOP_STATUS = "stop";
+    public static final String SORT_ASC = "asc";  //正序
+    public static final String SORT_DESC = "desc"; //倒叙
 }

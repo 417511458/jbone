@@ -13,6 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Map;
 
@@ -29,7 +30,11 @@ public class RepositoryConfig {
     @Bean(name = "entityManager")
     @Primary
     public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
-        return entityManagerFactoryDecorate(builder).getObject().createEntityManager();
+        EntityManagerFactory entityManagerFactory =entityManagerFactoryDecorate(builder).getObject();
+            if(entityManagerFactory == null){
+                return null;
+            }
+        return entityManagerFactory.createEntityManager();
     }
 
     @Bean(name = "entityManagerFactory")
