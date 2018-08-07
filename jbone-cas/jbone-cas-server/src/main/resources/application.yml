@@ -8,6 +8,7 @@ server:
     key-store: classpath:jbonekeystore
     key-store-password: 123456
     key-password: 123456
+    enabled: true
   tomcat:
     max-http-post-size: 2097152
     basedir: build/tomcat
@@ -38,7 +39,8 @@ cas:
     name: https://jbone-cas.majunwei.com:8443
     prefix: https://jbone-cas.majunwei.com:8443/cas
   adminPagesSecurity:
-    ip: 127.0.0.1
+    #CAS监控授权的IP,测试时127.0.0.1是必须的，第一个配置本机IP。如果是生产环境只需要配置jbone-sm-admin的IP即可
+    ip: (172\.16\.180\.163)|(127\.0\.0\.1)
     actuatorEndpointsEnabled: true
   monitor:
     endpoints:
@@ -165,12 +167,74 @@ spring:
     properties.mail.smtp.auth: true
     properties.mail.smtp.starttls.enable: true
 
-management:
-  security.enabled: false
-  context-path: /status
-  server.ssl.enabled: false
+management.security.enabled: false
+management.context-path: /status
+management.add-application-context-header: false
+management.port: 30003
+management.ssl.enabled: false
 
-security.basic.enabled: false
+
+
+# 开启endpoints start #
+endpoints.enabled: true
+endpoints.sensitive: false
+
+endpoints.restart.enabled: true
+endpoints.shutdown.enabled: false
+
+cas.monitor.endpoints.dashboard.enabled: true
+cas.monitor.endpoints.dashboard.sensitive: false
+
+cas.monitor.endpoints.discovery.enabled: true
+cas.monitor.endpoints.discovery.sensitive: false
+
+cas.monitor.endpoints.auditEvents.enabled: true
+cas.monitor.endpoints.auditEvents.sensitive: false
+
+cas.monitor.endpoints.authenticationEvents.enabled: true
+cas.monitor.endpoints.authenticationEvents.sensitive: false
+
+cas.monitor.endpoints.configurationState.enabled: true
+cas.monitor.endpoints.configurationState.sensitive: false
+
+cas.monitor.endpoints.healthCheck.enabled: true
+cas.monitor.endpoints.healthCheck.sensitive: false
+
+cas.monitor.endpoints.loggingConfig.enabled: true
+cas.monitor.endpoints.loggingConfig.sensitive: false
+
+cas.monitor.endpoints.metrics.enabled: true
+cas.monitor.endpoints.metrics.sensitive: false
+
+cas.monitor.endpoints.attributeResolution.enabled: true
+cas.monitor.endpoints.attributeResolution.sensitive: false
+
+cas.monitor.endpoints.singleSignOnReport.enabled: true
+cas.monitor.endpoints.singleSignOnReport.sensitive: false
+
+cas.monitor.endpoints.statistics.enabled: true
+cas.monitor.endpoints.statistics.sensitive: false
+
+cas.monitor.endpoints.trustedDevices.enabled: true
+cas.monitor.endpoints.trustedDevices.sensitive: false
+
+cas.monitor.endpoints.status.enabled: true
+cas.monitor.endpoints.status.sensitive: false
+
+cas.monitor.endpoints.singleSignOnStatus.enabled: true
+cas.monitor.endpoints.singleSignOnStatus.sensitive: false
+
+cas.monitor.endpoints.springWebflowReport.enabled: true
+cas.monitor.endpoints.springWebflowReport.sensitive: false
+
+cas.monitor.endpoints.registeredServicesReport.enabled: true
+cas.monitor.endpoints.registeredServicesReport.sensitive: false
+
+cas.monitor.endpoints.configurationMetadata.enabled: true
+cas.monitor.endpoints.configurationMetadata.sensitive: false
+
+# 开启endpoints end #
+
 
 logging:
   config: classpath:log4j2.xml
@@ -185,13 +249,22 @@ eureka:
       user.password: jbone
     healthcheck.enabled: true
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
     instance-id: ${spring.cloud.client.ipAddress}:${server.port}
-    statusPageUrl: ${cas.server.prefix}/status/info
-    healthCheckUrl: ${cas.server.prefix}/status/health
-    homePageUrl: ${cas.server.prefix}/
+    statusPageUrl: http://${spring.cloud.client.ipAddress}:${management.port}/status/info
+    healthCheckUrl: http://${spring.cloud.client.ipAddress}:${management.port}/status/health
+    homePageUrl: http://${spring.cloud.client.ipAddress}:${management.port}/
+#https的健康检测url
+#    secureHealthCheckUrl: http://${spring.cloud.client.ipAddress}:${management.port}/status/health
+#https端口
+#    securePort: 8443
+#启用https安全端口
+#    securePortEnabled: true
+#    nonSecurePortEnabled: false
+#boot-admin在监控时，需要从metadata-map中获取context-path和port
     metadata-map:
-      management.context-path: /status
+      management.context-path: ${management.context-path}
+      management.port: ${management.port}
 ribbon:
     ConnectTimeout: 500
     ReadTimeout: 3000
