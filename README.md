@@ -284,7 +284,34 @@ set keystoreJDKPath="C:\devSpace\Java\jdk1.8.0_131\jre\lib\security\cacerts "
 ![Spring Boot架构图](doc/diagram-boot-reactor.png)
 ## Spring Cloud架构图
 ![Spring Cloud架构图](doc/diagram-distributed-systems.png)
+## Spring Cloud学习资料
+[深入理解Spring Cloud - Spring Cloud Netflix Eureka](http://majunwei.com/view/201808130810451238.html)
+
+[深入理解Eureka-Eureka架构综述](http://www.majunwei.com/view/201808130819216747.html)
+
+[深入理解Eureka-Eureka数据结构](http://www.majunwei.com/view/201808130944142253.html)
+
+[深入理解Eureka-Eureka Register机制](http://www.majunwei.com/view/201808130936271290.html)
+
+[深入理解Eureka-Eureka Renew机制](http://www.majunwei.com/view/201808130925153632.html)
+
+[深入理解Eureka-Eureka Cancel机制](http://www.majunwei.com/view/201808130912315418.html)
+
+[深入理解Eureka-Eureka Evict机制](http://www.majunwei.com/view/201808130902525688.html)
+
+[深入理解Eureka-Eureka Server缓存机制](http://www.majunwei.com/view/201808131007529750.html)
+
+[深入理解Eureka-Eureka Server节点复制机制](http://www.majunwei.com/view/201808130854525492.html)
+
+[深入理解Eureka-Eureka Client获取注册信息机制](http://www.majunwei.com/view/201808131001085867.html)
+
+[深入理解Eureka-Eureka Server自我保护机制](http://www.majunwei.com/view/201808131015366640.html)
+
+[深入理解Eureka-Eureka Region Zone](http://www.majunwei.com/view/201808130953353185.html)
+
+[深入理解Eureka-Eureka配置列表](http://www.majunwei.com/view/201808130827002632.html)
 ## CAS认证过程
 ![CAS认证过程](doc/cas_protocol.jpg)
+
 
 

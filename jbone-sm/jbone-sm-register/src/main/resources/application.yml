@@ -19,7 +19,6 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.cloud.client.ipAddress}:${server.port}
-
 # info接口返回值
 info:
   app:

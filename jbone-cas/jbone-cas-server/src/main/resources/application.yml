@@ -167,10 +167,14 @@ spring:
     properties.mail.smtp.auth: true
     properties.mail.smtp.starttls.enable: true
 
+#取消management安全验证
 management.security.enabled: false
+#单独配置management的context-path
 management.context-path: /status
 management.add-application-context-header: false
+#单独配置监控端口
 management.port: 30003
+#禁用management的ssl
 management.ssl.enabled: false
 
 
@@ -249,11 +253,11 @@ eureka:
       user.password: jbone
     healthcheck.enabled: true
   instance:
-    prefer-ip-address: false
+    prefer-ip-address: true
     instance-id: ${spring.cloud.client.ipAddress}:${server.port}
-    statusPageUrl: http://${spring.cloud.client.ipAddress}:${management.port}/status/info
-    healthCheckUrl: http://${spring.cloud.client.ipAddress}:${management.port}/status/health
-    homePageUrl: http://${spring.cloud.client.ipAddress}:${management.port}/
+#    statusPageUrl: http://${spring.cloud.client.ipAddress}:${management.port}/status/info
+#    healthCheckUrl: http://${spring.cloud.client.ipAddress}:${management.port}/status/health
+#    homePageUrl: http://${spring.cloud.client.ipAddress}:${management.port}/
 #https的健康检测url
 #    secureHealthCheckUrl: http://${spring.cloud.client.ipAddress}:${management.port}/status/health
 #https端口
