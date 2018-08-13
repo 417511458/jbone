@@ -283,6 +283,18 @@ jbone.rpc.sysServer.feign:
   protocol: http
   name: jbone-sys-server
 
+# info接口返回值
+info:
+  app:
+    name: ${spring.application.name}
+    version: 1.0.0
+  java:
+    version: ${java.version}
+  code:
+    git: https://github.com/417511458/jbone
+    gitee: https://gitee.com/majunwei2017/jbone
+  domain: http://www.majunwei.com
+
 # 不允许静态用户
 staticAuthentication: false
 

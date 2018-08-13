@@ -97,14 +97,13 @@ jbone:
 # info接口返回值
 info:
   app:
-    java:
-      source: ${java.version}
-      target: ${java.version}
     name: ${spring.application.name}
-  git:
-    url: https://github.com/417511458/jbone
-  gitee:
-    url: https://gitee.com/majunwei2017/jbone
+    version: 1.0.0
+  java:
+    version: ${java.version}
+  code:
+    git: https://github.com/417511458/jbone
+    gitee: https://gitee.com/majunwei2017/jbone
   domain: http://www.majunwei.com
 
 # 启用超时设置
