@@ -45,17 +45,13 @@
 </head>
 
 <body>
-<div th:replace="fragments/css :: #css"></div>
-<div th:replace="fragments/js :: #js"></div>
-
-<div id="container" class="container login-box">
-    <div class="login-logo">
-        <b>Jbone</b>CAS
-    </div>
+<div id="container">
+    <div th:replace="fragments/logo"/>
     <div layout:fragment="content" id="content">
         <h1/>
         <p/>
     </div>
+    <div th:replace="fragments/footer"/>
 </div>
 <div th:insert="fragments/bottom"/>
 <div th:replace="/fragments/css :: #css"></div>

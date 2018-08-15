@@ -1,4 +1,4 @@
-<div th:if="${registeredService}" id="serviceui" class="alert alert-success">
+<div th:if="${registeredService}" id="serviceui" class="container login-container">
     <div th:if="${serviceUIMetadata}">
         <table>
             <tr>
@@ -28,18 +28,22 @@
         </table>
     </div>
 
-    <div th:unless="${serviceUIMetadata}">
-        <table>
-            <tr>
-                <td>
-                    <img th:src="${registeredService.logo}" th:if="${registeredService.logo}"/>
-                    <img th:src="@{images/webapp.png}" th:unless="${registeredService.logo}"/>
-                </td>
-                <td id="servicedesc">
-                    <h2 th:text="${registeredService.name}"></h2>
-                    <p th:text="${registeredService.description}"></p>
-                </td>
-            </tr>
-        </table>
+    <div th:unless="${serviceUIMetadata}" class="row row-centered">
+        <div class="col-md-6 col-md-offset-1">
+            <h2 th:text="${registeredService.name}"></h2>
+            <p th:text="${registeredService.description}"></p>
+        </div>
+        <!--<table>-->
+            <!--<tr>-->
+                <!--<td>-->
+                    <!--<img th:src="${registeredService.logo}" th:if="${registeredService.logo}"/>-->
+                    <!--&lt;!&ndash;<img th:src="@{images/webapp.png}" th:unless="${registeredService.logo}"/>&ndash;&gt;-->
+                <!--</td>-->
+                <!--<td id="servicedesc">-->
+                    <!--<h1 th:text="${registeredService.name}"></h1>-->
+                    <!--<p th:text="${registeredService.description}"></p>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
     </div>
 </div>
