@@ -2,7 +2,10 @@ package cn.jbone.sys.core.service;
 
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.utils.PasswordUtils;
+import cn.jbone.sys.api.dto.ThirdPartyName;
 import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
+import cn.jbone.sys.api.dto.request.GithubUserLoginRequestDTO;
+import cn.jbone.sys.api.dto.request.ThirdPartyUserLoginRequestDTO;
 import cn.jbone.sys.api.dto.response.MenuInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserSecurityQuestionsResponseDTO;
@@ -48,6 +51,9 @@ public class UserService {
 
     @Autowired
     RbacUserSecurityQuestionsRepository userSecurityQuestionsRepository;
+
+    @Autowired
+    GithubUserRepository githubUserRepository;
 
 
     /**
@@ -421,6 +427,50 @@ public class UserService {
         userEntity.setSalt(salt);
         userEntity.setPassword(PasswordUtils.getMd5PasswordWithSalt(changePasswordRequestDTO.getPassword(),salt));
         userRepository.save(userEntity);
+    }
+
+    /**
+     * 第三方登录
+     * @param thirdPartyUserLoginRequestDTO
+     */
+    public void thirdPartyLogin(ThirdPartyUserLoginRequestDTO thirdPartyUserLoginRequestDTO){
+        if(thirdPartyUserLoginRequestDTO.getThirdPartyName() == ThirdPartyName.GITHUB){
+            GithubUserLoginRequestDTO requestDTO = (GithubUserLoginRequestDTO)thirdPartyUserLoginRequestDTO;
+            GithubUserEntity githubUserEntity = githubUserRepository.findByGithubId(Long.parseLong(requestDTO.getId()));
+            if(githubUserEntity == null){
+                githubUserEntity = new GithubUserEntity();
+
+                //如果是第一次登录，默认添加用户并赋予guest角色
+                String username = ThirdPartyName.GITHUB.toString().toUpperCase() + "_" + requestDTO.getId();
+                CreateUserModel createUserModel = new CreateUserModel();
+                createUserModel.setAvatar(requestDTO.getAvatarUrl());
+                createUserModel.setEmail(requestDTO.getEmail());
+                createUserModel.setRealname(requestDTO.getName());
+                createUserModel.setUsername(username);
+                createUserModel.setPassword(username);
+                save(createUserModel);
+
+                RbacUserEntity userEntity = userRepository.findByUsername(username);
+                List<RbacRoleEntity> roleEntities = roleRepository.findByName("guest");
+                if(roleEntities != null && !roleEntities.isEmpty()){
+                    userEntity.setRoles(roleEntities);
+                }
+                githubUserEntity.setUserId(userEntity.getId());
+            }
+            githubUserEntity.setAvatarUrl(requestDTO.getAvatarUrl());
+            githubUserEntity.setBlog(requestDTO.getBlog());
+            githubUserEntity.setCompany(requestDTO.getCompany());
+            githubUserEntity.setEmail(requestDTO.getEmail());
+            githubUserEntity.setGithubId(Long.parseLong(requestDTO.getId()));
+            githubUserEntity.setHtmlUrl(requestDTO.getHtmlUrl());
+            githubUserEntity.setLogin(requestDTO.getLogin());
+            githubUserEntity.setName(requestDTO.getName());
+            githubUserEntity.setNodeId(requestDTO.getNodeId());
+
+
+            githubUserRepository.save(githubUserEntity);
+        }
+
     }
 
 }

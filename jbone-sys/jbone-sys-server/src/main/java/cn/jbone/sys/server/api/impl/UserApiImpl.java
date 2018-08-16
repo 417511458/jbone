@@ -3,6 +3,7 @@ package cn.jbone.sys.server.api.impl;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
 import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
+import cn.jbone.sys.api.dto.request.GithubUserLoginRequestDTO;
 import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserSecurityQuestionsResponseDTO;
@@ -87,6 +88,7 @@ public class UserApiImpl implements UserApi {
                 return Result.wrap404Error("securityQuestions is not found");
             }
         } catch (Exception e) {
+            logger.warn("getUserSecurityQuestions error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return new Result(responseDTOList);
@@ -98,6 +100,19 @@ public class UserApiImpl implements UserApi {
         try {
             userService.modifyPassword(changePasswordRequestDTO);
         } catch (Exception e) {
+            logger.warn("modify password error.",e);
+            return Result.wrap500Error(e.getMessage());
+        }
+        return new Result();
+    }
+
+    @Override
+    @RequestMapping(value = "/thirdPartyUserLogin", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Result<Void> thirdPartyUserLogin(@RequestBody GithubUserLoginRequestDTO githubUserLoginRequestDTO) {
+        try {
+            userService.thirdPartyLogin(githubUserLoginRequestDTO);
+        } catch (Exception e) {
+            logger.warn("third party login error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return new Result();

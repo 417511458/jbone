@@ -17,6 +17,7 @@ import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.CollectionUtils;
+import org.pac4j.cas.profile.CasProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,12 +44,23 @@ public class JboneCasRealm extends Pac4jRealm {
         Pac4jToken pac4jToken = (Pac4jToken)token;
         LinkedHashMap profiles = pac4jToken.getProfiles();
         Pac4jPrincipal principal = new Pac4jPrincipal(profiles, this.getPrincipalNameAttribute());
+
+        String  username = principal.getName();
+        //如果是第三方登录，通过三方名字_id查询
+        CasProfile casProfile =(CasProfile) profiles.get("CasClient");
+        if(casProfile != null){
+                Object clientName = casProfile.getAttribute("clientName");
+                if(clientName != null){
+                    username = clientName.toString().toUpperCase() + "_" + casProfile.getId();
+                }
+        }
+
         /**
          * 将用户对象保存为身份信息，用于系统获取用户信息
          */
-        Result<UserInfoResponseDTO> userModel = userApi.getUserDetailByNameAndServerName(principal.getName(), serverName);
+        Result<UserInfoResponseDTO> userModel = userApi.getUserDetailByNameAndServerName(username, serverName);
         if(!userModel.isSuccess() || userModel.getData() == null ){
-            throw new JboneException(String.format("user[%s] server[%s] is not found.", principal.getName(), serverName));
+            throw new JboneException(String.format("user[%s] server[%s] is not found.", username, serverName));
         }
         List<Object> principals = CollectionUtils.asList(new Object[]{userModel.getData(), principal});
         SimplePrincipalCollection principalCollection = new SimplePrincipalCollection(principals, this.getName());

@@ -433,6 +433,12 @@
 
         <dependency>
             <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-pac4j-webflow</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
             <artifactId>cas-server-support-eureka-client</artifactId>
             <version>${cas.version}</version>
         </dependency>

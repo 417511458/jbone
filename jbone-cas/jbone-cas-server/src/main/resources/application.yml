@@ -35,6 +35,16 @@ cas:
         emailAttribute: mail
         securityQuestionsEnabled: true
         autoLogin: false
+    pac4j:
+      github:
+        id: 151e91b5b0018290a074
+        secret: 3db661368363a8775d7b6bf7603710e6d90f490e
+        profileAttrs.id: id
+        profileAttrs.username: username
+        profileAttrs.company: company
+        profileAttrs.following: following
+        profileAttrs.email: email
+        client-name: github
   server:
     name: https://jbone-cas.majunwei.com:8443
     prefix: https://jbone-cas.majunwei.com:8443/cas

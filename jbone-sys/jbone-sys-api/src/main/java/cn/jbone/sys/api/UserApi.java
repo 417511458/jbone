@@ -2,6 +2,8 @@ package cn.jbone.sys.api;
 
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
+import cn.jbone.sys.api.dto.request.GithubUserLoginRequestDTO;
+import cn.jbone.sys.api.dto.request.ThirdPartyUserLoginRequestDTO;
 import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserSecurityQuestionsResponseDTO;
@@ -34,4 +36,8 @@ public interface UserApi {
     @HystrixCommand(commandKey = "changePassword")
     @RequestMapping(value = "/changePassword")
     Result<Void> changePassword(@RequestBody ChangePasswordRequestDTO changePasswordRequestDTO);
+
+    @HystrixCommand(commandKey = "thirdPartyUserLogin")
+    @RequestMapping(value = "/thirdPartyUserLogin")
+    Result<Void> thirdPartyUserLogin(@RequestBody GithubUserLoginRequestDTO githubUserLoginRequestDTO);
 }

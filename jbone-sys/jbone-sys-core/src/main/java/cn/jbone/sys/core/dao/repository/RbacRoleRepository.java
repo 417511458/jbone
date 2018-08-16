@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface RbacRoleRepository extends JpaRepository<RbacRoleEntity,Integer>,JpaSpecificationExecutor<RbacRoleEntity> {
     List<RbacRoleEntity> findByIdIn(int[] ids);
+
+    List<RbacRoleEntity> findByName(String name);
 }
