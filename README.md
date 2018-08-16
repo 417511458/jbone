@@ -105,7 +105,7 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 ### 实现方式
 集成Spring Boot Admin 、Spring Cloud Hystrix，完成服务和JVM的监控
 ### 进入方式
-http://jbone-sm-admin.majunwei.com:100002/admin,调入CAS认证中心，输入jbone／jbone，即可进入
+浏览器输入：http://jbone-sm-admin.majunwei.com:100002/admin,跳转至CAS认证中心，输入jbone／jbone，即可进入
 ### 功能简介
 篇幅有限，简单介绍下：
 
