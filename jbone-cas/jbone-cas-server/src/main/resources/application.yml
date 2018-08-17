@@ -139,6 +139,11 @@ cas:
   slo:
     disabled: false
     asynchronous: true
+  #验证码,申请地址：https://www.google.com/recaptcha/admin (默认关闭，登录太麻烦)
+#  googleRecaptcha:
+#    verifyUrl: https://www.google.com/recaptcha/api/siteverify
+#    siteKey: 6666LcsZ2oUAAAAAMCxIHtsEcWnyUp4NVHEaatCrwUK
+#    secret: 6666LcsZ2oUAAAAAFjw1U8OGVo8R-F3az_FM7uc-m88
 spring:
   http:
     encoding:
