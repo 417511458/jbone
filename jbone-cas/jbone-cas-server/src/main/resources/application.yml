@@ -28,10 +28,10 @@ cas:
       enabled: true
       #policyPattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d){8,10}
       reset:
-        text: Reset your password with this link %s
-        subject: Password Reset Request
+        text: 请使用以下链接重置您的密码： %s
+        subject: Jbone重置密码邮件
         from: jbone666@163.com
-        expirationMinutes: 1
+        expirationMinutes: 10
         emailAttribute: mail
         securityQuestionsEnabled: true
         autoLogin: false

@@ -96,7 +96,7 @@ function jqueryReady() {
             $('#password-strength-text').show();
             responseText = '<div class=\'alert alert-danger\' role=\'alert\'>' +
                 '<span class=\'glyphicon glyphicon-exclamation-sign\' aria-hidden=\'true\'></span>' +
-                '<strong>Password does not match the password policy requirement.</strong></div>';
+                '<strong>不符合密码安全规范（必须大于8位且同时包含大小写字母、数字、特殊符号。）.</strong></div>';
             $('#password-strength-text').html(responseText);
             return;
         }
