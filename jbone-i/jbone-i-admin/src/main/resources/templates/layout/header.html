@@ -6,56 +6,41 @@
 </head>
 <body>
 <div th:fragment="header">
-    <header class="main-header">
-        <!-- Logo -->
-        <a href="#" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>J</b>bone</span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Jbone</b>系统管理</span>
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
-            </a>
+    <div class="logo">
+        <a href="http://www.jbone.cn/" class="logo-img" title="Jbone"></a>
+        <h1 class="logo-title">个人中心</h1>
+    </div>
 
-            <div class="navbar-custom-menu">
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    Jbone
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown user user-menu">
-                        <a href="#" id="user-name-label" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <img th:src="${user.avatar}" width="160" height="160" class="user-image" alt="User Image" />
-                            <span class="hidden-xs" ><shiro:principal property="realname" /></span>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="user-name-label">
-                            <!-- User image -->
-                            <li class="user-header">
-                                <img th:src="${user.avatar}" width="160" height="160" class="img-circle" alt="User Image" />
-                                <p>
-                                    <shiro:principal property="realname" />
-                                    <small><shiro:principal property="email" /></small>
-                                </p>
-                            </li>
-                            <!-- Menu Footer-->
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">修改密码</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a th:href="@{/logout}" class="btn btn-default btn-flat">退出登录</a>
-                                </div>
-                            </li>
+                    <li><a href="#">QQ交流群: 547104190</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text" th:text="'欢迎你：' + ${user.username}">登录名</p></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我要进入&gt;&gt; <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://jbone-sys-admin.majunwei.com:20002/">系统管理</a></li>
+                            <li><a href="http://jbone-tag-admin.majunwei.com:40002/">标签管理</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="http://jbone-sm-admin.majunwei.com:10002/">服务管理系统</a></li>
+                            <li><a href="http://jbone-sm-monitor.majunwei.com:10003/">调用链追踪系统</a></li>
+                            <li><a href="http://jbone-sm-register.majunwei.com:10001/">服务注册中心</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="http://jbone-cas-manager.majunwei.com:30002/">服务授权系统</a></li>
                         </ul>
-                    </li>
-                    <!-- Control Sidebar Toggle Button -->
-                    <li>
-                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                     </li>
                 </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 </div>
 </body>
 </html>

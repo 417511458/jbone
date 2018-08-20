@@ -1,6 +1,6 @@
 spring:
   application:
-    name: jbone-sys-admin
+    name: jbone-i-admin
   redis:
     host: 127.0.0.1
     port: 6379
@@ -14,14 +14,11 @@ spring:
   thymeleaf:
     cache: false
     enabled: true
-  freemarker:
-    enabled: false
-  jpa:
-    show-sql: true
+
 
 #服务
 server:
-  port: 20002
+  port: 7001
 
 #注册中心
 eureka:
@@ -44,14 +41,17 @@ jbone:
     #CAS服务地址
     casServerUrl: https://jbone-cas.majunwei.com:8443/cas
     #当前系统地址
-    currentServerUrlPrefix: http://jbone-sys-admin.majunwei.com:20002
+    currentServerUrlPrefix: http://jbone-i-admin.majunwei.com:7001
     #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
     casFilterUrlPattern: /cas
     #登录成功后的跳转路径，默认"/"
     successUrl: /
     #未授权的跳转路径，默认"/403"
     unauthorizedUrl: /403
-    #客户端Session失效时间，默认30分钟
+    #客户端Session失效 freemarker:
+                     #    enabled: false
+                     #  jpa:
+                     #    show-sql: true时间，默认30分钟
     clientSessionTimeout: 180000
     #权限过滤规则
     filterChainDefinition:
@@ -80,7 +80,7 @@ jbone:
       /**: authc
   #当前系统名，在系统管理里面对应的名字
   sys:
-    serverName: jbone-sys-admin
+    serverName: jbone-i-admin
     jdbc:
       url: jdbc:mysql://121.42.174.77:3306/jbone_sys?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
       username: jbone_sys

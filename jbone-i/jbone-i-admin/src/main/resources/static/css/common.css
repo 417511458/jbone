@@ -109,3 +109,41 @@ iframe#main {
 .dispersion{
     margin-right: 5px;
 }
+
+
+.logo {
+    margin-left: 35px;
+    font-size: 0;
+    height: 115px;
+    line-height: 115px;
+}
+
+.logo-img{
+    width:127px;
+    height:66px;
+    display:inline-block;
+    vertical-align:middle;
+    margin-right:26px;
+    background: url(../images/logo.png) no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
+}
+
+.logo-title{
+    vertical-align:middle;
+    display:inline-block;
+    padding-left:25px;
+    line-height:64px;
+    border-left:1px solid #888;
+    font-size:26px;
+    font-weight:400;
+    color:#888
+}
+
+.main-container .profile .media-object{
+    width: 130px;
+    height: 130px;
+}
+.main-container .profile{
+
+}
