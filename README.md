@@ -10,9 +10,9 @@ jbone为企业提供解决方案的同时，更重视对前沿技术的学习和
 QQ群：547104190
 # 系统设计
 ## jbone功能架构图
-![Jbone功能架构图](doc/功能架构图.png)
+![Jbone功能架构图](doc/images/功能架构图.png)
 ## jbone物理结构图
-![Jbone物理架构图](doc/物理架构图.png)
+![Jbone物理架构图](doc/images/物理架构图.png)
 ## 项目模块划分
 * jbone-cas : 用户单点登录模块
     * jbone-cas-client：客户端jar包，用于集成到需要CAS授权的系统
@@ -55,9 +55,9 @@ QQ群：547104190
 * jbone-im : 即时通信模块
 * jbone-ui : 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。
 ## 电商平台
-![电商平台](doc/电商平台/电商功能架构图.png)
+![电商平台](doc/images/电商功能架构图.png)
 ### 部分数据结构
-![电商平台数据结构](doc/电商平台/数据库关系图.png)
+![电商平台数据结构](doc/images/数据库关系图.png)
 ## 非功能设计
 ### 可用性
 HA >=99.99%（无任何单点问题，对单点故障零容忍）
@@ -100,7 +100,7 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 考虑到不同系统可能有显示不同风格的登录页面，后端支持配置系统登录皮肤（登录皮肤需要自己开发），也可使用默认视图。
 
 默认视图加载系统的名字和描述信息，以下为登录服务管理系统的视图（登录不同系统会切换视图的展现）：
-![CAS登录](doc/loginview.png)
+![CAS登录](doc/images/loginview.png)
 ## Jbone SM Admin(服务管理中心)
 ### 实现方式
 集成Spring Boot Admin 、Spring Cloud Hystrix，完成服务和JVM的监控
@@ -111,34 +111,34 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 
 **系统健康概况及内存和JVM概况**
 
-![系统内存分析](doc/admin_index.jpg)
+![系统内存分析](doc/images/admin_index.jpg)
 
 **环境变量**
 
-![环境变量](doc/admin_properties.png)
+![环境变量](doc/images/admin_properties.png)
 
 **Hystrix流量和熔断监控**
-![Hystrix流量和熔断监控](doc/hystrix监控.png)
+![Hystrix流量和熔断监控](doc/images/hystrix监控.png)
 ## 调用链跟踪
 ### trace跟踪
-![trace](doc/sm_monitor_01.png)
+![trace](doc/images/sm_monitor_01.png)
 ### 调用链
-![调用链](doc/sm_monitor_02.png)
+![调用链](doc/images/sm_monitor_02.png)
 ## CAS系统管理
-![CAS系统管理](doc/cas-manager.png)
+![CAS系统管理](doc/images/cas-manager.png)
 ## Jbone系统管理
 ### 系统管理
-![Jbone系统管理](doc/systemManager.png)
+![Jbone系统管理](doc/images/systemManager.png)
 ### 用户管理
-![用户管理](doc/userManager.png)
+![用户管理](doc/images/userManager.png)
 ### 角色管理
-![角色管理](doc/roleManager.png)
+![角色管理](doc/images/roleManager.png)
 ### 菜单管理
-![菜单管理](doc/menuManager.png)
+![菜单管理](doc/images/menuManager.png)
 ### 权限管理
-![权限管理](doc/permissionManager.png)
+![权限管理](doc/images/permissionManager.png)
 ## jbone功能和进度表
-![进度](doc/jboneProcess.png)
+![进度](doc/images/jboneProcess.png)
 # jbone部署说明
 ## 下载代码
 将代码clone下来并导入idea或eclipse；
@@ -281,9 +281,9 @@ set keystoreJDKPath="C:\devSpace\Java\jdk1.8.0_131\jre\lib\security\cacerts "
 
 # 关键开源技术介绍
 ## Spring Boot架构图
-![Spring Boot架构图](doc/diagram-boot-reactor.png)
+![Spring Boot架构图](doc/images/diagram-boot-reactor.png)
 ## Spring Cloud架构图
-![Spring Cloud架构图](doc/diagram-distributed-systems.png)
+![Spring Cloud架构图](doc/images/diagram-distributed-systems.png)
 ## Spring Cloud学习资料
 [深入理解Spring Cloud - Spring Cloud Netflix Eureka](http://majunwei.com/view/201808130810451238.html)
 
@@ -311,7 +311,7 @@ set keystoreJDKPath="C:\devSpace\Java\jdk1.8.0_131\jre\lib\security\cacerts "
 
 [深入理解Eureka-Eureka配置列表](http://www.majunwei.com/view/201808130827002632.html)
 ## CAS认证过程
-![CAS认证过程](doc/cas_protocol.jpg)
+![CAS认证过程](doc/images/cas_protocol.jpg)
 
 
 
