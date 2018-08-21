@@ -20,6 +20,7 @@
         <module>jbone-tag</module>
         <module>jbone-i</module>
         <module>jbone-errors</module>
+        <module>jbone-b2b2c</module>
     </modules>
     <packaging>pom</packaging>
 

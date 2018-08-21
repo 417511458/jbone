@@ -20,6 +20,7 @@ public class RbacUserEntity implements Serializable {
     private String avatar;
     private String phone;
     private String email;
+    private String nickName;
     private int sex;
     private int locked;
     private Timestamp addTime;
@@ -30,6 +31,15 @@ public class RbacUserEntity implements Serializable {
     private List<RbacRoleEntity> roles;
     private List<RbacPermissionEntity> permissions;
     private List<RbacMenuEntity> menus;
+
+    @Column(name = "nick_name",length = 200,columnDefinition = "COMMENT '昵称'")
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     @Id
     @Column(name = "id")
