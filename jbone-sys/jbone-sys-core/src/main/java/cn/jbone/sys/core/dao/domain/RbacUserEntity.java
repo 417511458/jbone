@@ -32,7 +32,7 @@ public class RbacUserEntity implements Serializable {
     private List<RbacPermissionEntity> permissions;
     private List<RbacMenuEntity> menus;
 
-    @Column(name = "nick_name",length = 200,columnDefinition = "COMMENT '昵称'")
+    @Column(name = "nick_name",length = 200)
     public String getNickName() {
         return nickName;
     }

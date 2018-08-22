@@ -81,11 +81,6 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>cn.jbone</groupId>
-            <artifactId>jbone-eb-consumer-core</artifactId>
-            <version>1.0.0</version>
-        </dependency>
 
 
         <dependency>

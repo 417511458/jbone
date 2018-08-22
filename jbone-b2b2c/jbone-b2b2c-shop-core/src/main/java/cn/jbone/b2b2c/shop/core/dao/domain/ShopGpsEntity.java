@@ -7,41 +7,72 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+/**
+ * 店铺定位信息
+ */
 @Data
-@Entity
-@Table(name = "shop_gps")
+@Entity(name = "shop_gps")
+@org.hibernate.annotations.Table(appliesTo = "shop_gps",comment = "店铺定位信息表")
 public class ShopGpsEntity {
+    /**
+     * COMMENT '主键ID'
+     */
     @Id
-    @Column(name = "id",unique = true,columnDefinition = "COMMENT '主键ID'")
+    @Column(name = "id",unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "shop_id",nullable = false,columnDefinition = "COMMENT '店铺ID'")
-    private long shopId;
-
-    @Column(name = "guid",length = 100,columnDefinition = "COMMENT '设备ID'")
+    /**
+     * COMMENT '设备ID'
+     */
+    @Column(name = "guid",length = 100)
     private String guid;
 
-    @Column(name = "lon",columnDefinition = "COMMENT '经度'")
+    /**
+     * COMMENT '经度'
+     */
+    @Column(name = "lon")
     private double lon;
 
-    @Column(name = "lat",columnDefinition = "COMMENT '纬度'")
+    /**
+     * COMMENT '纬度'
+     */
+    @Column(name = "lat")
     private double lat;
 
-    @Column(name = "operator", length = 100, columnDefinition = "COMMENT '操作人'")
+    /**
+     * COMMENT '操作人'
+     */
+    @Column(name = "operator", length = 100)
     private String operator;
 
+    /**
+     * COMMENT '添加时间'
+     */
     @CreationTimestamp
-    @Column(name = "add_time",columnDefinition = "COMMENT '添加时间'")
+    @Column(name = "add_time")
     private Timestamp addTime;
 
+    /**
+     * COMMENT '更新时间'
+     */
     @UpdateTimestamp
-    @Column(name = "update_time",columnDefinition = "COMMENT '更新时间'")
+    @Column(name = "update_time")
     private Timestamp updateTime;
 
+    /**
+     * COMMENT '版本号，乐观锁'
+     */
     @Version
-    @Column(name = "version",columnDefinition = "COMMENT '版本号，乐观锁'")
+    @Column(name = "version")
     private int version;
+
+    /**
+     * COMMENT '店铺ID'
+     */
+    @OneToOne
+    @JoinColumn(name = "shop_id",referencedColumnName = "id",nullable = false)
+    private ShopInfoEntity shopInfo;
 
 
 }

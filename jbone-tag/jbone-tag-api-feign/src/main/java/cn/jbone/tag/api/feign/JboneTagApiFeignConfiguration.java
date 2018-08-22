@@ -32,7 +32,7 @@ public class JboneTagApiFeignConfiguration {
                 .encoder(encoder)
                 .decoder(decoder)
                 .contract(new SpringMvcContract())
-                .target(TagApi.class, jboneConfiguration.getRpc().getSysServer().getFeign() + "://" + jboneConfiguration.getRpc().getSysServer().getFeign().getName().toUpperCase());
+                .target(TagApi.class, jboneConfiguration.getRpc().getTagServer().getFeign().getProtocol() + "://" + jboneConfiguration.getRpc().getTagServer().getFeign().getName().toUpperCase());
         return tagApi;
     }
 

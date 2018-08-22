@@ -20,11 +20,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring-boot-starter</artifactId>
-        </dependency>
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-tag-api</artifactId>

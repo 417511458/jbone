@@ -1,7 +1,10 @@
 package cn.jbone.configuration.props.rpcs;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public class SysServerProperties implements Serializable {
 
     /**
@@ -9,18 +12,4 @@ public class SysServerProperties implements Serializable {
      */
     private SysServerFeignProperties feign = new SysServerFeignProperties();
 
-    public SysServerFeignProperties getFeign() {
-        return feign;
-    }
-
-    public void setFeign(SysServerFeignProperties feign) {
-        this.feign = feign;
-    }
-
-    @Override
-    public String toString() {
-        return "SysServerProperties{" +
-                "feign=" + feign +
-                '}';
-    }
 }

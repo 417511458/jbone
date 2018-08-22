@@ -42,7 +42,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -50,7 +49,13 @@
         </dependency>
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-eb-shop-api</artifactId>
+            <artifactId>jbone-b2b2c-shop-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-tag-api-feign</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

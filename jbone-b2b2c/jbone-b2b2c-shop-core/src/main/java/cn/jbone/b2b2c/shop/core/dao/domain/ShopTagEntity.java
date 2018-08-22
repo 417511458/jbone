@@ -7,9 +7,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+/**
+ * 店铺标签
+ */
 @Data
-@Entity
-@Table(name = "shop_tag")
+@Entity(name = "shop_tag")
+@org.hibernate.annotations.Table(appliesTo = "shop_tag",comment = "店铺标签关系表")
 public class ShopTagEntity {
 
     @Id
@@ -17,26 +20,45 @@ public class ShopTagEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "tag_id",nullable = false,columnDefinition = "COMMENT '标签ID,外键依赖标签中心的标签ID'")
+    /**
+     * 标签ID,外键依赖标签中心的标签ID
+     */
+    @Column(name = "tag_id",nullable = false)
     private int tagId;
 
-    @Column(name = "shop_id",nullable = false,columnDefinition = "COMMENT '店铺ID'")
-    private long shopId;
-
-    @Column(name = "operator", length = 100, columnDefinition = "COMMENT '操作人'")
+    /**
+     * COMMENT '操作人'
+     */
+    @Column(name = "operator", length = 100)
     private String operator;
 
+    /**
+     * COMMENT '添加时间'
+     */
     @CreationTimestamp
-    @Column(name = "add_time",columnDefinition = "COMMENT '添加时间'")
+    @Column(name = "add_time")
     private Timestamp addTime;
 
+    /**
+     * COMMENT '更新时间'
+     */
     @UpdateTimestamp
-    @Column(name = "update_time",columnDefinition = "COMMENT '更新时间'")
+    @Column(name = "update_time")
     private Timestamp updateTime;
 
+    /**
+     * COMMENT '版本号，乐观锁'
+     */
     @Version
-    @Column(name = "version",columnDefinition = "COMMENT '版本号，乐观锁'")
+    @Column(name = "version")
     private int version;
+
+    /**
+     * 店铺ID
+     */
+    @ManyToOne
+    @JoinColumn(name = "shop_id",nullable = false)
+    private ShopInfoEntity shopInfo;
 
 
 

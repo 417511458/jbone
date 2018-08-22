@@ -1,4 +1,9 @@
 package cn.jbone.configuration.props.rpcs;
 
-public class EbPortalServerFeignProperties extends AbstactFeignProperties {
+import lombok.Data;
+
+@Data
+public class EbPortalServerFeignProperties {
+    private String protocol = "http";
+    private String name = "eb-portal-server";  //系统服务名字
 }

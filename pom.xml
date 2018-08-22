@@ -15,7 +15,6 @@
         <module>jbone-pay</module>
         <module>jbone-bpm</module>
         <module>jbone-cms</module>
-        <module>jbone-im</module>
         <module>jbone-ui</module>
         <module>jbone-tag</module>
         <module>jbone-i</module>
