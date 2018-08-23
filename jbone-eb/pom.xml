@@ -15,7 +15,6 @@
     <modules>
         <module>jbone-eb-manager-admin</module>
         <module>jbone-eb-manager-core</module>
-        <module>jbone-eb-item-core</module>
         <module>jbone-eb-category-server</module>
         <module>jbone-eb-portal-core</module>
         <module>jbone-eb-portal-server</module>
