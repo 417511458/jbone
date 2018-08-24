@@ -1,4 +1,4 @@
-package cn.jbone.b2b2c.api.starter;
+package cn.jbone.b2b2c.shop.api.starter;
 
 import cn.jbone.b2b2c.shop.api.ShopReadApi;
 import cn.jbone.b2b2c.shop.api.dto.response.ShopDetailsRespDTO;

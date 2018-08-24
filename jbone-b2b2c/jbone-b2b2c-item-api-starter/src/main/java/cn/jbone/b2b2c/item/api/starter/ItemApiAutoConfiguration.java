@@ -1,6 +1,7 @@
-package cn.jbone.b2b2c.api.starter;
+package cn.jbone.b2b2c.item.api.starter;
 
-import cn.jbone.b2b2c.shop.api.ShopReadApi;
+import cn.jbone.b2b2c.item.api.ItemCategoryReadApi;
+import cn.jbone.b2b2c.item.api.ItemReadApi;
 import cn.jbone.configuration.JboneConfiguration;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
@@ -23,22 +24,36 @@ import java.lang.reflect.Method;
 
 @Configuration
 @Import(FeignClientsConfiguration.class)
-public class ShopApiAutoConfiguration {
+public class ItemApiAutoConfiguration {
     @Autowired
     JboneConfiguration jboneConfiguration;
 
     @Bean
-    public ShopReadApi getShopReadApi(Decoder decoder, Encoder encoder, Client client){
-        ShopReadApi shopReadApi = HystrixFeign.builder().client(client).setterFactory(getCommandSetter())
+    public ItemReadApi getItemReadApi(Decoder decoder, Encoder encoder, Client client){
+        ItemReadApi itemReadApi = HystrixFeign.builder().client(client).setterFactory(getCommandSetter())
                 .encoder(encoder)
                 .decoder(decoder).contract(new SpringMvcContract())
-                .target(ShopReadApi.class, jboneConfiguration.getRpc().getShopServer().getFeign().getProtocol() + "://" + jboneConfiguration.getRpc().getShopServer().getFeign().getName().toUpperCase(),getShopReadApiFallbackFactory());
-        return shopReadApi;
+                .target(ItemReadApi.class, jboneConfiguration.getRpc().getItemServer().getFeign().getProtocol() + "://" + jboneConfiguration.getRpc().getItemServer().getFeign().getName().toUpperCase(),getItemReadApiFallbackFactory());
+        return itemReadApi;
     }
 
     @Bean
-    public ShopReadApiFallbackFactory getShopReadApiFallbackFactory(){
-        return new ShopReadApiFallbackFactory();
+    public ItemCategoryReadApi getItemCategoryReadApi(Decoder decoder, Encoder encoder, Client client){
+        ItemCategoryReadApi itemCategoryReadApi = HystrixFeign.builder().client(client).setterFactory(getCommandSetter())
+                .encoder(encoder)
+                .decoder(decoder).contract(new SpringMvcContract())
+                .target(ItemCategoryReadApi.class, jboneConfiguration.getRpc().getItemServer().getFeign().getProtocol() + "://" + jboneConfiguration.getRpc().getItemServer().getFeign().getName().toUpperCase(),getItemCategoryReadApiFallbackFactory());
+        return itemCategoryReadApi;
+    }
+
+    @Bean
+    public ItemReadApiFallbackFactory getItemReadApiFallbackFactory(){
+        return new ItemReadApiFallbackFactory();
+    }
+
+    @Bean
+    public ItemCategoryReadApiFallbackFactory getItemCategoryReadApiFallbackFactory(){
+        return new ItemCategoryReadApiFallbackFactory();
     }
 
     /**
@@ -48,7 +63,7 @@ public class ShopApiAutoConfiguration {
     @Bean
     public SetterFactory getCommandSetter(){
         String sysname = jboneConfiguration.getSys().getServerName();
-        String groupKey = sysname + "." + ShopReadApi.class.getSimpleName();//组名（系统名.类名）用户分组统计Hystrix线程池
+        String groupKey = sysname + "." + ItemReadApi.class.getSimpleName();//组名（系统名.类名）用户分组统计Hystrix线程池
         SetterFactory setterFactory = new SetterFactory() {
             @Override
             public HystrixCommand.Setter create(Target<?> target, Method method) {
@@ -57,10 +72,10 @@ public class ShopApiAutoConfiguration {
                 if(anno != null){
                     String commandKey = null;//命令（类名.方法名)，hystrix dashboard会自动拼接成：系统名.类名.方法名
                     if(StringUtils.isNotBlank(anno.commandKey())){
-                        commandKey = ShopReadApi.class.getSimpleName() + "." + anno.commandKey();
+                        commandKey = ItemReadApi.class.getSimpleName() + "." + anno.commandKey();
 
                     }else{
-                        commandKey = ShopReadApi.class.getSimpleName() + "." + method.getName();
+                        commandKey = ItemReadApi.class.getSimpleName() + "." + method.getName();
                     }
                     commandSetter.andCommandKey(HystrixCommandKey.Factory.asKey(commandKey));
 

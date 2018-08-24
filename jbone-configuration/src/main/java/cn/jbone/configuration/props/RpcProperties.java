@@ -1,9 +1,6 @@
 package cn.jbone.configuration.props;
 
-import cn.jbone.configuration.props.rpcs.EbPortalServerProperties;
-import cn.jbone.configuration.props.rpcs.ShopServerProperties;
-import cn.jbone.configuration.props.rpcs.SysServerProperties;
-import cn.jbone.configuration.props.rpcs.TagServerProperties;
+import cn.jbone.configuration.props.rpcs.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,5 +17,7 @@ public class RpcProperties implements Serializable {
     private EbPortalServerProperties ebPortalServer = new EbPortalServerProperties();
     private ShopServerProperties shopServer = new ShopServerProperties();
     private TagServerProperties tagServer = new TagServerProperties();
+    private ItemServerProperties itemServer = new ItemServerProperties();
+    private DecorationServerProperties decorationServer = new DecorationServerProperties();
 
 }

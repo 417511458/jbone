@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.jbone.b2b2c.api.starter.ShopApiAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.jbone.b2b2c.shop.api.starter.ShopApiAutoConfiguration
