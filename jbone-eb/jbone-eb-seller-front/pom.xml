@@ -83,13 +83,6 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-eb-seller-core</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>cn.jbone</groupId>
             <artifactId>jbone-ui</artifactId>
         </dependency>
     </dependencies>
