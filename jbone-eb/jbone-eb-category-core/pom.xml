@@ -47,10 +47,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
-        <dependency>
-            <groupId>cn.jbone</groupId>
-            <artifactId>jbone-eb-shop-api</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+
     </dependencies>
 </project>
