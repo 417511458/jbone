@@ -1,7 +1,7 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : jbone_root
+ Source Server         : jbone_sys
  Source Server Type    : MySQL
  Source Server Version : 50711
  Source Host           : 121.42.174.77
@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 08/16/2018 19:44:18 PM
+ Date: 09/10/2018 10:50:58 AM
 */
 
 SET NAMES utf8;
@@ -207,7 +207,7 @@ CREATE TABLE `rbac_system` (
 --  Records of `rbac_system`
 -- ----------------------------
 BEGIN;
-INSERT INTO `rbac_system` VALUES ('2', 'http://jbone-sm-admin.majunwei:10002/jbone-sm-admin', '1', 'jbone-sm-admin', '服务管理系统', '服务管理系统', '2', null, null, '0', '1', 'http://jbone-sm-admin.majunwei.com:10002/cas111', 'http://localhost:20001/Jbone-sys-server/service/getTheme', '10002', 'Jbone服务管理系统，是基于Spring Cloud、Spring Boot Admin做的服务管理，包含服务健康检查、内存分析、JVM监控、垃圾回收、环境变量等监控和管理等功能', '1', 'Jbone服务管理系统', 'jbonesmadmin1'), ('3', 'http://jbone-sys-admin.majunwei:20002', '1', 'jbone-sys-admin', '系统管理', '系统管理', '0', null, '2018-01-28 16:32:46', '1', '1', null, null, '20002', null, '1', null, null), ('17', 'test', '-1', '测试系统', '测试系统', 'ffffeeee', '0', '2018-01-28 16:14:08', '2018-01-28 16:30:59', '2', '0', null, null, '0', null, '0', null, null), ('18', 'http://jbone-wx-admin.majunwei.com:40003', '1', 'jbone-wx-admin	', '微信公众号管理平台', '统一管理微信公众号', '0', '2018-01-29 18:56:57', '2018-08-09 17:50:36', '2', '0', null, null, '0', null, '0', null, null), ('19', 'http://jbone-sm-monitor.majunwei.com:10003/', '1', 'jbone-sm-monitor', '服务监控系统', '服务监控系统', '0', '2018-02-24 18:14:55', '2018-03-24 21:37:02', '1', '0', null, null, '0', null, '0', null, null), ('20', 'http://jbone-tag-admin.majunwei.com:40002/', '1', 'jbone-tag-admin', '标签管理系统', '标签管理系统', '0', '2018-03-24 21:36:36', '2018-03-24 21:36:36', '0', '0', null, null, '0', null, '0', null, null), ('21', 'http://jbone-eb-manager.majunwei.com:50001/', '1', 'jbone-eb-manager', '电商平台后台管理', '电商平台后台管理', '0', '2018-04-03 19:54:42', '2018-04-03 19:54:42', '0', '0', null, null, '0', null, '0', null, null), ('22', 'http://jbone-bpm-admin.majunwei.com:60002/', '1', 'jbone-bpm-admin', 'BPM后台管理', 'BPM后台管理', '0', '2018-04-21 16:13:17', '2018-04-21 16:13:17', '0', '0', null, null, '0', null, '0', null, null), ('23', 'http://eop-sys-admin.majunwei.com:50002', '1', 'eop-sys-admin', 'EOP系统', 'EOP系统', '0', '2018-05-31 18:26:01', '2018-05-31 19:13:30', '2', '0', null, null, '0', null, '0', null, null);
+INSERT INTO `rbac_system` VALUES ('2', 'http://jbone-sm-admin.majunwei:10002/jbone-sm-admin', '1', 'jbone-sm-admin', '服务管理系统', '服务管理系统', '2', null, null, '0', '1', 'http://jbone-sm-admin.majunwei.com:10002/cas111', 'http://localhost:20001/Jbone-sys-server/service/getTheme', '10002', 'Jbone服务管理系统，是基于Spring Cloud、Spring Boot Admin做的服务管理，包含服务健康检查、内存分析、JVM监控、垃圾回收、环境变量等监控和管理等功能', '1', 'Jbone服务管理系统', 'jbonesmadmin1'), ('3', 'http://jbone-sys-admin.majunwei:20002', '1', 'jbone-sys-admin', '系统管理', '系统管理', '0', null, '2018-01-28 16:32:46', '1', '1', null, null, '20002', null, '1', null, null), ('17', 'test', '-1', '测试系统', '测试系统', 'ffffeeee', '0', '2018-01-28 16:14:08', '2018-09-08 14:33:37', '4', '0', null, null, '0', null, '0', null, null), ('18', 'http://jbone-wx-admin.majunwei.com:40003', '1', 'jbone-wx-admin	', '微信公众号管理平台', '统一管理微信公众号', '0', '2018-01-29 18:56:57', '2018-08-09 17:50:36', '2', '0', null, null, '0', null, '0', null, null), ('19', 'http://jbone-sm-monitor.majunwei.com:10003/', '1', 'jbone-sm-monitor', '服务监控系统', '服务监控系统', '0', '2018-02-24 18:14:55', '2018-03-24 21:37:02', '1', '0', null, null, '0', null, '0', null, null), ('20', 'http://jbone-tag-admin.majunwei.com:40002/', '1', 'jbone-tag-admin', '标签管理系统', '标签管理系统', '0', '2018-03-24 21:36:36', '2018-03-24 21:36:36', '0', '0', null, null, '0', null, '0', null, null), ('21', 'http://jbone-eb-manager.majunwei.com:50001/', '1', 'jbone-eb-manager', '电商平台后台管理', '电商平台后台管理', '0', '2018-04-03 19:54:42', '2018-04-03 19:54:42', '0', '0', null, null, '0', null, '0', null, null), ('22', 'http://jbone-bpm-admin.majunwei.com:60002/', '1', 'jbone-bpm-admin', 'BPM后台管理', 'BPM后台管理', '0', '2018-04-21 16:13:17', '2018-04-21 16:13:17', '0', '0', null, null, '0', null, '0', null, null), ('23', 'http://eop-sys-admin.majunwei.com:50002', '1', 'eop-sys-admin', 'EOP系统', 'EOP系统', '0', '2018-05-31 18:26:01', '2018-05-31 19:13:30', '2', '0', null, null, '0', null, '0', null, null);
 COMMIT;
 
 -- ----------------------------
@@ -219,6 +219,7 @@ CREATE TABLE `rbac_user` (
   `username` varchar(20) NOT NULL COMMENT '帐号',
   `password` varchar(100) NOT NULL COMMENT '密码MD5(密码+盐)',
   `realname` varchar(20) DEFAULT NULL COMMENT '姓名',
+  `nick_name` varchar(200) DEFAULT NULL COMMENT '昵称',
   `avatar` varchar(150) DEFAULT NULL COMMENT '头像',
   `phone` varchar(20) DEFAULT NULL COMMENT '电话',
   `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
@@ -236,7 +237,7 @@ CREATE TABLE `rbac_user` (
 --  Records of `rbac_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `rbac_user` VALUES ('14', 'test123', 'test', '1231111', '123', '123fff', '123', '1', '1', '2018-02-01 09:31:47', '2018-03-21 09:20:09', '2', null), ('24', 'jbone', '49a12ae5ed3a17e04e9837bae71da54e', '渔樵', 'http://majunwei.com/logo.png', '1', '417511458@qq.com', '1', '1', '2018-02-01 09:31:47', '2018-08-10 17:05:08', '29', '1521896490652'), ('25', 'test1', 'eedcca02294e4519f834984df8ec5939', 'test1', 'jbone666@163.com', '111', '417511458@qq.com', '1', '0', '2018-02-27 21:47:53', '2018-02-27 21:59:54', '3', null), ('28', 'salt', '97d993a9e0c5ba68c86570350c6cd7bf', '测试Salt', '', '', '', '1', '0', '2018-03-22 22:15:16', '2018-03-24 17:52:21', '2', '1521885141059'), ('30', 'test77', '5ebb7bad80b2250d14df6759e91487ac', '测试修改密码', '', '', '', '1', '0', '2018-03-24 17:01:02', '2018-06-03 16:33:02', '8', '1521987975171'), ('32', 'admin', 'f48ee23c20880b460f7bf3ef1f4a9d9d', 'testAdmin', '', '', '', '1', '0', '2018-05-09 04:40:57', '2018-05-09 04:44:22', '3', '1525812262119'), ('40', 'jboneeeeee', '8b5d5518c9187e46a691c596b0abb41d', 'eeeee', '', '', '', '1', '0', '2018-05-29 10:09:50', '2018-06-03 16:33:26', '1', '1527559789781'), ('46', 'jbone111', '85fcb53ffff84e1333a0f38dde8d01f4', '111', '', '', '', '1', '0', '2018-06-04 08:03:58', '2018-06-04 08:03:58', '0', '1528070638008'), ('48', 'test111', '7e7c0e57ea12ecf9bba8bb2bdc8eb12d', '111', '', '', '', '1', '0', '2018-06-04 15:22:34', '2018-06-04 16:37:59', '4', '1528096953590'), ('49', 'test222', '7003d4a4b7c7d3c30721d25ac3dba5fc', '123', '', '', '', '1', '0', '2018-06-04 16:43:09', '2018-06-04 16:43:14', '1', '1528101789052'), ('60', 'GITHUB_11766855', '342f5885f21fc3fbec51e2dc9b7bf32c', 'Small', 'https://avatars3.githubusercontent.com/u/11766855?v=4', null, null, '0', '0', '2018-08-16 19:15:41', '2018-08-16 19:15:41', '1', '1534418140354');
+INSERT INTO `rbac_user` VALUES ('14', 'test123', 'test', '1231111', null, '123', '123fff', '123', '1', '1', '2018-02-01 09:31:47', '2018-03-21 09:20:09', '2', null), ('24', 'jbone', '49a12ae5ed3a17e04e9837bae71da54e', '渔樵', null, 'http://majunwei.com/logo.png', '1', '417511458@qq.com', '1', '1', '2018-02-01 09:31:47', '2018-08-17 10:18:35', '30', '1521896490652'), ('25', 'test1', 'eedcca02294e4519f834984df8ec5939', 'test1', null, 'jbone666@163.com', '111', '417511458@qq.com', '1', '0', '2018-02-27 21:47:53', '2018-02-27 21:59:54', '3', null), ('28', 'salt', '97d993a9e0c5ba68c86570350c6cd7bf', '测试Salt', null, '', '', '', '1', '0', '2018-03-22 22:15:16', '2018-03-24 17:52:21', '2', '1521885141059'), ('30', 'test77', '5ebb7bad80b2250d14df6759e91487ac', '测试修改密码', null, '', '', '', '1', '0', '2018-03-24 17:01:02', '2018-06-03 16:33:02', '8', '1521987975171'), ('32', 'admin', 'f48ee23c20880b460f7bf3ef1f4a9d9d', 'testAdmin', null, '', '', '', '1', '0', '2018-05-09 04:40:57', '2018-05-09 04:44:22', '3', '1525812262119'), ('40', 'jboneeeeee', '8b5d5518c9187e46a691c596b0abb41d', 'eeeee', null, '', '', '', '1', '0', '2018-05-29 10:09:50', '2018-06-03 16:33:26', '1', '1527559789781'), ('46', 'jbone111', '85fcb53ffff84e1333a0f38dde8d01f4', '111', null, '', '', '', '1', '0', '2018-06-04 08:03:58', '2018-06-04 08:03:58', '0', '1528070638008'), ('48', 'test111', '7e7c0e57ea12ecf9bba8bb2bdc8eb12d', '111', null, '', '', '', '1', '0', '2018-06-04 15:22:34', '2018-06-04 16:37:59', '4', '1528096953590'), ('49', 'test222', '7003d4a4b7c7d3c30721d25ac3dba5fc', '123', null, '', '', '', '1', '0', '2018-06-04 16:43:09', '2018-06-04 16:43:14', '1', '1528101789052'), ('60', 'GITHUB_11766855', '342f5885f21fc3fbec51e2dc9b7bf32c', 'Small', null, 'https://avatars3.githubusercontent.com/u/11766855?v=4', null, null, '0', '0', '2018-08-16 19:15:41', '2018-08-16 19:15:41', '1', '1534418140354');
 COMMIT;
 
 -- ----------------------------
