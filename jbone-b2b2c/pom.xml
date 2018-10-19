@@ -24,7 +24,6 @@
         <module>jbone-b2b2c-item-api-starter</module>
         <module>jbone-b2b2c-item-server</module>
         <module>jbone-b2b2c-decoration-core</module>
-        <module>jbone-b2b2c-decoration-server</module>
         <module>jbone-b2b2c-decoration-api</module>
         <module>jbone-b2b2c-decoration-api-starter</module>
         <module>jbone-b2b2c-decoration-server</module>
