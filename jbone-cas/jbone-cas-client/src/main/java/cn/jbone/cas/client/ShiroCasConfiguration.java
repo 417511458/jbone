@@ -23,6 +23,7 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.pac4j.cas.client.CasClient;
 import org.pac4j.cas.config.CasConfiguration;
@@ -142,13 +143,14 @@ public class ShiroCasConfiguration {
     }
 
     @Bean(name = "sessionManager")
-    public DefaultWebSessionManager getDefaultWebSessionManager(SessionListener sessionListener, SessionDAO sessionDao, SessionFactory sessionFactory,JboneConfiguration jboneConfiguration){
+    public DefaultWebSessionManager getDefaultWebSessionManager(SessionListener sessionListener, SessionDAO sessionDao, SessionFactory sessionFactory,JboneConfiguration jboneConfiguration,SimpleCookie cookie){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setGlobalSessionTimeout(jboneConfiguration.getCas().getClientSessionTimeout());
         sessionManager.setSessionValidationSchedulerEnabled(false);
         sessionManager.setSessionListeners(Arrays.asList(sessionListener));
         sessionManager.setSessionDAO(sessionDao);
         sessionManager.setSessionFactory(sessionFactory);
+        sessionManager.setSessionIdCookie(cookie);
         return sessionManager;
     }
 
@@ -157,6 +159,13 @@ public class ShiroCasConfiguration {
         JboneCasSessionDao sessionDao = new JboneCasSessionDao(redisTemplate);
         sessionDao.setSessionTicketStore(sessionTicketStore);
         return sessionDao;
+    }
+
+    @Bean
+    public SimpleCookie getCookie(){
+        SimpleCookie cookie = new SimpleCookie();
+        cookie.setName("jbone.session.id");
+        return cookie;
     }
 
 
