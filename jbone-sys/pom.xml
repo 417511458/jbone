@@ -16,7 +16,7 @@
         <module>jbone-sys-api</module>
         <module>jbone-sys-server</module>
         <module>jbone-sys-admin</module>
-        <module>jbone-sys-api-feign</module>
+        <module>jbone-sys-api-starter</module>
         <module>jbone-sys-core</module>
     </modules>
 

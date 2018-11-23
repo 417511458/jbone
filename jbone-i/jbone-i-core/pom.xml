@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-api-feign</artifactId>
+            <artifactId>jbone-sys-api-starter</artifactId>
         </dependency>
     </dependencies>
 </project>

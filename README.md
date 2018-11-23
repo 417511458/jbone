@@ -25,7 +25,7 @@ QQ群：547104190
 * jbone-sys : 系统管理模块
     * jbone-sys-admin ： 系统管理后台
     * jbone-sys-api : 系统服务对外接口定义
-    * jbone-sys-api-feign : 基于Spring Cloud Feign的调用实现
+    * jbone-sys-api-starter : 基于Spring Cloud Feign的调用实现
     * jbone-sys-core : 系统管理核心
     * jbone-sys-server : 系统管理服务
 * jbone-tag ：全平台标签系统

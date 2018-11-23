@@ -75,7 +75,7 @@ cas:
       dataSourceName:
       dataSourceProxy: false
       properties.hibernate.hbm2ddl.auto: none
-      properties.hibernate.show_sql: true
+      properties.hibernate.show_sql: false
       pool.suspension: false
       pool.minSize: 6
       pool.maxSize: 18
@@ -108,7 +108,7 @@ cas:
 
         # Hibernate-specific properties (i.e. `hibernate.globally_quoted_identifiers`)
         properties.hibernate.hbm2ddl.auto: none
-        properties.hibernate.show_sql: true
+        properties.hibernate.show_sql: false
 
         pool.suspension: false
         pool.minSize: 6

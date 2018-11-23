@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jbone-bpm-api-feign</artifactId>
+    <artifactId>jbone-bpm-api-starter</artifactId>
 
-    <name>jbone-bpm-api-feign</name>
+    <name>jbone-bpm-api-starter</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 

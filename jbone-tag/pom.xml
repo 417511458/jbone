@@ -16,7 +16,7 @@
         <module>jbone-tag-admin</module>
         <module>jbone-tag-api</module>
         <module>jbone-tag-server</module>
-        <module>jbone-tag-api-feign</module>
+        <module>jbone-tag-api-starter</module>
         <module>jbone-tag-core</module>
     </modules>
 

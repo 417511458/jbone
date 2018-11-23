@@ -193,6 +193,11 @@
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
+        <AsyncLogger name="org.apereo.cas" level="warn" additivity="true" includeLocation="true">
+            <AppenderRef ref="casFile"/>
+            <AppenderRef ref="casConsole"/>
+        </AsyncLogger>
+
         <AsyncLogger name="org.springframework.context.annotation" level="off" additivity="false" />
         <AsyncLogger name="org.springframework.boot.devtools" level="off" additivity="false" />
         <AsyncLogger name="org.jasig.spring" level="warn" additivity="false">
@@ -214,8 +219,10 @@
         <AsyncLogger name="perfStatsLogger" level="info" additivity="false" includeLocation="true">
             <AppenderRef ref="casPerf"/>
         </AsyncLogger>
+
         <AsyncLogger name="org.apereo.cas.web.flow" level="debug" additivity="true" includeLocation="true">
             <AppenderRef ref="casFile"/>
+            <AppenderRef ref="casConsole"/>
         </AsyncLogger>
         <AsyncLogger name="org.apereo.inspektr.audit.support" level="info" includeLocation="true">
             <AppenderRef ref="casAudit"/>

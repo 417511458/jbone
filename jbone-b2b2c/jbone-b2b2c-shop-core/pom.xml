@@ -55,7 +55,7 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-tag-api-feign</artifactId>
+            <artifactId>jbone-tag-api-starter</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

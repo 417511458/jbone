@@ -14,7 +14,7 @@
     <url>http://maven.apache.org</url>
     <modules>
         <module>jbone-bpm-api</module>
-        <module>jbone-bpm-api-feign</module>
+        <module>jbone-bpm-api-starter</module>
         <module>jbone-bpm-core</module>
         <module>jbone-bpm-server</module>
         <module>jbone-bpm-admin</module>
