@@ -125,7 +125,7 @@
         <AsyncLogger name="org.springframework.boot.actuate.autoconfigure" level="warn" additivity="false">
             <AppenderRef ref="casConsole"/>
         </AsyncLogger>
-        <AsyncLogger name="org.springframework.webflow" level="debug" additivity="false">
+        <AsyncLogger name="org.springframework.webflow" level="info" additivity="false">
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
@@ -161,7 +161,7 @@
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
-        <AsyncLogger name="org.pac4j" level="debug" additivity="false">
+        <AsyncLogger name="org.pac4j" level="info" additivity="false">
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
@@ -220,7 +220,7 @@
             <AppenderRef ref="casPerf"/>
         </AsyncLogger>
 
-        <AsyncLogger name="org.apereo.cas.web.flow" level="debug" additivity="true" includeLocation="true">
+        <AsyncLogger name="org.apereo.cas.web.flow" level="info" additivity="true" includeLocation="true">
             <AppenderRef ref="casFile"/>
             <AppenderRef ref="casConsole"/>
         </AsyncLogger>
@@ -228,7 +228,7 @@
             <AppenderRef ref="casAudit"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
-        <AsyncLogger name="org.pac4j" level="debug" additivity="false">
+        <AsyncLogger name="org.pac4j" level="info" additivity="false">
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>

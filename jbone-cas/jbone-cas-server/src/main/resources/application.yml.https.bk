@@ -3,7 +3,21 @@
 #
 server:
   context-path: /cas
-  port: 30001
+  port: 8443
+  ssl:
+    key-store: classpath:jbonekeystore
+    key-store-password: 123456
+    key-password: 123456
+    enabled: true
+  tomcat:
+    max-http-post-size: 2097152
+    basedir: build/tomcat
+    max-threads: 10
+    port-header: X-Forwarded-Port
+    protocol-header: X-Forwarded-Proto
+    protocol-header-https-value: https
+    remote-ip-header: X-FORWARDED-FOR
+    uri-encoding: UTF-8
 
 cas:
   authn:
@@ -29,11 +43,11 @@ cas:
         profileAttrs.id: id
         client-name: github
   server:
-    name: http://jbone-cas.majunwei.com:30001
-    prefix: http://jbone-cas.majunwei.com:30001/cas
+    name: https://jbone-cas.majunwei.com:8443
+    prefix: https://jbone-cas.majunwei.com:8443/cas
   adminPagesSecurity:
     #CAS监控授权的IP,测试时127.0.0.1是必须的，第一个配置本机IP。如果是生产环境只需要配置jbone-sm-admin的IP即可
-    ip: (172\.16\.185\.72)|(127\.0\.0\.1)
+    ip: (172\.16\.180\.163)|(127\.0\.0\.1)
     actuatorEndpointsEnabled: true
   monitor:
     endpoints:
@@ -121,11 +135,6 @@ cas:
       numberOfUses: 1
       # ST有效期600S
       timeToKillInSeconds: 600
-  #关闭https验证
-  tgc:
-    secure: false
-  warningCookie:
-    secure: false
   #单点登出
   slo:
     disabled: false

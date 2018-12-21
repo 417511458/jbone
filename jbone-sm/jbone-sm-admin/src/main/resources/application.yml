@@ -8,10 +8,21 @@ spring:
   cloud:
     config:
     enabled: false
+  boot:
+    admin:
+      monitor:
+        #监控超时时间
+        connect-timeout: 30000
+      routes:
+        endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+      # turbine监控配置
+      # clusters是指监控的集群
+      # location是turbine服务的ID，Jbone中使用jbone-sm-monitor作为turbine监控服务
+      turbine:
+        location: http://jbone-sm-monitor.majunwei.com:10004/
+      context-path: /admin
 
 server.port: 10002
-
-spring.boot.admin.context-path: /admin
 
 #注册中心
 eureka:
@@ -27,19 +38,11 @@ eureka:
 
 management.security.enabled: false
 
-spring.boot.admin.routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
-
-# turbine监控配置
-# clusters是指监控的集群
-# location是turbine服务的ID，Jbone中使用jbone-sm-monitor作为turbine监控服务
-spring.boot.admin.turbine:
-#  clusters: default
-  location: http://jbone-sm-monitor.majunwei.com:10004/
 
 #CAS服务地址
 jbone:
   cas:
-    casServerUrl: https://jbone-cas.majunwei.com:8443/cas
+    casServerUrl: http://jbone-cas.majunwei.com:30001/cas
     #当前系统地址
     currentServerUrlPrefix: http://jbone-sm-admin.majunwei.com:10002
     #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern

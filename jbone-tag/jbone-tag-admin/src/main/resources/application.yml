@@ -42,7 +42,7 @@ management:
 jbone:
   cas:
     #CAS服务地址
-    casServerUrl: https://jbone-cas.majunwei.com:8443/cas
+    casServerUrl: http://jbone-cas.majunwei.com:30001/cas
     #当前系统地址
     currentServerUrlPrefix: http://jbone-tag-admin.majunwei.com:40002
     #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
