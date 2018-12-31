@@ -8,8 +8,7 @@ jbone项目主要关注两个方面的技术交流：
 * 功能实现：为技术选型相同的项目，提供实现参考。
 * 技术探究：jbone在实现功能的同时，会针对选择的技术框架进行深入探究，使用的同时获得技术提升；出现问题能尽快的定位问题。知道How to use,更要知道How it works。
 ### 造轮子
-造轮子的成本非常高，企业快速的业务发展，更想拿来即用。jbone在技术交流的过程中会沉淀出很多轮子，如系统管理、内容管理、电商平台等解决方案。使中小企业花最少的成本建立自己的电商平台、企业管理平台、支付平台等。
-jbone功能包括服务管理、系统管理平台、内容管理平台、电商平台、支付平台、工作流平台等子系统。
+造轮子的成本非常高，企业快速的业务发展，更想拿来即用。jbone在技术交流的过程中会沉淀出很多轮子，如服务治理、系统管理、内容管理、电商平台等解决方案。使中小企业花最少的成本建立自己的服务治理体系、电商平台、企业管理平台、支付平台等。
 ## 交流方式
 QQ群：547104190
 
@@ -196,7 +195,7 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 # 技术探究
 
 ## Spring CLoud篇
-[Eureka实现原理（推荐）](https://mp.weixin.qq.com/s?__biz=MzU0MDQ1MjM1MA==&tempkey=OTg5Xy92SFJPaUlrN0xqUFduUVN4WFZHVS1OV19odGRUTWVIUFo2QWVzbWpDZkp4Y3dVZXBuUjVFeF9IbWxScm96ZDg0bzNXdy12azYydVNTb1A0dV9YX0dfS2ZvVXVtekw4VVBpTlEwVFRaVDNMU19JeHU2dXBsV0kzSUJSX3hKXy1wNEpqY0cwMGg3TldVU2gtZVZvcmJuU2RUOGxQZkMyZmdkSVNMZ1F%2Bfg%3D%3D&chksm=7b39b5f14c4e3ce7c64c03e7db811b5db274f2dadc15bd2f796663883c0346204102ede1629a#rd)
+[Eureka实现原理（推荐）](https://mp.weixin.qq.com/s/AhRYd0Iwrxb_nsN4F9E9DQ)
 
 [深入理解Spring Cloud - Spring Cloud Netflix Eureka](http://majunwei.com/view/201808130810451238.html)
 
@@ -226,7 +225,7 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 
 ## CAS 篇
 
-[Spring Web Flow - Web流程实现利器](https://mp.weixin.qq.com/s?__biz=MzU0MDQ1MjM1MA==&mid=2247483727&idx=1&sn=091231aa4ed3e5298695301effa7cc15&chksm=fb39b5decc4e3cc8383ec6034991dbb2e593e5a4d8bd999d40802fc9983734f357a5a959f6a3&token=1709107465&lang=zh_CN#rd)
+[Spring Web Flow - Web流程实现利器](https://mp.weixin.qq.com/s/dDCIdSRW6otFopvS1DDG9g)
 
 [深入理解CAS - CAS票据](http://majunwei.com/view/201807171040041163.html)
 
