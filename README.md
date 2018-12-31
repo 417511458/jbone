@@ -1,18 +1,28 @@
 # 概述
 ## jbone定位
-### 对企业
-jbone采用微服务架构，为中小企业提供系统管理、内容管理、电商平台等解决方案。使中小企业花最少的成本建立自己的电商平台、企业管理平台、支付平台等。
+### 学习交流
+随着微服务的发展，出现了很多微服务架构的解决方案，Spring Cloud就是其中的典型代表。jbone是基于Spring Cloud搭建的微服务项目，包括服务注册与发现、服务监控、服务管理、服务网关、服务熔断等常见微服务组件。
+除Spring Cloud以外，会根据业务特点选择合适的解决方案，如单点登录的CAS、安全框架Shiro等。具体参考《技术选型》。
+
+jbone项目主要关注两个方面的技术交流：
+* 功能实现：为技术选型相同的项目，提供实现参考。
+* 技术探究：jbone在实现功能的同时，会针对选择的技术框架进行深入探究，使用的同时获得技术提升；出现问题能尽快的定位问题。知道How to use,更要知道How it works。
+### 造轮子
+造轮子的成本非常高，企业快速的业务发展，更想拿来即用。jbone在技术交流的过程中会沉淀出很多轮子，如系统管理、内容管理、电商平台等解决方案。使中小企业花最少的成本建立自己的电商平台、企业管理平台、支付平台等。
 jbone功能包括服务管理、系统管理平台、内容管理平台、电商平台、支付平台、工作流平台等子系统。
-### 对开发
-jbone为企业提供解决方案的同时，更重视对前沿技术的学习和探索；jbone使用spring cloud生态体系技术，采用微服务架构，为企业微服务架构提供一种解决方案，供开发人员学习和交流。
-其中包括服务注册与发现、服务监控、服务管理、服务治理、服务网关、服务熔断等常见微服务组件。
-## 技术交流
+## 交流方式
 QQ群：547104190
+
+公众号：writebugs
+
+作者QQ：417511458
+
+作者微信：dreamming_now
+
 # 系统设计
 ## jbone功能架构图
 ![Jbone功能架构图](doc/images/功能架构图.png)
-## jbone物理结构图
-![Jbone物理架构图](doc/images/物理架构图.png)
+
 ## 项目模块划分
 * jbone-cas : 用户单点登录模块
     * jbone-cas-client：客户端jar包，用于集成到需要CAS授权的系统
@@ -37,8 +47,7 @@ QQ群：547104190
 * jbone-pay : 支付平台模块
 * jbone-im : 即时通信模块
 * jbone-ui : 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。
-## 电商平台
-![电商平台](doc/images/电商功能架构图.png)
+
 ## 非功能设计
 ### 可用性
 HA >=99.99%（无任何单点问题，对单点故障零容忍）
@@ -184,12 +193,11 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 ## [https配置方式](doc/https部署.md)
 
 
-# 关键开源技术介绍
-## Spring Boot架构图
-![Spring Boot架构图](doc/images/diagram-boot-reactor.png)
-## Spring Cloud架构图
-![Spring Cloud架构图](doc/images/diagram-distributed-systems.png)
-## Spring Cloud学习资料
+# 技术探究
+
+## Spring CLoud篇
+[Eureka实现原理（推荐）](https://mp.weixin.qq.com/s?__biz=MzU0MDQ1MjM1MA==&tempkey=OTg5Xy92SFJPaUlrN0xqUFduUVN4WFZHVS1OV19odGRUTWVIUFo2QWVzbWpDZkp4Y3dVZXBuUjVFeF9IbWxScm96ZDg0bzNXdy12azYydVNTb1A0dV9YX0dfS2ZvVXVtekw4VVBpTlEwVFRaVDNMU19JeHU2dXBsV0kzSUJSX3hKXy1wNEpqY0cwMGg3TldVU2gtZVZvcmJuU2RUOGxQZkMyZmdkSVNMZ1F%2Bfg%3D%3D&chksm=7b39b5f14c4e3ce7c64c03e7db811b5db274f2dadc15bd2f796663883c0346204102ede1629a#rd)
+
 [深入理解Spring Cloud - Spring Cloud Netflix Eureka](http://majunwei.com/view/201808130810451238.html)
 
 [深入理解Eureka-Eureka架构综述](http://www.majunwei.com/view/201808130819216747.html)
@@ -215,8 +223,17 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 [深入理解Eureka-Eureka Region Zone](http://www.majunwei.com/view/201808130953353185.html)
 
 [深入理解Eureka-Eureka配置列表](http://www.majunwei.com/view/201808130827002632.html)
-## CAS认证过程
-![CAS认证过程](doc/images/cas_protocol.jpg)
+
+## CAS 篇
+
+[Spring Web Flow - Web流程实现利器](https://mp.weixin.qq.com/s?__biz=MzU0MDQ1MjM1MA==&mid=2247483727&idx=1&sn=091231aa4ed3e5298695301effa7cc15&chksm=fb39b5decc4e3cc8383ec6034991dbb2e593e5a4d8bd999d40802fc9983734f357a5a959f6a3&token=1709107465&lang=zh_CN#rd)
+
+[深入理解CAS - CAS票据](http://majunwei.com/view/201807171040041163.html)
+
+[CAS认证和注销过程](http://majunwei.com/view/201807122100410471.html)
+
+[使用spring-boot-admin监控CAS服务](http://majunwei.com/view/201808080954075692.html)
+
 
 
 
