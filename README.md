@@ -126,9 +126,7 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 ![菜单管理](doc/images/menuManager.png)
 ### 权限管理
 ![权限管理](doc/images/permissionManager.png)
-## jbone功能和进度表
-![进度](doc/images/jboneProcess.png)
-# jbone部署说明
+# jbone部署说明(默认HTTP)
 ## 下载代码
 将代码clone下来并导入idea或eclipse；
 ## 创建数据库
@@ -194,7 +192,7 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 
 # 技术探究
 
-## Spring CLoud篇
+## Spring Cloud篇
 [Eureka实现原理（推荐）](https://mp.weixin.qq.com/s/AhRYd0Iwrxb_nsN4F9E9DQ)
 
 [深入理解Spring Cloud - Spring Cloud Netflix Eureka](http://majunwei.com/view/201808130810451238.html)
