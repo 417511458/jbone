@@ -6,7 +6,7 @@
 
 jbone项目主要关注两个方面的技术交流：
 * 功能实现：为技术选型相同的项目，提供实现参考。
-* 技术探究：jbone在实现功能的同时，会针对选择的技术框架进行深入探究，使用的同时获得技术提升；出现问题能尽快的定位问题。知道How to use,更要知道How it works。
+* 技术探究：jbone在实现功能的同时，会针对选择的技术框架进行深入探究，使用的同时获得技术提升；出现问题能尽快的定位问题。知道How to use,更要知道How it works。（**技术探究文章在末尾**）
 ### 造轮子
 造轮子的成本非常高，企业快速的业务发展，更想拿来即用。jbone在技术交流的过程中会沉淀出很多轮子，如服务治理、系统管理、内容管理、电商平台等解决方案。使中小企业花最少的成本建立自己的服务治理体系、电商平台、企业管理平台、支付平台等。
 ## 交流方式
@@ -82,6 +82,8 @@ Thymeleaf | 模板引擎  | [http://www.thymeleaf.org/](http://www.thymeleaf.org
 Maven | 项目构建管理  | [http://maven.apache.org/](http://maven.apache.org/)
 Redis | 分布式缓存数据库 | [https://redis.io/](https://redis.io/)
 Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
+
+# 功能预览
 ## Jbone CAS(认证中心)
 ### 实现方式
 服务采用Apereo CAS作为登录认证中心，底层集成Shiro，通过Spring Cloud Feign声明式调用权限数据，完成用户授权。
