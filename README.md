@@ -250,3 +250,9 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 3、CAS由5.2.0升级到6.0.0
 
 4、JDK由1.8升级到11
+
+遗留问题：
+
+1、jbone-sm-monitor调用链和流量监控未完成；
+
+2、jbone-cas-manager未完成
