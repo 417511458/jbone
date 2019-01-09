@@ -5,9 +5,17 @@ spring:
   application:
     name: Jbone-sm-register
 
+# 服务管理配置
 management:
-  security:
-    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"        #暴漏的接口，"*"表示所有web监控接口
+        exclude:            #不暴漏的接口
+      base-path: /actuator  #监控根路径
+  endpoint:
+    health:
+      show-details: ALWAYS
 
 #注册中心
 eureka:
@@ -18,7 +26,7 @@ eureka:
       defaultZone: http://localhost:10001/eureka
   instance:
     prefer-ip-address: true
-    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 
 # info接口返回值
 info:

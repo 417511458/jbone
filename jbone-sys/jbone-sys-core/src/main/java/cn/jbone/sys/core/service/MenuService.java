@@ -48,7 +48,7 @@ public class MenuService {
 
 
     public TreeMenuModel get(int id){
-        RbacMenuEntity menuEntity = rbacMenuRepository.findOne(id);
+        RbacMenuEntity menuEntity = rbacMenuRepository.getOne(id);
         TreeMenuModel menuModel = new TreeMenuModel();
         BeanUtils.copyProperties(menuEntity,menuModel);
         return menuModel;

@@ -18,6 +18,14 @@ spring:
     enabled: false
   jpa:
     show-sql: true
+  zipkin:
+    sender:
+      type: rabbit
+  datasource:
+    username: jbone_sys
+    password: Jbone_sys_666
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://121.42.174.77:3306/jbone_sys?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
 
 #服务
 server:
@@ -32,11 +40,19 @@ eureka:
       defaultZone: http://localhost:10001/eureka
   instance:
     prefer-ip-address: true
-    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 
+# 服务管理配置
 management:
-  security:
-    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"        #暴漏的接口，"*"表示所有web监控接口
+        exclude:            #不暴漏的接口
+      base-path: /actuator  #监控根路径
+  endpoint:
+    health:
+      show-details: ALWAYS
 
 #Jbone配置
 jbone:
@@ -55,40 +71,11 @@ jbone:
     clientSessionTimeout: 180000
     #权限过滤规则
     filterChainDefinition:
-      /health: anon
-      /archaius: anon
-      /refresh: anon
-      /configprops: anon
-      /env/**: anon
-      /service-registry/**: anon
-      /auditevents: anon
-      /pause: anon
-      /dump: anon
-      /loggers/**: anon
-      /resume: anon
-      /metrics/**: anon
-      /channels: anon
-      /beans: anon
-      /mappings: anon
-      /autoconfig: anon
-      /trace: anon
-      /hystrix.stream/**: anon
-      /info: anon
-      /restart: anon
-      /heapdump: anon
-      /features: anon
-      /**: authc
+      "[/actuator/**]": anon  #不过滤监控端口，此处巨坑，升级到2。0之后必须用[]括起来，否则会规律所有符号.
+      "[/**]": authc
   #当前系统名，在系统管理里面对应的名字
   sys:
     serverName: jbone-sys-admin
-    jdbc:
-      url: jdbc:mysql://121.42.174.77:3306/jbone_sys?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
-      username: jbone_sys
-      password: Jbone_sys_666
-      driverClassName: com.mysql.jdbc.Driver
-      maxActive: 10
-      initialSize: 2
-      maxWait: 10000
   #系统管理Feign调用配置
   rpc.sysServer.feign:
     protocol: http

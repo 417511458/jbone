@@ -97,7 +97,7 @@ public class TagService {
      * @date 2018/3/22 2:33
      */
     public void update(UpdateTagModel updateTagModel) throws ParseException {
-        TagInfoEntity tagInfoEntity = tagInfoRepository.findOne(updateTagModel.getId());
+        TagInfoEntity tagInfoEntity = tagInfoRepository.getOne(updateTagModel.getId());
 
         if (tagInfoEntity == null) {
             throw new JboneException("没有找到标签");
@@ -127,7 +127,7 @@ public class TagService {
             if (StringUtils.isBlank(id)) {
                 continue;
             }
-            tagInfoRepository.delete(Integer.parseInt(id));
+            tagInfoRepository.deleteById(Integer.parseInt(id));
         }
     }
 
@@ -141,7 +141,7 @@ public class TagService {
      */
     public UpdateTagModel findTagById(Integer id) {
         UpdateTagModel tagModel = new UpdateTagModel();
-        TagInfoEntity tagInfoEntity = tagInfoRepository.findOne(id);
+        TagInfoEntity tagInfoEntity = tagInfoRepository.getOne(id);
         if (tagInfoEntity == null) {
             throw new JboneException("没有找到标签");
         }

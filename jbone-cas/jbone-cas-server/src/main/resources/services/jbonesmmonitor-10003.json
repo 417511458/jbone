@@ -1,9 +1,0 @@
-{
-  "@class" : "org.apereo.cas.services.RegexRegisteredService",
-  "serviceId" : "^http://jbone-sm-monitor.majunwei.com:10003/cas",
-  "name" : "Jbone服务服务监控",
-  "id" : 10003,
-  "description" : "Jbone服务监控系统，是基于Spring Cloud Zipkin做的调用链监控系统",
-  "logoutType" : "BACK_CHANNEL",
-  "logoutUrl" : "http://jbone-sm-monitor.majunwei.com:10003/casLogout"
-}

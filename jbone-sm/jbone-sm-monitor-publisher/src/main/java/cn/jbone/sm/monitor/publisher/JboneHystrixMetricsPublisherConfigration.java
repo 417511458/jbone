@@ -12,7 +12,7 @@ public class JboneHystrixMetricsPublisherConfigration {
     @Bean
     public JboneHystrixMetricsPublisher getJboneHystrixMetricsPublisher(){
         JboneHystrixMetricsPublisher publisher = new JboneHystrixMetricsPublisher();
-        HystrixPlugins.getInstance().registerMetricsPublisher(publisher);
+//        HystrixPlugins.getInstance().registerMetricsPublisher(publisher);
         return publisher;
     }
 }

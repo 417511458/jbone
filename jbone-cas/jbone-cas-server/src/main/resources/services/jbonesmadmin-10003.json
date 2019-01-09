@@ -1,0 +1,9 @@
+{
+  "@class" : "org.apereo.cas.services.RegexRegisteredService",
+  "serviceId" : "^http://jbone-sm-admin.majunwei.com.*",
+  "name" : "Jbone服务管理",
+  "id" : 10003,
+  "description" : "Jbone服务管理系统，在Jbone项目服务治理体系中，主要负责系统的监控和管理，包括健康检查、JVM监控、内存监控、环境变量、线程监控、Hystrix熔断器监控等等。",
+  "logoutType" : "BACK_CHANNEL",
+  "logoutUrl" : "http://jbone-sm-admin.majunwei.com:10002/cas?client_name=CasClient"
+}

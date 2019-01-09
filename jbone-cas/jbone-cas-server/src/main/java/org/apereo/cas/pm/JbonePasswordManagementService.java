@@ -26,7 +26,7 @@ public class JbonePasswordManagementService extends BasePasswordManagementServic
     private UserApi userApi;
 
     public JbonePasswordManagementService(CipherExecutor<Serializable, String> cipherExecutor, String issuer, PasswordManagementProperties properties,UserApi userApi) {
-        super(cipherExecutor, issuer, properties);
+        super(properties,cipherExecutor, issuer);
         this.userApi = userApi;
     }
 

@@ -1,7 +1,7 @@
 package cn.jbone.b2b2c.decoration;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 public class JboneB2b2cDecorationServerInitializer extends SpringBootServletInitializer {
     @Override

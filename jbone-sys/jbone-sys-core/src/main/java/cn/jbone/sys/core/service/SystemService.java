@@ -27,7 +27,7 @@ public class SystemService {
     }
 
     public void update(UpdateSystemModel systemModel){
-        RbacSystemEntity systemEntity = rbacSystemRepository.findOne(systemModel.getId());
+        RbacSystemEntity systemEntity = rbacSystemRepository.getOne(systemModel.getId());
         BeanUtils.copyProperties(systemModel,systemEntity);
         rbacSystemRepository.save(systemEntity);
     }
@@ -38,7 +38,7 @@ public class SystemService {
             if(StringUtils.isBlank(id)){
                 continue;
             }
-            rbacSystemRepository.delete(Integer.parseInt(id));
+            rbacSystemRepository.deleteById(Integer.parseInt(id));
         }
     }
 

@@ -39,7 +39,7 @@ public class PermissionService {
      * 更新权限
      */
     public void update(PermissionUpdateModel updateModel){
-        RbacPermissionEntity permissionEntity = permissionRepository.findOne(updateModel.getId());
+        RbacPermissionEntity permissionEntity = permissionRepository.getOne(updateModel.getId());
         if(permissionEntity == null){
             throw new JboneException("没有找到权限");
         }
@@ -56,7 +56,7 @@ public class PermissionService {
             if(StringUtils.isBlank(id)){
                 continue;
             }
-            permissionRepository.delete(Integer.parseInt(id));
+            permissionRepository.deleteById(Integer.parseInt(id));
         }
     }
 

@@ -210,7 +210,7 @@ public class UserService {
      * @param userModel
      */
     public void update(UpdateUserModel userModel){
-        RbacUserEntity userEntity = userRepository.findOne(userModel.getId());
+        RbacUserEntity userEntity = userRepository.getOne(userModel.getId());
         if(userEntity == null){
             throw new JboneException("没有找到用户");
         }
@@ -231,7 +231,7 @@ public class UserService {
             if(StringUtils.isBlank(id)){
                 continue;
             }
-            userRepository.delete(Integer.parseInt(id));
+            userRepository.deleteById(Integer.parseInt(id));
         }
     }
 
@@ -241,7 +241,7 @@ public class UserService {
      * @return
      */
     public RbacUserEntity findById(int id){
-        RbacUserEntity userEntity = userRepository.findOne(id);
+        RbacUserEntity userEntity = userRepository.getOne(id);
         if(userEntity == null){
             throw new JboneException("没有找到用户");
         }
@@ -256,7 +256,7 @@ public class UserService {
      * @param assignRoleModel
      */
     public void assignRole(AssignRoleModel assignRoleModel){
-        RbacUserEntity userEntity = userRepository.findOne(assignRoleModel.getUserId());
+        RbacUserEntity userEntity = userRepository.getOne(assignRoleModel.getUserId());
         List<RbacRoleEntity> roleEntities = null;
         if(assignRoleModel.getUserRole() != null && assignRoleModel.getUserRole().length > 0){
             roleEntities = roleRepository.findByIdIn(assignRoleModel.getUserRole());
@@ -304,7 +304,7 @@ public class UserService {
      */
     public void assignPermission(AssignPermissionModel permissionModel){
         //首先删除该系统下所有菜单
-        RbacUserEntity userEntity = userRepository.findOne(permissionModel.getId());
+        RbacUserEntity userEntity = userRepository.getOne(permissionModel.getId());
         List<RbacPermissionEntity> permissionEntities = userEntity.getPermissions();
         if(permissionEntities != null && !permissionEntities.isEmpty()){
             for (int i = 0;i < permissionEntities.size(); i++){
@@ -380,7 +380,7 @@ public class UserService {
      * @param modifyPasswordModel
      */
     public void modifyPassword(ModifyPasswordModel modifyPasswordModel){
-        RbacUserEntity userEntity = userRepository.findOne(modifyPasswordModel.getId());
+        RbacUserEntity userEntity = userRepository.getOne(modifyPasswordModel.getId());
         if(userEntity == null){
             throw new JboneException("没有找到用户");
         }

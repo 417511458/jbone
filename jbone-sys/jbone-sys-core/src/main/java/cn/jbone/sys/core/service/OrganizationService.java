@@ -49,7 +49,7 @@ public class OrganizationService {
 
 
     public OrganizationBaseInfoModel get(int id){
-        RbacOrganizationEntity organizationEntity = rbacOrganizationRepository.findOne(id);
+        RbacOrganizationEntity organizationEntity = rbacOrganizationRepository.getOne(id);
         OrganizationBaseInfoModel organizationBaseInfoModel = new OrganizationBaseInfoModel();
         BeanUtils.copyProperties(organizationEntity,organizationBaseInfoModel);
         return organizationBaseInfoModel;

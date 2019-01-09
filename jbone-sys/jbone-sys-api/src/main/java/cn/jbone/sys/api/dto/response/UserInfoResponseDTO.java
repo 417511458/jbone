@@ -122,4 +122,9 @@ public class UserInfoResponseDTO implements Serializable {
     public void setSalt(String salt) {
         this.salt = salt;
     }
+
+    @Override
+    public String toString() {
+        return this.realname;
+    }
 }

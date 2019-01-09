@@ -1,0 +1,10 @@
+{
+  "@class" : "org.apereo.cas.services.RegexRegisteredService",
+  "serviceId" : "^http://jbone-sys-admin.majunwei.com.*",
+  "name" : "Jbone系统管理",
+  "id" : 10001,
+  "description" : "Jbone系统管理，包含系统管理、权限管理、菜单管理等",
+  "evaluationOrder" : 1,
+  "logoutType" : "BACK_CHANNEL",
+  "logoutUrl" : "http://jbone-sys-admin.majunwei.com:20002/cas?client_name=CasClient"
+}

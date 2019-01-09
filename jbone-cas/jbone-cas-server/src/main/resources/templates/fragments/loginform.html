@@ -31,6 +31,28 @@
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
             </div>
+            <div class="form-group">
+                            <span th:if="${availableAuthenticationHandlerNames != null}">
+                                <span th:if="${availableAuthenticationHandlerNames.size() > 1}">
+                                    <label for="source" th:utext="#{screen.welcome.label.source}">Source</label>
+                                    <div>
+                                        <select class="form-control required"
+                                                id="source"
+                                                name="source"
+                                                tabindex="0"
+                                                th:field="*{source}">
+                                            <option th:each="handler : ${availableAuthenticationHandlerNames}" th:value="${handler}" th:text="${handler}">Source</option>
+                                        </select>
+                                    </div>
+                                </span>
+                                <span th:if="${availableAuthenticationHandlerNames.size() == 1}">
+                                     <input type="hidden"
+                                            id="source"
+                                            name="source"
+                                            th:value="${availableAuthenticationHandlerNames.get(0)}"/>
+                                </span>
+                            </span>
+            </div>
 
             <div class="form-group has-feedback">
                 <div>

@@ -4,12 +4,11 @@ import cn.jbone.sys.api.UserApi;
 import cn.jbone.sys.api.dto.ThirdPartyName;
 import cn.jbone.sys.api.dto.request.GithubUserLoginRequestDTO;
 import org.apache.commons.lang3.StringUtils;
-import org.apereo.cas.authentication.principal.SimplePrincipal;
+import org.apereo.cas.authentication.principal.Principal;
 import org.apereo.cas.support.events.ticket.CasTicketGrantingTicketCreatedEvent;
 import org.apereo.cas.ticket.TicketGrantingTicket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -30,7 +29,7 @@ public class CasTicketGrantingTicketCreatedEventListener implements ApplicationL
     public void onApplicationEvent(CasTicketGrantingTicketCreatedEvent event) {
         try {
             TicketGrantingTicket ticketGrantingTicket =  event.getTicketGrantingTicket();
-            SimplePrincipal principal = (SimplePrincipal) ticketGrantingTicket.getAuthentication().getPrincipal();
+            Principal principal =  ticketGrantingTicket.getAuthentication().getPrincipal();
 
             Map<String,Object> authAttributes = ticketGrantingTicket.getAuthentication().getAttributes();
 

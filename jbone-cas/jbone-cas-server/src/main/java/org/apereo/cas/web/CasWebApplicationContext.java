@@ -1,8 +1,11 @@
 package org.apereo.cas.web;
 
-import org.apereo.cas.config.support.CasConfigurationEmbeddedValueResolver;
+import org.apereo.cas.CasEmbeddedValueResolver;
+
+import lombok.ToString;
+import lombok.val;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext;
+import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor;
 import org.springframework.scheduling.config.TaskManagementConfigUtils;
 
@@ -12,7 +15,10 @@ import org.springframework.scheduling.config.TaskManagementConfigUtils;
  * @author Misagh Moayyed
  * @since 5.1.0
  */
-public class CasWebApplicationContext extends AnnotationConfigEmbeddedWebApplicationContext {
+@ToString
+public class CasWebApplicationContext extends AnnotationConfigServletWebServerApplicationContext {
+
+
     /**
      * {@inheritDoc}
      * Reset the value resolver on the inner {@link ScheduledAnnotationBeanPostProcessor}
@@ -21,15 +27,10 @@ public class CasWebApplicationContext extends AnnotationConfigEmbeddedWebApplica
      */
     @Override
     protected void onRefresh() {
-        final ScheduledAnnotationBeanPostProcessor sch = (ScheduledAnnotationBeanPostProcessor)
-                getBeanFactory().getBean(TaskManagementConfigUtils.SCHEDULED_ANNOTATION_PROCESSOR_BEAN_NAME, BeanPostProcessor.class);
-        sch.setEmbeddedValueResolver(new CasConfigurationEmbeddedValueResolver(this));
+        val sch =
+                (ScheduledAnnotationBeanPostProcessor) getBeanFactory()
+                        .getBean(TaskManagementConfigUtils.SCHEDULED_ANNOTATION_PROCESSOR_BEAN_NAME, BeanPostProcessor.class);
+        sch.setEmbeddedValueResolver(new CasEmbeddedValueResolver(this));
         super.onRefresh();
-    }
-
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
     }
 }

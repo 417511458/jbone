@@ -18,6 +18,11 @@ QQ群：547104190
 
 作者微信：dreamming_now
 
+# 系统要求
+
+**JDK11+**
+
+
 # 系统设计
 ## jbone功能架构图
 ![Jbone功能架构图](doc/images/功能架构图.png)
@@ -43,8 +48,6 @@ QQ群：547104190
 * jbone-common : 共用模块
 * jbone-configuration : 公共配置模块
 * jbone-b2b2c : 多店铺电商平台模块 
-* jbone-pay : 支付平台模块
-* jbone-im : 即时通信模块
 * jbone-ui : 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。
 
 ## 非功能设计
@@ -98,18 +101,22 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 ### 进入方式
 浏览器输入：http://jbone-sm-admin.majunwei.com:100002/admin,跳转至CAS认证中心，输入jbone／jbone，即可进入
 ### 功能简介
-篇幅有限，简单介绍下：
 
-**系统健康概况及内存和JVM概况**
+**系统监控墙**
 
-![系统内存分析](doc/images/admin_index.jpg)
+![系统监控墙](doc/images/bootadmin-wallboard.png)
 
-**环境变量**
+**系统详情**
 
-![环境变量](doc/images/admin_properties.png)
+![系统详情](doc/images/bootadmin-instancedetails.png)
+
+**JVM线程监控**
+
+![JVM线程监控](doc/images/bootadmin-instancethread.png)
 
 **Hystrix流量和熔断监控**
 ![Hystrix流量和熔断监控](doc/images/hystrix监控.png)
+
 ## 调用链跟踪
 ### trace跟踪
 ![trace](doc/images/sm_monitor_01.png)
@@ -176,7 +183,6 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 
 6. jbone-sm-monitor （服务调用链）
 
-6. jbone-cas-manager （CAS系统管理）
 
 ## 进入系统
 
@@ -185,7 +191,6 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
  系统管理 | http://jbone-sys-admin.majunwei.com:20002/ |
  服务管理 | http://jbone-sm-admin.majunwei.com:10002/ |
  服务调用链 | http://jbone-sm-monitor.majunwei.com:10003/ |
- CAS系统管理 | http://jbone-cas-manager.majunwei.com:30002/ |
 
 默认用户名密码：jbone/jbone
 
@@ -235,4 +240,13 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 
 
 
+#重大更新记录
+** 2019.1.9: **
 
+1、Spring cloud由Dalston.SR3升级到Finchley.SR2
+
+2、Spring boot 由1.5.8升级到2.0.6
+
+3、CAS由5.2.0升级到6.0.0
+
+4、JDK由1.8升级到11

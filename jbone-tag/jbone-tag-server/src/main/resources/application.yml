@@ -15,6 +15,15 @@ spring:
   sleuth:
     sampler:
       percentage: 1
+  zipkin:
+    sender:
+      type: rabbit
+  datasource:
+    username: jbone_tag
+    password: Jbone_tag_666
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://121.42.174.77:3306/jbone_tag?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+
 #注册中心
 eureka:
   client:
@@ -24,7 +33,7 @@ eureka:
       defaultZone: http://localhost:10001/eureka
   instance:
     prefer-ip-address: true
-    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 
 management:
   security:
@@ -48,14 +57,6 @@ jbone:
   #当前系统名，在系统管理里面对应的名字
   sys:
     serverName: jbone-tag-admin
-    jdbc:
-      url: jdbc:mysql://121.42.174.77:3306/jbone_tag?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
-      username: jbone_tag
-      password: Jbone_tag_666
-      driverClassName: com.mysql.jdbc.Driver
-      maxActive: 10
-      initialSize: 2
-      maxWait: 10000
 
 # info接口返回值
 info:

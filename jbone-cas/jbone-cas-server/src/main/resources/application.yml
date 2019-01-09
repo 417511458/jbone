@@ -2,9 +2,9 @@
 # CAS Server Context Configuration
 #
 server:
-  context-path: /cas
   port: 30001
-
+  servlet:
+    context-path: /cas
 cas:
   authn:
     shiro:
@@ -14,107 +14,84 @@ cas:
       enabled: true
       #policyPattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d){8,10}
       reset:
-        text: 请使用以下链接重置您的密码： %s
-        subject: Jbone重置密码邮件
-        from: jbone666@163.com
         expirationMinutes: 10
-        emailAttribute: mail
         securityQuestionsEnabled: true
-        autoLogin: false
+        mail:
+          text: 请使用以下链接重置您的密码： %s
+          subject: Jbone重置密码邮件
+          from: jbone666@163.com
+      autoLogin: false
     pac4j:
       #github三方账号授权登录，可自行修改成自己的id和secret
       github:
         id: 151e91b5b0018290a074
         secret: 3db661368363a8775d7b6bf7603710e6d90f490e
-        profileAttrs.id: id
         client-name: github
   server:
     name: http://jbone-cas.majunwei.com:30001
     prefix: http://jbone-cas.majunwei.com:30001/cas
-  adminPagesSecurity:
-    #CAS监控授权的IP,测试时127.0.0.1是必须的，第一个配置本机IP。如果是生产环境只需要配置jbone-sm-admin的IP即可
-    ip: (172\.16\.185\.72)|(127\.0\.0\.1)
-    actuatorEndpointsEnabled: true
   monitor:
     endpoints:
-      dashboard:
-        enabled: true
-        sensitive: true
-  #使用json加载注册到CAS上的服务，还可以使用redis／rest等方式
-  serviceRegistry:
-    initFromJson: false
-    jpa:
-      healthQuery: select now()
-      isolateInternalQueries: false
-      url: jdbc:mysql://121.42.174.77:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
-      failFastTimeout: 1
-      dialect: org.hibernate.dialect.MySQL5Dialect
-      leakThreshold: 10
-      jpaLockingTgtEnabled: true
-      batchSize: 1
-      user: jbone_cas
-      ddlAuto: none
-      password: Jbone_cas_666
-      autocommit: false
-      driverClass: com.mysql.jdbc.Driver
-      idleTimeout: 5000
-      dataSourceName:
-      dataSourceProxy: false
-      properties.hibernate.hbm2ddl.auto: none
-      properties.hibernate.show_sql: false
-      pool.suspension: false
-      pool.minSize: 6
-      pool.maxSize: 18
-      pool.maxWait: 2000
+      endpoint:
+        #监控端口权限，下面都开启了，生产要配置IP策略或其他策略
+        info.access[0]: PERMIT
+        status.access[0]: PERMIT
+        health.access[0]: PERMIT
+        configurationMetadata.access[0]: PERMIT
+        auditevents.access[0]: PERMIT
+        beans.access[0]: PERMIT
+        caches.access[0]: PERMIT
+        conditions.access[0]: PERMIT
+        configprops.access[0]: PERMIT
+        env.access[0]: PERMIT
+        flyway.access[0]: PERMIT
+        httptrace.access[0]: PERMIT
+        integrationgraph.access[0]: PERMIT
+        loggers.access[0]: PERMIT
+        liquibase.access[0]: PERMIT
+        metrics.access[0]: PERMIT
+        mappings.access[0]: PERMIT
+        scheduledtasks.access[0]: PERMIT
+        sessions.access[0]: PERMIT
+        shutdown.access[0]: PERMIT
+        threaddump.access[0]: PERMIT
+        jolokia.access[0]: PERMIT
+        logfile.access[0]: PERMIT
+        prometheus.access[0]: PERMIT
 
-  #票据持久化，用于分布式管理用户票据
+  #使用reids存储授权的服务，初始化数据从services下加载json
+  serviceRegistry:
+    initFromJson: true
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: jbone
+      database: 0
+      timeout: 2000
+      useSsl: false
+
+  #票据持久化(redis)，用于分布式管理用户票据
   ticket:
     registry:
-      jpa:
-        ticketLockType: NONE
-        jpaLockingTimeout: 3600
-        healthQuery: select now()
-        isolateInternalQueries: false
-        url: jdbc:mysql://121.42.174.77:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
-        failFastTimeout: 1
-        dialect: org.hibernate.dialect.MySQL5Dialect
-        leakThreshold: 10
-        jpaLockingTgtEnabled: true
-        batchSize: 1
-        defaultCatalog:
-        defaultSchema: jbone_cas
-        user: jbone_cas
-        ddlAuto: none
-        password: Jbone_cas_666
-        autocommit: false
-        driverClass: com.mysql.jdbc.Driver
-        idleTimeout: 5000
-        dataSourceName:
-        dataSourceProxy: false
-
-        # Hibernate-specific properties (i.e. `hibernate.globally_quoted_identifiers`)
-        properties.hibernate.hbm2ddl.auto: none
-        properties.hibernate.show_sql: false
-
-        pool.suspension: false
-        pool.minSize: 6
-        pool.maxSize: 18
-        pool.maxWait: 2000
-
-        crypto.signing.key:
-        crypto.signing.keySize: 512
-        crypto.encryption.key:
-        crypto.encryption.keySize: 16
-        crypto.alg: AES
-        crypto.enabled: false
+      redis:
+        host: 127.0.0.1
+        port: 6379
+        password: jbone
+        timeout: 2000
+        useSsl: false
+      cleaner:
+        schedule:
+          enabled: false
     tgt:
       # 启用rememberMe
       rememberMe:
         enabled: true
         timeToKillInSeconds: 28800
       # tgt有效期（会话超时时间）
-      timeout:
-        maxTimeToLiveInSeconds: 28800
+#      timeout:
+#        maxTimeToLiveInSeconds: 28800
+      maxTimeToLiveInSeconds: 28800
+      timeToKillInSeconds: 7200
     st:
       maxLength: 20
       # ST使用次数
@@ -170,81 +147,26 @@ spring:
     properties.mail.smtp.auth: true
     properties.mail.smtp.starttls.enable: true
 
-#取消management安全验证
-management.security.enabled: false
-#单独配置management的context-path
-management.context-path: /status
-management.add-application-context-header: false
-#单独配置监控端口
-management.port: 30003
-#禁用management的ssl
-management.ssl.enabled: false
-
-
-
-# 开启endpoints start #
-endpoints.enabled: true
-endpoints.sensitive: false
-
-endpoints.restart.enabled: true
-endpoints.shutdown.enabled: false
-
-cas.monitor.endpoints.dashboard.enabled: true
-cas.monitor.endpoints.dashboard.sensitive: false
-
-cas.monitor.endpoints.discovery.enabled: true
-cas.monitor.endpoints.discovery.sensitive: false
-
-cas.monitor.endpoints.auditEvents.enabled: true
-cas.monitor.endpoints.auditEvents.sensitive: false
-
-cas.monitor.endpoints.authenticationEvents.enabled: true
-cas.monitor.endpoints.authenticationEvents.sensitive: false
-
-cas.monitor.endpoints.configurationState.enabled: true
-cas.monitor.endpoints.configurationState.sensitive: false
-
-cas.monitor.endpoints.healthCheck.enabled: true
-cas.monitor.endpoints.healthCheck.sensitive: false
-
-cas.monitor.endpoints.loggingConfig.enabled: true
-cas.monitor.endpoints.loggingConfig.sensitive: false
-
-cas.monitor.endpoints.metrics.enabled: true
-cas.monitor.endpoints.metrics.sensitive: false
-
-cas.monitor.endpoints.attributeResolution.enabled: true
-cas.monitor.endpoints.attributeResolution.sensitive: false
-
-cas.monitor.endpoints.singleSignOnReport.enabled: true
-cas.monitor.endpoints.singleSignOnReport.sensitive: false
-
-cas.monitor.endpoints.statistics.enabled: true
-cas.monitor.endpoints.statistics.sensitive: false
-
-cas.monitor.endpoints.trustedDevices.enabled: true
-cas.monitor.endpoints.trustedDevices.sensitive: false
-
-cas.monitor.endpoints.status.enabled: true
-cas.monitor.endpoints.status.sensitive: false
-
-cas.monitor.endpoints.singleSignOnStatus.enabled: true
-cas.monitor.endpoints.singleSignOnStatus.sensitive: false
-
-cas.monitor.endpoints.springWebflowReport.enabled: true
-cas.monitor.endpoints.springWebflowReport.sensitive: false
-
-cas.monitor.endpoints.registeredServicesReport.enabled: true
-cas.monitor.endpoints.registeredServicesReport.sensitive: false
-
-cas.monitor.endpoints.configurationMetadata.enabled: true
-cas.monitor.endpoints.configurationMetadata.sensitive: false
-
-# 开启endpoints end #
+# 服务管理配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"        #暴漏的接口，"*"表示所有web监控接口
+#        exclude:            #不暴漏的接口
+      base-path: /actuator  #监控根路径
+    enabled-by-default: true
+  endpoint:
+    health:
+      show-details: ALWAYS
+  server:
+    port: 30003
+    add-application-context-header: false
 
 
 logging:
   config: classpath:log4j2.xml
+#  level.root: debug
 
 eureka:
   client:
@@ -257,21 +179,11 @@ eureka:
     healthcheck.enabled: true
   instance:
     prefer-ip-address: true
-    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
-#    statusPageUrl: http://${spring.cloud.client.ipAddress}:${management.port}/status/info
-#    healthCheckUrl: http://${spring.cloud.client.ipAddress}:${management.port}/status/health
-#    homePageUrl: http://${spring.cloud.client.ipAddress}:${management.port}/
-#https的健康检测url
-#    secureHealthCheckUrl: http://${spring.cloud.client.ipAddress}:${management.port}/status/health
-#https端口
-#    securePort: 8443
-#启用https安全端口
-#    securePortEnabled: true
-#    nonSecurePortEnabled: false
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 #boot-admin在监控时，需要从metadata-map中获取context-path和port
     metadata-map:
-      management.context-path: ${management.context-path}
-      management.port: ${management.port}
+      management.context-path: ${management.endpoints.web.base-path}
+      management.port: ${management.server.port}
 ribbon:
     ConnectTimeout: 500
     ReadTimeout: 3000
@@ -281,6 +193,8 @@ feign:
       enabled: true
     response:
       enabled: true
+  hystrix:
+    enabled: true
 
 jbone.rpc.sysServer.feign:
   protocol: http

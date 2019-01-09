@@ -24,7 +24,7 @@ public class JbonePasswordManagementConfiguration {
     private UserApi userApi;
 
     @Bean(name="passwordChangeService")
-    public PasswordManagementService passwordChangeService(){
+    public BasePasswordManagementService passwordChangeService(){
         return new JbonePasswordManagementService(passwordManagementCipherExecutor,casProperties.getServer().getPrefix(),
                 casProperties.getAuthn().getPm(),userApi);
     }

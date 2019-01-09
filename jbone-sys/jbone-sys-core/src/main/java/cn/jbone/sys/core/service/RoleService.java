@@ -42,7 +42,7 @@ public class RoleService {
     }
 
     public void update(UpdateRoleModel roleModel){
-        RbacRoleEntity roleEntity = roleRepository.findOne(roleModel.getId());
+        RbacRoleEntity roleEntity = roleRepository.getOne(roleModel.getId());
         BeanUtils.copyProperties(roleModel,roleEntity);
         roleRepository.save(roleEntity);
     }
@@ -53,7 +53,7 @@ public class RoleService {
             if(StringUtils.isBlank(id)){
                 continue;
             }
-            roleRepository.delete(Integer.parseInt(id));
+            roleRepository.deleteById(Integer.parseInt(id));
         }
     }
 
@@ -77,7 +77,7 @@ public class RoleService {
      */
     public void assignMenu(AssignMenuModel menuModel){
         //首先删除该系统下所有菜单
-        RbacRoleEntity roleEntity = roleRepository.findOne(menuModel.getRoleId());
+        RbacRoleEntity roleEntity = roleRepository.getOne(menuModel.getRoleId());
         List<RbacMenuEntity> menuEntities = roleEntity.getMenus();
         if(menuEntities != null && !menuEntities.isEmpty()){
             for (int i = 0;i < menuEntities.size(); i++){
@@ -102,7 +102,7 @@ public class RoleService {
      */
     public void assignPermission(AssignPermissionModel permissionModel){
         //首先删除该系统下所有菜单
-        RbacRoleEntity roleEntity = roleRepository.findOne(permissionModel.getId());
+        RbacRoleEntity roleEntity = roleRepository.getOne(permissionModel.getId());
         List<RbacPermissionEntity> permissionEntities = roleEntity.getPermissions();
         if(permissionEntities != null && !permissionEntities.isEmpty()){
             for (int i = 0;i < permissionEntities.size(); i++){
