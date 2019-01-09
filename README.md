@@ -240,8 +240,8 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 
 
 
-#重大更新记录
-** 2019.1.9: **
+# 重大更新记录
+**2019.1.9**
 
 1、Spring cloud由Dalston.SR3升级到Finchley.SR2
 
