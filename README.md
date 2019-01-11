@@ -119,9 +119,8 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 
 ## 调用链跟踪
 ### trace跟踪
-![trace](doc/images/sm_monitor_01.png)
-### 调用链
-![调用链](doc/images/sm_monitor_02.png)
+![trace](doc/images/zipkin_01.png)
+
 ## CAS系统管理
 ![CAS系统管理](doc/images/cas-manager.png)
 ## Jbone系统管理
