@@ -35,7 +35,7 @@ QQ群：547104190
 * jbone-sm : 服务管理模块
     * jbone-sm-admin : 服务管理系统，包括服务监控、服务管理等
     * jbone-sm-register : 服务注册中心，原则上所有服务都要注册进来
-    * jbone-sm-monitor : 服务监控系统，主要包含服务调用链分析和trace跟踪
+    * jbone-sm-zipkinserver : 基于zipkin的调用链监控系统
 * jbone-sys : 系统管理模块
     * jbone-sys-admin ： 系统管理后台
     * jbone-sys-api : 系统服务对外接口定义
@@ -157,7 +157,7 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 127.0.0.1 jbone-sys-server.majunwei.com
 127.0.0.1 jbone-sm-admin.majunwei.com
 127.0.0.1 jbone-sys-admin.majunwei.com
-127.0.0.1 jbone-sm-monitor.majunwei.com
+127.0.0.1 jbone-sm-zipkinserver.majunwei.com
 127.0.0.1 jbone-cas-manager.majunwei.com
 127.0.0.1 jbone-tag-admin.majunwei.com
 127.0.0.1 jbone-eb-portal.majunwei.com
@@ -181,7 +181,7 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 
 5. jbone-sm-admin （服务管理）
 
-6. jbone-sm-monitor （服务调用链）
+6. jbone-sm-zipkinserver （服务调用链）
 
 
 ## 进入系统
@@ -190,7 +190,7 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
  ---- | ------ 
  系统管理 | http://jbone-sys-admin.majunwei.com:20002/ |
  服务管理 | http://jbone-sm-admin.majunwei.com:10002/ |
- 服务调用链 | http://jbone-sm-monitor.majunwei.com:10003/ |
+ 服务调用链 | http://jbone-sm-zipkinserver.majunwei.com:10003/ |
 
 默认用户名密码：jbone/jbone
 
@@ -253,6 +253,6 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 
 遗留问题：
 
-1、jbone-sm-monitor调用链和流量监控未完成；
+1、jbone-sm-zipkinserver调用链和流量监控未完成；
 
 2、jbone-cas-manager未完成

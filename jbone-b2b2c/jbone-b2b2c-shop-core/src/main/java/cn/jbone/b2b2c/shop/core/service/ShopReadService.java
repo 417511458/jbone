@@ -23,7 +23,7 @@ public class ShopReadService {
     private TagApi tagApi;
 
     public ShopDetailsRespDTO getShopDetails(Long shopId){
-        ShopInfoEntity shopInfoEntity = shopInfoRepository.findOne(shopId);
+        ShopInfoEntity shopInfoEntity = shopInfoRepository.getOne(shopId);
         if(shopInfoEntity == null){
             return null;
         }

@@ -12,17 +12,28 @@ spring:
     password: guest
   jpa:
     show-sql: true
-  sleuth:
-    sampler:
-      percentage: 1
-  zipkin:
-    sender:
-      type: rabbit
   datasource:
     username: jbone_sys
     password: Jbone_sys_666
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://121.42.174.77:3306/jbone_sys?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+
+#
+# 以下为 zipkin客户端配置
+#
+  sleuth:
+    sampler:
+      probability: 1
+    messaging:
+      enabled: true
+      rabbit:
+        enabled: true
+  zipkin:
+    sender:
+      type: rabbit
+zipkin.rabbitmq.queue: zipkin
+
+# ###
 
 #注册中心
 eureka:
@@ -64,8 +75,7 @@ hystrix:
 jbone:
   #当前系统名，在系统管理里面对应的名字
   sys:
-    serverName: jbone-sys-admin
-
+    serverName: jbone-sys-server
 
 
 # info接口返回值

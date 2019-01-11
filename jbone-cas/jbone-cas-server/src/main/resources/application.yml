@@ -135,9 +135,13 @@ spring:
     port: 5672
     username: guest
     password: guest
-  sleuth:
-    sampler:
-      percentage: 1
+    #自rabbitmq2.1.2之后，必须设置AdviceChain，否则启动会报空指针（参见AbstractRabbitListenerContainerFactory.getAdviceChain）
+    #在2.1.3中已修复
+#    listener:
+#      simple:
+#        retry:
+#          max-attempts: 3
+#          enabled: true
   mail:
     host: smtp.163.com
     ##port: 25
@@ -146,6 +150,24 @@ spring:
     testConnection: true
     properties.mail.smtp.auth: true
     properties.mail.smtp.starttls.enable: true
+
+#
+# 以下为 zipkin客户端配置
+#
+  sleuth:
+    sampler:
+      probability: 1
+    messaging:
+      enabled: true
+      rabbit:
+        enabled: true
+    enabled: true
+  zipkin:
+    sender:
+      type: rabbit
+    enabled: true
+
+zipkin.rabbitmq.queue: zipkin
 
 # 服务管理配置
 management:

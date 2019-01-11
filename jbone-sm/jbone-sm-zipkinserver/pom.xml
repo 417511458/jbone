@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jbone-sm-monitor</artifactId>
+    <artifactId>jbone-sm-zipkinserver</artifactId>
     <packaging>jar</packaging>
 
-    <name>jbone-sm-monitor</name>
+    <name>jbone-sm-zipkinserver</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -23,34 +23,9 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-netflix-hystrix-stream</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-turbine-stream</artifactId>
-        </dependency>
-
 
         <!-- zipkin调用链 -->
         <dependency>
@@ -78,8 +53,26 @@
             <groupId>io.zipkin.java</groupId>
             <artifactId>zipkin-autoconfigure-storage-mysql</artifactId>
             <version>2.11.12</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jooq</groupId>
+                    <artifactId>jooq</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-autoconfigure-collector-rabbitmq</artifactId>
+            <version>2.11.12</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jooq/jooq -->
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>3.11.9</version>
+        </dependency>
 
         <!-- zipkin调用链 end -->
 
@@ -110,12 +103,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring-boot-starter</artifactId>
         </dependency>
@@ -128,25 +115,11 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.jbone</groupId>
-            <artifactId>jbone-configuration</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.jbone</groupId>
             <artifactId>jbone-cas-client</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-common</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.shiro</groupId>
-                    <artifactId>shiro-core</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
     </dependencies>

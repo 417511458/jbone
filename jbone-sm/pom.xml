@@ -15,6 +15,7 @@
         <module>jbone-sm-admin</module>
         <module>jbone-sm-monitor</module>
         <module>jbone-sm-monitor-publisher</module>
+        <module>jbone-sm-zipkinserver</module>
     </modules>
 
 

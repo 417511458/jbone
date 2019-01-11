@@ -17,8 +17,7 @@ spring:
 
   # 调用链数据源配置
   datasource:
-    schema:
-     - classpath:/zipkin.sql
+    schema: classpath:/zipkin.sql
     url: jdbc:mysql://121.42.174.77:3306/jbone_zipkin?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: jbone_zipkin
     password: Jbone_zipkin_666
@@ -31,6 +30,7 @@ spring:
 zipkin:
   storage:
     type: mysql
+    StorageComponent: mysql
 
 # 服务端口
 server:

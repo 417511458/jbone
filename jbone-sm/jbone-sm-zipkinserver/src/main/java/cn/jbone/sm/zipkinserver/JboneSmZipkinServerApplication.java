@@ -1,22 +1,19 @@
-package cn.jbone.sm.monitor;
+package cn.jbone.sm.zipkinserver;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
-import org.springframework.cloud.netflix.turbine.stream.EnableTurbineStream;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import zipkin.server.EnableZipkinServer;
+import zipkin2.server.internal.EnableZipkinServer;
 
-@EnableTurbineStream
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-@EnableHystrixDashboard
 @SpringBootApplication
 @EnableFeignClients
-public class JboneSmMonitorApplication {
+@EnableZipkinServer
+public class JboneSmZipkinServerApplication {
     public static void main(String[] args) {
-        new SpringApplicationBuilder(JboneSmMonitorApplication.class).banner(new JboneSmMonitorBanner()).logStartupInfo(true).run(args);
+        new SpringApplicationBuilder(JboneSmZipkinServerApplication.class).banner(new JboneSmZipkinServerBanner()).logStartupInfo(true).run(args);
     }
 }

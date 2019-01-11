@@ -2,7 +2,7 @@
   "@class" : "org.apereo.cas.services.RegexRegisteredService",
   "serviceId" : "^http://jbone-tag-admin.majunwei.com.*",
   "name" : "Jbone标签管理系统",
-  "id" : 10004,
+  "id" : 40002,
   "description" : "Jbone标签管理系统",
   "logoutType" : "BACK_CHANNEL",
   "logoutUrl" : "http://jbone-tag-admin.majunwei.com:40002/cas?client_name=CasClient"
