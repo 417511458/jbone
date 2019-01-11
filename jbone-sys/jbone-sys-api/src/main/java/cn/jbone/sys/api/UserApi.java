@@ -6,7 +6,6 @@ import cn.jbone.sys.api.dto.request.GithubUserLoginRequestDTO;
 import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserSecurityQuestionsResponseDTO;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

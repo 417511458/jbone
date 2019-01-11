@@ -88,7 +88,7 @@ jbone:
     #权限过滤规则
     filterChainDefinition:
       "[/actuator/**]": anon  #不过滤监控端口，此处巨坑，升级到2。0之后必须用[]括起来，否则会规律所有符号.
-#      "[/zipkin/**]": authc,roles[serverAdministrator]
+      "[/zipkin/**]": authc,roles[serverAdministrator]
       "[/**]": anon
       "[/login]": anon
     clientSessionTimeout: 180000 #客户端Session失效时间，默认30分钟

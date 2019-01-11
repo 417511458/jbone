@@ -28,6 +28,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,6 +68,11 @@ public class CasWebApplication {
      * @param args the args
      */
     public static void main(final String[] args) {
+        List<String> argArr = new ArrayList<>();
+        argArr.add("spring.main.allow-bean-definition-overriding=true");
+        if(args != null || args.length >0){
+            argArr.addAll(Arrays.asList(args));
+        }
         val properties = CasEmbeddedContainerUtils.getRuntimeProperties(Boolean.TRUE);
         val banner = CasEmbeddedContainerUtils.getCasBannerInstance();
         new SpringApplicationBuilder(CasWebApplication.class)
@@ -73,6 +81,6 @@ public class CasWebApplication {
                 .properties(properties)
                 .logStartupInfo(true)
                 .contextClass(CasWebApplicationContext.class)
-                .run(args);
+                .run(argArr.toArray(new String[]{}));
     }
 }
