@@ -1,6 +1,6 @@
 package cn.jbone.tag.api;
 
-import cn.jbone.common.rpc.Result;
+import cn.jbone.cms.common.rpc.Result;
 import cn.jbone.tag.api.model.CreateTagModel;
 import cn.jbone.tag.api.model.TagModel;
 import cn.jbone.tag.api.model.UpdateTagModel;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * 标签接口

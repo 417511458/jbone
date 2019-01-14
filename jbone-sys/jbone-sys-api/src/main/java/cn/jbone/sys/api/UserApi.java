@@ -1,6 +1,6 @@
 package cn.jbone.sys.api;
 
-import cn.jbone.common.rpc.Result;
+import cn.jbone.cms.common.rpc.Result;
 import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.api.dto.request.GithubUserLoginRequestDTO;
 import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;

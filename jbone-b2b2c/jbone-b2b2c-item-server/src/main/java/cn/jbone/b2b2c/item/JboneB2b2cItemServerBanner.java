@@ -1,6 +1,6 @@
 package cn.jbone.b2b2c.item;
 
-import cn.jbone.common.boot.AbastractJboneBanner;
+import cn.jbone.cms.common.boot.AbastractJboneBanner;
 
 public class JboneB2b2cItemServerBanner extends AbastractJboneBanner {
 

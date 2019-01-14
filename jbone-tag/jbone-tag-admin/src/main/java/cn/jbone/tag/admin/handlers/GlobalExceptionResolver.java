@@ -1,7 +1,7 @@
 package cn.jbone.tag.admin.handlers;
 
-import cn.jbone.common.ui.result.Result;
-import cn.jbone.common.utils.ResultUtils;
+import cn.jbone.cms.common.ui.result.Result;
+import cn.jbone.cms.common.utils.ResultUtils;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.AuthorizationException;

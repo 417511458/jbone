@@ -1,7 +1,7 @@
 package cn.jbone.cas.client.realm;
 
-import cn.jbone.common.exception.JboneException;
-import cn.jbone.common.rpc.Result;
+import cn.jbone.cms.common.exception.JboneException;
+import cn.jbone.cms.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
 import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
 import io.buji.pac4j.realm.Pac4jRealm;

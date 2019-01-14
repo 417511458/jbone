@@ -2,7 +2,7 @@ package cn.jbone.bpm.api;
 
 import cn.jbone.bpm.api.dto.response.ProcessInstanceQueryRequestDTO;
 import cn.jbone.bpm.api.dto.response.ProcessInstanceQueryResponseDTO;
-import cn.jbone.common.rpc.Result;
+import cn.jbone.cms.common.rpc.Result;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/processQuery")

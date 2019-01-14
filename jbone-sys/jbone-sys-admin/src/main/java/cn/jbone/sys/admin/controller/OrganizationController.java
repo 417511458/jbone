@@ -1,7 +1,7 @@
 package cn.jbone.sys.admin.controller;
 
-import cn.jbone.common.ui.result.Result;
-import cn.jbone.common.utils.ResultUtils;
+import cn.jbone.cms.common.ui.result.Result;
+import cn.jbone.cms.common.utils.ResultUtils;
 import cn.jbone.sys.core.service.OrganizationService;
 import cn.jbone.sys.core.service.model.organization.CreateOrganizationModel;
 import cn.jbone.sys.core.service.model.organization.OrganizationBaseInfoModel;

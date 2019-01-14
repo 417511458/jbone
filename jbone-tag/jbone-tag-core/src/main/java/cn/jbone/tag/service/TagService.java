@@ -1,6 +1,6 @@
 package cn.jbone.tag.service;
 
-import cn.jbone.common.exception.JboneException;
+import cn.jbone.cms.common.exception.JboneException;
 import cn.jbone.tag.api.model.CreateTagModel;
 import cn.jbone.tag.api.model.TagModel;
 import cn.jbone.tag.api.model.UpdateTagModel;

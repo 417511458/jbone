@@ -4,7 +4,7 @@ import cn.jbone.b2b2c.item.api.ItemCategoryReadApi;
 import cn.jbone.b2b2c.item.api.response.ItemCategoryTreeRespDTO;
 import cn.jbone.b2b2c.item.api.response.ShopCagetoryItemsRespDTO;
 import cn.jbone.b2b2c.item.core.service.ItemCategoryReadService;
-import cn.jbone.common.rpc.Result;
+import cn.jbone.cms.common.rpc.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

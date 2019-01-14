@@ -2,7 +2,7 @@ package cn.jbone.b2b2c.decoration.api.starter;
 
 import cn.jbone.b2b2c.decoration.api.DecorationReadApi;
 import cn.jbone.b2b2c.decoration.api.dto.response.ShopDecorationInfoRespDTO;
-import cn.jbone.common.rpc.Result;
+import cn.jbone.cms.common.rpc.Result;
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

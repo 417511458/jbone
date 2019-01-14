@@ -5,7 +5,7 @@ import cn.jbone.bpm.api.dto.request.StartProcessRequestDTO;
 import cn.jbone.bpm.api.dto.request.StopProcessRequestDTO;
 import cn.jbone.bpm.api.dto.request.SuspendProcessRequestDTO;
 import cn.jbone.bpm.api.dto.response.StartProcessResponseDTO;
-import cn.jbone.common.rpc.Result;
+import cn.jbone.cms.common.rpc.Result;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**

@@ -3,7 +3,7 @@ package cn.jbone.b2b2c.shop.core.service;
 import cn.jbone.b2b2c.shop.api.dto.response.*;
 import cn.jbone.b2b2c.shop.core.dao.domain.*;
 import cn.jbone.b2b2c.shop.core.dao.repository.ShopInfoRepository;
-import cn.jbone.common.rpc.Result;
+import cn.jbone.cms.common.rpc.Result;
 import cn.jbone.tag.api.TagApi;
 import cn.jbone.tag.api.model.TagModel;
 import org.springframework.beans.BeanUtils;

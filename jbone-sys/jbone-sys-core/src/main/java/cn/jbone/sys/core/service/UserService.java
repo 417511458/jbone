@@ -1,7 +1,7 @@
 package cn.jbone.sys.core.service;
 
-import cn.jbone.common.exception.JboneException;
-import cn.jbone.common.utils.PasswordUtils;
+import cn.jbone.cms.common.exception.JboneException;
+import cn.jbone.cms.common.utils.PasswordUtils;
 import cn.jbone.sys.api.dto.ThirdPartyName;
 import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.api.dto.request.GithubUserLoginRequestDTO;
