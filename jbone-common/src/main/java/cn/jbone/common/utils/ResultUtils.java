@@ -1,9 +1,9 @@
-package cn.jbone.cms.common.utils;
+package cn.jbone.common.utils;
 
-import cn.jbone.cms.common.ui.result.ListResult;
-import cn.jbone.cms.common.ui.result.ModelResult;
-import cn.jbone.cms.common.ui.result.Result;
-import cn.jbone.cms.common.ui.result.ResultStatus;
+import cn.jbone.common.ui.result.ListResult;
+import cn.jbone.common.ui.result.ModelResult;
+import cn.jbone.common.ui.result.Result;
+import cn.jbone.common.ui.result.ResultStatus;
 
 import java.util.Collection;
 

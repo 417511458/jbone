@@ -1,4 +1,4 @@
-package cn.jbone.cms.common.utils;
+package cn.jbone.common.utils;
 
 import java.text.DecimalFormat;
 import java.util.Date;

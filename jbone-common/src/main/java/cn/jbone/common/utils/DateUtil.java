@@ -1,4 +1,4 @@
-package cn.jbone.cms.common.utils;
+package cn.jbone.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;

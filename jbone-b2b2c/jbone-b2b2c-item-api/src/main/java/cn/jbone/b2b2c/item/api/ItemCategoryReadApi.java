@@ -2,7 +2,7 @@ package cn.jbone.b2b2c.item.api;
 
 import cn.jbone.b2b2c.item.api.response.ItemCategoryTreeRespDTO;
 import cn.jbone.b2b2c.item.api.response.ShopCagetoryItemsRespDTO;
-import cn.jbone.cms.common.rpc.Result;
+import cn.jbone.common.rpc.Result;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

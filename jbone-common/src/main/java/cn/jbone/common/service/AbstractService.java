@@ -1,8 +1,8 @@
-package cn.jbone.cms.common.service;
+package cn.jbone.common.service;
 
 
-import cn.jbone.cms.common.api.dto.SearchListDTO;
-import cn.jbone.cms.common.utils.DateUtil;
+import cn.jbone.common.api.dto.SearchListDTO;
+import cn.jbone.common.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

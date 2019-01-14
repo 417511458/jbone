@@ -1,6 +1,6 @@
 package cn.jbone.tag;
 
-import cn.jbone.cms.common.boot.AbastractJboneBanner;
+import cn.jbone.common.boot.AbastractJboneBanner;
 
 /**
  * @author HoldDie

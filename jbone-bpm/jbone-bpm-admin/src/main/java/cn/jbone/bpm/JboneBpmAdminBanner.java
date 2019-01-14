@@ -1,6 +1,6 @@
 package cn.jbone.bpm;
 
-import cn.jbone.cms.common.boot.AbastractJboneBanner;
+import cn.jbone.common.boot.AbastractJboneBanner;
 
 public class JboneBpmAdminBanner extends AbastractJboneBanner {
 

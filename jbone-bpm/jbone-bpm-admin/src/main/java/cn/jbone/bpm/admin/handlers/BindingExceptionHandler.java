@@ -1,8 +1,8 @@
 package cn.jbone.bpm.admin.handlers;
 
-import cn.jbone.cms.common.exception.JboneException;
-import cn.jbone.cms.common.ui.result.Result;
-import cn.jbone.cms.common.utils.ResultUtils;
+import cn.jbone.common.exception.JboneException;
+import cn.jbone.common.ui.result.Result;
+import cn.jbone.common.utils.ResultUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -27,7 +27,7 @@ public class BindingExceptionHandler {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Around("execution(cn.jbone.cms.common.ui.result.Result cn.jbone.tag.admin.controller.*.*(..))")
+    @Around("execution(cn.jbone.common.ui.result.Result cn.jbone.tag.admin.controller.*.*(..))")
     public Result doAround(ProceedingJoinPoint pjp) throws Throwable {
 
         BindingResult bindingResult = null;

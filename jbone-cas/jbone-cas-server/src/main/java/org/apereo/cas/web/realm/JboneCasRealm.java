@@ -1,6 +1,6 @@
 package org.apereo.cas.web.realm;
 
-import cn.jbone.cms.common.rpc.Result;
+import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
 import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;
 import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;

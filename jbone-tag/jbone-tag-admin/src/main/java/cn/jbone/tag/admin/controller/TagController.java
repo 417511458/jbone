@@ -1,7 +1,7 @@
 package cn.jbone.tag.admin.controller;
 
-import cn.jbone.cms.common.ui.result.Result;
-import cn.jbone.cms.common.utils.ResultUtils;
+import cn.jbone.common.ui.result.Result;
+import cn.jbone.common.utils.ResultUtils;
 import cn.jbone.tag.api.model.CreateTagModel;
 import cn.jbone.tag.api.model.TagModel;
 import cn.jbone.tag.api.model.UpdateTagModel;

@@ -1,6 +1,6 @@
 package org.apereo.cas.pswd.action;
 
-import cn.jbone.cms.common.rpc.Result;
+import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
 import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
 import org.apereo.cas.authentication.principal.Principal;

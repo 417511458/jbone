@@ -3,7 +3,7 @@ package cn.jbone.b2b2c.shop.server;
 import cn.jbone.b2b2c.shop.api.ShopReadApi;
 import cn.jbone.b2b2c.shop.api.dto.response.ShopDetailsRespDTO;
 import cn.jbone.b2b2c.shop.core.service.ShopReadService;
-import cn.jbone.cms.common.rpc.Result;
+import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

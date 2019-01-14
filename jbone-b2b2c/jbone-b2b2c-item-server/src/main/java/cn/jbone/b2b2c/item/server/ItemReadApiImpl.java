@@ -4,7 +4,7 @@ import cn.jbone.b2b2c.item.api.ItemReadApi;
 import cn.jbone.b2b2c.item.api.request.GetItemTopListReqDTO;
 import cn.jbone.b2b2c.item.api.response.ItemBaseInfoRespDTO;
 import cn.jbone.b2b2c.item.core.service.ItemReadService;
-import cn.jbone.cms.common.rpc.Result;
+import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

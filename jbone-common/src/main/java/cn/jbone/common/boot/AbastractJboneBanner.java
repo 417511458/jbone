@@ -1,6 +1,6 @@
-package cn.jbone.cms.common.boot;
+package cn.jbone.common.boot;
 
-import cn.jbone.cms.common.utils.AsciiArtUtils;
+import cn.jbone.common.utils.AsciiArtUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.BooleanUtils;

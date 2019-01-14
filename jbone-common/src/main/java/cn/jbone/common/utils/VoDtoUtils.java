@@ -1,7 +1,7 @@
-package cn.jbone.cms.common.utils;
+package cn.jbone.common.utils;
 
-import cn.jbone.cms.common.api.dto.SearchListDTO;
-import cn.jbone.cms.common.service.vo.SearchListVo;
+import cn.jbone.common.api.dto.SearchListDTO;
+import cn.jbone.common.service.vo.SearchListVo;
 import org.springframework.beans.BeanUtils;
 
 public class VoDtoUtils {

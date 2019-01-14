@@ -1,4 +1,4 @@
-package cn.jbone.cms.common.utils;
+package cn.jbone.common.utils;
 
 public enum IdTargetEnum {
     SHOP(10),   //店铺

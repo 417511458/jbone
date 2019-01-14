@@ -1,6 +1,6 @@
 package cn.jbone.sys.core.service;
 
-import cn.jbone.cms.common.exception.JboneException;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.sys.core.dao.domain.RbacPermissionEntity;
 import cn.jbone.sys.core.dao.repository.RbacPermissionRepository;
 import cn.jbone.sys.core.service.model.permission.PermissionBaseInfoModel;

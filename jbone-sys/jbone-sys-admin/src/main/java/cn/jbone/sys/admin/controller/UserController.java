@@ -2,8 +2,8 @@ package cn.jbone.sys.admin.controller;
 
 import cn.jbone.sys.core.dao.domain.*;
 import cn.jbone.sys.core.service.model.user.*;
-import cn.jbone.cms.common.ui.result.Result;
-import cn.jbone.cms.common.utils.ResultUtils;
+import cn.jbone.common.ui.result.Result;
+import cn.jbone.common.utils.ResultUtils;
 import cn.jbone.sys.core.service.PermissionService;
 import cn.jbone.sys.core.service.RoleService;
 import cn.jbone.sys.core.service.SystemService;

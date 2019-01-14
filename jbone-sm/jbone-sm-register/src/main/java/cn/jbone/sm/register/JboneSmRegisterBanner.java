@@ -1,6 +1,6 @@
 package cn.jbone.sm.register;
 
-import cn.jbone.cms.common.boot.AbastractJboneBanner;
+import cn.jbone.common.boot.AbastractJboneBanner;
 
 public class JboneSmRegisterBanner extends AbastractJboneBanner {
     @Override

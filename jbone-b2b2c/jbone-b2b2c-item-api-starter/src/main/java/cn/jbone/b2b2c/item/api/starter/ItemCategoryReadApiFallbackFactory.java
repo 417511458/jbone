@@ -3,7 +3,7 @@ package cn.jbone.b2b2c.item.api.starter;
 import cn.jbone.b2b2c.item.api.ItemCategoryReadApi;
 import cn.jbone.b2b2c.item.api.response.ItemCategoryTreeRespDTO;
 import cn.jbone.b2b2c.item.api.response.ShopCagetoryItemsRespDTO;
-import cn.jbone.cms.common.rpc.Result;
+import cn.jbone.common.rpc.Result;
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

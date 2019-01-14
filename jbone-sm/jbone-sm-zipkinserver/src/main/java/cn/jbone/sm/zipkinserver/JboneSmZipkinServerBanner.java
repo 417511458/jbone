@@ -1,6 +1,6 @@
 package cn.jbone.sm.zipkinserver;
 
-import cn.jbone.cms.common.boot.AbastractJboneBanner;
+import cn.jbone.common.boot.AbastractJboneBanner;
 
 public class JboneSmZipkinServerBanner extends AbastractJboneBanner {
     @Override

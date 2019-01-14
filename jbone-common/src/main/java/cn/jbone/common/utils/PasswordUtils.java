@@ -1,4 +1,4 @@
-package cn.jbone.cms.common.utils;
+package cn.jbone.common.utils;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;

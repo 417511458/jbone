@@ -1,8 +1,8 @@
 package cn.jbone.sys.admin.handlers;
 
 import com.alibaba.fastjson.JSON;
-import cn.jbone.cms.common.ui.result.Result;
-import cn.jbone.cms.common.utils.ResultUtils;
+import cn.jbone.common.ui.result.Result;
+import cn.jbone.common.utils.ResultUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package cn.jbone.cms.common.utils;
+package cn.jbone.common.utils;
 
 import com.github.lalyos.jfiglet.FigletFont;
 import org.apache.commons.lang3.StringUtils;

@@ -1,4 +1,4 @@
-package cn.jbone.cms.common.ui.result;
+package cn.jbone.common.ui.result;
 
 import java.io.Serializable;
 

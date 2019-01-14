@@ -1,7 +1,7 @@
 package cn.jbone.sys.admin.controller;
 
-import cn.jbone.cms.common.ui.result.Result;
-import cn.jbone.cms.common.utils.ResultUtils;
+import cn.jbone.common.ui.result.Result;
+import cn.jbone.common.utils.ResultUtils;
 import cn.jbone.sys.core.dao.domain.RbacSystemEntity;
 import cn.jbone.sys.core.service.MenuService;
 import cn.jbone.sys.core.service.SystemService;

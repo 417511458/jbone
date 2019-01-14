@@ -1,4 +1,4 @@
-package cn.jbone.cms.common.service.vo;
+package cn.jbone.common.service.vo;
 
 import lombok.Data;
 

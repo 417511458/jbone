@@ -1,6 +1,6 @@
 package cn.jbone.tag.api;
 
-import cn.jbone.cms.common.rpc.Result;
+import cn.jbone.common.rpc.Result;
 import cn.jbone.tag.api.model.CreateTagModel;
 import cn.jbone.tag.api.model.TagModel;
 import cn.jbone.tag.api.model.UpdateTagModel;

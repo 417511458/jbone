@@ -1,6 +1,6 @@
 package cn.jbone.sys.api.feign;
 
-import cn.jbone.cms.common.rpc.Result;
+import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
 import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.api.dto.request.GithubUserLoginRequestDTO;

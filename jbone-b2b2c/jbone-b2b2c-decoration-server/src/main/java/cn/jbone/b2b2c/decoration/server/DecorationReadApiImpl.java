@@ -3,7 +3,7 @@ package cn.jbone.b2b2c.decoration.server;
 import cn.jbone.b2b2c.decoration.api.DecorationReadApi;
 import cn.jbone.b2b2c.decoration.api.dto.response.ShopDecorationInfoRespDTO;
 import cn.jbone.b2b2c.decoration.core.ShopDecorationService;
-import cn.jbone.cms.common.rpc.Result;
+import cn.jbone.common.rpc.Result;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
