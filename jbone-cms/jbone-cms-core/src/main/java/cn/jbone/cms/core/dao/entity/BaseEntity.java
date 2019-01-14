@@ -1,14 +1,16 @@
-package cn.jbone.core.dao.entity;
+package cn.jbone.cms.core.dao.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
-public class BaseEntity {
+@MappedSuperclass
+public class BaseEntity implements Serializable {
 
     /**
      * 添加时间

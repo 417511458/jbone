@@ -1,4 +1,4 @@
-package cn.jbone.core.dao.entity;
+package cn.jbone.cms.core.dao.entity;
 
 import lombok.Data;
 

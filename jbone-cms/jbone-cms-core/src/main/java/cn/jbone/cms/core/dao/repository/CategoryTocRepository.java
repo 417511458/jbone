@@ -1,6 +1,6 @@
-package cn.jbone.core.dao.repository;
+package cn.jbone.cms.core.dao.repository;
 
-import cn.jbone.core.dao.entity.CategoryToc;
+import cn.jbone.cms.core.dao.entity.CategoryToc;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

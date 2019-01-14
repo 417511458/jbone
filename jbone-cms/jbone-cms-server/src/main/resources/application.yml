@@ -14,7 +14,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-    generate-ddl: true
   datasource:
     username: jbone_cms
     password: Jbone_cms_666

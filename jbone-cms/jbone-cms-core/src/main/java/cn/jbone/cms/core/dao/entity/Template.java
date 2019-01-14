@@ -1,4 +1,4 @@
-package cn.jbone.core.dao.entity;
+package cn.jbone.cms.core.dao.entity;
 
 import cn.jbone.cms.common.enums.TemplateTypeEnum;
 import lombok.Data;
