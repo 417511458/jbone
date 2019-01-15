@@ -142,12 +142,16 @@ spring:
 #        retry:
 #          max-attempts: 3
 #          enabled: true
+
+  #
+  # 开发环境网络不稳定，连接不上影响服务监控，可以关闭下
+  #
   mail:
     host: smtp.163.com
     ##port: 25
     username: jbone666@163.com
     password: jbonesq2018
-    testConnection: true
+    testConnection: false
     properties.mail.smtp.auth: true
     properties.mail.smtp.starttls.enable: true
 
