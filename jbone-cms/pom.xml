@@ -17,6 +17,7 @@
         <module>jbone-cms-common</module>
         <module>jbone-cms-api</module>
         <module>jbone-cms-server</module>
+        <module>jbone-cms-admin</module>
     </modules>
 
     <properties>
