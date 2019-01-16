@@ -30,7 +30,7 @@ export default [
   {
     path: '/',
     name: '_home',
-    redirect: '/home',
+    redirect: '/ui/home',
     component: Main,
     meta: {
       hideInMenu: true,
@@ -38,7 +38,7 @@ export default [
     },
     children: [
       {
-        path: '/home',
+        path: '/ui/home',
         name: 'home',
         meta: {
           hideInMenu: true,
@@ -60,7 +60,7 @@ export default [
     }
   },
   {
-    path: '/join',
+    path: '/ui/join',
     name: 'join',
     component: Main,
     meta: {
@@ -79,7 +79,7 @@ export default [
     ]
   },
   {
-    path: '/message',
+    path: '/ui/message',
     name: 'message',
     component: Main,
     meta: {
@@ -99,7 +99,7 @@ export default [
     ]
   },
   {
-    path: '/components',
+    path: '/ui/components',
     name: 'components',
     meta: {
       icon: 'logo-buffer',
@@ -209,7 +209,7 @@ export default [
     ]
   },
   {
-    path: '/update',
+    path: '/ui/update',
     name: 'update',
     meta: {
       icon: 'md-cloud-upload',
@@ -238,7 +238,7 @@ export default [
     ]
   },
   {
-    path: '/excel',
+    path: '/ui/excel',
     name: 'excel',
     meta: {
       icon: 'ios-stats',
@@ -267,7 +267,7 @@ export default [
     ]
   },
   {
-    path: '/tools_methods',
+    path: '/ui/tools_methods',
     name: 'tools_methods',
     meta: {
       hideInBread: true
@@ -287,7 +287,7 @@ export default [
     ]
   },
   {
-    path: '/i18n',
+    path: '/ui/i18n',
     name: 'i18n',
     meta: {
       hideInBread: true
@@ -306,7 +306,7 @@ export default [
     ]
   },
   {
-    path: '/error_store',
+    path: '/ui/error_store',
     name: 'error_store',
     meta: {
       hideInBread: true
@@ -325,7 +325,7 @@ export default [
     ]
   },
   {
-    path: '/error_logger',
+    path: '/ui/error_logger',
     name: 'error_logger',
     meta: {
       hideInBread: true,
@@ -345,7 +345,7 @@ export default [
     ]
   },
   {
-    path: '/directive',
+    path: '/ui/directive',
     name: 'directive',
     meta: {
       hideInBread: true
@@ -364,7 +364,7 @@ export default [
     ]
   },
   {
-    path: '/multilevel',
+    path: '/ui/multilevel',
     name: 'multilevel',
     meta: {
       icon: 'md-menu',
@@ -424,7 +424,7 @@ export default [
     ]
   },
   {
-    path: '/argu',
+    path: '/ui/argu',
     name: 'argu',
     meta: {
       hideInMenu: true
@@ -455,7 +455,7 @@ export default [
     ]
   },
   {
-    path: '/401',
+    path: '/ui/401',
     name: 'error_401',
     meta: {
       hideInMenu: true
@@ -463,7 +463,7 @@ export default [
     component: () => import('@/view/error-page/401.vue')
   },
   {
-    path: '/500',
+    path: '/ui/500',
     name: 'error_500',
     meta: {
       hideInMenu: true

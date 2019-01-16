@@ -8,7 +8,7 @@
         </Card>
       </i-col>
       <i-col span="12">
-        <Card title="iview-admin交流群21111112312123" shadow>
+        <Card title="jbone-cms交流群21111112312123" shadow>
           <img class="qq-group-img" :src="qqFans2" alt="">
           <p class="qq-group-intro">本群为使用iview-admin或者对iview-admin感兴趣的开发者提供交流平台，在这里，解决你开发中的疑惑，共同进步。</p>
         </Card>
