@@ -40,5 +40,15 @@ export default {
   message_page: '消息中心',
   tree_table_page: '树状表格',
   org_tree_page: '组织结构树',
-  drag_drawer_page: '可拖动抽屉'
+  drag_drawer_page: '可拖动抽屉',
+
+  article: '内容管理',
+  category_page: '栏目管理',
+  article_page: '文章管理',
+  tag_page: '标签管理',
+  special_page: '专题管理',
+
+  base: '基本设置',
+  site_base_page: '网站基本信息',
+  link_page: '友情链接'
 }
