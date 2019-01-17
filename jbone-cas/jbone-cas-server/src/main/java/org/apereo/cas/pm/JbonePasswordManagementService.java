@@ -2,9 +2,9 @@ package org.apereo.cas.pm;
 
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
-import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
-import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;
-import cn.jbone.sys.api.dto.response.UserSecurityQuestionsResponseDTO;
+import cn.jbone.sys.common.dto.request.ChangePasswordRequestDTO;
+import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
+import cn.jbone.sys.common.dto.response.UserSecurityQuestionsResponseDTO;
 import org.apereo.cas.CipherExecutor;
 import org.apereo.cas.authentication.Credential;
 import org.apereo.cas.configuration.model.support.pm.PasswordManagementProperties;

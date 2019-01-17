@@ -1,11 +1,11 @@
 package cn.jbone.sys.api;
 
 import cn.jbone.common.rpc.Result;
-import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
-import cn.jbone.sys.api.dto.request.GithubUserLoginRequestDTO;
-import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;
-import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
-import cn.jbone.sys.api.dto.response.UserSecurityQuestionsResponseDTO;
+import cn.jbone.sys.common.dto.request.ChangePasswordRequestDTO;
+import cn.jbone.sys.common.dto.request.GithubUserLoginRequestDTO;
+import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
+import cn.jbone.sys.common.dto.response.UserInfoResponseDTO;
+import cn.jbone.sys.common.dto.response.UserSecurityQuestionsResponseDTO;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

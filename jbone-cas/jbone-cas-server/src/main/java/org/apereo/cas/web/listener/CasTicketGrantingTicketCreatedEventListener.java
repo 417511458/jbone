@@ -1,8 +1,8 @@
 package org.apereo.cas.web.listener;
 
 import cn.jbone.sys.api.UserApi;
-import cn.jbone.sys.api.dto.ThirdPartyName;
-import cn.jbone.sys.api.dto.request.GithubUserLoginRequestDTO;
+import cn.jbone.sys.common.dto.ThirdPartyName;
+import cn.jbone.sys.common.dto.request.GithubUserLoginRequestDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.apereo.cas.authentication.principal.Principal;
 import org.apereo.cas.support.events.ticket.CasTicketGrantingTicketCreatedEvent;

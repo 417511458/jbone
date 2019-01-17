@@ -1,6 +1,6 @@
 package cn.jbone.cas.client.utils;
 
-import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
+import cn.jbone.sys.common.dto.response.UserInfoResponseDTO;
 import org.apache.shiro.SecurityUtils;
 
 /**

@@ -2,11 +2,11 @@ package cn.jbone.sys.server.api.impl;
 
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
-import cn.jbone.sys.api.dto.request.ChangePasswordRequestDTO;
-import cn.jbone.sys.api.dto.request.GithubUserLoginRequestDTO;
-import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;
-import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
-import cn.jbone.sys.api.dto.response.UserSecurityQuestionsResponseDTO;
+import cn.jbone.sys.common.dto.request.ChangePasswordRequestDTO;
+import cn.jbone.sys.common.dto.request.GithubUserLoginRequestDTO;
+import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
+import cn.jbone.sys.common.dto.response.UserInfoResponseDTO;
+import cn.jbone.sys.common.dto.response.UserSecurityQuestionsResponseDTO;
 import cn.jbone.sys.core.service.UserService;
 import cn.jbone.sys.core.service.model.user.UserBaseInfoModel;
 import org.slf4j.Logger;

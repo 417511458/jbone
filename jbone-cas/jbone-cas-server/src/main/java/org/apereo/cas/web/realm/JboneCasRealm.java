@@ -2,8 +2,8 @@ package org.apereo.cas.web.realm;
 
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
-import cn.jbone.sys.api.dto.response.UserBaseInfoResponseDTO;
-import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
+import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
+import cn.jbone.sys.common.dto.response.UserInfoResponseDTO;
 import org.apache.shiro.util.ByteSource;
 import org.apereo.cas.web.SpringManager;
 import org.apache.shiro.authc.*;

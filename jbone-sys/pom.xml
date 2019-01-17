@@ -18,6 +18,7 @@
         <module>jbone-sys-admin</module>
         <module>jbone-sys-api-starter</module>
         <module>jbone-sys-core</module>
+        <module>jbone-sys-common</module>
     </modules>
 
     <properties>

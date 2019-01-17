@@ -1,6 +1,6 @@
-package cn.jbone.sys.api.dto.request;
+package cn.jbone.sys.common.dto.request;
 
-import cn.jbone.sys.api.dto.ThirdPartyName;
+import cn.jbone.sys.common.dto.ThirdPartyName;
 import lombok.Data;
 
 @Data

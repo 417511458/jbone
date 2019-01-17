@@ -3,7 +3,7 @@ package cn.jbone.cas.client.realm;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
-import cn.jbone.sys.api.dto.response.UserInfoResponseDTO;
+import cn.jbone.sys.common.dto.response.UserInfoResponseDTO;
 import io.buji.pac4j.realm.Pac4jRealm;
 import io.buji.pac4j.subject.Pac4jPrincipal;
 import io.buji.pac4j.token.Pac4jToken;

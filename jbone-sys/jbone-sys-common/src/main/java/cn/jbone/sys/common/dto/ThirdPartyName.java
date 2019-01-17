@@ -1,4 +1,4 @@
-package cn.jbone.sys.api.dto;
+package cn.jbone.sys.common.dto;
 
 public enum ThirdPartyName {
     GITHUB

@@ -1,4 +1,4 @@
-package cn.jbone.sys.api.dto.response;
+package cn.jbone.sys.common.dto.response;
 
 
 import java.io.Serializable;

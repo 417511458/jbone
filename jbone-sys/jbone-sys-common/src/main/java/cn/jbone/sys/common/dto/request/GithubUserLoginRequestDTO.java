@@ -1,4 +1,4 @@
-package cn.jbone.sys.api.dto.request;
+package cn.jbone.sys.common.dto.request;
 
 import lombok.Data;
 
