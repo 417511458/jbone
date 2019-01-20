@@ -17,8 +17,8 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev: 'http://jbone-cms-admin.majunwei.com:50002',
-    pro: 'http://jbone-cms-admin.majunwei.com:50002'
+    dev: 'http://jbone-sm-gateway.majunwei.com:10005',
+    pro: 'http://jbone-sm-gateway.majunwei.com:10005'
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home

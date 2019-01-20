@@ -15,6 +15,11 @@ import '@/assets/icons/iconfont.css'
 import TreeTable from 'tree-table-vue'
 import VOrgTree from 'v-org-tree'
 import 'v-org-tree/dist/v-org-tree.css'
+import axios from 'axios'
+
+axios.defaults.withCredentials = true;
+Vue.prototype.$axios = axios;
+
 // 实际打包时应该不引入mock
 /* eslint-disable */
 if (process.env.NODE_ENV !== 'production') require('@/mock')
@@ -41,6 +46,8 @@ Vue.prototype.$config = config
  */
 importDirective(Vue)
 Vue.directive('clickOutside', clickOutside)
+
+
 
 /* eslint-disable no-new */
 new Vue({

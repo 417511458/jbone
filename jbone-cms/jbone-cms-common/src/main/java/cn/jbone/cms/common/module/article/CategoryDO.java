@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CategoryInfo {
+public class CategoryDO {
 
     private Long id;
 
@@ -45,7 +45,7 @@ public class CategoryInfo {
     /**
      * 子栏目
      */
-    private List<CategoryInfo> childCategory;
+    private List<CategoryDO> childCategory;
 
     /**
      * 关键字，用于SEO
@@ -75,10 +75,10 @@ public class CategoryInfo {
     /**
      * 模版
      */
-    private TemplateInfo template;
+    private TemplateDO template;
 
     /**
      * 栏目标签，只用于标签虚拟栏目
      */
-    private List<TagInfo> tags;
+    private List<TagDO> tags;
 }

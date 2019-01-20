@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 // import { Spin } from 'iview'
+
 const addErrorLog = errorInfo => {
   const { statusText, status, request: { responseURL } } = errorInfo
   let info = {
@@ -21,8 +22,12 @@ class HttpRequest {
     const config = {
       baseURL: this.baseUrl,
       headers: {
-        //
-      }
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+        //'Content-Type': 'application/x-www-form-urlencoded',
+        //'X-Requested-With': 'XMLHttpRequest',
+      },
+      withCredentials: true // 允许携带cookie
     }
     return config
   }
@@ -65,8 +70,41 @@ class HttpRequest {
     })
   }
   request (options) {
-    const instance = axios.create()
-    options = Object.assign(this.getInsideConfig(), options)
+    const instance = axios.create({
+      baseURL: this.baseUrl,
+      timeout: 5000, // 请求的超时时间
+      withCredentials: true, // 允许携带cookie
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+        //'Content-Type': 'application/x-www-form-urlencoded',
+        //'X-Requested-With': 'XMLHttpRequest',
+      },
+      transformRequest: [function transformRequest(data, headers) {
+        /* 把类似content-type这种改成Content-Type */
+        let keys = Object.keys(headers);
+        let normalizedName = 'Content-Type';
+        keys.forEach(name => {
+          if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+          headers[normalizedName] = headers[name];
+          delete headers[name];
+        }
+      });
+        /* 这里就是用来解决POST提交json数据的时候是直接把整个json放在request payload中提交过去的情况
+         * 这里简单处理下，把 {name: 'admin', pwd: 123}这种转换成name=admin&pwd=123就可以通过
+         * x-www-form-urlencoded这种方式提交
+         * */
+        if (data) {
+          headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+
+          let keys2 = Object.keys(data);
+          /* 这里就是把json变成url形式，并进行encode */
+          return encodeURI(keys2.map(name => `${name}=${data[name]}`).join('&'));
+        }
+      }]
+    })
+    options = Object.assign(this.getInsideConfig(), options);
+    console.info(options);
     this.interceptors(instance, options.url)
     return instance(options)
   }

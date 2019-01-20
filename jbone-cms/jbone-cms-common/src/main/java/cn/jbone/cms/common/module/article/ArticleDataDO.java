@@ -3,7 +3,7 @@ package cn.jbone.cms.common.module.article;
 import lombok.Data;
 
 @Data
-public class ArticleDataInfo {
+public class ArticleDataDO {
 
     /**
      * 内容

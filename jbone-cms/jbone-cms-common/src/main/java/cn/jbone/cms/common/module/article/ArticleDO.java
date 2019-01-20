@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ArticleInfo {
+public class ArticleDO {
 
     private Long id;
 
@@ -49,22 +49,22 @@ public class ArticleInfo {
     /**
      * 栏目
      */
-    private CategoryInfo category;
+    private CategoryDO category;
 
     /**
      * 文章模版
      */
-    private TemplateInfo template;
+    private TemplateDO template;
 
     /**
      * 文章标签
      */
-    private List<TagInfo> tags;
+    private List<TagDO> tags;
 
     /**
      * 文章内容
      */
-    private ArticleDataInfo articleData;
+    private ArticleDataDO articleData;
 
     /**
      * 作者ID

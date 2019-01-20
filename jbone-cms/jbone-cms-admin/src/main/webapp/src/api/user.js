@@ -13,8 +13,8 @@ export const login = ({ userName, password }) => {
 }
 
 export const getUserInfo = (token) => {
-  return axios.request({
-    url: 'get_info',
+  return $htt.request({
+    url: 'system/getUserBaseInfo',
     params: {
       token
     },

@@ -1,7 +1,7 @@
 package cn.jbone.cms.core.service;
 
-import cn.jbone.cms.common.module.article.ArticleRequest;
-import cn.jbone.cms.common.module.article.ArticleResponse;
+import cn.jbone.cms.common.module.article.ArticleRequestDO;
+import cn.jbone.cms.common.module.article.ArticleResponseDO;
 import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +13,19 @@ public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
-    public ArticleResponse addOrUpdateArticle(ArticleRequest articleRequest){
+    public ArticleResponseDO addOrUpdateArticle(ArticleRequestDO articleRequestDO){
         Article article = new Article();
-        article.setAllowComment(articleRequest.getAllowComment());
+        article.setAllowComment(articleRequestDO.getAllowComment());
 //        article.setArticleData();
 //        article.setCategory();
-        article.setDescription(articleRequest.getDescription());
-        article.setFrontCover(articleRequest.getFrontCover());
-        article.setHits(articleRequest.getHits());
-        article.setId(articleRequest.getId());
+        article.setDescription(articleRequestDO.getDescription());
+        article.setFrontCover(articleRequestDO.getFrontCover());
+        article.setHits(articleRequestDO.getHits());
+        article.setId(articleRequestDO.getId());
         article.setKeywords(article.getKeywords());
-        article.setStatus(articleRequest.getStatus());
+        article.setStatus(articleRequestDO.getStatus());
 //        article.setTags();
-        article.setTitle(articleRequest.getTitle());
+        article.setTitle(articleRequestDO.getTitle());
 //        article.setTemplate();
 //        article.setCreator();
         return null;

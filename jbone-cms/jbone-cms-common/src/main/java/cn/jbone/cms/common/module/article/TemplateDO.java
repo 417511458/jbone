@@ -4,7 +4,7 @@ import cn.jbone.cms.common.enums.TemplateTypeEnum;
 import lombok.Data;
 
 @Data
-public class TemplateInfo {
+public class TemplateDO {
 
     private Long id;
 

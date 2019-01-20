@@ -60,7 +60,7 @@ zuul:
   routes:
     jbone-sys-server: /system/**  #暴漏jbone-sys-server的服务
     jbone-cms-server: /cms/**     #暴漏jbone-cms-server的服务
-
+  sensitive-headers:
 
 #CAS服务地址
 jbone:

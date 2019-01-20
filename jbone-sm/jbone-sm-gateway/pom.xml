@@ -49,7 +49,18 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-common</artifactId>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>

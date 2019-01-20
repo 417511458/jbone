@@ -4,6 +4,6 @@ import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
 import lombok.Data;
 
 @Data
-public class ArticleResponse extends ArticleInfo {
+public class ArticleResponseDO extends ArticleDO {
     private UserBaseInfoResponseDTO author;
 }

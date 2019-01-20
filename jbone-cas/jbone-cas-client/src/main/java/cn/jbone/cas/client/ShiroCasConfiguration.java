@@ -165,6 +165,7 @@ public class ShiroCasConfiguration {
     public SimpleCookie getCookie(){
         SimpleCookie cookie = new SimpleCookie();
         cookie.setName("jbone.session.id");
+        cookie.setHttpOnly(false);
         return cookie;
     }
 
