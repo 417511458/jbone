@@ -85,5 +85,4 @@ public class Result<T> implements Serializable {
     public static Result wrapSuccess() {
         return new Result();
     }
-
 }

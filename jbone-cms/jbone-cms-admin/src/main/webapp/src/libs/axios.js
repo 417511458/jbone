@@ -1,6 +1,11 @@
 import axios from 'axios'
 import store from '@/store'
+import { getToken } from '@/libs/util'
 // import { Spin } from 'iview'
+import Vue from 'vue'
+
+axios.defaults.withCredentials = true;
+Vue.prototype.$axios = axios;
 
 const addErrorLog = errorInfo => {
   const { statusText, status, request: { responseURL } } = errorInfo
@@ -21,75 +26,26 @@ class HttpRequest {
   getInsideConfig () {
     const config = {
       baseURL: this.baseUrl,
+      timeout: 5000,
+      withCredentials: true,
       headers: {
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': 'http://jbone-cms-admin.majunwei.com:50002',
         'Access-Control-Allow-Credentials': true,
-        //'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded'
         //'X-Requested-With': 'XMLHttpRequest',
       },
-      withCredentials: true // 允许携带cookie
-    }
-    return config
-  }
-  destroy (url) {
-    delete this.queue[url]
-    if (!Object.keys(this.queue).length) {
-      // Spin.hide()
-    }
-  }
-  interceptors (instance, url) {
-    // 请求拦截
-    instance.interceptors.request.use(config => {
-      // 添加全局的loading...
-      if (!Object.keys(this.queue).length) {
-        // Spin.show() // 不建议开启，因为界面不友好
-      }
-      this.queue[url] = true
-      return config
-    }, error => {
-      return Promise.reject(error)
-    })
-    // 响应拦截
-    instance.interceptors.response.use(res => {
-      this.destroy(url)
-      const { data, status } = res
-      return { data, status }
-    }, error => {
-      this.destroy(url)
-      let errorInfo = error.response
-      if (!errorInfo) {
-        const { request: { statusText, status }, config } = JSON.parse(JSON.stringify(error))
-        errorInfo = {
-          statusText,
-          status,
-          request: { responseURL: config.url }
-        }
-      }
-      addErrorLog(errorInfo)
-      return Promise.reject(error)
-    })
-  }
-  request (options) {
-    const instance = axios.create({
-      baseURL: this.baseUrl,
-      timeout: 5000, // 请求的超时时间
-      withCredentials: true, // 允许携带cookie
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-        //'Content-Type': 'application/x-www-form-urlencoded',
-        //'X-Requested-With': 'XMLHttpRequest',
-      },
+      crossDomain: true,
       transformRequest: [function transformRequest(data, headers) {
         /* 把类似content-type这种改成Content-Type */
         let keys = Object.keys(headers);
         let normalizedName = 'Content-Type';
         keys.forEach(name => {
-          if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
-          headers[normalizedName] = headers[name];
-          delete headers[name];
-        }
-      });
+            if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+            headers[normalizedName] = headers[name];
+            delete headers[name];
+          }
+        });
+
         /* 这里就是用来解决POST提交json数据的时候是直接把整个json放在request payload中提交过去的情况
          * 这里简单处理下，把 {name: 'admin', pwd: 123}这种转换成name=admin&pwd=123就可以通过
          * x-www-form-urlencoded这种方式提交
@@ -102,11 +58,44 @@ class HttpRequest {
           return encodeURI(keys2.map(name => `${name}=${data[name]}`).join('&'));
         }
       }]
-    })
+    }
+    return config;
+  }
+  destroy (url) {
+    delete this.queue[url]
+    if (!Object.keys(this.queue).length) {
+      // Spin.hide()
+    }
+  }
+  interceptors (instance, url) {
+    // 请求拦截
+    //添加请求拦截器
+    instance.interceptors.request.use(function (config) {
+    //在发送请求之前做某事
+      return config;
+    }, function (error) {
+    //请求错误时做些事
+    //   this.$Message.info(error.message);
+      console.log(error);
+      return Promise.reject(error);
+    });
+    // 响应拦截
+    //添加响应拦截器
+    instance.interceptors.response.use(function (response) {
+      //对响应数据做些事
+      return response;
+    }, function (error) {
+      //请求错误时做些事
+      // this.$Message.info(error.message);
+      console.log(error);
+      return Promise.reject(error);
+    });
+  }
+  request (options) {
+    const instance = axios.create({params:{token:getToken}});
     options = Object.assign(this.getInsideConfig(), options);
-    console.info(options);
-    this.interceptors(instance, options.url)
-    return instance(options)
+    this.interceptors(instance, options.url);
+    return instance(options);
   }
 }
 export default HttpRequest

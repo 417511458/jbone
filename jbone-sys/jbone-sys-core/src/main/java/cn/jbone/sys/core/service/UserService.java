@@ -2,6 +2,7 @@ package cn.jbone.sys.core.service;
 
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.utils.PasswordUtils;
+import cn.jbone.sys.common.*;
 import cn.jbone.sys.common.dto.ThirdPartyName;
 import cn.jbone.sys.common.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.common.dto.request.GithubUserLoginRequestDTO;
@@ -160,6 +161,143 @@ public class UserService {
         }
 
         return userModel;
+    }
+
+
+
+
+    /**
+     * 查询用户详情
+     * 1、用户基本信息
+     * 2、用户权限
+     * 3、用户角色
+     * 4、用户菜单
+     * 注：如果没有传服务名，则不加载用户菜单
+     * @return 用户详细信息
+     */
+    public UserResponseDO commonRequest(UserRequestDO userRequestDO) {
+
+        UserResponseDO userResponseDO = new UserResponseDO();
+
+        RbacUserEntity userEntity = userRepository.findById(userRequestDO.getUserId()).get();
+
+        //基本信息
+        UserBaseInfoDO userBaseInfoDO = new UserBaseInfoDO();
+        userBaseInfoDO.setAvatar(userEntity.getAvatar());
+        userBaseInfoDO.setEmail(userEntity.getEmail());
+        userBaseInfoDO.setId(userEntity.getId());
+        userBaseInfoDO.setRealname(userEntity.getRealname());
+        userBaseInfoDO.setPhone(userEntity.getPhone());
+        userBaseInfoDO.setSex(userEntity.getSex());
+        userBaseInfoDO.setUsername(userEntity.getUsername());
+
+        userResponseDO.setBaseInfo(userBaseInfoDO);
+
+        //安全相关信息
+        if(userRequestDO.containsModule(UserRequestDO.UserRequestModule.SECURITY)){
+            UserSecurityInfoDO userSecurityInfoDO = new UserSecurityInfoDO();
+            userSecurityInfoDO.setLocked(userEntity.getLocked());
+            userSecurityInfoDO.setPassword(userEntity.getPassword());
+            userSecurityInfoDO.setSalt(userEntity.getSalt());
+
+            userResponseDO.setSecurityInfo(userSecurityInfoDO);
+        }
+
+        //权限相关信息
+        if(userRequestDO.containsModule(UserRequestDO.UserRequestModule.AUTH)){
+            UserAuthInfoDO userAuthInfoDO = new UserAuthInfoDO();
+            userResponseDO.setAuthInfo(userAuthInfoDO);
+
+            Set<String> permissions = new HashSet<String>();
+            Set<String> roles = new HashSet<String>();
+
+            //用户角色
+            List<RbacRoleEntity> roleEntities = userEntity.getRoles();
+            if(roleEntities != null && !roleEntities.isEmpty()){
+                for(RbacRoleEntity roleEntity : roleEntities){
+                    roles.add(roleEntity.getName());
+
+                    //角色对应的权限
+                    List<RbacPermissionEntity> permissionEntities = roleEntity.getPermissions();
+                    if(permissionEntities != null && !permissionEntities.isEmpty()){
+                        for (RbacPermissionEntity permissionEntity : permissionEntities){
+                            permissions.add(permissionEntity.getPermissionValue());
+                        }
+                    }
+                }
+            }
+
+            userAuthInfoDO.setRoles(roles);
+
+            //用户权限
+            List<RbacPermissionEntity> permissionEntities =  userEntity.getPermissions();
+            if(permissionEntities != null && !permissionEntities.isEmpty()){
+                for(RbacPermissionEntity permissionEntity : permissionEntities){
+                    permissions.add(permissionEntity.getPermissionValue());
+                }
+            }
+
+            userAuthInfoDO.setPermissions(permissions);
+
+
+
+
+            //如果不包含服务名，则不加载菜单信息
+            if(!StringUtils.isBlank(userRequestDO.getServerName())){
+                //解析前用户拥有的菜单
+                List<MenuInfoResponseDTO> menuList = new ArrayList<>();
+                List<RbacMenuEntity> correctMenuList = new ArrayList<>();
+
+                RbacSystemEntity systemEntity = systemRepository.findByName(userRequestDO.getServerName());
+                if(systemEntity != null){
+                    List<RbacUserEntity> userCondition = new ArrayList<>();
+                    userCondition.add(userEntity);
+
+                    //获取用户和对应角色拥有的系统菜单
+                    List<RbacMenuEntity> roleMenus = menuRepository.findDistinctByRolesInAndPidAndSystemIdOrderByOrdersDesc(userEntity.getRoles(),0,systemEntity.getId());
+                    List<RbacMenuEntity> userMenus = menuRepository.findDistinctByUsersInAndPidAndSystemIdOrderByOrdersDesc(userCondition,0,systemEntity.getId());
+                    correctMenuList.addAll(roleMenus);
+                    correctMenuList.addAll(userMenus);
+
+                    for (RbacMenuEntity menuEntity : correctMenuList){
+                        MenuInfoResponseDTO menu = new MenuInfoResponseDTO();
+                        BeanUtils.copyProperties(menuEntity,menu);
+                        if(isContains(menuList,menu)){
+                            continue;
+                        }
+                        List<RbacMenuEntity> childRoleMenus = menuRepository.findDistinctByRolesInAndPidAndSystemIdOrderByOrdersDesc(userEntity.getRoles(),menuEntity.getId(),systemEntity.getId());
+                        List<RbacMenuEntity> childUserMenus = menuRepository.findDistinctByUsersInAndPidAndSystemIdOrderByOrdersDesc(userCondition,menuEntity.getId(),systemEntity.getId());
+                        List<RbacMenuEntity> childMenus = new ArrayList<>();
+                        childMenus.addAll(childRoleMenus);
+                        childMenus.addAll(childUserMenus);
+
+                        if(!childMenus.isEmpty()){
+                            List<MenuInfoResponseDTO> childMenuList = new ArrayList<>();
+                            for (RbacMenuEntity childMenuEntity : childMenus){
+                                MenuInfoResponseDTO childMenu = new MenuInfoResponseDTO();
+                                BeanUtils.copyProperties(childMenuEntity,childMenu);
+                                if(isContains(childMenuList,childMenu)){
+                                    continue;
+                                }
+                                childMenuList.add(childMenu);
+
+                            }
+                            Collections.sort(childMenuList);
+                            menu.setChildMenus(childMenuList);
+                        }
+
+                        menuList.add(menu);
+
+                    }
+                    Collections.sort(menuList);
+                    userAuthInfoDO.setMenus(menuList);
+                }
+            }
+        }
+
+
+
+        return userResponseDO;
     }
 
 

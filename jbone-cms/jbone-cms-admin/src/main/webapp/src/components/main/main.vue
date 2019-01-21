@@ -107,7 +107,6 @@ export default {
       'setHomeRoute'
     ]),
     ...mapActions([
-      'handleLogin',
       'getUnreadMessageCount',
       'getUserInfo'
     ]),

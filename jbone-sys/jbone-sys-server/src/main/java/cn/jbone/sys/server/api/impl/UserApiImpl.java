@@ -2,6 +2,8 @@ package cn.jbone.sys.server.api.impl;
 
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
+import cn.jbone.sys.common.UserRequestDO;
+import cn.jbone.sys.common.UserResponseDO;
 import cn.jbone.sys.common.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.common.dto.request.GithubUserLoginRequestDTO;
 import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 public class UserApiImpl implements UserApi {
@@ -116,5 +119,22 @@ public class UserApiImpl implements UserApi {
             return Result.wrap500Error(e.getMessage());
         }
         return new Result();
+    }
+
+    @Override
+    @RequestMapping(value = "/commonRequest", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Result<UserResponseDO> commonRequest(@RequestBody UserRequestDO userRequestDO) {
+        UserResponseDO userResponseDO = null;
+        try {
+            userResponseDO = userService.commonRequest(userRequestDO);
+            if(userResponseDO == null){
+                return Result.wrap404Error("user is not found");
+            }
+        } catch (NoSuchElementException e) {
+            return Result.wrap404Error("user is not found");
+        } catch(Exception e){
+            return Result.wrap500Error(e.getMessage());
+        }
+        return new Result(userResponseDO);
     }
 }

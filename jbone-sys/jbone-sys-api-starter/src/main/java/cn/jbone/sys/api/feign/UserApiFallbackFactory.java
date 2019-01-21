@@ -2,6 +2,8 @@ package cn.jbone.sys.api.feign;
 
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
+import cn.jbone.sys.common.UserRequestDO;
+import cn.jbone.sys.common.UserResponseDO;
 import cn.jbone.sys.common.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.common.dto.request.GithubUserLoginRequestDTO;
 import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
@@ -57,6 +59,12 @@ public class UserApiFallbackFactory implements FallbackFactory<UserApi> {
             @Override
             public Result<Void> thirdPartyUserLogin(GithubUserLoginRequestDTO githubUserLoginRequestDTO) {
                 logger.error("rpc thirdPartyUserLogin broke",throwable);
+                return Result.wrapProtectedError();
+            }
+
+            @Override
+            public Result<UserResponseDO> commonRequest(UserRequestDO userRequestDO) {
+                logger.error("rpc commonRequest broke",throwable);
                 return Result.wrapProtectedError();
             }
         };

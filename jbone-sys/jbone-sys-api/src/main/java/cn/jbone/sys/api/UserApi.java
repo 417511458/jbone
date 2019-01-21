@@ -1,6 +1,8 @@
 package cn.jbone.sys.api;
 
 import cn.jbone.common.rpc.Result;
+import cn.jbone.sys.common.UserRequestDO;
+import cn.jbone.sys.common.UserResponseDO;
 import cn.jbone.sys.common.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.common.dto.request.GithubUserLoginRequestDTO;
 import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
@@ -34,4 +36,7 @@ public interface UserApi {
 
     @RequestMapping(value = "/thirdPartyUserLogin",method = {RequestMethod.POST})
     Result<Void> thirdPartyUserLogin(@RequestBody GithubUserLoginRequestDTO githubUserLoginRequestDTO);
+
+    @RequestMapping(value = "/commonRequest",method = {RequestMethod.POST})
+    Result<UserResponseDO> commonRequest(@RequestBody UserRequestDO userRequestDO);
 }

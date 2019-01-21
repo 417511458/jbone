@@ -4,15 +4,15 @@ import config from '@/config'
 import { forEach, hasOneOf, objEqual } from '@/libs/tools'
 const { title, cookieExpires, useI18n } = config
 
-export const TOKEN_KEY = 'jbone.session.id'
+export const TOKEN_KEY = 'j_s_id';
 
 export const setToken = (token) => {
-  Cookies.set(TOKEN_KEY, token, {expires: cookieExpires || 1})
+  Cookies.set(TOKEN_KEY, token, {expires: cookieExpires || 1});
 }
 
 export const getToken = () => {
-  const token = Cookies.get(TOKEN_KEY)
-  if (token) return token
+  const token = Cookies.get(TOKEN_KEY);
+  if (token) return token;
   else return false
 }
 

@@ -70,4 +70,8 @@ public class ArticleDO {
      * 作者ID
      */
     private Long creator;
+
+    private Long addTime;
+
+    private Long updateTime;
 }
