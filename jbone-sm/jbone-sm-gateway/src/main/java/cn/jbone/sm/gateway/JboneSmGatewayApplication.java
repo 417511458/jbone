@@ -1,5 +1,6 @@
 package cn.jbone.sm.gateway;
 
+import cn.jbone.cas.client.ShiroCasConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
@@ -11,7 +12,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-@SpringBootApplication(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class, ShiroCasConfiguration.class})
 @EnableFeignClients
 @EnableZuulProxy
 public class JboneSmGatewayApplication {

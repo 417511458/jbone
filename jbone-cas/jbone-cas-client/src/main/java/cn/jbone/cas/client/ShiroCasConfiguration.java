@@ -177,8 +177,8 @@ public class ShiroCasConfiguration {
     }
 
     @Bean(name = "sessionFactory")
-    public SessionFactory getSessionFactory(){
-        return new JboneCasSessionFactory();
+    public SessionFactory getSessionFactory(JboneConfiguration jboneConfiguration){
+        return new JboneCasSessionFactory(jboneConfiguration);
     }
 
     @Bean
