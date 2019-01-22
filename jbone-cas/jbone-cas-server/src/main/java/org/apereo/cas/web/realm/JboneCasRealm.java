@@ -2,8 +2,8 @@ package org.apereo.cas.web.realm;
 
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
-import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
-import cn.jbone.sys.common.dto.response.UserInfoResponseDTO;
+import cn.jbone.sys.common.UserRequestDO;
+import cn.jbone.sys.common.UserResponseDO;
 import org.apache.shiro.util.ByteSource;
 import org.apereo.cas.web.SpringManager;
 import org.apache.shiro.authc.*;
@@ -42,16 +42,21 @@ public class JboneCasRealm extends AuthorizingRealm {
      */
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        Result<UserBaseInfoResponseDTO> userInfoModel = getUserApi().getUserByName(token.getUsername());
-        if(userInfoModel == null || !userInfoModel.isSuccess() || userInfoModel.getData() == null){
-            throw new AuthenticationException("用户不存在");
-        }
+        UserRequestDO userRequestDO = UserRequestDO.buildSecurity(token.getUsername());
+        Result<UserResponseDO> result = getUserApi().commonRequest(userRequestDO);
 
-        ByteSource credentialsSalt = ByteSource.Util.bytes(userInfoModel.getData().getSalt());
+        checkResult(result);
 
-        return new SimpleAuthenticationInfo(userInfoModel.getData().getUsername(), userInfoModel.getData().getPassword(),credentialsSalt, getName());
+        ByteSource credentialsSalt = ByteSource.Util.bytes(result.getData().getSecurityInfo().getSalt());
+
+        return new SimpleAuthenticationInfo(result.getData().getBaseInfo().getUsername(), result.getData().getSecurityInfo().getPassword(),credentialsSalt, getName());
     }
 
+    private void checkResult(Result<UserResponseDO> result){
+        if(result == null || !result.isSuccess() || result.getData() == null){
+            throw new AuthenticationException("用户不存在");
+        }
+    }
 
     /**
      * 获取登录用户权限信息
@@ -60,9 +65,15 @@ public class JboneCasRealm extends AuthorizingRealm {
      */
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String userName = (String) principals.fromRealm(getName()).iterator().next();
-        Result<UserInfoResponseDTO> userModel = getUserApi().getUserDetailByName(userName);
-        Set<String> roles = userModel.getData().getRoles();
-        Set<String> permissions = userModel.getData().getPermissions();
+        UserRequestDO userRequestDO = UserRequestDO.buildAll(userName,null);
+        Result<UserResponseDO> result = getUserApi().commonRequest(userRequestDO);
+
+        checkResult(result);
+
+        UserResponseDO userResponseDO = result.getData();
+
+        Set<String> roles = userResponseDO.getAuthInfo().getRoles();
+        Set<String> permissions = userResponseDO.getAuthInfo().getPermissions();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         if(roles != null && !roles.isEmpty()){

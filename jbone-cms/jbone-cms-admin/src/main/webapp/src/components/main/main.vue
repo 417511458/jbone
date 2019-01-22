@@ -178,7 +178,7 @@ export default {
     }
     // 获取未读消息条数
     // this.getUnreadMessageCount();
-    this.getUserInfo(this.$store.state);
+    this.getUserInfo();
   }
 }
 </script>

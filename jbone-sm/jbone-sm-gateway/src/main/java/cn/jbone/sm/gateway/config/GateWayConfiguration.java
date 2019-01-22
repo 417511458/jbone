@@ -1,10 +1,8 @@
-package cn.jbone.sm.gateway;
+package cn.jbone.sm.gateway.config;
 
 import cn.jbone.cas.client.session.JboneCasSessionDao;
-import cn.jbone.cas.client.session.JboneSessionTicketStore;
 import cn.jbone.sm.gateway.filters.TokenFilter;
-import io.buji.pac4j.context.ShiroSessionStore;
-import org.apache.shiro.session.mgt.eis.SessionDAO;
+import cn.jbone.sm.gateway.filters.UserInfoFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -34,6 +32,11 @@ public class GateWayConfiguration {
     @Bean
     public TokenFilter tokenFilter(JboneCasSessionDao jboneCasSessionDao){
         return new TokenFilter(jboneCasSessionDao);
+    }
+
+    @Bean
+    public UserInfoFilter userInfoFilter(){
+        return new UserInfoFilter();
     }
 
     @Bean(name = "jboneCasSessionDao")

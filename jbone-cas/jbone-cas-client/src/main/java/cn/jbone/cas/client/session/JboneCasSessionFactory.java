@@ -19,6 +19,7 @@ public class JboneCasSessionFactory implements SessionFactory {
     public Session createSession(SessionContext sessionContext) {
         JboneCasSession session = new JboneCasSession();
         session.setServerName(jboneConfiguration.getSys().getServerName());
+        session.setHost(sessionContext.getHost());
         return session;
     }
 }

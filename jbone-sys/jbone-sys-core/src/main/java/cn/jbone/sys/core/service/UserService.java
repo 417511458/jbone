@@ -178,8 +178,15 @@ public class UserService {
     public UserResponseDO commonRequest(UserRequestDO userRequestDO) {
 
         UserResponseDO userResponseDO = new UserResponseDO();
-
-        RbacUserEntity userEntity = userRepository.findById(userRequestDO.getUserId()).get();
+        RbacUserEntity userEntity = null;
+        if(userRequestDO.getUserId() != null && userRequestDO.getUserId() > 0){
+            userEntity = userRepository.findById(userRequestDO.getUserId()).get();
+        }else if(StringUtils.isNotBlank(userRequestDO.getUsername())){
+            userEntity = userRepository.findByUsername(userRequestDO.getUsername());
+        }
+        if(userEntity == null){
+            throw new JboneException("user is not found");
+        }
 
         //基本信息
         UserBaseInfoDO userBaseInfoDO = new UserBaseInfoDO();

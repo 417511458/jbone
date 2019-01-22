@@ -25,16 +25,16 @@
                 <ul class="nav navbar-nav">
                     <li class="dropdown user user-menu">
                         <a href="#" id="user-name-label" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <img th:src="${user.avatar}" width="160" height="160" class="user-image" alt="User Image" />
-                            <span class="hidden-xs" ><shiro:principal property="realname" /></span>
+                            <img th:src="${user.baseInfo.avatar}" width="160" height="160" class="user-image" alt="User Image" />
+                            <span class="hidden-xs" th:text="${user.baseInfo.realname}"></span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="user-name-label">
                             <!-- User image -->
                             <li class="user-header">
-                                <img th:src="${user.avatar}" width="160" height="160" class="img-circle" alt="User Image" />
+                                <img th:src="${user.baseInfo.avatar}" width="160" height="160" class="img-circle" alt="User Image" />
                                 <p>
-                                    <shiro:principal property="realname" />
-                                    <small><shiro:principal property="email" /></small>
+                                    <label th:text="${user.baseInfo.realname}"></label>
+                                    <small th:text="${user.baseInfo.email}"></small>
                                 </p>
                             </li>
                             <!-- Menu Footer-->

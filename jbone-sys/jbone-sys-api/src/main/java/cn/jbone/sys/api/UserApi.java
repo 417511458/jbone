@@ -8,6 +8,8 @@ import cn.jbone.sys.common.dto.request.GithubUserLoginRequestDTO;
 import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
 import cn.jbone.sys.common.dto.response.UserInfoResponseDTO;
 import cn.jbone.sys.common.dto.response.UserSecurityQuestionsResponseDTO;
+import feign.Headers;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +39,7 @@ public interface UserApi {
     @RequestMapping(value = "/thirdPartyUserLogin",method = {RequestMethod.POST})
     Result<Void> thirdPartyUserLogin(@RequestBody GithubUserLoginRequestDTO githubUserLoginRequestDTO);
 
-    @RequestMapping(value = "/commonRequest",method = {RequestMethod.POST})
+    @RequestMapping(value = "/commonRequest",method = {RequestMethod.POST},consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Headers("Content-Type: application/json")
     Result<UserResponseDO> commonRequest(@RequestBody UserRequestDO userRequestDO);
 }

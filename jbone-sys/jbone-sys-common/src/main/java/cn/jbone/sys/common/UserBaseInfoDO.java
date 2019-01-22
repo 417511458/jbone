@@ -2,8 +2,10 @@ package cn.jbone.sys.common;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class UserBaseInfoDO {
+public class UserBaseInfoDO implements Serializable {
     private int id;
     private String username;
     private String realname;

@@ -2,7 +2,7 @@ package cn.jbone.bpm.admin.controller;
 
 import cn.jbone.configuration.JboneConfiguration;
 import cn.jbone.sys.api.UserApi;
-import cn.jbone.sys.common.dto.response.UserInfoResponseDTO;
+import cn.jbone.sys.common.UserResponseDO;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.ui.ModelMap;
 
@@ -19,8 +19,7 @@ public class CommonController {
      * @date 2018/3/25 17:45
      */
     public void setCurrentUser(ModelMap modelMap, UserApi userApi, JboneConfiguration jboneConfiguration) {
-        UserInfoResponseDTO currentUser = (UserInfoResponseDTO) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
-        UserInfoResponseDTO userModel = userApi.getUserDetailByNameAndServerName(currentUser.getUsername(), jboneConfiguration.getSys().getServerName()).getData();
-        modelMap.put("user", userModel);
+        UserResponseDO currentUser = (UserResponseDO) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
+        modelMap.put("user", currentUser);
     }
 }

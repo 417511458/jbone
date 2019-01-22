@@ -3,7 +3,8 @@ package cn.jbone.cas.client.realm;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
-import cn.jbone.sys.common.dto.response.UserInfoResponseDTO;
+import cn.jbone.sys.common.UserRequestDO;
+import cn.jbone.sys.common.UserResponseDO;
 import io.buji.pac4j.realm.Pac4jRealm;
 import io.buji.pac4j.subject.Pac4jPrincipal;
 import io.buji.pac4j.token.Pac4jToken;
@@ -58,11 +59,13 @@ public class JboneCasRealm extends Pac4jRealm {
         /**
          * 将用户对象保存为身份信息，用于系统获取用户信息
          */
-        Result<UserInfoResponseDTO> userModel = userApi.getUserDetailByNameAndServerName(username, serverName);
-        if(!userModel.isSuccess() || userModel.getData() == null ){
+        UserRequestDO userRequestDO = UserRequestDO.buildAll(username,serverName);
+        Result<UserResponseDO> result = userApi.commonRequest(userRequestDO);
+
+        if(!result.isSuccess() || result.getData() == null ){
             throw new JboneException(String.format("user[%s] server[%s] is not found.", username, serverName));
         }
-        List<Object> principals = CollectionUtils.asList(new Object[]{userModel.getData(), principal});
+        List<Object> principals = CollectionUtils.asList(new Object[]{result.getData(), principal});
         SimplePrincipalCollection principalCollection = new SimplePrincipalCollection(principals, this.getName());
 
         return new SimpleAuthenticationInfo(principalCollection, pac4jToken.getCredentials());
@@ -77,9 +80,9 @@ public class JboneCasRealm extends Pac4jRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         logger.info("--加载Shiro权限认证--");
-        UserInfoResponseDTO userModel = principals.oneByType(UserInfoResponseDTO.class);
-        Set<String> roles = userModel.getRoles();
-        Set<String> permissions = userModel.getPermissions();
+        UserResponseDO userResponseDO = principals.oneByType(UserResponseDO.class);
+        Set<String> roles = userResponseDO.getAuthInfo().getRoles();
+        Set<String> permissions = userResponseDO.getAuthInfo().getPermissions();
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 

@@ -2,9 +2,13 @@ package cn.jbone.sm.gateway.filters;
 
 import cn.jbone.cas.client.session.JboneCasSession;
 import cn.jbone.cas.client.session.JboneCasSessionDao;
+import cn.jbone.common.rpc.Result;
+import cn.jbone.sys.common.UserResponseDO;
+import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import org.apache.shiro.session.UnknownSessionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +35,7 @@ public class TokenFilter extends ZuulFilter {
 
     public final static String TOKEN = "token";
     public final static String SESSION = "session";
+    public final static String USER = "user";
 
 
     private JboneCasSessionDao sessionDao;
@@ -47,18 +52,40 @@ public class TokenFilter extends ZuulFilter {
         String token = request.getParameter(TOKEN);
 
 
-        JboneCasSession session = (JboneCasSession) sessionDao.readSession(token);
+        JboneCasSession session = null;
+        try {
+            session = (JboneCasSession) sessionDao.readSession(token);
+        } catch (UnknownSessionException e) {
+            authErrorSession(requestContext,token);
+            return null;
+        }
         if(session == null){
-            logger.info("token is not found: {}",token);
-            requestContext.setSendZuulResponse(false);
-            requestContext.setResponseStatusCode(401);
+            authErrorSession(requestContext,token);
             return null;
         }
 
-        requestContext.set(TOKEN,token);
-        requestContext.set(SESSION,session);
+        if(!session.getHost().equals(request.getRemoteHost())){
+            logger.info("host is not mached.session host:{},remoteHost:{}",session.getHost(),request.getRemoteHost());
+            authErrorSession(requestContext,token);
+            return null;
+        }
 
         logger.info("session: " + session.toString());
+
+
+        requestContext.set(TOKEN,token);
+
+        //将用户信息保存到上下文
+        UserResponseDO userModel = session.getUserInfo();
+        requestContext.set(USER,userModel);
         return null;
+    }
+
+    private void authErrorSession(RequestContext requestContext,String token){
+        logger.info("token is not found: {}",token);
+        requestContext.getResponse().setContentType("text/html;charset=UTF-8");
+        requestContext.setSendZuulResponse(false);
+        requestContext.setResponseStatusCode(401);
+        requestContext.setResponseBody(JSON.toJSONString(Result.wrapError(401,"没有权限")));
     }
 }
