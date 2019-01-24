@@ -82,7 +82,7 @@ jbone:
   sys:
     serverName: jbone-tag-admin
     jdbc:
-      url: jdbc:mysql://121.42.174.77:3306/jbone_tag?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+      url: jdbc:mysql://121.42.174.77:3306/jbone_tag?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
       username: jbone_tag
       password: Jbone_tag_666
       driverClassName: com.mysql.jdbc.Driver

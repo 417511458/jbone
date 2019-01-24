@@ -22,7 +22,7 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5Dialect
   datasource:
-    url: jdbc:mysql://121.42.174.77:3306/jbone_b2b2c_shop?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+    url: jdbc:mysql://121.42.174.77:3306/jbone_b2b2c_shop?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
     username: jbone_b2b2c_shop
     password: Jbone_b2b2c_shop_666
     driver-class-name: com.mysql.jdbc.Driver

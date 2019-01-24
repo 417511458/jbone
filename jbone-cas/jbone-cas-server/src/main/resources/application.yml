@@ -101,6 +101,10 @@ cas:
   #关闭https验证
   tgc:
     secure: false
+
+    # 关闭TGC安全严重，公网慎用
+#    crypto:
+#      enabled: false
   warningCookie:
     secure: false
   #单点登出

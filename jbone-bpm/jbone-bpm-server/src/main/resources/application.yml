@@ -19,7 +19,7 @@ spring:
   jpa:
     show-sql: true
   datasource:
-    url: jdbc:mysql://121.42.174.77:3306/jbone_bpm?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+    url: jdbc:mysql://121.42.174.77:3306/jbone_bpm?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
     username: jbone_bpm
     password: Jbone_bpm_666
 
