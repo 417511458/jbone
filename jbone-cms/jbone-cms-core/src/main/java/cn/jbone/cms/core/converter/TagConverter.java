@@ -1,6 +1,6 @@
 package cn.jbone.cms.core.converter;
 
-import cn.jbone.cms.common.module.article.TagDO;
+import cn.jbone.cms.common.dataobject.TagDO;
 import cn.jbone.cms.core.dao.entity.Tag;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -34,6 +34,32 @@ public class TagConverter {
             }
         }
         return tagDOS;
+    }
 
+
+    public Tag toTag(TagDO tagDO){
+        if(tagDO == null){
+            return null;
+        }
+
+        Tag tag = new Tag();
+        tag.setId(tagDO.getId());
+        tag.setName(tagDO.getName());
+        return tag;
+    }
+
+    public List<Tag> toTags(List<TagDO> tagDOS){
+        if(CollectionUtils.isEmpty(tagDOS)){
+            return null;
+        }
+
+        List<Tag> tags = new ArrayList<>();
+        for (TagDO tagDO : tagDOS){
+            Tag tag = toTag(tagDO);
+            if(tag != null){
+                tags.add(tag);
+            }
+        }
+        return tags;
     }
 }

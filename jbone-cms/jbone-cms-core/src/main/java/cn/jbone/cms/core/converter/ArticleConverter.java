@@ -1,7 +1,7 @@
 package cn.jbone.cms.core.converter;
 
-import cn.jbone.cms.common.module.article.ArticleDataDO;
-import cn.jbone.cms.common.module.article.ArticleResponseDO;
+import cn.jbone.cms.common.dataobject.ArticleDataDO;
+import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.entity.ArticleData;
 import cn.jbone.sys.common.UserResponseDO;
@@ -27,7 +27,7 @@ public class ArticleConverter {
         articleResponseDO.setAllowComment(article.getAllowComment());
         articleResponseDO.setAuthor(user);
         articleResponseDO.setArticleData(toArticleDataDO(article.getArticleData()));
-        articleResponseDO.setCategory(categoryConverter.toCategoryDO(article.getCategory()));
+        articleResponseDO.setCategory(categoryConverter.toCategoryDO(article.getCategory(),CategoryFieldConfig.buildSimple()));
         articleResponseDO.setCreator(article.getCreator());
         articleResponseDO.setDescription(article.getDescription());
         articleResponseDO.setFrontCover(article.getFrontCover());

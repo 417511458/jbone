@@ -1,4 +1,4 @@
-package cn.jbone.cms.common.module.article;
+package cn.jbone.cms.common.dataobject;
 
 import lombok.Data;
 

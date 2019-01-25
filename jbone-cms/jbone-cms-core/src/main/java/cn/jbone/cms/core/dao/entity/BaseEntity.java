@@ -39,5 +39,5 @@ public class BaseEntity implements Serializable {
      * 创建者
      */
     @Column(name = "creator")
-    private Long creator;
+    private Integer creator;
 }

@@ -14,6 +14,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+      useNewIdGeneratorMappings: true # 使用新的ID生成器，使@TableGenerator的initialValue生效
+    properties:
+      hibernate:
+        id:
+          new_generator_mappings: true # 使用新的ID生成器，使@TableGenerator的initialValue生效
   datasource:
     username: jbone_cms
     password: Jbone_cms_666
@@ -95,4 +100,5 @@ info:
     gitee: https://gitee.com/majunwei2017/jbone
   domain: http://www.majunwei.com
 
-
+logging:
+  config: classpath:logback.xml

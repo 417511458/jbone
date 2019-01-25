@@ -1,4 +1,4 @@
-package cn.jbone.cms.common.module.article;
+package cn.jbone.cms.common.dataobject;
 
 import cn.jbone.cms.common.enums.BooleanEnum;
 import cn.jbone.cms.common.enums.CategoryTypeEnum;
@@ -15,7 +15,7 @@ public class CategoryDO {
     /**
      * 父级栏目
      */
-    private int pid;
+    private long pid;
 
     /**
      * 栏目标题

@@ -1,8 +1,6 @@
-package cn.jbone.cms.common.module.article;
+package cn.jbone.cms.common.dataobject;
 
-import cn.jbone.sys.common.UserBaseInfoDO;
 import cn.jbone.sys.common.UserResponseDO;
-import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
 import lombok.Data;
 
 @Data

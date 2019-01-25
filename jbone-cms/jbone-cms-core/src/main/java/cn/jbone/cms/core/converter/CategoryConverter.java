@@ -1,6 +1,6 @@
 package cn.jbone.cms.core.converter;
 
-import cn.jbone.cms.common.module.article.CategoryDO;
+import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.core.dao.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,13 +18,13 @@ public class CategoryConverter {
     @Autowired
     private TemplateConverter templateConverter;
 
-    public CategoryDO toCategoryDO(Category category){
+    public CategoryDO toCategoryDO(Category category,CategoryFieldConfig config){
         if(category == null){
             return null;
         }
 
         CategoryDO categoryDO = new CategoryDO();
-        categoryDO.setChildCategory(toCategoryDOs(category.getChildCategory()));
+
         categoryDO.setDescription(category.getDescription());
         categoryDO.setFrontCover(category.getFrontCover());
         categoryDO.setId(category.getId());
@@ -33,28 +33,80 @@ public class CategoryConverter {
         categoryDO.setOrders(category.getOrders());
         categoryDO.setPid(category.getPid());
         categoryDO.setStatus(category.getStatus());
-        categoryDO.setTags(tagConverter.toTagDOs(category.getTags()));
+
         categoryDO.setTarget(category.getTarget());
-        categoryDO.setTemplate(templateConverter.toTemplateDO(category.getTemplate()));
+
         categoryDO.setTitle(category.getTitle());
         categoryDO.setType(category.getType());
         categoryDO.setUrl(category.getUrl());
 
+        if(config.isTag()){
+            categoryDO.setTags(tagConverter.toTagDOs(category.getTags()));
+        }
+        if(config.isTemplate()){
+            categoryDO.setTemplate(templateConverter.toTemplateDO(category.getTemplate()));
+        }
+        if(config.isChilds()){
+            categoryDO.setChildCategory(toCategoryDOs(category.getChildCategory(),config));
+        }
+
         return categoryDO;
     }
 
-    public List<CategoryDO> toCategoryDOs(List<Category> categorys){
+    public List<CategoryDO> toCategoryDOs(List<Category> categorys,CategoryFieldConfig config){
         if(CollectionUtils.isEmpty(categorys)){
             return null;
         }
 
         List<CategoryDO> categoryDOS = new ArrayList<>();
         for (Category category:categorys){
-            CategoryDO categoryDO = toCategoryDO(category);
+            CategoryDO categoryDO = toCategoryDO(category,config);
             if(categoryDO != null){
                 categoryDOS.add(categoryDO);
             }
         }
         return categoryDOS;
     }
+
+    public Category toCategory(CategoryDO categoryDO){
+        if(categoryDO == null){
+            return null;
+        }
+
+        Category category = new Category();
+
+        category.setDescription(categoryDO.getDescription());
+        category.setFrontCover(categoryDO.getFrontCover());
+        category.setId(categoryDO.getId());
+        category.setInMenu(categoryDO.getInMenu());
+        category.setKeywords(categoryDO.getKeywords());
+        category.setOrders(categoryDO.getOrders());
+        category.setPid(categoryDO.getPid());
+        category.setStatus(categoryDO.getStatus());
+        category.setTarget(categoryDO.getTarget());
+        category.setTitle(categoryDO.getTitle());
+        category.setType(categoryDO.getType());
+        category.setUrl(categoryDO.getUrl());
+
+        category.setTags(tagConverter.toTags(categoryDO.getTags()));
+        category.setTemplate(templateConverter.toTemplate(categoryDO.getTemplate()));
+
+        return category;
+    }
+
+    public List<Category> toCategories(List<CategoryDO> categoryDOS){
+        if(CollectionUtils.isEmpty(categoryDOS)){
+            return null;
+        }
+
+        List<Category> categories = new ArrayList<>();
+        for (CategoryDO categoryDO:categoryDOS){
+            Category category = toCategory(categoryDO);
+            if(category != null){
+                categories.add(category);
+            }
+        }
+        return categories;
+    }
+
 }

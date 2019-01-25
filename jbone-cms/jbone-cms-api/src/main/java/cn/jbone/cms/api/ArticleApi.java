@@ -1,7 +1,7 @@
-package cn.jbone.cms.api.article;
+package cn.jbone.cms.api;
 
-import cn.jbone.cms.common.module.article.ArticleRequestDO;
-import cn.jbone.cms.common.module.article.ArticleResponseDO;
+import cn.jbone.cms.common.dataobject.ArticleRequestDO;
+import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.common.rpc.Result;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

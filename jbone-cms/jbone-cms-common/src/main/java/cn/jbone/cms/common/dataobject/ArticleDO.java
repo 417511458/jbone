@@ -1,4 +1,4 @@
-package cn.jbone.cms.common.module.article;
+package cn.jbone.cms.common.dataobject;
 
 import cn.jbone.cms.common.enums.BooleanEnum;
 import cn.jbone.cms.common.enums.StatusEnum;
@@ -69,7 +69,7 @@ public class ArticleDO {
     /**
      * 作者ID
      */
-    private Long creator;
+    private Integer creator;
 
     private Long addTime;
 

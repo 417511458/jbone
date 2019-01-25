@@ -22,7 +22,7 @@ public class Category extends BaseEntity {
      * 父级栏目
      */
     @Column(name = "pid")
-    private int pid;
+    private long pid; //默认是0
 
     /**
      * 栏目标题

@@ -6,6 +6,7 @@
         <artifactId>jbone-cms</artifactId>
         <groupId>cn.jbone</groupId>
         <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -56,8 +57,24 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
+            <artifactId>jbone-sys-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-cms-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
             <artifactId>jbone-cms-api</artifactId>
             <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-common</artifactId>
         </dependency>
     </dependencies>
 

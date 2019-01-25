@@ -1,7 +1,7 @@
 package cn.jbone.cms.core.service;
 
-import cn.jbone.cms.common.module.article.ArticleRequestDO;
-import cn.jbone.cms.common.module.article.ArticleResponseDO;
+import cn.jbone.cms.common.dataobject.ArticleRequestDO;
+import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.core.converter.ArticleConverter;
 import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;

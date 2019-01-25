@@ -1,8 +1,8 @@
 package cn.jbone.cms.api.impl;
 
-import cn.jbone.cms.api.article.ArticleApi;
-import cn.jbone.cms.common.module.article.ArticleRequestDO;
-import cn.jbone.cms.common.module.article.ArticleResponseDO;
+import cn.jbone.cms.api.ArticleApi;
+import cn.jbone.cms.common.dataobject.ArticleRequestDO;
+import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.core.service.ArticleService;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.rpc.Result;
