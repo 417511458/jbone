@@ -69,11 +69,6 @@ public class CasWebApplication {
      * @param args the args
      */
     public static void main(final String[] args) {
-        List<String> argArr = new ArrayList<>();
-        argArr.add("spring.main.allow-bean-definition-overriding=true");
-        if(args != null || args.length >0){
-            argArr.addAll(Arrays.asList(args));
-        }
         val properties = CasEmbeddedContainerUtils.getRuntimeProperties(Boolean.TRUE);
         val banner = CasEmbeddedContainerUtils.getCasBannerInstance();
         new SpringApplicationBuilder(CasWebApplication.class)
@@ -82,6 +77,6 @@ public class CasWebApplication {
                 .properties(properties)
                 .logStartupInfo(true)
                 .contextClass(CasWebApplicationContext.class)
-                .run(argArr.toArray(new String[]{}));
+                .run(args);
     }
 }
