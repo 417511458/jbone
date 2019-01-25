@@ -17,4 +17,6 @@ public interface CategoryRepository extends JpaRepository<Category,Long>, JpaSpe
 
     long countByPid(long pid);
 
+    long countById(long id);
+
 }

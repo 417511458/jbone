@@ -13,12 +13,26 @@ import java.util.List;
 @RequestMapping("/category")
 public interface CategoryApi {
 
+    /**
+     * 添加/更新栏目
+     * @param categoryDO
+     * @return
+     */
     @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST},consumes = MediaType.APPLICATION_JSON_VALUE)
     Result<Void> addOrUpdate(@RequestBody CategoryDO categoryDO);
 
+    /**
+     * 删除栏目
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
     Result<Void> delete(@RequestParam("id") Long id);
 
+    /**
+     * 获取栏目树
+     * @return
+     */
     @RequestMapping(value = "/getCategoryTree",method = {RequestMethod.GET})
     Result<List<CategoryDO>> getCategoryTree();
 

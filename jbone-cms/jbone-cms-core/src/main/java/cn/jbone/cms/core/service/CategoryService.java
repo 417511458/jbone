@@ -47,21 +47,18 @@ public class CategoryService {
     }
 
     public void delete(Long id){
-        Category category = null;
-        logger.info("ttttttt",category);
-        try {
-            category = categoryRepository.getOne(id);
-        } catch (Exception e) {
-            logger.warn(e.getMessage(),e);
+
+        long categoryCount = categoryRepository.countById(id);
+        if(categoryCount <= 0){
             throw new ObjectNotFoundException("栏目不存在.");
         }
-        logger.info("dddddddddddd",category);
+
         long childCount = categoryRepository.countByPid(id);
         if(childCount > 0){
             throw new JboneException("含有子栏目，不能删除.");
         }
 
-        categoryRepository.delete(category);
+        categoryRepository.deleteById(id);
 
     }
 
