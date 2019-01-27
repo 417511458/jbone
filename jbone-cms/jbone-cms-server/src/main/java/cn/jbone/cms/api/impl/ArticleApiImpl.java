@@ -1,6 +1,7 @@
 package cn.jbone.cms.api.impl;
 
 import cn.jbone.cms.api.ArticleApi;
+import cn.jbone.cms.common.dataobject.ArticleCommonRequestDO;
 import cn.jbone.cms.common.dataobject.ArticleRequestDO;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.core.service.ArticleService;
@@ -9,6 +10,8 @@ import cn.jbone.common.rpc.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class ArticleApiImpl implements ArticleApi {
 
@@ -16,31 +19,42 @@ public class ArticleApiImpl implements ArticleApi {
     private ArticleService articleService;
 
     @Override
-    public Result<ArticleResponseDO> addArticle(ArticleRequestDO articleRequestDO) {
-        return null;
+    public Result<ArticleResponseDO> addOrUpdate(ArticleRequestDO articleRequestDO) {
+        ArticleResponseDO articleResponseDO = null;
+        try {
+            articleResponseDO = articleService.addOrUpdateArticle(articleRequestDO);
+        }catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+
+        return new Result(articleResponseDO);
     }
 
     @Override
-    public Result<ArticleResponseDO> updateArticle(ArticleRequestDO articleRequestDO) {
-        return null;
+    public Result<Void> delete(Long id) {
+        try {
+            articleService.deleteArticle(id);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return new Result<>();
     }
 
     @Override
-    public Result<Void> deleteArticle(Long id) {
-        return null;
-    }
-
-    @Override
-    public Result<ArticleResponseDO> getArticle(Long id) {
+    public Result<ArticleResponseDO> get(Long id) {
         ArticleResponseDO articleResponseDO = null;
         try {
             articleResponseDO = articleService.getArticle(id);
         } catch (ObjectNotFoundException e){
             return Result.wrap404Error("article is not found");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
         return new Result(articleResponseDO);
+    }
+
+    @Override
+    public Result<List<ArticleResponseDO>> commonRequest(ArticleCommonRequestDO articleCommonRequestDO) {
+        return null;
     }
 }

@@ -70,6 +70,12 @@ public class CategoryService {
 
         checkParam(categoryDO);
 
+        //如果是更新，先补下默认属性
+        if(categoryDO.getId() != null && categoryDO.getId() > 0){
+            Category category = categoryRepository.getOne(categoryDO.getId());
+            categoryDO.setAddTime(category.getAddTime());
+        }
+
         Category category = categoryConverter.toCategory(categoryDO);
         categoryRepository.save(category);
     }

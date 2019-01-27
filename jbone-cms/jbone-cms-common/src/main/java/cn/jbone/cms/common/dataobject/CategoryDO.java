@@ -5,6 +5,7 @@ import cn.jbone.cms.common.enums.CategoryTypeEnum;
 import cn.jbone.cms.common.enums.StatusEnum;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -81,4 +82,6 @@ public class CategoryDO {
      * 栏目标签，只用于标签虚拟栏目
      */
     private List<TagDO> tags;
+
+    private Timestamp addTime;
 }

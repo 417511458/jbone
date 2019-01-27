@@ -19,6 +19,7 @@ spring:
       hibernate:
         id:
           new_generator_mappings: true # 使用新的ID生成器，使@TableGenerator的initialValue生效
+        format_sql: true
   datasource:
     username: jbone_cms
     password: Jbone_cms_666
