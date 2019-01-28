@@ -17,7 +17,12 @@ public class LinkApiImpl implements LinkApi {
 
     @Override
     public Result<Void> addOrUpdate(LinkDO linkDO) {
-        return null;
+        try {
+            linkService.addOrUpdate(linkDO);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess();
     }
 
     @Override
