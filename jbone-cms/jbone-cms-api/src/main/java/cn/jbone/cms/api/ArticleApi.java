@@ -3,13 +3,12 @@ package cn.jbone.cms.api;
 import cn.jbone.cms.common.dataobject.ArticleCommonRequestDO;
 import cn.jbone.cms.common.dataobject.ArticleRequestDO;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
+import cn.jbone.cms.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @RequestMapping("/article")
 public interface ArticleApi {
@@ -23,7 +22,7 @@ public interface ArticleApi {
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
     Result<ArticleResponseDO> get(@RequestParam("id") Long id);
 
-    @RequestMapping(value = "/get",method = {RequestMethod.POST})
-    Result<List<ArticleResponseDO>> commonRequest(@RequestBody ArticleCommonRequestDO articleCommonRequestDO);
+    @RequestMapping(value = "/commonRequest",method = {RequestMethod.POST})
+    Result<PagedResponseDO<ArticleResponseDO>> commonRequest(@RequestBody ArticleCommonRequestDO articleCommonRequestDO);
 
 }

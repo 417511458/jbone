@@ -2,6 +2,8 @@ package cn.jbone.cms.core.converter;
 
 import cn.jbone.cms.common.dataobject.TagDO;
 import cn.jbone.cms.core.dao.entity.Tag;
+import cn.jbone.cms.core.dao.repository.TagRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -10,6 +12,10 @@ import java.util.List;
 
 @Component
 public class TagConverter {
+
+    @Autowired
+    private TagRepository tagRepository;
+
     public TagDO toTagDO(Tag tag){
         if(tag == null){
             return null;
@@ -42,7 +48,15 @@ public class TagConverter {
             return null;
         }
 
-        Tag tag = new Tag();
+        Tag tag = null;
+
+        if(tagDO.getId() != null && tagDO.getId() > 0){
+            tag = tagRepository.getOne(tagDO.getId());
+        }
+
+        if(tag == null){
+            tag = new Tag();
+        }
         tag.setId(tagDO.getId());
         tag.setName(tagDO.getName());
         return tag;

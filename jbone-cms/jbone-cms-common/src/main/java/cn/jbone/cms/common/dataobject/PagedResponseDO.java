@@ -5,10 +5,9 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ArticleCommonResponseDO {
-
-    List<ArticleResponseDO> articles;
+public class PagedResponseDO<T> {
     long total;
     int pageSize;
     int pageNum;
+    List<T> datas;
 }

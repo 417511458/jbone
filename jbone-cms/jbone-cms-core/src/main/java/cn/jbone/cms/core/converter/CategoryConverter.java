@@ -2,6 +2,7 @@ package cn.jbone.cms.core.converter;
 
 import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.core.dao.entity.Category;
+import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -17,6 +18,10 @@ public class CategoryConverter {
 
     @Autowired
     private TemplateConverter templateConverter;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
 
     public CategoryDO toCategoryDO(Category category,CategoryFieldConfig config){
         if(category == null){
@@ -73,7 +78,13 @@ public class CategoryConverter {
             return null;
         }
 
-        Category category = new Category();
+        Category category = null;
+        if(categoryDO.getId() != null && categoryDO.getId() > 0){
+            category = categoryRepository.getOne(categoryDO.getId());
+        }
+        if(category == null){
+            category = new Category();
+        }
 
         category.setDescription(categoryDO.getDescription());
         category.setFrontCover(categoryDO.getFrontCover());

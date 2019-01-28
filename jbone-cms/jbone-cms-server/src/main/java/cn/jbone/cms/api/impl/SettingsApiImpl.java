@@ -44,7 +44,7 @@ public class SettingsApiImpl implements SettingsApi {
         } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
-        return new Result<>(settingsDO);
+        return Result.wrapSuccess(settingsDO);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class SettingsApiImpl implements SettingsApi {
         } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
-        return new Result<>(settingsDOList);
+        return Result.wrapSuccess(settingsDOList);
     }
 
     @Override
@@ -66,6 +66,6 @@ public class SettingsApiImpl implements SettingsApi {
         } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
-        return new Result<>(settingsDOMap);
+        return Result.wrapSuccess(settingsDOMap);
     }
 }

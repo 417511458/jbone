@@ -1,9 +1,6 @@
 package cn.jbone.cms.core.service;
 
-import cn.jbone.cms.common.dataobject.ArticleCommonRequestDO;
-import cn.jbone.cms.common.dataobject.ArticleCommonResponseDO;
-import cn.jbone.cms.common.dataobject.ArticleRequestDO;
-import cn.jbone.cms.common.dataobject.ArticleResponseDO;
+import cn.jbone.cms.common.dataobject.*;
 import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.cms.core.converter.ArticleConverter;
 import cn.jbone.cms.core.dao.entity.Article;
@@ -78,12 +75,12 @@ public class ArticleService {
      * @param articleCommonRequestDO
      * @return
      */
-    public ArticleCommonResponseDO commonRequest(ArticleCommonRequestDO articleCommonRequestDO){
-        ArticleCommonResponseDO responseDO = new ArticleCommonResponseDO();
+    public PagedResponseDO<ArticleResponseDO> commonRequest(ArticleCommonRequestDO articleCommonRequestDO){
+        PagedResponseDO<ArticleResponseDO> responseDO = new PagedResponseDO<>();
         responseDO.setPageNum(articleCommonRequestDO.getPageNumber());
         responseDO.setPageSize(articleCommonRequestDO.getPageSize());
 
-        PageRequest pageRequest = PageRequest.of(articleCommonRequestDO.getPageNumber(),articleCommonRequestDO.getPageSize());
+        PageRequest pageRequest = null;
         if(StringUtils.isNotBlank(articleCommonRequestDO.getSortName())){
             pageRequest = PageRequest.of(articleCommonRequestDO.getPageNumber()-1,articleCommonRequestDO.getPageSize(), Sort.Direction.fromString(articleCommonRequestDO.getSortOrder()),articleCommonRequestDO.getSortName());
         }else {
@@ -95,7 +92,7 @@ public class ArticleService {
         responseDO.setTotal(articlePage.getTotalElements());
         responseDO.setPageNum(articlePage.getNumber());
         responseDO.setPageSize(articlePage.getSize());
-        responseDO.setArticles(articleConverter.toArticleDOs(articlePage.getContent()));
+        responseDO.setDatas(articleConverter.toArticleDOs(articlePage.getContent()));
 
         return responseDO;
 

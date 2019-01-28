@@ -44,6 +44,6 @@ public class CategoryApiImpl implements CategoryApi {
         }catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
-        return new Result(categoryDOS);
+        return Result.wrapSuccess(categoryDOS);
     }
 }

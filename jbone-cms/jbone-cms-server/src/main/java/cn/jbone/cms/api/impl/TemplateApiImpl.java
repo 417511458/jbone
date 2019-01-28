@@ -1,8 +1,8 @@
 package cn.jbone.cms.api.impl;
 
-import cn.jbone.cms.api.LinkApi;
-import cn.jbone.cms.common.dataobject.LinkDO;
-import cn.jbone.cms.core.service.LinkService;
+import cn.jbone.cms.api.TemplateApi;
+import cn.jbone.cms.common.dataobject.TemplateDO;
+import cn.jbone.cms.core.service.TemplateService;
 import cn.jbone.common.rpc.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class LinkApiImpl implements LinkApi {
+public class TemplateApiImpl implements TemplateApi {
 
     @Autowired
-    private LinkService linkService;
+    private TemplateService templateService;
 
     @Override
-    public Result<Void> addOrUpdate(LinkDO linkDO) {
+    public Result<Void> addOrUpdate(TemplateDO templateDO) {
         try {
-            linkService.addOrUpdate(linkDO);
+            templateService.addOrUpdate(templateDO);
         } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
@@ -28,7 +28,7 @@ public class LinkApiImpl implements LinkApi {
     @Override
     public Result<Void> delete(Long id) {
         try {
-            linkService.delete(id);
+            templateService.delete(id);
         } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
@@ -36,24 +36,24 @@ public class LinkApiImpl implements LinkApi {
     }
 
     @Override
-    public Result<LinkDO> get(Long id) {
-        LinkDO linkDO = null;
+    public Result<TemplateDO> get(Long id) {
+        TemplateDO templateDO = null;
         try {
-            linkDO = linkService.get(id);
+            templateDO = templateService.get(id);
         } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
-        return Result.wrapSuccess(linkDO);
+        return Result.wrapSuccess(templateDO);
     }
 
     @Override
-    public Result<List<LinkDO>> getAll() {
-        List<LinkDO> linkDOS = null;
+    public Result<List<TemplateDO>> getAll() {
+        List<TemplateDO> list;
         try {
-            linkDOS = linkService.getAll();
+            list = templateService.getAll();
         } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }
-        return Result.wrapSuccess(linkDOS);
+        return Result.wrapSuccess(list);
     }
 }

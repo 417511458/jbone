@@ -85,4 +85,8 @@ public class Result<T> implements Serializable {
     public static Result wrapSuccess() {
         return new Result();
     }
+
+    public static <T> Result<T> wrapSuccess(T a) {
+        return new Result<>(a);
+    }
 }
