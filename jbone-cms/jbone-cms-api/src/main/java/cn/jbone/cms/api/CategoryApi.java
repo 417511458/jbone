@@ -33,7 +33,7 @@ public interface CategoryApi {
      * 获取栏目树
      * @return
      */
-    @RequestMapping(value = "/getCategoryTree",method = {RequestMethod.GET})
+    @RequestMapping(value = "/getCategoryTree",method = {RequestMethod.GET,RequestMethod.POST})
     Result<List<CategoryDO>> getCategoryTree();
 
 }

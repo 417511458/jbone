@@ -16,7 +16,7 @@ public interface CategoryTocApi {
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
     Result<Void> delete(@RequestParam("id") Long id);
 
-    @RequestMapping(value = "/getTree",method = {RequestMethod.GET})
+    @RequestMapping(value = "/getTree",method = {RequestMethod.GET,RequestMethod.POST})
     Result<CategoryTocDO> getTree(@RequestParam("categoryId") Long categoryId);
 
 

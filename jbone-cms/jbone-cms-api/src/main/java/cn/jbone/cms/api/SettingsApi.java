@@ -22,10 +22,10 @@ public interface SettingsApi {
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
     Result<SettingsDO> get(@RequestParam("id") Long id);
 
-    @RequestMapping(value = "/getList",method = {RequestMethod.POST})
+    @RequestMapping(value = "/getList",method = {RequestMethod.GET,RequestMethod.POST})
     Result<List<SettingsDO>> getList();
 
-    @RequestMapping(value = "/getMap",method = {RequestMethod.POST})
+    @RequestMapping(value = "/getMap",method = {RequestMethod.GET,RequestMethod.POST})
     Result<Map<String,SettingsDO>> getMap();
 
 }

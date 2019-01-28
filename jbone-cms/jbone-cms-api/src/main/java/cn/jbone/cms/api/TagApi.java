@@ -10,7 +10,7 @@ import java.util.List;
 @RequestMapping("/tag")
 public interface TagApi {
 
-    @RequestMapping(value = "/getAll",method = {RequestMethod.POST})
+    @RequestMapping(value = "/getAll",method = {RequestMethod.POST,RequestMethod.GET})
     Result<List<TagDO>> getAll();
 
 }
