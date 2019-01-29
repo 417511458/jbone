@@ -46,6 +46,14 @@ Vue.prototype.$config = config
 importDirective(Vue)
 Vue.directive('clickOutside', clickOutside)
 
+Vue.prototype.prompt = function (success, text) {
+  if (success) {
+    this.$Message.info({content: text, duration: 3})
+  } else {
+    this.$Message.error({content: text, duration: 20, closable: true})
+  }
+};
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

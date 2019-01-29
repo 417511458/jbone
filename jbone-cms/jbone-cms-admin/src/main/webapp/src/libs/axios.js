@@ -36,6 +36,7 @@ class HttpRequest {
       },
       crossDomain: true,
       transformRequest: [function transformRequest(data, headers) {
+        console.info(data);
         /* 把类似content-type这种改成Content-Type */
         let keys = Object.keys(headers);
         let normalizedName = 'Content-Type';
@@ -54,6 +55,7 @@ class HttpRequest {
           headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
           let keys2 = Object.keys(data);
+          console.info(keys2);
           /* 这里就是把json变成url形式，并进行encode */
           return encodeURI(keys2.map(name => `${name}=${data[name]}`).join('&'));
         }

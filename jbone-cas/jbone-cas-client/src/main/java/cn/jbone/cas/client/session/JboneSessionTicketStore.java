@@ -26,7 +26,7 @@ public class JboneSessionTicketStore {
 
     private String SESSION_TICKET_PREFIX = "session_ticket_";  //sessionId_ST票据关系健前缀
 
-    private Long timeout = 1800l; //默认半个小时
+    private Long timeout = 28800l; //默认8个小时
 
     public void setRedisTemplate(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;

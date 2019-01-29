@@ -123,7 +123,7 @@ export default [
           icon: 'ios-book',
           title: '友情链接'
         },
-        component: () => import('@/view/join-page.vue')
+        component: () => import('@/view/link/link.vue')
       }
     ]
   },

@@ -4,14 +4,14 @@ export const getUserInfo = () => {
   return axios.request({
     url: 'system/getCurrentUser',
     method: 'get'
-  });
+  })
 }
 
 export const logout = () => {
   return axios.request({
     url: 'logout',
     method: 'post'
-  });
+  })
 }
 
 export const getUnreadCount = () => {
