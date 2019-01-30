@@ -36,6 +36,16 @@ public class LinkApiImpl implements LinkApi {
     }
 
     @Override
+    public Result<Void> batchDelete(String ids) {
+        try {
+            linkService.batchDelete(ids);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess();
+    }
+
+    @Override
     public Result<LinkDO> get(Long id) {
         LinkDO linkDO = null;
         try {

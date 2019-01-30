@@ -18,6 +18,9 @@ public interface LinkApi {
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
     Result<Void> delete(@RequestParam("id") Long id);
 
+    @RequestMapping(value = "/batchDelete",method = {RequestMethod.DELETE})
+    Result<Void> batchDelete(@RequestParam("ids") String ids);
+
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
     Result<LinkDO> get(@RequestParam("id") Long id);
 

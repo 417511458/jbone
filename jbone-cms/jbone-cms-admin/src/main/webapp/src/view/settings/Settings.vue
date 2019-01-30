@@ -13,26 +13,22 @@
       {{table.operation.message}}
     </card>
 
-    <Modal :title="title" v-model="editModalModel.showModal" :mask-closable="false">
+    <Modal :title="title" v-model="modal.showModal" :mask-closable="false">
 
       <p slot="header">
         <Icon type="ios-information-circle"></Icon>
-        <span> {{ editModalModel.title }}</span>
+        <span> {{ modal.title }}</span>
       </p>
-      <Form :model="linkModel" :label-width="100" ref="linkForm" :rules="ruleValidate">
-          <FormItem label="链接名" prop="title" style="margin: 0;" :required="true">
-            <i-input v-model="linkModel.title" clearable placeholder="链接名"></i-input>
+      <Form :model="modal.data" :label-width="100" ref="modalForm" :rules="ruleValidate">
+          <FormItem label="配置键" prop="settingKey" style="margin: 0;" :required="true">
+            <i-input v-model="modal.data.settingKey" clearable placeholder="配置键"></i-input>
           </FormItem>
-          <FormItem label="URL" prop="url" style="margin: 0;" :required="true">
-            <i-input v-model="linkModel.url" clearable  placeholder="链接地址"></i-input>
+          <FormItem label="配置值" prop="settingValue" style="margin: 0;" :required="true">
+            <i-input v-model="modal.data.settingValue" clearable  placeholder="配置值"></i-input>
           </FormItem>
-          <FormItem label="排序号" prop="orders" style="margin: 0;" :required="true">
-            <i-input v-model="linkModel.orders" clearable  placeholder="排序号"></i-input>
+          <FormItem label="说明" prop="description" style="margin: 0;">
+            <i-input v-model="modal.data.description" clearable placeholder="说明"></i-input>
           </FormItem>
-          <FormItem label="描述" prop="description" style="margin: 0;">
-            <i-input v-model="linkModel.description" clearable placeholder="描述"></i-input>
-          </FormItem>
-
       </Form>
       <div slot="footer">
         <Button type="primary" size="large" long :loading="loading" @click="addOrUpdate">保存</Button>
@@ -41,7 +37,7 @@
   </div>
 </template>
 <script>
-  import linkApi from '@/api/link'
+  import settingsApi from '@/api/settings'
 
   export default {
     data() {
@@ -68,11 +64,10 @@
               width: 60,
               align: 'center'
             },
-            {title: '链接ID', key: 'id'},
-            {title: '链接名', key: 'title'},
-            {title: 'URL', key: 'url'},
+            {title: '配置ID', key: 'id'},
+            {title: '配置键', key: 'settingKey'},
+            {title: '配置值', key: 'settingValue'},
             {title: '说明', key: 'description'},
-            {title: '排序号', key: 'orders'},
             {
               title: '操作',
               key: 'handle',
@@ -113,32 +108,24 @@
             message: ""
           }
         },
-        totalRecord: 0,
-        pageSize: 15,
-        pageNum: 1,
-        editModelTitle: '',
-
-        editModalModel: {
+        modal:{
           title: '',
           showModal: false,
-          linkId: 0,
-        },
-
-        linkModel: {
-          id: 0,
-          title: '',
-          url: '',
-          description: '',
-          orders: 0
+          data: {
+            id: 0,
+            settingKey: '',
+            settingValue: '',
+            description: ''
+          }
         },
 
         ruleValidate: {
-          title: [
-            {required: true, message: '链接名称不能为空', trigger: 'blur'},
+          settingKey: [
+            {required: true, message: '配置键不能为空', trigger: 'blur'},
             {validator: validateName, trigger: 'blur'}
           ],
-          url: [
-            {required: true, message: 'URL不能为空', trigger: 'blur'},
+          settingValue: [
+            {required: true, message: '配置值不能为空', trigger: 'blur'},
             {validator: validateName, trigger: 'blur'},
           ]
         },
@@ -153,22 +140,11 @@
       init() {
         // 加载表格数据
         this.search();
-
-        this.table.columns.forEach(item => {
-          // if (item.key === 'handle') {
-          //   item.render = (h, param) => {
-          //     let currentRowData = this.table.data[param.index];
-          //     return h('div', [
-          //       addHandleButton(this, h, currentRowData, param.index),
-          //     ]);
-          //   };
-          // }
-        });
       },
       search() {
         this.table.loading = true;
         let self = this;
-        linkApi.getAll().then(function (res) {
+        settingsApi.getAll().then(function (res) {
           console.info(res);
           self.table.loading = false;
           if (!res.data.success) {
@@ -182,37 +158,34 @@
       },
 
       toAddModel() {
-        this.editModalModel.title = '添加链接';
-        this.editModalModel.showModal = true;
-        this.linkModel = {
+        this.modal.title = '添加网站配置';
+        this.modal.showModal = true;
+        this.modal.data = {
           id: 0,
-          title: '',
-          url: '',
-          description: '',
-          orders: 0
+          settingKey: '',
+          settingValue: '',
+          description: ''
         };
       },
 
       toEditModel(index) {
-        this.editModalModel.title = '修改链接';
-        this.editModalModel.showModal = true;
-        this.linkModel = {
+        this.modal.title = '修改网站配置';
+        this.modal.showModal = true;
+        this.modal.data = {
           id: 0,
-          title: '',
-          url: '',
-          description: '',
-          orders: 0
+          settingKey: '',
+          settingValue: '',
+          description: ''
         };
-        console.info("toEditModel,index:" + index )
+
         let self = this;
-        linkApi.getById(this.table.data[index].id).then(function (res) {
+        settingsApi.getById(this.table.data[index].id).then(function (res) {
           let result = res.data;
           if(result.success){
-            self.linkModel.id = result.data.id;
-            self.linkModel.title = result.data.title;
-            self.linkModel.url = result.data.url;
-            self.linkModel.description = result.data.description;
-            self.linkModel.orders = result.data.orders;
+            self.modal.data.id = result.data.id;
+            self.modal.data.settingKey = result.data.settingKey;
+            self.modal.data.settingValue = result.data.settingValue;
+            self.modal.data.description = result.data.description;
           }else{
             self.$Message.error(result.status.message);
           }
@@ -226,9 +199,9 @@
       },
       addOrUpdate() {
         let self = this;
-        this.$refs.linkForm.validate((valid) => {
+        this.$refs.modalForm.validate((valid) => {
           if (valid) {
-            linkApi.addOrUpdate(this.linkModel).then(function (res) {
+            settingsApi.addOrUpdate(this.modal.data).then(function (res) {
               let result = res.data;
               if (result.success) {
                 self.$Message.info("添加成功");
@@ -240,7 +213,7 @@
               self.$Message.error(error.message);
             });
             self.loading = false;
-            self.editModalModel.showModal = false;
+            self.modal.showModal = false;
 
           } else {
             self.loading = false;
@@ -254,7 +227,7 @@
         this.$Modal.confirm({
           title: '确定要删除这条记录吗？',
           onOk: () => {
-            linkApi.delete(this.table.data[index].id).then(function (res) {
+            settingsApi.delete(this.table.data[index].id).then(function (res) {
               let result = res.data;
               if(result.success){
                 self.$Message.info('删除成功');
@@ -282,7 +255,7 @@
         this.$Modal.confirm({
           title: '确定要删除这些记录吗？',
           onOk: () => {
-            linkApi.batchDelete(ids).then(function (res) {
+            settingsApi.batchDelete(ids).then(function (res) {
               let result = res.data;
               if(result.success){
                 self.$Message.info('删除成功');

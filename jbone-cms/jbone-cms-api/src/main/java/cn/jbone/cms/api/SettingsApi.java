@@ -19,6 +19,9 @@ public interface SettingsApi {
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
     Result<Void> delete(@RequestParam("id") Long id);
 
+    @RequestMapping(value = "/batchDelete",method = {RequestMethod.DELETE})
+    Result<Void> batchDelete(@RequestParam("String") String ids);
+
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
     Result<SettingsDO> get(@RequestParam("id") Long id);
 

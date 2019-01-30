@@ -1,17 +1,17 @@
 import axios from '@/libs/api.request'
 
-let linkApi = {};
+let settingsApi = {};
 
-linkApi.getAll = function(){
+settingsApi.getAll = function(){
   return axios.request({
-    url: 'cms/link/getAll',
+    url: 'cms/settings/getList',
     method: 'get'
   });
 }
 
-linkApi.getById = function(id){
+settingsApi.getById = function(id){
   return axios.request({
-    url: 'cms/link/get',
+    url: 'cms/settings/get',
     method: 'get',
     params: {
       id: id
@@ -19,17 +19,17 @@ linkApi.getById = function(id){
   });
 }
 
-linkApi.addOrUpdate = function(link){
+settingsApi.addOrUpdate = function(link){
   return axios.request({
-    url: 'cms/link/addOrUpdate',
+    url: 'cms/settings/addOrUpdate',
     method: 'post',
     data: link
   });
 }
 
-linkApi.delete = function(id){
+settingsApi.delete = function(id){
   return axios.request({
-    url: 'cms/link/delete',
+    url: 'cms/settings/delete',
     method: 'delete',
     params: {
       id: id
@@ -37,9 +37,9 @@ linkApi.delete = function(id){
   });
 }
 
-linkApi.batchDelete = function (ids) {
+settingsApi.batchDelete = function (ids) {
   return axios.request({
-    url: 'cms/link/batchDelete',
+    url: 'cms/settings/batchDelete',
     method: 'delete',
     params: {
       ids: ids
@@ -47,5 +47,5 @@ linkApi.batchDelete = function (ids) {
   });
 }
 
-export default linkApi;
+export default settingsApi;
 

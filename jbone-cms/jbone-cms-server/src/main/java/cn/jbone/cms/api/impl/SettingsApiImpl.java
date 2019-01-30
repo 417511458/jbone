@@ -37,6 +37,16 @@ public class SettingsApiImpl implements SettingsApi {
     }
 
     @Override
+    public Result<Void> batchDelete(String ids) {
+        try {
+            settingsService.batchDelete(ids);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess();
+    }
+
+    @Override
     public Result<SettingsDO> get(Long id) {
         SettingsDO settingsDO = null;
         try {

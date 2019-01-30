@@ -5,6 +5,7 @@ import cn.jbone.cms.core.converter.TagConverter;
 import cn.jbone.cms.core.dao.entity.Tag;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.TagRepository;
+import cn.jbone.common.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -30,8 +31,15 @@ public class TagService {
      * @return
      */
     public List<TagDO> findAll(){
-        List<TagDO> tagDOS = new ArrayList<>();
         List<Tag> tags = tagRepository.findAll();
+        return fillArticleCount(tags);
+    }
+
+    private List<TagDO> fillArticleCount(List<Tag> tags){
+        if(CollectionUtils.isEmpty(tags)){
+            return null;
+        }
+        List<TagDO> tagDOS = new ArrayList<>();
         if(!CollectionUtils.isEmpty(tags)){
             for (Tag tag : tags){
                 TagDO tagDO = tagConverter.toTagDO(tag);
@@ -41,5 +49,17 @@ public class TagService {
         }
         Collections.sort(tagDOS);
         return tagDOS;
+    }
+
+    public List<TagDO> getByName(String name){
+        List<Tag> tags = tagRepository.findByNameLike(name);
+        return fillArticleCount(tags);
+    }
+
+    public void delete(Long id){
+        if(!tagRepository.existsById(id)){
+            throw new ObjectNotFoundException("标签不存在");
+        }
+        tagRepository.deleteById(id);
     }
 }

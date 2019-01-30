@@ -5,11 +5,14 @@ import cn.jbone.cms.core.converter.LinkConverter;
 import cn.jbone.cms.core.dao.entity.Link;
 import cn.jbone.cms.core.dao.repository.LinkRepository;
 import cn.jbone.common.exception.ObjectNotFoundException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,6 +38,26 @@ public class LinkService {
             throw new ObjectNotFoundException("链接不存在");
         }
         linkRepository.deleteById(id);
+    }
+
+    public void batchDelete(String ids){
+        String[] idArray = ids.split(",");
+        if(idArray == null || idArray.length <= 0){
+            return;
+        }
+        List<Link> links = new ArrayList<>();
+        for (String id: idArray){
+            if(StringUtils.isBlank(id)){
+                continue;
+            }
+            Link link = new Link();
+            link.setId(Long.parseLong(id));
+            links.add(link);
+        }
+        if(!CollectionUtils.isEmpty(links)){
+            linkRepository.deleteInBatch(links);
+        }
+
     }
 
     public LinkDO get(Long id){

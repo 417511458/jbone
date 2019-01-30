@@ -5,10 +5,13 @@ import cn.jbone.cms.core.converter.SettingsConverter;
 import cn.jbone.cms.core.dao.entity.Settings;
 import cn.jbone.cms.core.dao.repository.SettingsRepository;
 import cn.jbone.common.exception.ObjectNotFoundException;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.coyote.http2.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +52,27 @@ public class SettingsService {
         }
 
         settingsRepository.deleteById(id);
+    }
+
+    public void batchDelete(String ids){
+        if(StringUtils.isBlank(ids)){
+            return;
+        }
+        String[] idArray = ids.split(",");
+        if(idArray == null && ids.length() <= 0){
+            return;
+        }
+        List<Settings> settingsList = new ArrayList<>();
+        for (String id : idArray){
+            if(StringUtils.isBlank(id)){
+                continue;
+            }
+            Settings settings = new Settings();
+            settings.setId(Long.parseLong(id));
+            settingsList.add(settings);
+        }
+
+        settingsRepository.deleteInBatch(settingsList);
     }
 
     public SettingsDO get(Long id){

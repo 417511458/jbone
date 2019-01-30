@@ -114,7 +114,7 @@ export default [
          icon: 'ios-book',
          title: '网站基本信息'
         },
-        component: () => import('@/view/join-page.vue')
+        component: () => import('@/view/settings/Settings.vue')
       },
       {
         path: 'link_page',
