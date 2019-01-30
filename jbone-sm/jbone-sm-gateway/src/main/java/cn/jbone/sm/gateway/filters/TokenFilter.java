@@ -70,6 +70,9 @@ public class TokenFilter extends ZuulFilter {
             return null;
         }
 
+        //更新下超时时间，防止过期
+//        sessionDao.update(session);
+
         logger.info("session: " + session.toString());
 
 

@@ -6,6 +6,7 @@ import cn.jbone.cms.core.dao.entity.Tag;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.TagRepository;
 import cn.jbone.common.exception.ObjectNotFoundException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -52,6 +53,9 @@ public class TagService {
     }
 
     public List<TagDO> getByName(String name){
+        if(StringUtils.isBlank(name)){
+            return findAll();
+        }
         List<Tag> tags = tagRepository.findByNameLike(name);
         return fillArticleCount(tags);
     }

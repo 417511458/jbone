@@ -84,7 +84,7 @@ export default [
             icon: 'ios-book',
             title: '标签管理'
         },
-        component: () => import('@/view/join-page.vue')
+        component: () => import('@/view/tag/tag.vue')
       },
       {
         path: 'special_page',

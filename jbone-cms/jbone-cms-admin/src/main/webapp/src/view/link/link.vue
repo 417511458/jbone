@@ -29,7 +29,7 @@
           <FormItem label="排序号" prop="orders" style="margin: 0;" :required="true">
             <i-input v-model="linkModel.orders" clearable  placeholder="排序号"></i-input>
           </FormItem>
-          <FormItem label="描述" prop="description" style="margin: 0;">
+          <FormItem label="描述" prop="description" style="margin: 0;" :required="true">
             <i-input v-model="linkModel.description" clearable placeholder="描述"></i-input>
           </FormItem>
 
@@ -245,8 +245,7 @@
           } else {
             self.loading = false;
           }
-        });
-
+        })
       },
       handleDelete (index) {
         console.log(index);
