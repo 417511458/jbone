@@ -1,16 +1,23 @@
 package cn.jbone.cms.core.service;
 
-import cn.jbone.cms.common.dataobject.TagDO;
+import cn.jbone.cms.common.dataobject.*;
+import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.cms.core.converter.TagConverter;
+import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.entity.Tag;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.TagRepository;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -75,5 +82,63 @@ public class TagService {
     public TagDO getById(long id){
         Tag tag = tagRepository.getOne(id);
         return tagConverter.toTagDO(tag);
+    }
+
+    /**
+     * 通用查询
+     * @return
+     */
+    public PagedResponseDO<TagDO> commonRequest(TagCommonRequestDO tagCommonRequestDO){
+        PagedResponseDO<TagDO> responseDO = new PagedResponseDO<>();
+        responseDO.setPageNum(tagCommonRequestDO.getPageNumber());
+        responseDO.setPageSize(tagCommonRequestDO.getPageSize());
+
+        PageRequest pageRequest = null;
+        if(StringUtils.isNotBlank(tagCommonRequestDO.getSortName())){
+            pageRequest = PageRequest.of(tagCommonRequestDO.getPageNumber()-1,tagCommonRequestDO.getPageSize(), Sort.Direction.fromString(tagCommonRequestDO.getSortOrder()),tagCommonRequestDO.getSortName());
+        }else {
+            pageRequest = PageRequest.of(tagCommonRequestDO.getPageNumber()-1,tagCommonRequestDO.getPageSize());
+        }
+
+        Page<Tag> tagPage =  tagRepository.findAll(new TagCommonRequestSpecification(tagCommonRequestDO),pageRequest);
+
+        responseDO.setTotal(tagPage.getTotalElements());
+        responseDO.setPageNum(tagPage.getNumber()+1);
+        responseDO.setPageSize(tagPage.getSize());
+        if(tagCommonRequestDO.isIncludeArticleCount()){
+            responseDO.setDatas(fillArticleCount(tagPage.getContent()));
+        }else{
+            responseDO.setDatas(tagConverter.toTagDOs(tagPage.getContent()));
+        }
+
+
+
+        return responseDO;
+
+    }
+
+    /**
+     *
+     */
+    private class TagCommonRequestSpecification implements Specification<Tag> {
+        private TagCommonRequestDO tagCommonRequestDO;
+        public TagCommonRequestSpecification(TagCommonRequestDO tagCommonRequestDO){
+            this.tagCommonRequestDO = tagCommonRequestDO;
+        }
+
+        @Override
+        public Predicate toPredicate(Root<Tag> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+            if(tagCommonRequestDO == null){
+                return criteriaQuery.getRestriction();
+            }
+            List<Predicate> predicates = new ArrayList<>();
+
+            if(StringUtils.isNotBlank(tagCommonRequestDO.getName())){
+                Path<String> name = root.get("name");
+                predicates.add(criteriaBuilder.like(name,"%" + tagCommonRequestDO.getName() + "%"));
+            }
+            Predicate predicate = criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
+            return predicate;
+        }
     }
 }

@@ -126,19 +126,19 @@ public class ArticleService {
 
             if(StringUtils.isNotBlank(articleCommonRequestDO.getTitle())){
                 Path<String> title = root.get("title");
-                predicates.add(criteriaBuilder.like(title,"%" + articleCommonRequestDO.getTitle() + ""));
+                predicates.add(criteriaBuilder.like(title,"%" + articleCommonRequestDO.getTitle() + "%"));
             }
 
 
             if(StringUtils.isNotBlank(articleCommonRequestDO.getKeywords())){
                 Path<String> keyWords = root.get("keywords");
-                predicates.add(criteriaBuilder.like(keyWords,"%" + articleCommonRequestDO.getKeywords() + ""));
+                predicates.add(criteriaBuilder.like(keyWords,"%" + articleCommonRequestDO.getKeywords() + "%"));
             }
 
 
             if(StringUtils.isNotBlank(articleCommonRequestDO.getDescription())){
                 Path<String> description = root.get("description");
-                predicates.add(criteriaBuilder.like(description,"%" + articleCommonRequestDO.getDescription() + ""));
+                predicates.add(criteriaBuilder.like(description,"%" + articleCommonRequestDO.getDescription() + "%"));
             }
 
             if(!CollectionUtils.isEmpty(articleCommonRequestDO.getStatusList())){

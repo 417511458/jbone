@@ -19,6 +19,17 @@ tagApi.getByName = function(name){
   });
 }
 
+tagApi.commonRequest = function(condition){
+
+  console.info(condition);
+
+  return axios.request({
+    url: 'cms/tag/commonRequest',
+    method: 'post',
+    data: condition
+  });
+}
+
 tagApi.getById = function(id){
   return axios.request({
     url: 'cms/tag/getById',
@@ -40,6 +51,7 @@ tagApi.delete = function(id){
 }
 
 tagApi.addOrUpdate = function(tag){
+  console.info(tag);
   return axios.request({
     url: 'cms/tag/addOrUpdate',
     method: 'post',

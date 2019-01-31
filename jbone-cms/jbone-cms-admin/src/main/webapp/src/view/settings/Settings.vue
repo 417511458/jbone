@@ -7,6 +7,10 @@
     </card>
 
     <card v-if="table.operation.success">
+      <p slot="title">
+        <Icon type="ios-film-outline"></Icon>
+        网站基本信息配置
+      </p>
       <Table :loading="table.loading" :columns="table.columns" :data="table.data" stripe border ref="selection" @on-delete="handleDelete" @on-select="handleSelect"></Table>
     </card>
     <card v-else>

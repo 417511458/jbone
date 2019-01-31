@@ -1,6 +1,8 @@
 package cn.jbone.cms.api.impl;
 
 import cn.jbone.cms.api.TagApi;
+import cn.jbone.cms.common.dataobject.PagedResponseDO;
+import cn.jbone.cms.common.dataobject.TagCommonRequestDO;
 import cn.jbone.cms.common.dataobject.TagDO;
 import cn.jbone.cms.core.service.TagService;
 import cn.jbone.common.rpc.Result;
@@ -66,5 +68,16 @@ public class TagApiImpl implements TagApi {
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess();
+    }
+
+    @Override
+    public Result<PagedResponseDO<TagDO>> commonRequest(TagCommonRequestDO tagCommonRequestDO) {
+        PagedResponseDO<TagDO> pagedResponseDO = null;
+        try {
+            pagedResponseDO = tagService.commonRequest(tagCommonRequestDO);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess(pagedResponseDO);
     }
 }

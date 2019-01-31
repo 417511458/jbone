@@ -19,6 +19,8 @@
           <Tag v-for="item in tagcloud.data" :key="item" :color="item.color" :name="item" closable @on-close="handleDeleteOnTag">{{ item.name }}({{item.articleCount}})</Tag>
         </TabPane>
       </Tabs>
+      <Page :total="query.totalRecord" show-total :pageSize="query.pageSize" @on-change="pageChange" show-sizer @on-page-size-change="pageSizeChange"
+            v-show="tagcloud.operation.success"></Page>
     </card>
 
 
@@ -66,7 +68,12 @@
 
       return {
 
-        query: {name: ''},
+        query: {
+          name: '',
+          totalRecord: 0,
+          pageSize: 10,
+          pageNumber: 1
+        },
         tagcloud: {
           operation: {
             operation: {
@@ -152,14 +159,13 @@
 
         let self = this;
         self.table.loading = true;
-        tagApi.getByName(this.query.name).then(function (res) {
-          console.info(res);
+        tagApi.commonRequest(this.query).then(function (res) {
           self.table.loading = false;
           if (!res.data.success) {
             self.tagcloud.operation.success = false;
             self.tagcloud.operation.message = res.data.status.message;
           } else {
-            self.tagcloud.data = res.data.data;
+            self.tagcloud.data = res.data.data.datas;
             self.tagcloud.data.forEach(tag => {
               tag.color = 'default';
 
@@ -172,7 +178,12 @@
               }
 
             });
+
+            self.query.totalRecord = res.data.data.total;
+            self.query.pageSize = res.data.data.pageSize;
+            self.query.pageNumber = res.data.data.pageNum;
             self.tagcloud.operation.success = true;
+
             self.tagcloud.operation.message = '';
             console.info(self.tagcloud.data);
           }
@@ -263,7 +274,14 @@
         });
 
       },
-
+      pageChange(pageNum){
+        this.query.pageNumber = pageNum;
+        this.search();
+      },
+      pageSizeChange(pageSize){
+        this.query.pageSize = pageSize;
+        this.search();
+      },
     }
   }
 </script>
