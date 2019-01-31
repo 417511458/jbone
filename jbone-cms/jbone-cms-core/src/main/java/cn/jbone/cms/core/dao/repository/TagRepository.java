@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface TagRepository extends JpaRepository<Tag,Long>, JpaSpecificationExecutor<Tag> {
-    List<Tag> findByNameLike(String name);
+    List<Tag> findByNameContaining(String name);
 }

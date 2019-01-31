@@ -19,6 +19,16 @@ tagApi.getByName = function(name){
   });
 }
 
+tagApi.getById = function(id){
+  return axios.request({
+    url: 'cms/tag/getById',
+    method: 'get',
+    params: {
+      id: id
+    }
+  });
+}
+
 tagApi.delete = function(id){
   return axios.request({
     url: 'cms/tag/delete',
@@ -26,6 +36,14 @@ tagApi.delete = function(id){
     params: {
       id: id
     }
+  });
+}
+
+tagApi.addOrUpdate = function(tag){
+  return axios.request({
+    url: 'cms/tag/addOrUpdate',
+    method: 'post',
+    data: tag
   });
 }
 

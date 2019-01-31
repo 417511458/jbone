@@ -38,9 +38,30 @@ public class TagApiImpl implements TagApi {
     }
 
     @Override
+    public Result<TagDO> getById(Long id) {
+        TagDO tagDO = null;
+        try {
+            tagDO = tagService.getById(id);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess(tagDO);
+    }
+
+    @Override
     public Result<Void> delete(Long id) {
         try {
             tagService.delete(id);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess();
+    }
+
+    @Override
+    public Result<Void> addOrUpdate(TagDO tagDO) {
+        try {
+            tagService.addOrUpdate(tagDO);
         } catch (Exception e) {
             return Result.wrap500Error(e.getMessage());
         }

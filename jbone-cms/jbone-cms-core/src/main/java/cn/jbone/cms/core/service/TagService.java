@@ -56,7 +56,7 @@ public class TagService {
         if(StringUtils.isBlank(name)){
             return findAll();
         }
-        List<Tag> tags = tagRepository.findByNameLike(name);
+        List<Tag> tags = tagRepository.findByNameContaining(name);
         return fillArticleCount(tags);
     }
 
@@ -65,5 +65,15 @@ public class TagService {
             throw new ObjectNotFoundException("标签不存在");
         }
         tagRepository.deleteById(id);
+    }
+
+    public void addOrUpdate(TagDO tagDO){
+        Tag tag = tagConverter.toTag(tagDO);
+        tagRepository.save(tag);
+    }
+
+    public TagDO getById(long id){
+        Tag tag = tagRepository.getOne(id);
+        return tagConverter.toTagDO(tag);
     }
 }
