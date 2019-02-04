@@ -11,7 +11,6 @@ import java.util.List;
 
 @RequestMapping("/link")
 public interface LinkApi {
-
     @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST})
     Result<Void> addOrUpdate(@RequestBody LinkDO linkDO);
 

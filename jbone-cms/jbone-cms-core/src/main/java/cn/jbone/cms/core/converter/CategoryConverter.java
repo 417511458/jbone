@@ -52,7 +52,7 @@ public class CategoryConverter {
             categoryDO.setTemplate(templateConverter.toTemplateDO(category.getTemplate()));
         }
         if(config.isChilds()){
-            categoryDO.setChildCategory(toCategoryDOs(category.getChildCategory(),config));
+            categoryDO.setChildren(toCategoryDOs(category.getChildCategory(),config));
         }
 
         return categoryDO;

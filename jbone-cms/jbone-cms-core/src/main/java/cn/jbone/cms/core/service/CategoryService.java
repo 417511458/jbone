@@ -40,7 +40,7 @@ public class CategoryService {
         List<CategoryDO> categoryDOS = categoryConverter.toCategoryDOs(categories, CategoryFieldConfig.build());
         if(!CollectionUtils.isEmpty(categoryDOS)){
             for (CategoryDO categoryDO : categoryDOS){
-                categoryDO.setChildCategory(getCategoryByPid(categoryDO.getId()));
+                categoryDO.setChildren(getCategoryByPid(categoryDO.getId()));
             }
         }
         return categoryDOS;
@@ -71,10 +71,6 @@ public class CategoryService {
         checkParam(categoryDO);
 
         //如果是更新，先补下默认属性
-        if(categoryDO.getId() != null && categoryDO.getId() > 0){
-            Category category = categoryRepository.getOne(categoryDO.getId());
-            categoryDO.setAddTime(category.getAddTime());
-        }
 
         Category category = categoryConverter.toCategory(categoryDO);
         categoryRepository.save(category);

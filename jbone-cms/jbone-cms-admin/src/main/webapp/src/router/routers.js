@@ -66,7 +66,7 @@ export default [
           icon: 'ios-book',
           title: '栏目管理'
         },
-        component: () => import('@/view/join-page.vue')
+        component: () => import('@/view/category/category.vue')
       },
       {
         path: 'article_page',

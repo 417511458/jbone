@@ -46,7 +46,7 @@ public class CategoryDO {
     /**
      * 子栏目
      */
-    private List<CategoryDO> childCategory;
+    private List<CategoryDO> children;
 
     /**
      * 关键字，用于SEO

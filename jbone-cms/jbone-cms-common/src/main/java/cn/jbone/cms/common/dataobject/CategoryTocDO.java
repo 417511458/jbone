@@ -45,7 +45,7 @@ public class CategoryTocDO {
     /**
      * 子目录
      */
-    private List<CategoryTocDO> childCategoryToc;
+    private List<CategoryTocDO> children;
 
     /**
      * 所属栏目

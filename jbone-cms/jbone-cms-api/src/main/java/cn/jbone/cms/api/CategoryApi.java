@@ -18,7 +18,7 @@ public interface CategoryApi {
      * @param categoryDO
      * @return
      */
-    @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST},consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST})
     Result<Void> addOrUpdate(@RequestBody CategoryDO categoryDO);
 
     /**

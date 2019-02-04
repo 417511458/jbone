@@ -1,6 +1,5 @@
 package cn.jbone.cms.core.converter;
 
-import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.CategoryTocDO;
 import cn.jbone.cms.core.dao.entity.CategoryToc;
 import cn.jbone.cms.core.dao.repository.CategoryTocRepository;
@@ -32,7 +31,7 @@ public class CategoryTocConverter {
 
         categoryTocDO.setArticle(articleConverter.toArticleDO(categoryToc.getArticle()));
         categoryTocDO.setCategory(categoryConverter.toCategoryDO(categoryToc.getCategory(),CategoryFieldConfig.buildSimple()));
-        categoryTocDO.setChildCategoryToc(toCategoryTocDOs(categoryToc.getChildCategoryToc()));
+        categoryTocDO.setChildren(toCategoryTocDOs(categoryToc.getChildCategoryToc()));
 
         return categoryTocDO;
     }
