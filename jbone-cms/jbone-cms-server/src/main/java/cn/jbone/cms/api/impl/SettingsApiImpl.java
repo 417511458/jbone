@@ -4,7 +4,10 @@ import cn.jbone.cms.api.SettingsApi;
 import cn.jbone.cms.common.dataobject.SettingsDO;
 import cn.jbone.cms.core.service.SettingsService;
 import cn.jbone.common.rpc.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -13,14 +16,17 @@ import java.util.Map;
 @RestController
 public class SettingsApiImpl implements SettingsApi {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private SettingsService settingsService;
 
     @Override
-    public Result<Void> addOrUpdate(SettingsDO settingsDO) {
+    public Result<Void> addOrUpdate(@RequestBody SettingsDO settingsDO) {
         try {
             settingsService.addOrUpdate(settingsDO);
         } catch (Exception e) {
+            logger.warn("Settings addOrUpdate error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess();
@@ -31,6 +37,7 @@ public class SettingsApiImpl implements SettingsApi {
         try {
             settingsService.delete(id);
         } catch (Exception e) {
+            logger.warn("Settings delete error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess();
@@ -41,6 +48,7 @@ public class SettingsApiImpl implements SettingsApi {
         try {
             settingsService.batchDelete(ids);
         } catch (Exception e) {
+            logger.warn("Settings batchDelete error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess();
@@ -52,6 +60,7 @@ public class SettingsApiImpl implements SettingsApi {
         try {
             settingsDO = settingsService.get(id);
         } catch (Exception e) {
+            logger.warn("Settings get error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess(settingsDO);
@@ -63,6 +72,7 @@ public class SettingsApiImpl implements SettingsApi {
         try {
             settingsDOList = settingsService.getSettingsList();
         } catch (Exception e) {
+            logger.warn("Settings getList error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess(settingsDOList);
@@ -74,6 +84,7 @@ public class SettingsApiImpl implements SettingsApi {
         try {
             settingsDOMap = settingsService.getSettingsMap();
         } catch (Exception e) {
+            logger.warn("Settings getMap error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess(settingsDOMap);

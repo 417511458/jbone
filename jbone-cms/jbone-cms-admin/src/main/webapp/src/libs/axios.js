@@ -51,13 +51,19 @@ class HttpRequest {
          * 这里简单处理下，把 {name: 'admin', pwd: 123}这种转换成name=admin&pwd=123就可以通过
          * x-www-form-urlencoded这种方式提交
          * */
-        if (data) {
-          headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+        // if (data) {
+        //   headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+        //
+        //   let keys2 = Object.keys(data);
+        //   console.info(keys2);
+        //   /* 这里就是把json变成url形式，并进行encode */
+        //   return encodeURI(keys2.map(name => `${name}=${data[name]}`).join('&'));
+        // }
 
-          let keys2 = Object.keys(data);
-          console.info(keys2);
-          /* 这里就是把json变成url形式，并进行encode */
-          return encodeURI(keys2.map(name => `${name}=${data[name]}`).join('&'));
+        if (data) {
+          headers['Content-Type'] = 'application/json;charset=utf-8';
+
+          return JSON.stringify(data);
         }
       }]
     }

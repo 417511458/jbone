@@ -18,7 +18,7 @@ public interface CategoryApi {
      * @param categoryDO
      * @return
      */
-    @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST},consumes = "application/x-www-form-urlencoded;charset=UTF-8")
+    @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST})
     Result<Void> addOrUpdate(@RequestBody CategoryDO categoryDO);
 
     /**

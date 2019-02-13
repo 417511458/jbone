@@ -122,6 +122,7 @@ public class ArticleConverter {
         articleData.setContent(articleDataDO.getContent());
         articleData.setTableOfContents(articleDataDO.getTableOfContents());
 
+
         return articleData;
     }
 
@@ -141,10 +142,11 @@ public class ArticleConverter {
 
         BeanUtils.copyProperties(articleDO,article,"category","tags","template","articleData","addTime","updateTime");
 
-        article.setCategory(categoryConverter.toCategory(articleDO.getCategory()));
+        article.setCategory(categoryRepository.getOne(articleDO.getCategory().getId()));
         article.setTags(tagConverter.toTags(articleDO.getTags()));
         article.setTemplate(templateConverter.toTemplate(articleDO.getTemplate()));
-        article.setArticleData(toArticleData(article,articleDO.getArticleData()));
+//        article.setArticleData(toArticleData(article,articleDO.getArticleData()));
+
 
         return article;
     }

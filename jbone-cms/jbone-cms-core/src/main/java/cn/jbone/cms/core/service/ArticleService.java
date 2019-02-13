@@ -3,8 +3,8 @@ package cn.jbone.cms.core.service;
 import cn.jbone.cms.common.dataobject.*;
 import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.cms.core.converter.ArticleConverter;
-import cn.jbone.cms.core.dao.entity.Article;
-import cn.jbone.cms.core.dao.entity.Tag;
+import cn.jbone.cms.core.dao.entity.*;
+import cn.jbone.cms.core.dao.repository.ArticleDataRepository;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.sys.api.UserApi;
@@ -29,6 +29,9 @@ public class ArticleService {
     private ArticleRepository articleRepository;
 
     @Autowired
+    private ArticleDataRepository articleDataRepository;
+
+    @Autowired
     private ArticleConverter articleConverter;
 
     @Autowired
@@ -38,6 +41,10 @@ public class ArticleService {
         checkParam(articleRequestDO);
         Article article = articleConverter.toArticle(articleRequestDO);
         article = articleRepository.save(article);
+
+        ArticleData articleData = articleConverter.toArticleData(article,articleRequestDO.getArticleData());
+        articleDataRepository.save(articleData);
+
         return getArticle(article.getId());
     }
 
@@ -76,9 +83,7 @@ public class ArticleService {
      * @return
      */
     public PagedResponseDO<ArticleResponseDO> commonRequest(ArticleCommonRequestDO articleCommonRequestDO){
-        PagedResponseDO<ArticleResponseDO> responseDO = new PagedResponseDO<>();
-        responseDO.setPageNum(articleCommonRequestDO.getPageNumber());
-        responseDO.setPageSize(articleCommonRequestDO.getPageSize());
+
 
         PageRequest pageRequest = null;
         if(StringUtils.isNotBlank(articleCommonRequestDO.getSortName())){
@@ -89,8 +94,9 @@ public class ArticleService {
 
         Page<Article> articlePage =  articleRepository.findAll(new ArticleCommonRequestSpecification(articleCommonRequestDO),pageRequest);
 
+        PagedResponseDO<ArticleResponseDO> responseDO = new PagedResponseDO<>();
         responseDO.setTotal(articlePage.getTotalElements());
-        responseDO.setPageNum(articlePage.getNumber());
+        responseDO.setPageNum(articlePage.getNumber() + 1);
         responseDO.setPageSize(articlePage.getSize());
         responseDO.setDatas(articleConverter.toArticleDOs(articlePage.getContent()));
 
@@ -150,13 +156,13 @@ public class ArticleService {
             }
 
             if(articleCommonRequestDO.getCategoryId() != null && articleCommonRequestDO.getCategoryId() > 0){
-                Path<Long> categoryId = root.get("categoryId");
-                predicates.add(criteriaBuilder.equal(categoryId,articleCommonRequestDO.getCategoryId()));
+                Join<Article,Category> categoryJoin = root.join("category",JoinType.INNER);
+                predicates.add(criteriaBuilder.equal(categoryJoin.get("id"),articleCommonRequestDO.getCategoryId()));
             }
 
             if(articleCommonRequestDO.getTemplateId() != null && articleCommonRequestDO.getTemplateId() > 0){
-                Path<Long> templateId = root.get("templateId");
-                predicates.add(criteriaBuilder.equal(templateId,articleCommonRequestDO.getTemplateId()));
+                Join<Template,Template> templateJoin = root.join("template",JoinType.INNER);
+                predicates.add(criteriaBuilder.equal(templateJoin.get("id"),articleCommonRequestDO.getTemplateId()));
             }
 
 

@@ -6,6 +6,8 @@ import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.core.service.CategoryService;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.rpc.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +16,16 @@ import java.util.List;
 @RestController
 public class CategoryApiImpl implements CategoryApi {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private CategoryService categoryService;
 
-    public Result<Void> addOrUpdate(CategoryDO categoryDO){
+    public Result<Void> addOrUpdate(@RequestBody CategoryDO categoryDO){
         try {
             categoryService.addOrUpdate(categoryDO);
         } catch (Exception e) {
+            logger.warn("category addOrUpdate error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess();
@@ -32,6 +37,7 @@ public class CategoryApiImpl implements CategoryApi {
         } catch (ObjectNotFoundException e){
             return Result.wrap404Error(e.getMessage());
         } catch (Exception e) {
+            logger.warn("category delete error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess();
@@ -43,6 +49,7 @@ public class CategoryApiImpl implements CategoryApi {
         try {
             categoryDO = categoryService.get(id);
         } catch (Exception e) {
+            logger.warn("category get error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess(categoryDO);
@@ -53,6 +60,7 @@ public class CategoryApiImpl implements CategoryApi {
         try {
             categoryDOS = categoryService.getCategoryTree();
         }catch (Exception e) {
+            logger.warn("category getCategoryTree error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess(categoryDOS);

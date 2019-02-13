@@ -28,7 +28,7 @@
         <appender-ref ref="ROOT-APPENDER"/>
         <appender-ref ref="stdout"/>
     </logger>
-    <logger name="org.springframework" level="debug" additivity="false">
+    <logger name="org.springframework" level="info" additivity="false">
         <appender-ref ref="ROOT-APPENDER"/>
         <appender-ref ref="stdout"/>
     </logger>

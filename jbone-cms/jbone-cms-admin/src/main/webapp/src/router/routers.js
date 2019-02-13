@@ -75,7 +75,7 @@ export default [
           icon: 'ios-book',
           title: '文章管理'
         },
-        component: () => import('@/view/join-page.vue')
+        component: () => import('@/view/article/article.vue')
       },
       {
         path: 'tag_page',

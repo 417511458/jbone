@@ -3,6 +3,8 @@ package cn.jbone.cms.core.dao.entity;
 import cn.jbone.cms.common.enums.BooleanEnum;
 import cn.jbone.cms.common.enums.StatusEnum;
 import lombok.Data;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -49,6 +51,12 @@ public class Article extends BaseEntity {
     private int hits;
 
     /**
+     * 排序号
+     */
+    @Column(name = "orders")
+    private int orders;
+
+    /**
      * 文章状态，枚举,默认发布状态
      */
     @Column(name = "status")
@@ -66,6 +74,7 @@ public class Article extends BaseEntity {
      * 文章内容，双向关联
      */
     @OneToOne(targetEntity = ArticleData.class,mappedBy = "article",fetch=FetchType.LAZY)
+    @NotFound(action= NotFoundAction.IGNORE)
     private ArticleData articleData;
 
     /**
@@ -73,6 +82,7 @@ public class Article extends BaseEntity {
      */
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "category_id",referencedColumnName = "id")
+    @NotFound(action= NotFoundAction.IGNORE)
     private Category category;
 
     /**
@@ -80,6 +90,7 @@ public class Article extends BaseEntity {
      */
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "template_id",referencedColumnName = "id")
+    @NotFound(action= NotFoundAction.IGNORE)
     private Template template;
 
     /**

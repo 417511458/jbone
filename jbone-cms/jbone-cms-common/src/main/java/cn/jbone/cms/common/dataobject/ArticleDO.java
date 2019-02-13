@@ -36,6 +36,8 @@ public class ArticleDO {
      */
     private int hits = 0;
 
+    private int orders = 0;
+
     /**
      * 文章状态，枚举,默认发布状态
      */
