@@ -36,7 +36,7 @@ class HttpRequest {
       },
       crossDomain: true,
       transformRequest: [function transformRequest(data, headers) {
-        console.info(data);
+        // console.info(data);
         /* 把类似content-type这种改成Content-Type */
         let keys = Object.keys(headers);
         let normalizedName = 'Content-Type';

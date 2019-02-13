@@ -51,6 +51,7 @@ tagApi.delete = function(id){
 }
 
 tagApi.addOrUpdate = function(tag){
+  console.info("tag:" + tag);
   console.info(tag);
   return axios.request({
     url: 'cms/tag/addOrUpdate',

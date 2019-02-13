@@ -29,15 +29,15 @@ public class GateWayConfiguration {
         return new CorsFilter(source);
     }
 
-    @Bean
-    public TokenFilter tokenFilter(JboneCasSessionDao jboneCasSessionDao){
-        return new TokenFilter(jboneCasSessionDao);
-    }
-
-    @Bean
-    public UserInfoFilter userInfoFilter(){
-        return new UserInfoFilter();
-    }
+//    @Bean
+//    public TokenFilter tokenFilter(JboneCasSessionDao jboneCasSessionDao){
+//        return new TokenFilter(jboneCasSessionDao);
+//    }
+//
+//    @Bean
+//    public UserInfoFilter userInfoFilter(){
+//        return new UserInfoFilter();
+//    }
 
     @Bean(name = "jboneCasSessionDao")
     public JboneCasSessionDao getSessionDao(StringRedisTemplate redisTemplate){

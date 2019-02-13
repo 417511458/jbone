@@ -2,7 +2,6 @@
   <div>
     <card>
       <Button type="primary" icon="ios-add" @click="toAddModel(0)">添加</Button>
-      <Button type="primary" icon="ios-backspace-outline" @click="handleBatchDelete" style="margin-left: 10px">删除</Button>
       <Button type="primary" icon="ios-search" @click="search" style="margin-left: 10px">刷新</Button>
     </card>
 
@@ -11,9 +10,16 @@
         <Icon type="ios-film-outline"></Icon>
         所有栏目
       </p>
-      <tree-table expand-key="title" :expand-type="false" :selectable="false" :columns="table.columns" :data="table.data" >
-        <template slot="likes" slot-scope="scope">
-          <Button @click="handle(scope)">123</Button>
+      <tree-table expand-key="title" :show-index="true" :expand-type="false" :selectable="false" :columns="table.columns" :data="table.data" >
+        <template slot="handle" slot-scope="scope">
+          <Button @click="toEditModel(scope.row.id)" type="primary" size="small">编辑</Button>
+          <Button @click="toAddModel(scope.row.id)" type="primary" size="small" style="margin-left: 5px">添加下级栏目</Button>
+          <Button @click="handleDelete(scope.row.id)" type="error" size="small" style="margin-left: 5px">删除</Button>
+        </template>
+        <template slot="type" slot-scope="scope">
+          <span v-if="scope.row.type == 'CATEGORY'">普通栏目</span>
+          <span v-if="scope.row.type == 'TAG'">标签聚合栏目</span>
+          <span v-if="scope.row.type == 'SPECIAL'">专题栏目</span>
         </template>
       </tree-table>
     </card>
@@ -28,19 +34,19 @@
         <span> {{ modal.title }}</span>
       </p>
       <Form :model="modal.data" :label-width="100" ref="modalForm" :rules="ruleValidate">
-        <FormItem label="栏目标题" prop="title" style="margin: 0;" :required="true">
+        <FormItem label="栏目标题" prop="title" :required="true">
           <i-input v-model="modal.data.title" clearable placeholder="栏目标题"></i-input>
         </FormItem>
 
-        <FormItem label="关键字" prop="keywords" style="margin: 0;">
+        <FormItem label="关键字" prop="keywords">
           <i-input v-model="modal.data.keywords" clearable placeholder="关键字"></i-input>
         </FormItem>
 
-        <FormItem label="说明" prop="description" style="margin: 0;">
+        <FormItem label="说明" prop="description" >
           <i-input v-model="modal.data.description" clearable placeholder="说明"></i-input>
         </FormItem>
 
-        <FormItem label="类型" prop="type" style="margin: 0;">
+        <FormItem label="类型" prop="type" >
           <RadioGroup v-model="modal.data.type" type="button">
             <Radio label="CATEGORY">普通栏目</Radio>
             <Radio label="TAG">标签聚合栏目</Radio>
@@ -48,26 +54,30 @@
           </RadioGroup>
         </FormItem>
 
-        <FormItem label="是否展示在导航" prop="inMenu" style="margin: 0;" type="button">
-          <RadioGroup v-model="modal.data.inMenu">
+        <FormItem label="是否展示在导航" prop="inMenu"  >
+          <RadioGroup v-model="modal.data.inMenu" type="button">
             <Radio label="TRUE">是</Radio>
             <Radio label="FALSE">否</Radio>
           </RadioGroup>
         </FormItem>
 
-        <FormItem label="状态" prop="status" style="margin: 0;" type="button">
-          <RadioGroup v-model="modal.data.status">
+        <FormItem label="状态" prop="status" >
+          <RadioGroup v-model="modal.data.status" type="button">
             <Radio label="PUBLISH">发布</Radio>
             <Radio label="AUDIT">待审核</Radio>
           </RadioGroup>
         </FormItem>
 
-        <FormItem label="栏目链接" prop="url" style="margin: 0;" :required="true">
+        <FormItem label="排序号" prop="orders" >
+          <InputNumber v-model="modal.data.orders" clearable  placeholder="排序号"></InputNumber>
+        </FormItem>
+
+        <FormItem label="栏目链接" prop="url" >
           <i-input v-model="modal.data.url" clearable  placeholder="栏目链接"></i-input>
         </FormItem>
 
-        <FormItem label="跳转目标" prop="target" style="margin: 0;" :required="true">
-          <i-input v-model="modal.data.target" clearable  placeholder="栏目链接"></i-input>
+        <FormItem label="跳转目标" prop="target">
+          <i-input v-model="modal.data.target" clearable  placeholder="跳转目标"></i-input>
         </FormItem>
 
       </Form>
@@ -79,8 +89,10 @@
 </template>
 <script>
   import categoryApi from '@/api/category'
+  import InputNumber from "iview/src/components/input-number/input-number";
 
   export default {
+    components: {InputNumber},
     data() {
       const validateName = (rule, value, callback) => {
         if (value) {
@@ -109,25 +121,10 @@
             },
             {
               title: '栏目类型',
-              key: 'type',
-              render: (h, params) => {
-                let lblText = '';
-                if(this.table.data[params.index].type == 'CATEGORY'){
-                  lblText = '普通栏目';
-                }else if(this.table.data[params.index].type == 'TAG'){
-                  lblText = '标签聚合栏目';
-                }else if(this.table.data[params.index].type == 'SPECIAL'){
-                  lblText = '专题栏目';
-                }
-                return h('div', [
-                  h('Button', {
-                    props: {
-                      type: 'error',
-                      size: 'small'
-                    }
-                  }, lblText)
-                ]);
-              }
+              // key: 'type',
+              minWidth: '200px',
+              type: 'template',
+              template: 'type'
             },
             {
               title: '排序号',
@@ -135,36 +132,10 @@
             },
             {
               title: '操作',
-              key: 'handle',
-              render: (h, params) => {
-                return h('div', [
-                  h('Button', {
-                    props: {
-                      type: 'primary',
-                      size: 'small'
-                    },
-                    style: {
-                      marginRight: '5px'
-                    },
-                    on: {
-                      click: () => {
-                        this.toEditModel(params.index);
-                      }
-                    }
-                  }, '修改'),
-                  h('Button', {
-                    props: {
-                      type: 'error',
-                      size: 'small'
-                    },
-                    on: {
-                      click: () => {
-                        this.handleDelete(params.index);
-                      }
-                    }
-                  }, '删除')
-                ]);
-              }
+              // key: 'handle',
+              minWidth: '200px',
+              type: 'template',
+              template: 'handle'
             }
           ],
           data: [],
@@ -245,7 +216,7 @@
         };
       },
 
-      toEditModel(index) {
+      toEditModel(id) {
         this.modal.title = '修改网站配置';
         this.modal.showModal = true;
         this.modal.data = {
@@ -263,7 +234,7 @@
         };
 
         let self = this;
-        categoryApi.getById(this.table.data[index].id).then(function (res) {
+        categoryApi.getById(id).then(function (res) {
           let result = res.data;
           if(result.success){
             self.modal.data = {
@@ -297,7 +268,7 @@
             categoryApi.addOrUpdate(this.modal.data).then(function (res) {
               let result = res.data;
               if (result.success) {
-                self.$Message.info("添加成功");
+                self.$Message.info("操作成功");
                 self.search();
               } else {
                 self.$Message.error(result.status.message);
@@ -314,53 +285,27 @@
         });
 
       },
-      handleDelete (index) {
-        console.log(index);
+      handleDelete (id) {
         let self = this;
         this.$Modal.confirm({
           title: '确定要删除这条记录吗？',
           onOk: () => {
-            categoryApi.delete(this.table.data[index].id).then(function (res) {
+            console.log("delele ok.");
+            console.log("id:" + id);
+            categoryApi.delete(id).then(function (res) {
               let result = res.data;
               if(result.success){
                 self.$Message.info('删除成功');
                 self.search();
               }else {
-                self.$Message.error('删除失败');
+                self.$Message.error('删除失败!' + result.status.message);
               }
             });
           }
         });
 
       },
-      handleBatchDelete(){
-        let self = this;
-        let selectedData = this.$refs.selection.getSelection();
-        if(selectedData == null || selectedData.length <= 0){
-          this.$Message.error("请选中要删除的数据");
-          return;
-        }
-        let ids = '';
-        selectedData.forEach(currentData => {
-          ids = ids + currentData.id + ',';
-        });
-        console.info("batchDelete:" + ids);
-        this.$Modal.confirm({
-          title: '确定要删除这些记录吗？',
-          onOk: () => {
-            categoryApi.batchDelete(ids).then(function (res) {
-              let result = res.data;
-              if(result.success){
-                self.$Message.info('删除成功');
-                self.search();
-              }else {
-                self.$Message.error('删除失败');
-              }
-            });
-          }
-        });
 
-      },
       handleSelect(selection,row){
         console.info(selection);
         console.info(this.$refs.selection.getSelection());

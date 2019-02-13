@@ -46,6 +46,11 @@ public class CategoryService {
         return categoryDOS;
     }
 
+    public CategoryDO get(Long id){
+        Category category = categoryRepository.getOne(id);
+        return categoryConverter.toCategoryDO(category,CategoryFieldConfig.build());
+    }
+
     public void delete(Long id){
 
         long categoryCount = categoryRepository.countById(id);

@@ -24,13 +24,13 @@
         <span> {{ modal.title }}</span>
       </p>
       <Form :model="modal.data" :label-width="100" ref="modalForm" :rules="ruleValidate">
-          <FormItem label="配置键" prop="settingKey" style="margin: 0;" :required="true">
+          <FormItem label="配置键" prop="settingKey" :required="true">
             <i-input v-model="modal.data.settingKey" clearable placeholder="配置键"></i-input>
           </FormItem>
-          <FormItem label="配置值" prop="settingValue" style="margin: 0;" :required="true">
+          <FormItem label="配置值" prop="settingValue" :required="true">
             <i-input v-model="modal.data.settingValue" clearable  placeholder="配置值"></i-input>
           </FormItem>
-          <FormItem label="说明" prop="description" style="margin: 0;">
+          <FormItem label="说明" prop="description" >
             <i-input v-model="modal.data.description" clearable placeholder="说明"></i-input>
           </FormItem>
       </Form>

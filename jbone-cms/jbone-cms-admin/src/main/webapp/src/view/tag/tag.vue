@@ -35,7 +35,7 @@
         <span> {{ modal.title }}</span>
       </p>
       <Form :model="modal.data" :label-width="100" ref="modalForm" :rules="ruleValidate">
-        <FormItem label="标签名" prop="name" style="margin: 0;" :required="true">
+        <FormItem label="标签名" prop="name" :required="true">
           <i-input v-model="modal.data.name" clearable placeholder="标签名"></i-input>
         </FormItem>
       </Form>

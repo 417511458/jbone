@@ -17,7 +17,7 @@ public class CategoryApiImpl implements CategoryApi {
     @Autowired
     private CategoryService categoryService;
 
-    public Result<Void> addOrUpdate(@RequestBody CategoryDO categoryDO){
+    public Result<Void> addOrUpdate(CategoryDO categoryDO){
         try {
             categoryService.addOrUpdate(categoryDO);
         } catch (Exception e) {
@@ -26,7 +26,7 @@ public class CategoryApiImpl implements CategoryApi {
         return Result.wrapSuccess();
     }
 
-    public Result<Void> delete(@RequestParam("id") Long id){
+    public Result<Void> delete(Long id){
         try {
             categoryService.delete(id);
         } catch (ObjectNotFoundException e){
@@ -35,6 +35,17 @@ public class CategoryApiImpl implements CategoryApi {
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess();
+    }
+
+    @Override
+    public Result<CategoryDO> get(Long id) {
+        CategoryDO categoryDO = null;
+        try {
+            categoryDO = categoryService.get(id);
+        } catch (Exception e) {
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess(categoryDO);
     }
 
     public Result<List<CategoryDO>> getCategoryTree(){

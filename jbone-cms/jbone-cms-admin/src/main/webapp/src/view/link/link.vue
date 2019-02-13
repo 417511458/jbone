@@ -24,16 +24,16 @@
         <span> {{ editModalModel.title }}</span>
       </p>
       <Form :model="linkModel" :label-width="100" ref="linkForm" :rules="ruleValidate">
-          <FormItem label="链接名" prop="title" style="margin: 0;" :required="true">
+          <FormItem label="链接名" prop="title" :required="true">
             <i-input v-model="linkModel.title" clearable placeholder="链接名"></i-input>
           </FormItem>
-          <FormItem label="URL" prop="url" style="margin: 0;" :required="true">
+          <FormItem label="URL" prop="url" :required="true">
             <i-input v-model="linkModel.url" clearable  placeholder="链接地址"></i-input>
           </FormItem>
-          <FormItem label="排序号" prop="orders" style="margin: 0;" :required="true">
-            <i-input v-model="linkModel.orders" clearable  placeholder="排序号"></i-input>
+          <FormItem label="排序号" prop="orders"  :required="true">
+            <InputNumber v-model="linkModel.orders" clearable  placeholder="排序号"></InputNumber>
           </FormItem>
-          <FormItem label="描述" prop="description" style="margin: 0;" :required="true">
+          <FormItem label="描述" prop="description" :required="true">
             <i-input v-model="linkModel.description" clearable placeholder="描述"></i-input>
           </FormItem>
 

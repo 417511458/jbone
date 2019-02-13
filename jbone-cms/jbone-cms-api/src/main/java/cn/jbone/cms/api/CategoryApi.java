@@ -18,7 +18,7 @@ public interface CategoryApi {
      * @param categoryDO
      * @return
      */
-    @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST})
+    @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST},consumes = "application/x-www-form-urlencoded;charset=UTF-8")
     Result<Void> addOrUpdate(@RequestBody CategoryDO categoryDO);
 
     /**
@@ -28,6 +28,10 @@ public interface CategoryApi {
      */
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
     Result<Void> delete(@RequestParam("id") Long id);
+
+
+    @RequestMapping(value = "/get",method = {RequestMethod.GET})
+    Result<CategoryDO> get(@RequestParam("id") Long id);
 
     /**
      * 获取栏目树

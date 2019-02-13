@@ -20,6 +20,8 @@ categoryApi.getById = function(id){
 }
 
 categoryApi.addOrUpdate = function(cate){
+  console.info("cate:" + cate);
+  console.info(cate);
   return axios.request({
     url: 'cms/category/addOrUpdate',
     method: 'post',
@@ -28,6 +30,7 @@ categoryApi.addOrUpdate = function(cate){
 }
 
 categoryApi.delete = function(id){
+  console.info("delete category :" + id);
   return axios.request({
     url: 'cms/category/delete',
     method: 'delete',

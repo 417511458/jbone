@@ -28,6 +28,10 @@
         <appender-ref ref="ROOT-APPENDER"/>
         <appender-ref ref="stdout"/>
     </logger>
+    <logger name="org.springframework" level="debug" additivity="false">
+        <appender-ref ref="ROOT-APPENDER"/>
+        <appender-ref ref="stdout"/>
+    </logger>
 
     <root level="info">
         <appender-ref ref="ROOT-APPENDER"/>
