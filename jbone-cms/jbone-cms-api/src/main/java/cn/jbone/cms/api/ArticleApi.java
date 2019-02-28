@@ -19,6 +19,9 @@ public interface ArticleApi {
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
     Result<Void> delete(@RequestParam("id") Long id);
 
+    @RequestMapping(value = "/flushDelete",method = {RequestMethod.DELETE})
+    Result<Void> flushDelete(@RequestParam("id") Long id);
+
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
     Result<ArticleResponseDO> get(@RequestParam("id") Long id);
 

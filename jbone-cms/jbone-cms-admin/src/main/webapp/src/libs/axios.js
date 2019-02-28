@@ -60,6 +60,7 @@ class HttpRequest {
         //   return encodeURI(keys2.map(name => `${name}=${data[name]}`).join('&'));
         // }
 
+        //对象采用json传参
         if (data) {
           headers['Content-Type'] = 'application/json;charset=utf-8';
 

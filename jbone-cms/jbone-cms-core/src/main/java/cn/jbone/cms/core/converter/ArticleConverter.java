@@ -5,6 +5,7 @@ import cn.jbone.cms.common.dataobject.ArticleDataDO;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.entity.ArticleData;
+import cn.jbone.cms.core.dao.entity.Tag;
 import cn.jbone.cms.core.dao.repository.ArticleDataRepository;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.CategoryRepository;
@@ -73,6 +74,14 @@ public class ArticleConverter {
         if(responseResult != null && responseResult.isSuccess()){
             articleResponseDO.setAuthor(responseResult.getData());
         }
+
+        List<Long> tagIds = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(article.getTags())){
+            for (Tag tag : article.getTags()){
+                tagIds.add(tag.getId());
+            }
+        }
+        articleResponseDO.setTagIds(tagIds);
 
         return articleResponseDO;
     }
@@ -143,7 +152,7 @@ public class ArticleConverter {
         BeanUtils.copyProperties(articleDO,article,"category","tags","template","articleData","addTime","updateTime");
 
         article.setCategory(categoryRepository.getOne(articleDO.getCategory().getId()));
-        article.setTags(tagConverter.toTags(articleDO.getTags()));
+        article.setTags(tagConverter.toTagsByIds(articleDO.getTagIds()));
         article.setTemplate(templateConverter.toTemplate(articleDO.getTemplate()));
 //        article.setArticleData(toArticleData(article,articleDO.getArticleData()));
 

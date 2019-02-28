@@ -64,6 +64,11 @@ public class ArticleDO {
     private List<TagDO> tags;
 
     /**
+     * 标签ID集合
+     */
+    private List<Long> tagIds;
+
+    /**
      * 文章内容
      */
     private ArticleDataDO articleData;

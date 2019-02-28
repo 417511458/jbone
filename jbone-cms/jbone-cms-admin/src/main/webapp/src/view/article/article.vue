@@ -1,6 +1,7 @@
 <template>
   <Row>
-    <Col span="6">
+
+    <Col span="4">
       <card v-if="categoryTree.operation.success">
         <p slot="title">
           <Icon type="ios-film-outline"></Icon>
@@ -12,18 +13,19 @@
         {{categoryTree.operation.message}}
       </card>
     </Col>
-    <Col span="18" v-if="query.categoryId > 0">
+
+    <Col span="20" v-if="query.categoryId > 0">
       <card v-if="table.operation.success">
         <p slot="title">
           <Icon type="ios-film-outline"></Icon>
           文章列表
         </p>
 
-        <Input clearable placeholder="文章标题" v-model="query.title" style="width: 200px;" />
-        <Button type="primary" icon="ios-search" @click="searchArticle" style="margin-left: 10px;">查询</Button>
-        <Button type="primary" icon="ios-add" @click="toAddModel" style="margin-left: 10px;">发表文章</Button>
-
-        <p></p>
+        <div style="margin-bottom: 10px;">
+          <Input clearable placeholder="文章标题" v-model="query.title" style="width: 200px;" />
+          <Button type="primary" icon="ios-search" @click="searchArticle" style="margin-left: 10px;">查询</Button>
+          <Button type="primary" icon="ios-add" @click="toAddModel" style="margin-left: 10px;">发表文章</Button>
+        </div>
 
         <Table :loading="table.loading" :columns="table.columns" :data="table.data" stripe border ref="selection" @on-delete="handleDelete" @on-select="handleSelect"></Table>
         <Page :total="query.totalRecord" show-total :pageSize="query.pageSize" @on-change="pageChange" show-sizer @on-page-size-change="pageSizeChange"
@@ -34,7 +36,7 @@
       </card>
 
 
-    <Modal :title="title" v-model="modal.showModal" :mask-closable="false">
+    <Modal :title="title" v-model="modal.showModal" :mask-closable="false" :width="80" :fullscreen="true">
 
       <p slot="header">
         <Icon type="ios-information-circle"></Icon>
@@ -72,14 +74,44 @@
           <InputNumber v-model="modal.data.orders" clearable placeholder="排序号"></InputNumber>
         </FormItem>
 
+        <FormItem label="文章标签" prop="tags" >
+          <Select v-model="modal.data.tagIds" filterable multiple>
+            <Option v-for="tag in modal.tags" :value="tag.id" :key="tag.name">{{ tag.name }}</Option>
+          </Select>
+        </FormItem>
+
         <FormItem label="文章内容" prop="articleData.content" >
-          <i-input v-model="modal.data.articleData.content" clearable  placeholder="文章内容"></i-input>
+          <div class="edit_container" id="editor">
+            <quill-editor
+              v-model="modal.data.articleData.content"
+              ref="myQuillEditor"
+              :options="editorOption"
+              @blur="onEditorBlur" @focus="onEditorFocus"
+              @change="onEditorChange" @ready="onEditorReady">
+            </quill-editor>
+          </div>
         </FormItem>
       </Form>
       <div slot="footer">
         <Button type="primary" size="large" long :loading="loading" @click="addOrUpdate">保存</Button>
       </div>
     </Modal>
+
+      <Modal :title="title" v-model="linkImageModal.showModal" :mask-closable="false" :width="400"  @on-ok="handleInsertImage">
+
+        <p slot="header">
+          <Icon type="ios-information-circle"></Icon>
+          <span>插入图片链接</span>
+        </p>
+
+        <Form ref="formInline" :model="linkImageModal.data" inline >
+          <FormItem prop="user">
+            <Input type="text" v-model="linkImageModal.data.url" placeholder="图片URL" style="width: 300px;">
+              <Icon type="ios-images" slot="prepend"/>
+            </Input>
+          </FormItem>
+        </Form>
+      </Modal>
 
     </Col>
   </Row>
@@ -89,7 +121,13 @@
   import Tree from "iview/src/components/tree/tree";
   import categoryApi from '@/api/category'
   import articleApi from '@/api/article'
+  import tagApi from '@/api/tag'
 
+  var quill = new Quill('#editor', {
+    modules: {
+      counter: true
+    }
+  });
   export default {
     components: {Tree},
     data() {
@@ -106,7 +144,45 @@
       };
 
       return {
-
+        editorOption: {
+          modules: {
+            toolbar: [
+              ['bold', 'italic', 'underline', 'strike'],
+              ['blockquote', 'code-block'],
+              [{ 'header': 1 }, { 'header': 2 }],
+              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+              [{ 'script': 'sub' }, { 'script': 'super' }],
+              [{ 'indent': '-1' }, { 'indent': '+1' }],
+              [{ 'direction': 'rtl' }],
+              [{ 'size': ['small', false, 'large', 'huge'] }],
+              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+              [{ 'font': [] }],
+              [{ 'color': [] }, { 'background': [] }],
+              [{ 'align': [] }],
+              ['clean'],
+              ['link', 'image','linkImage', 'video']
+            ],
+            history: {
+              delay: 1000,
+              maxStack: 50,
+              userOnly: false
+            },
+            imageDrop: true,
+            imageResize: {
+              displayStyles: {
+                backgroundColor: 'black',
+                border: 'none',
+                color: 'white'
+              },
+              modules: [ 'Resize', 'DisplaySize', 'Toolbar' ]
+            },
+            handlers: {
+              'linkImage': function (value) {
+                console.info(value);
+              }
+            }
+          }
+        },
         query: {
           title: '',
           categoryId: 0,
@@ -124,7 +200,7 @@
             },
             {title: '标题', key: 'title'},
             {title: '关键字', key: 'keywords'},
-            {title: '说明', key: 'description'},
+            {title: '状态', key: 'status'},
             {title: '阅读量', key: 'hits'},
             {title: '排序号', key: 'orders'},
             {
@@ -148,7 +224,7 @@
                   }, '修改'),
                   h('Button', {
                     props: {
-                      type: 'error',
+                      type: 'warning',
                       size: 'small'
                     },
                     on: {
@@ -156,7 +232,18 @@
                         this.handleDelete(params.index);
                       }
                     }
-                  }, '删除')
+                  }, '删除'),
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    on: {
+                      click: () => {
+                        this.handleFlushDelete(params.index);
+                      }
+                    }
+                  }, '彻底删除')
                 ]);
               }
             }
@@ -170,12 +257,12 @@
         totalRecord: 0,
         pageSize: 15,
         pageNum: 1,
-        editModelTitle: '',
 
-        editModalModel: {
-          title: '',
+        linkImageModal: {
           showModal: false,
-          linkId: 0,
+          data:{
+            url: ''
+          }
         },
 
         categoryTree: {
@@ -201,11 +288,12 @@
             category:{
               id: 0
             },
-            tags: [],
+            tagIds: [],
             articleData:{
               content: ''
             }
-          }
+          },
+          tags: []
         },
 
         ruleValidate: {
@@ -225,12 +313,65 @@
     created() {
       this.init();
     },
+    computed: {
+      editor() {
+        return this.$refs.myQuillEditor.quill;
+      },
+    },
+
     methods: {
-      init() {
-        // 加载栏目树
-        this.searchCategoryTree();
+      initEditor(){
+        let self = this;
+
+        const linkImageButton = document.querySelector('.ql-linkImage');
+        console.info("linkImageButton:" + linkImageButton);
+        linkImageButton.innerHTML = "<i class=\"ivu-icon ivu-icon-ios-images\"></i>";
+        linkImageButton.addEventListener("click",function () {
+          self.linkImageModal.showModal = true;
+          self.linkImageModal.data.url = '';
+        });
+      },
+
+      handleInsertImage(){
+        console.log("log clicked ok");
+        console.info("handleInsertImage");
+        if(this.linkImageModal.data.url != ''){
+          console.info(this.editor);
+          console.info(this.$refs.myQuillEditor);
+          console.info(this.$refs.myQuillEditor.getSelection());
+          let quill = this.$refs.myQuillEditor.quill;
+          console.info(quill);
+          // 获取光标所在位置
+          let length = quill.getSelection().index;
+          console.info(length);
+          // 插入图片
+          quill.insertEmbed(length, 'image', self.linkImageModal.data.url);
+          // 调整光标到最后
+          quill.setSelection(length + 1);
+        }
+
+        self.linkImageModal.showModal = false;
+        self.linkImageModal.data.url = '';
 
       },
+      init(){
+        // 加载栏目树
+        this.searchCategoryTree();
+        this.searchTags();
+      },
+      onEditorReady(editor) { // 准备编辑器
+        console.info(editor);
+        this.initEditor();
+      },
+      onEditorBlur(){
+
+      }, // 失去焦点事件
+      onEditorFocus(){
+
+      }, // 获得焦点事件
+      onEditorChange(){
+
+      }, // 内容改变事件
       searchCategoryTree(){
         let self = this;
         categoryApi.getCategoryTree().then(function (res) {
@@ -241,6 +382,16 @@
           }
         }).catch(function (error) {
           self.setTreeMessage(error.message);
+        });
+      },
+      searchTags(){
+        let self = this;
+        tagApi.getAll().then(function (res) {
+          if (res.data.success) {
+            self.modal.tags = res.data.data;
+          }
+        }).catch(function (error) {
+          self.setTableMessage(error.message);
         });
       },
       searchArticle() {
@@ -289,12 +440,12 @@
           category:{
             id: this.query.categoryId
           },
-          tags: [],
+          tagIds: [],
           articleData:{
             content: ''
           }
         };
-        console.info(this.modal);
+        this.initEditor();
       },
 
       toEditModel(index) {
@@ -312,20 +463,27 @@
           category:{
             id: this.query.categoryId
           },
-          tags: [],
+          tagIds: [],
           articleData:{
             content: ''
           }
         };
+        this.initEditor();
         let self = this;
-        linkApi.getById(this.table.data[index].id).then(function (res) {
+        articleApi.getById(this.table.data[index].id).then(function (res) {
           let result = res.data;
           if(result.success){
-            self.linkModel.id = result.data.id;
-            self.linkModel.title = result.data.title;
-            self.linkModel.url = result.data.url;
-            self.linkModel.description = result.data.description;
-            self.linkModel.orders = result.data.orders;
+            self.modal.data.id = result.data.id;
+            self.modal.data.title = result.data.title;
+            self.modal.data.frontCover = result.data.frontCover;
+            self.modal.data.keywords = result.data.keywords;
+            self.modal.data.orders = result.data.orders;
+            self.modal.data.description = result.data.description;
+            self.modal.data.status = result.data.status;
+            self.modal.data.allowComment = result.data.allowComment;
+            self.modal.data.category.id = result.data.category.id;
+            self.modal.data.tagIds = result.data.tagIds;
+            self.modal.data.articleData.content = result.data.articleData.content;
           }else{
             self.$Message.error(result.status.message);
           }
@@ -357,7 +515,7 @@
               self.$Message.error(error.message);
             });
             self.loading = false;
-            self.editModalModel.showModal = false;
+            self.modal.showModal = false;
 
           } else {
             self.loading = false;
@@ -365,12 +523,29 @@
         })
       },
       handleDelete (index) {
-        console.log(index);
         let self = this;
         this.$Modal.confirm({
           title: '确定要删除这条记录吗？',
           onOk: () => {
-            linkApi.delete(this.table.data[index].id).then(function (res) {
+            articleApi.delete(this.table.data[index].id).then(function (res) {
+              let result = res.data;
+              if(result.success){
+                self.$Message.info('删除成功');
+                self.searchArticle();
+              }else {
+                self.$Message.error('删除失败');
+              }
+            });
+          }
+        });
+      },
+
+      handleFlushDelete (index) {
+        let self = this;
+        this.$Modal.confirm({
+          title: '删除后不能恢复，确定删除吗？',
+          onOk: () => {
+            articleApi.flushDelete(this.table.data[index].id).then(function (res) {
               let result = res.data;
               if(result.success){
                 self.$Message.info('删除成功');

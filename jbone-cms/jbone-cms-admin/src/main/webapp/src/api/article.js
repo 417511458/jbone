@@ -38,6 +38,16 @@ articleApi.delete = function(id){
   });
 }
 
+articleApi.flushDelete = function(id){
+  return axios.request({
+    url: 'cms/article/flushDelete',
+    method: 'delete',
+    params: {
+      id: id
+    }
+  });
+}
+
 articleApi.batchDelete = function (ids) {
   return axios.request({
     url: 'cms/article/batchDelete',

@@ -47,6 +47,17 @@ public class ArticleApiImpl implements ArticleApi {
     }
 
     @Override
+    public Result<Void> flushDelete(Long id) {
+        try {
+            articleService.flushDeleteArticle(id);
+        } catch (Exception e) {
+            logger.warn("article flushDelete error.",e);
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess();
+    }
+
+    @Override
     public Result<ArticleResponseDO> get(Long id) {
         ArticleResponseDO articleResponseDO = null;
         try {

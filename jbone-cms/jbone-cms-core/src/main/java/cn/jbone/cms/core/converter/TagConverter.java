@@ -76,4 +76,19 @@ public class TagConverter {
         }
         return tags;
     }
+
+    public List<Tag> toTagsByIds(List<Long> tagIds){
+        if(CollectionUtils.isEmpty(tagIds)){
+            return null;
+        }
+
+        List<Tag> tags = new ArrayList<>();
+        for (Long tagId : tagIds){
+            Tag tag = tagRepository.getOne(tagId);
+            if(tag != null){
+                tags.add(tag);
+            }
+        }
+        return tags;
+    }
 }

@@ -76,6 +76,13 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
+    public void flushDeleteArticle(Long id){
+        if(!articleRepository.existsById(id)){
+            throw new ObjectNotFoundException("文章不存在.");
+        }
+        articleRepository.deleteById(id);
+    }
+
 
     /**
      * 通用查询
