@@ -31,7 +31,6 @@ QQ群：547104190
 * jbone-cas : 用户单点登录模块
     * jbone-cas-client：客户端jar包，用于集成到需要CAS授权的系统
     * jbone-cas-server：CAS服务端，单独部署，用于完成单点登录、票据管理等
-    * jbone-cas-manager：CAS服务管理，用于管理授权服务等
 * jbone-sm : 服务管理模块
     * jbone-sm-admin : 服务管理系统，包括服务监控、服务管理等
     * jbone-sm-register : 服务注册中心，原则上所有服务都要注册进来
@@ -121,8 +120,6 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 ### trace跟踪
 ![trace](doc/images/zipkin_01.png)
 
-## CAS系统管理
-![CAS系统管理](doc/images/cas-manager.png)
 ## Jbone系统管理
 ### 系统管理
 ![Jbone系统管理](doc/images/systemManager.png)
@@ -157,7 +154,6 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 127.0.0.1 jbone-sm-admin.majunwei.com
 127.0.0.1 jbone-sys-admin.majunwei.com
 127.0.0.1 jbone-sm-zipkinserver.majunwei.com
-127.0.0.1 jbone-cas-manager.majunwei.com
 127.0.0.1 jbone-tag-admin.majunwei.com
 127.0.0.1 jbone-eb-portal.majunwei.com
 127.0.0.1 jbone-eb-manager.majunwei.com
@@ -253,5 +249,3 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 遗留问题：
 
 1、jbone-sm-zipkinserver调用链和流量监控未完成；
-
-2、jbone-cas-manager未完成
