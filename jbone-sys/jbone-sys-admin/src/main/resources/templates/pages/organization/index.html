@@ -52,7 +52,7 @@
                           <div class="form-group">
                               <label for="description" class="col-sm-3 control-label">描述</label>
                               <div class="col-sm-8">
-                                  <textarea id="description" name="description" readonly="readonly" class="form-control"/>
+                                  <textarea id="description" name="description" readonly="readonly" class="form-control"></textarea>
                               </div>
                           </div>
                       </form>
@@ -69,12 +69,23 @@
           <li><a href="javascript:;" onclick="toUpdateMenu()"><i class="fa fa-pencil-square-o"></i>修改</a></li>
       </ul>
   </div>
-<div th:replace="/layout/js :: #js"></div>
+    <div th:replace="/layout/js :: #js"></div>
   <script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.core-3.5.min.js}"></script>
   <script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.excheck-3.5.min.js}"></script>
   <script type="text/javascript" th:src="@{/webjars/ztree/3.5.0/js/jquery.ztree.exedit-3.5.min.js}"></script>
   <script>
-      /*<![CDATA[*/
+
+      /**
+       * 菜单和右键菜单
+       * */
+      var zTree, rMenu;
+
+      $(function () {
+          $("#menuDetail").hide();
+          rMenu = $("#rMenu");
+          loadOrganization();
+      });
+
 
       /**
        * 添加一级菜单
@@ -151,10 +162,7 @@
           }
       };
 
-      /**
-       * 菜单和右键菜单
-       * */
-      var zTree, rMenu;
+
 
 
       /**
@@ -253,12 +261,7 @@
           loadOrganization();
       }
 
-      $(function () {
-         $("#menuDetail").hide();
-         rMenu = $("#rMenu");
-          loadOrganization();
-      });
-      /*]]>*/
+
   </script>
   </body>
   </html>
