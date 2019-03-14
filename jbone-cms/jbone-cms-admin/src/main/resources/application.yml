@@ -79,7 +79,7 @@ jbone:
     #未授权的跳转路径，默认"/403"
     unauthorizedUrl: /403
     #客户端Session失效时间，默认30分钟
-    clientSessionTimeout: 180000
+    clientSessionTimeout: 18000000
     #权限过滤规则
     filterChainDefinition:
       "[/actuator/**]": anon  #不过滤监控端口，此处巨坑，升级到2。0之后必须用[]括起来，否则会规律所有符号.

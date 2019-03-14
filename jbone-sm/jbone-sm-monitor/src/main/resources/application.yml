@@ -87,7 +87,7 @@ jbone:
       "[/zipkin/**]": authc,roles[serverAdministrator]
       "[/**]": anon
       "[/login]": anon
-    clientSessionTimeout: 180000 #客户端Session失效时间，默认30分钟
+    clientSessionTimeout: 1800000 #客户端Session失效时间，默认30分钟
   #系统配置
   sys:
     serverName: jbone-sm-monitor

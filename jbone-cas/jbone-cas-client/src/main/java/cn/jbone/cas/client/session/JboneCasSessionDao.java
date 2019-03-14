@@ -28,6 +28,7 @@ public class JboneCasSessionDao extends CachingSessionDAO {
     StringRedisTemplate redisTemplate;
 
     public static final String SESSION_KEY = "jbone_session_";
+
     private JboneSessionTicketStore sessionTicketStore;
 
     public JboneSessionTicketStore getSessionTicketStore() {
@@ -47,8 +48,8 @@ public class JboneCasSessionDao extends CachingSessionDAO {
         String sessionId = session.getId().toString();
         ValueOperations<String,String> operations = redisTemplate.opsForValue();
         operations.set(SESSION_KEY + sessionId, SerializableUtil.serialize(session),session.getTimeout(), TimeUnit.MILLISECONDS);
-
-        sessionTicketStore.expireBySession(sessionId);
+        logger.info("ttl {} : {} S",SESSION_KEY + sessionId,redisTemplate.getExpire(SESSION_KEY + sessionId,TimeUnit.SECONDS));
+        sessionTicketStore.expireBySession(sessionId,session.getTimeout());
     }
 
     @Override

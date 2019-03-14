@@ -42,7 +42,7 @@ public class CasProperties implements Serializable {
     /**
      * 客户端Session超时时间
      */
-    private long clientSessionTimeout = 1000 * 60 * 3;
+    private long clientSessionTimeout = 1000 * 60 * 3 * 10;
 
     /**
      * 权限过滤规则，限制需要CAS过滤的请求路径

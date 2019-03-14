@@ -55,7 +55,7 @@ jbone:
     #未授权的跳转路径，默认"/403"
     unauthorizedUrl: /403
     #客户端Session失效时间，默认30分钟
-    clientSessionTimeout: 180000
+    clientSessionTimeout: 1800000
     #权限过滤规则
     filterChainDefinition:
       /health: anon

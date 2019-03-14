@@ -1,6 +1,8 @@
 package cn.jbone.sm.gateway.config;
 
 import cn.jbone.cas.client.session.JboneCasSessionDao;
+import cn.jbone.cas.client.session.JboneSessionTicketStore;
+import cn.jbone.configuration.JboneConfiguration;
 import cn.jbone.sm.gateway.filters.TokenFilter;
 import cn.jbone.sm.gateway.filters.UserInfoFilter;
 import org.springframework.context.annotation.Bean;
@@ -29,20 +31,29 @@ public class GateWayConfiguration {
         return new CorsFilter(source);
     }
 
-//    @Bean
-//    public TokenFilter tokenFilter(JboneCasSessionDao jboneCasSessionDao){
-//        return new TokenFilter(jboneCasSessionDao);
-//    }
-//
-//    @Bean
-//    public UserInfoFilter userInfoFilter(){
-//        return new UserInfoFilter();
-//    }
+    @Bean
+    public TokenFilter tokenFilter(JboneCasSessionDao jboneCasSessionDao){
+        return new TokenFilter(jboneCasSessionDao);
+    }
+
+    @Bean
+    public UserInfoFilter userInfoFilter(){
+        return new UserInfoFilter();
+    }
 
     @Bean(name = "jboneCasSessionDao")
-    public JboneCasSessionDao getSessionDao(StringRedisTemplate redisTemplate){
+    public JboneCasSessionDao getSessionDao(StringRedisTemplate redisTemplate,JboneSessionTicketStore sessionTicketStore){
         JboneCasSessionDao sessionDao = new JboneCasSessionDao(redisTemplate);
+        sessionDao.setSessionTicketStore(sessionTicketStore);
         return sessionDao;
+    }
+
+    @Bean
+    JboneSessionTicketStore getSessionTicketStore(StringRedisTemplate stringRedisTemplate, JboneConfiguration jboneConfiguration){
+        JboneSessionTicketStore sessionTicketStore = new JboneSessionTicketStore();
+        sessionTicketStore.setRedisTemplate(stringRedisTemplate);
+        sessionTicketStore.setTimeout(jboneConfiguration.getCas().getClientSessionTimeout());
+        return sessionTicketStore;
     }
 
 }

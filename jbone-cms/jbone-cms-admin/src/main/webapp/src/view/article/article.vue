@@ -82,13 +82,7 @@
 
         <FormItem label="文章内容" prop="articleData.content" >
           <div class="edit_container" id="editor">
-            <quill-editor
-              v-model="modal.data.articleData.content"
-              ref="myQuillEditor"
-              :options="editorOption"
-              @blur="onEditorBlur" @focus="onEditorFocus"
-              @change="onEditorChange" @ready="onEditorReady">
-            </quill-editor>
+            <editor ref="editor" :value="modal.data.articleData.content" @on-change="handleChange" />
           </div>
         </FormItem>
       </Form>
@@ -122,14 +116,10 @@
   import categoryApi from '@/api/category'
   import articleApi from '@/api/article'
   import tagApi from '@/api/tag'
+  import Editor from "../../components/editor/editor";
 
-  var quill = new Quill('#editor', {
-    modules: {
-      counter: true
-    }
-  });
   export default {
-    components: {Tree},
+    components: {Editor, Tree},
     data() {
       const validateName = (rule, value, callback) => {
         if (value) {
@@ -313,47 +303,9 @@
     created() {
       this.init();
     },
-    computed: {
-      editor() {
-        return this.$refs.myQuillEditor.quill;
-      },
-    },
 
     methods: {
-      initEditor(){
-        let self = this;
 
-        const linkImageButton = document.querySelector('.ql-linkImage');
-        console.info("linkImageButton:" + linkImageButton);
-        linkImageButton.innerHTML = "<i class=\"ivu-icon ivu-icon-ios-images\"></i>";
-        linkImageButton.addEventListener("click",function () {
-          self.linkImageModal.showModal = true;
-          self.linkImageModal.data.url = '';
-        });
-      },
-
-      handleInsertImage(){
-        console.log("log clicked ok");
-        console.info("handleInsertImage");
-        if(this.linkImageModal.data.url != ''){
-          console.info(this.editor);
-          console.info(this.$refs.myQuillEditor);
-          console.info(this.$refs.myQuillEditor.getSelection());
-          let quill = this.$refs.myQuillEditor.quill;
-          console.info(quill);
-          // 获取光标所在位置
-          let length = quill.getSelection().index;
-          console.info(length);
-          // 插入图片
-          quill.insertEmbed(length, 'image', self.linkImageModal.data.url);
-          // 调整光标到最后
-          quill.setSelection(length + 1);
-        }
-
-        self.linkImageModal.showModal = false;
-        self.linkImageModal.data.url = '';
-
-      },
       init(){
         // 加载栏目树
         this.searchCategoryTree();
@@ -361,7 +313,6 @@
       },
       onEditorReady(editor) { // 准备编辑器
         console.info(editor);
-        this.initEditor();
       },
       onEditorBlur(){
 
@@ -445,7 +396,6 @@
             content: ''
           }
         };
-        this.initEditor();
       },
 
       toEditModel(index) {
@@ -468,7 +418,6 @@
             content: ''
           }
         };
-        this.initEditor();
         let self = this;
         articleApi.getById(this.table.data[index].id).then(function (res) {
           let result = res.data;
@@ -484,9 +433,12 @@
             self.modal.data.category.id = result.data.category.id;
             self.modal.data.tagIds = result.data.tagIds;
             self.modal.data.articleData.content = result.data.articleData.content;
+
+            self.$refs.editor.setHtml(self.modal.data.articleData.content);
           }else{
             self.$Message.error(result.status.message);
           }
+          console.info(self.modal.data);
         }).catch(function (error) {
           self.$Message.error(error.message);
         });
@@ -503,6 +455,7 @@
         let self = this;
         this.$refs.modalForm.validate((valid) => {
           if (valid) {
+            console.info(this.modal.data);
             articleApi.addOrUpdate(this.modal.data).then(function (res) {
               let result = res.data;
               if (result.success) {
@@ -570,6 +523,10 @@
         this.query.pageSize = pageSize;
         this.searchArticle();
       },
+      handleChange (html, text) {
+        console.log(html, text)
+        this.modal.data.articleData.content = html;
+      }
     }
   }
 </script>

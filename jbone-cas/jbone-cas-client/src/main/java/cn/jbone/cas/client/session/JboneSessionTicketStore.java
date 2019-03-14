@@ -56,6 +56,14 @@ public class JboneSessionTicketStore {
      * @param sessionId
      */
     public void expireBySession(String sessionId){
+        expireBySession(sessionId,timeout);
+    }
+
+    /**
+     * 根据SessionId更新Session和ST的过期时间
+     * @param sessionId
+     */
+    public void expireBySession(String sessionId,long timeout){
         ValueOperations<String,String> valueOperations = redisTemplate.opsForValue();
         String ticket = valueOperations.get(SESSION_TICKET_PREFIX + sessionId);
         if(StringUtils.isNotBlank(ticket)){
