@@ -5110,7 +5110,7 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
-            <version>4.7.0</version>
+            <version>5.6.1</version>
 
             <exclusions>
                 <exclusion>
@@ -5666,6 +5666,18 @@
                     <groupId>cglib</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.3.1-1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>4.1.3</version>
         </dependency>
 
     </dependencies>
