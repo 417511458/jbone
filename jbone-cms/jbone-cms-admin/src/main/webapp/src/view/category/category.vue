@@ -15,6 +15,7 @@
           <Button @click="toEditModel(scope.row.id)" type="primary" size="small">编辑</Button>
           <Button @click="toAddModel(scope.row.id)" type="primary" size="small" style="margin-left: 5px">添加下级栏目</Button>
           <Button @click="handleDelete(scope.row.id)" type="error" size="small" style="margin-left: 5px">删除</Button>
+          <Button @click="handleEditSpecial(scope.row.id,scope.row.title)" type="error" size="small" style="margin-left: 5px" v-if="scope.row.type == 'SPECIAL'">编辑专题</Button>
         </template>
         <template slot="type" slot-scope="scope">
           <span v-if="scope.row.type == 'CATEGORY'">普通栏目</span>
@@ -85,14 +86,80 @@
         <Button type="primary" size="large" long :loading="loading" @click="addOrUpdate">保存</Button>
       </div>
     </Modal>
+
+
+
+    <Modal :title="title" v-model="specialModal.showModal" :mask-closable="false" style="width: 650px;">
+
+      <p slot="header">
+        <Icon type="ios-information-circle"></Icon>
+        <span> 编辑专题 【{{specialModal.title}}】</span>
+      </p>
+      <div>
+        <Row>
+          <Col span="12">
+            <card>
+              <p slot="title">
+                <Icon type="ios-film-outline"></Icon>
+                专题目录
+              </p>
+              <Tree :data="specialModal.data.tocTree" @on-select-change="handleCategoryChanged"></Tree>
+            </card>
+          </Col>
+          <Col span="12">
+            <card v-if="specialModal.showDetail">
+              <p slot="title">
+                <Icon type="ios-film-outline"></Icon>
+                目录详情
+              </p>
+              <Form :model="specialModal.data.toc" :label-width="100" ref="modalForm" :rules="ruleValidate">
+                <FormItem label="标题" prop="title" :required="true">
+                  <i-input v-model="specialModal.data.toc.title" clearable placeholder="栏目标题"></i-input>
+                </FormItem>
+
+                <FormItem label="链接" prop="keywords">
+                  <i-input v-model="specialModal.data.toc.url" clearable placeholder="链接URL"></i-input>
+                </FormItem>
+
+                <FormItem label="打开目标" prop="type" >
+                  <RadioGroup v-model="specialModal.data.toc.target">
+                    <Radio label="_self">当前窗口打开</Radio>
+                    <Radio label="_blank">新窗口打开</Radio>
+                  </RadioGroup>
+                </FormItem>
+
+
+                <FormItem label="排序号" prop="orders" >
+                  <InputNumber v-model="specialModal.data.toc.orders" clearable  placeholder="排序号"></InputNumber>
+                </FormItem>
+
+                <FormItem label="链接文章" prop="url" >
+                  <Select v-model="specialModal.data.toc.article.id" filterable remote
+                          :remote-method="loadArticles">
+                    <Option v-for="article in specialModal.data.articles" :value="article.id" :key="article.title">{{ article.title }}</Option>
+                  </Select>
+                </FormItem>
+
+              </Form>
+            </card>
+          </Col>
+        </Row>
+      </div>
+      <div slot="footer">
+        <Button type="primary" size="large" long :loading="loading" @click="addOrUpdate">保存</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 <script>
+  import Tree from "iview/src/components/tree/tree"
   import categoryApi from '@/api/category'
+  import categoryTocApi from '@/api/categoryToc'
+  import articleApi from '@/api/article'
   import InputNumber from "iview/src/components/input-number/input-number";
 
   export default {
-    components: {InputNumber},
+    components: {InputNumber,Tree},
     data() {
       const validateName = (rule, value, callback) => {
         if (value) {
@@ -132,7 +199,6 @@
             },
             {
               title: '操作',
-              // key: 'handle',
               minWidth: '200px',
               type: 'template',
               template: 'handle'
@@ -162,6 +228,49 @@
             status: 'PUBLISH'
 
           }
+        },
+
+        //专题模版
+        specialModal: {
+          showModal: false,
+          title: '',
+          showDetail: false,
+          query: {
+            categoryId: 0,
+            queryArticles: {
+              title: '',
+              pageSize: 10,
+              pageNumber: 1
+            },
+          },
+
+          data: {
+            tocTree:[],
+            toc:{
+              id: 0,
+              title: '',
+              pid: 0,
+              url: '',
+              target: '_self',
+              orders: 0,
+              category: {
+                id: 0
+              },
+              article: {
+                id: 0
+              }
+            },
+            articles:[]
+          },
+
+          tree: {
+            operation: {
+              success : false,
+              message : ''
+            }
+          }
+
+
         },
 
         ruleValidate: {
@@ -306,10 +415,69 @@
 
       },
 
-      handleSelect(selection,row){
-        console.info(selection);
-        console.info(this.$refs.selection.getSelection());
-      }
+      handleEditSpecial(id,title){
+        console.info("id" + id);
+        this.specialModal.showModal = true;
+        this.specialModal.title = title;
+        this.specialModal.query.categoryId = id;
+        let self = this;
+        categoryTocApi.getTree(id).then(function (res) {
+          console.info(res);
+          if (!res.data.success) {
+            self.setTreeMessage(res.data.status.message);
+          } else {
+            self.specialModal.data.tocTree = res.data.data;
+          }
+        }).catch(function (error) {
+          self.setTreeMessage(error.message);
+        });
+      },
+      loadArticles(query){
+        this.specialModal.query.queryArticles.title = query;
+        let self = this;
+        articleApi.commonSearch(this.specialModal.query.queryArticles).then(function (res) {
+          console.info(res);
+          if (!res.data.success) {
+            console.info("获取文章列表失败" + res.data.status.message);
+          } else {
+            self.specialModal.data.articles = res.data.data.datas;
+          }
+        }).catch(function (error) {
+          console.info("获取文章列表失败" + error);
+        });
+      },
+      handleCategoryChanged(row,event){
+        let self = this;
+        categoryTocApi.getById(row[0].id).then(function (res) {
+          let result = res.data;
+          console.info(result);
+          if (!result.success) {
+            console.info("获取专题目录失败" + result.status.message);
+          } else {
+            self.specialModal.data.toc.id = result.data.id;
+            if(res.data.data.article != null){
+              self.specialModal.data.toc.article.id = result.data.id;
+            }else{
+              self.specialModal.data.toc.article.id = 0;
+            }
+            self.specialModal.data.toc.target = result.data.target;
+            self.specialModal.data.toc.url = result.data.url;
+            self.specialModal.data.toc.category.id = result.data.category.id;
+            self.specialModal.data.toc.orders = result.data.orders;
+            self.specialModal.data.toc.pid = result.data.pid;
+            self.specialModal.data.toc.title = result.data.title;
+
+
+            self.specialModal.showDetail = true;
+          }
+        }).catch(function (error) {
+          console.info("获取专题目录失败" + error);
+        });
+      },
+      setTreeMessage(message) {
+        this.specialModal.tree.operation.success = false;
+        this.specialModal.tree.operation.message = message;
+      },
     }
   }
 </script>

@@ -3,6 +3,8 @@ package cn.jbone.cms.api.impl;
 
 import cn.jbone.cms.api.CategoryApi;
 import cn.jbone.cms.common.dataobject.CategoryDO;
+import cn.jbone.cms.common.dataobject.CategoryRequestDO;
+import cn.jbone.cms.common.dataobject.PagedResponseDO;
 import cn.jbone.cms.core.service.CategoryService;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.rpc.Result;
@@ -64,5 +66,17 @@ public class CategoryApiImpl implements CategoryApi {
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess(categoryDOS);
+    }
+
+    @Override
+    public Result<PagedResponseDO<CategoryDO>> requestCategorys(CategoryRequestDO categoryRequestDO) {
+        PagedResponseDO<CategoryDO> pagedResponseDO = null;
+        try {
+            pagedResponseDO = categoryService.requestCategorys(categoryRequestDO);
+        } catch (Exception e) {
+            logger.warn("category requestCategorys error.",e);
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess(pagedResponseDO);
     }
 }

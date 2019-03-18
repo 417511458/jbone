@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CategoryTocRepository extends JpaRepository<CategoryToc,Long>, JpaSpecificationExecutor<CategoryToc> {
     long countByPid(long pid);
 
-    CategoryToc findCategoryTocByCategory(Category category);
+    List<CategoryToc> findAllByCategoryAndPid(Category category,long pid);
 }

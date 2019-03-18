@@ -91,21 +91,6 @@
       </div>
     </Modal>
 
-      <Modal :title="title" v-model="linkImageModal.showModal" :mask-closable="false" :width="400"  @on-ok="handleInsertImage">
-
-        <p slot="header">
-          <Icon type="ios-information-circle"></Icon>
-          <span>插入图片链接</span>
-        </p>
-
-        <Form ref="formInline" :model="linkImageModal.data" inline >
-          <FormItem prop="user">
-            <Input type="text" v-model="linkImageModal.data.url" placeholder="图片URL" style="width: 300px;">
-              <Icon type="ios-images" slot="prepend"/>
-            </Input>
-          </FormItem>
-        </Form>
-      </Modal>
 
     </Col>
   </Row>
@@ -134,45 +119,6 @@
       };
 
       return {
-        editorOption: {
-          modules: {
-            toolbar: [
-              ['bold', 'italic', 'underline', 'strike'],
-              ['blockquote', 'code-block'],
-              [{ 'header': 1 }, { 'header': 2 }],
-              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-              [{ 'script': 'sub' }, { 'script': 'super' }],
-              [{ 'indent': '-1' }, { 'indent': '+1' }],
-              [{ 'direction': 'rtl' }],
-              [{ 'size': ['small', false, 'large', 'huge'] }],
-              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-              [{ 'font': [] }],
-              [{ 'color': [] }, { 'background': [] }],
-              [{ 'align': [] }],
-              ['clean'],
-              ['link', 'image','linkImage', 'video']
-            ],
-            history: {
-              delay: 1000,
-              maxStack: 50,
-              userOnly: false
-            },
-            imageDrop: true,
-            imageResize: {
-              displayStyles: {
-                backgroundColor: 'black',
-                border: 'none',
-                color: 'white'
-              },
-              modules: [ 'Resize', 'DisplaySize', 'Toolbar' ]
-            },
-            handlers: {
-              'linkImage': function (value) {
-                console.info(value);
-              }
-            }
-          }
-        },
         query: {
           title: '',
           categoryId: 0,
@@ -248,13 +194,6 @@
         pageSize: 15,
         pageNum: 1,
 
-        linkImageModal: {
-          showModal: false,
-          data:{
-            url: ''
-          }
-        },
-
         categoryTree: {
           data: [],
           operation: {
@@ -311,18 +250,6 @@
         this.searchCategoryTree();
         this.searchTags();
       },
-      onEditorReady(editor) { // 准备编辑器
-        console.info(editor);
-      },
-      onEditorBlur(){
-
-      }, // 失去焦点事件
-      onEditorFocus(){
-
-      }, // 获得焦点事件
-      onEditorChange(){
-
-      }, // 内容改变事件
       searchCategoryTree(){
         let self = this;
         categoryApi.getCategoryTree().then(function (res) {
@@ -374,7 +301,6 @@
       handleCategoryChanged(row,event){
         this.query.categoryId = row[0].id;
         this.searchArticle();
-
       },
       toAddModel() {
         this.modal.title = '发表文章';

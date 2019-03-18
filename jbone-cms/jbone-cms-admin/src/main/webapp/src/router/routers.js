@@ -85,15 +85,6 @@ export default [
             title: '标签管理'
         },
         component: () => import('@/view/tag/tag.vue')
-      },
-      {
-        path: 'special_page',
-        name: 'special_page',
-        meta: {
-          icon: 'ios-book',
-          title: '专题管理'
-        },
-        component: () => import('@/view/join-page.vue')
       }
     ]
   },

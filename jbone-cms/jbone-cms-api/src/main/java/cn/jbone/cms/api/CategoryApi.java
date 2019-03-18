@@ -1,6 +1,8 @@
 package cn.jbone.cms.api;
 
 import cn.jbone.cms.common.dataobject.CategoryDO;
+import cn.jbone.cms.common.dataobject.CategoryRequestDO;
+import cn.jbone.cms.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,5 +41,12 @@ public interface CategoryApi {
      */
     @RequestMapping(value = "/getCategoryTree",method = {RequestMethod.GET,RequestMethod.POST})
     Result<List<CategoryDO>> getCategoryTree();
+
+    /**
+     * 获取栏目列表
+     * @return
+     */
+    @RequestMapping(value = "/requestCategorys",method = {RequestMethod.GET,RequestMethod.POST})
+    Result<PagedResponseDO<CategoryDO>> requestCategorys(@RequestBody CategoryRequestDO categoryRequestDO);
 
 }

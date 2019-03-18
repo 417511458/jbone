@@ -4,6 +4,7 @@ import cn.jbone.cms.common.dataobject.CategoryTocDO;
 import cn.jbone.cms.core.converter.CategoryTocConverter;
 import cn.jbone.cms.core.dao.entity.Category;
 import cn.jbone.cms.core.dao.entity.CategoryToc;
+import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import cn.jbone.cms.core.dao.repository.CategoryTocRepository;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
@@ -11,12 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 @Service
 public class CategoryTocService {
     @Autowired
     private CategoryTocConverter categoryTocConverter;
     @Autowired
     private CategoryTocRepository categoryTocRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public void delete(Long id){
         if(!categoryTocRepository.existsById(id)){
@@ -27,6 +34,11 @@ public class CategoryTocService {
         }
 
         categoryTocRepository.deleteById(id);
+    }
+
+    public CategoryTocDO get(Long id){
+        CategoryToc categoryToc = categoryTocRepository.getOne(id);
+        return categoryTocConverter.toCategoryTocDO(categoryToc);
     }
 
 
@@ -40,10 +52,12 @@ public class CategoryTocService {
         Assert.notNull(categoryTocDO.getTitle(),"标题不能为空");
     }
 
-    public CategoryTocDO getTree(Long categoryId){
-        Category category = new Category();
-        category.setId(categoryId);
-        CategoryToc categoryToc = categoryTocRepository.findCategoryTocByCategory(category);
-        return categoryTocConverter.toCategoryTocDO(categoryToc);
+    public List<CategoryTocDO> getTree(Long categoryId){
+        Category category = categoryRepository.getOne(categoryId);
+        if(category == null){
+            return Collections.emptyList();
+        }
+        List<CategoryToc> categoryTocs = categoryTocRepository.findAllByCategoryAndPid(category,0);
+        return categoryTocConverter.toCategoryTocDOs(categoryTocs);
     }
 }

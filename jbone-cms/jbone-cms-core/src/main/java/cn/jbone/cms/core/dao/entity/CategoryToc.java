@@ -23,7 +23,7 @@ public class CategoryToc extends BaseEntity {
      * 父级栏目
      */
     @Column(name = "pid")
-    private int pid;
+    private long pid;
 
     /**
      * 栏目标题
