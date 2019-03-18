@@ -103,7 +103,7 @@
                 <Icon type="ios-film-outline"></Icon>
                 专题目录
               </p>
-              <Tree :data="specialModal.data.tocTree" @on-select-change="handleCategoryChanged"></Tree>
+              <Tree :data="specialModal.data.tocTree" @on-select-change="handleCategoryChanged" :render="renderContent"></Tree>
             </card>
           </Col>
           <Col span="12">
@@ -478,6 +478,59 @@
         this.specialModal.tree.operation.success = false;
         this.specialModal.tree.operation.message = message;
       },
+      renderContent (h, { root, node, data }) {
+        return h('span', {
+          style: {
+            display: 'inline-block',
+            width: '100%'
+          }
+        }, [
+          h('span', [
+            h('Icon', {
+              props: {
+                type: 'ios-paper-outline'
+              },
+              style: {
+                marginRight: '8px'
+              }
+            }),
+            h('span', data.title)
+          ]),
+          h('span', {
+            style: {
+              display: 'inline-block',
+              float: 'right',
+              marginRight: '32px'
+            }
+          }, [
+            h('Button', {
+              props: Object.assign({}, this.buttonProps, {
+                icon: 'ios-add'
+              }),
+              style: {
+                marginRight: '8px'
+              },
+              on: {
+                click: () => { this.appendToc(data) }
+              }
+            }),
+            h('Button', {
+              props: Object.assign({}, this.buttonProps, {
+                icon: 'ios-remove'
+              }),
+              on: {
+                click: () => { this.removeToc(root, node, data) }
+              }
+            })
+          ])
+        ]);
+      },
+      appendToc (data) {
+
+      },
+      removeToc (root, node, data) {
+
+      }
     }
   }
 </script>
