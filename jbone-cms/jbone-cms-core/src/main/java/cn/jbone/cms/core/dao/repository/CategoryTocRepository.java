@@ -12,5 +12,5 @@ import java.util.List;
 public interface CategoryTocRepository extends JpaRepository<CategoryToc,Long>, JpaSpecificationExecutor<CategoryToc> {
     long countByPid(long pid);
 
-    List<CategoryToc> findAllByCategoryAndPid(Category category,long pid);
+    List<CategoryToc> findAllByCategoryAndPidOrderByOrders(Category category,long pid);
 }

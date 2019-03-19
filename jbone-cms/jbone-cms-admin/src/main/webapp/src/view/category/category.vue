@@ -62,6 +62,13 @@
           </RadioGroup>
         </FormItem>
 
+        <FormItem label="展示方式" prop="inMenu"  >
+          <RadioGroup v-model="modal.data.showType" type="button">
+            <Radio label="LIST">列表展示</Radio>
+            <Radio label="FIRSTARTICLE">展示第一篇文章</Radio>
+          </RadioGroup>
+        </FormItem>
+
         <FormItem label="状态" prop="status" >
           <RadioGroup v-model="modal.data.status" type="button">
             <Radio label="PUBLISH">发布</Radio>
@@ -89,7 +96,7 @@
 
 
 
-    <Modal :title="title" v-model="specialModal.showModal" :mask-closable="false" style="width: 650px;">
+    <Modal :title="title" v-model="specialModal.showModal" :mask-closable="false" width="650">
 
       <p slot="header">
         <Icon type="ios-information-circle"></Icon>
@@ -103,6 +110,9 @@
                 <Icon type="ios-film-outline"></Icon>
                 专题目录
               </p>
+              <Button href="#" slot="extra" @click="addRootToc" size="small">
+                <Icon type="ios-add"></Icon>
+              </Button>
               <Tree :data="specialModal.data.tocTree" @on-select-change="handleCategoryChanged" :render="renderContent"></Tree>
             </card>
           </Col>
@@ -112,7 +122,7 @@
                 <Icon type="ios-film-outline"></Icon>
                 目录详情
               </p>
-              <Form :model="specialModal.data.toc" :label-width="100" ref="modalForm" :rules="ruleValidate">
+              <Form :model="specialModal.data.toc" :label-width="100" ref="tocForm" :rules="ruleValidate">
                 <FormItem label="标题" prop="title" :required="true">
                   <i-input v-model="specialModal.data.toc.title" clearable placeholder="栏目标题"></i-input>
                 </FormItem>
@@ -140,13 +150,15 @@
                   </Select>
                 </FormItem>
 
+                <FormItem label="" prop="" >
+                  <Button type="primary" size="large" long :loading="loading" @click="addOrUpdateToc">保存</Button>
+                </FormItem>
               </Form>
             </card>
           </Col>
         </Row>
       </div>
       <div slot="footer">
-        <Button type="primary" size="large" long :loading="loading" @click="addOrUpdate">保存</Button>
       </div>
     </Modal>
   </div>
@@ -225,7 +237,8 @@
             description: '',
             type: 'CATEGORY',
             inMenu: 'FALSE',
-            status: 'PUBLISH'
+            status: 'PUBLISH',
+            showType: 'LIST'
 
           }
         },
@@ -321,7 +334,8 @@
           description: '',
           type: 'CATEGORY',
           inMenu: 'FALSE',
-          status: 'PUBLISH'
+          status: 'PUBLISH',
+          showType: 'LIST'
         };
       },
 
@@ -339,7 +353,8 @@
           description: '',
           type: 'CATEGORY',
           inMenu: 'FALSE',
-          status: 'PUBLISH'
+          status: 'PUBLISH',
+          showType: 'LIST'
         };
 
         let self = this;
@@ -357,7 +372,8 @@
               description: result.data.description,
               type: result.data.type,
               inMenu: result.data.inMenu,
-              status: result.data.status
+              status: result.data.status,
+              showType: result.data.showType
             };
           }else{
             self.$Message.error(result.status.message);
@@ -420,8 +436,13 @@
         this.specialModal.showModal = true;
         this.specialModal.title = title;
         this.specialModal.query.categoryId = id;
+        this.specialModal.showDetail = false;
+        this.loadTocs();
+      },
+
+      loadTocs(){
         let self = this;
-        categoryTocApi.getTree(id).then(function (res) {
+        categoryTocApi.getTree(this.specialModal.query.categoryId).then(function (res) {
           console.info(res);
           if (!res.data.success) {
             self.setTreeMessage(res.data.status.message);
@@ -432,6 +453,7 @@
           self.setTreeMessage(error.message);
         });
       },
+
       loadArticles(query){
         this.specialModal.query.queryArticles.title = query;
         let self = this;
@@ -446,33 +468,42 @@
           console.info("获取文章列表失败" + error);
         });
       },
+
       handleCategoryChanged(row,event){
+        this.loadToc(row[0].id);
+      },
+
+      loadToc(id){
         let self = this;
-        categoryTocApi.getById(row[0].id).then(function (res) {
+        categoryTocApi.getById(id).then(function (res) {
           let result = res.data;
           console.info(result);
           if (!result.success) {
             console.info("获取专题目录失败" + result.status.message);
           } else {
-            self.specialModal.data.toc.id = result.data.id;
-            if(res.data.data.article != null){
-              self.specialModal.data.toc.article.id = result.data.id;
-            }else{
-              self.specialModal.data.toc.article.id = 0;
-            }
-            self.specialModal.data.toc.target = result.data.target;
-            self.specialModal.data.toc.url = result.data.url;
-            self.specialModal.data.toc.category.id = result.data.category.id;
-            self.specialModal.data.toc.orders = result.data.orders;
-            self.specialModal.data.toc.pid = result.data.pid;
-            self.specialModal.data.toc.title = result.data.title;
-
+            self.setToc(result.data);
 
             self.specialModal.showDetail = true;
           }
         }).catch(function (error) {
           console.info("获取专题目录失败" + error);
         });
+      },
+      setToc(data){
+        this.specialModal.data.toc.id = data.id;
+        if(data.article != null){
+          this.specialModal.data.toc.article.id = data.article.id;
+          this.specialModal.data.articles = [];
+          this.specialModal.data.articles.push(data.article);
+        }else{
+          this.specialModal.data.toc.article.id = 0;
+        }
+        this.specialModal.data.toc.target = data.target;
+        this.specialModal.data.toc.url = data.url;
+        this.specialModal.data.toc.category.id = data.category.id;
+        this.specialModal.data.toc.orders = data.orders;
+        this.specialModal.data.toc.pid = data.pid;
+        this.specialModal.data.toc.title = data.title;
       },
       setTreeMessage(message) {
         this.specialModal.tree.operation.success = false;
@@ -505,10 +536,11 @@
           }, [
             h('Button', {
               props: Object.assign({}, this.buttonProps, {
-                icon: 'ios-add'
+                icon: 'ios-add',
+                size: 'small'
               }),
               style: {
-                marginRight: '8px'
+                marginRight: '8px',
               },
               on: {
                 click: () => { this.appendToc(data) }
@@ -516,20 +548,84 @@
             }),
             h('Button', {
               props: Object.assign({}, this.buttonProps, {
-                icon: 'ios-remove'
+                icon: 'ios-remove',
+                size: 'small'
               }),
+              style: {
+                marginRight: '8px'
+              },
               on: {
                 click: () => { this.removeToc(root, node, data) }
+              }
+            }),
+            h('Button', {
+              props: Object.assign({}, this.buttonProps, {
+                icon: 'ios-create',
+                size: 'small'
+              }),
+
+              on: {
+                click: () => { this.loadToc(data.id) }
               }
             })
           ])
         ]);
       },
       appendToc (data) {
-
+        this.specialModal.showDetail = true;
+        this.resetToc();
+        this.specialModal.data.toc.pid = data.id;
+      },
+      addRootToc(){
+        this.specialModal.showDetail = true;
+        this.resetToc();
+      },
+      resetToc(){
+        this.specialModal.data.toc.id = 0;
+        this.specialModal.data.toc.title = '';
+        this.specialModal.data.toc.pid = 0;
+        this.specialModal.data.toc.url = '';
+        this.specialModal.data.toc.target = '_self';
+        this.specialModal.data.toc.orders = 0;
+        this.specialModal.data.toc.category.id = this.specialModal.query.categoryId;
+        this.specialModal.data.toc.article.id = 0;
       },
       removeToc (root, node, data) {
-
+        console.info(data);
+        let self = this;
+        this.$Modal.confirm({
+          title: '确定要删除这条记录吗？',
+          onOk: () => {
+            categoryTocApi.delete(data.id).then(function (res) {
+              let result = res.data;
+              if(result.success){
+                self.$Message.info('删除成功');
+                self.loadTocs();
+              }else {
+                self.$Message.error('删除失败!' + result.status.message);
+              }
+            });
+          }
+        });
+      },
+      addOrUpdateToc(){
+        let self = this;
+        this.$refs.tocForm.validate((valid) => {
+          if (valid) {
+            categoryTocApi.addOrUpdate(this.specialModal.data.toc).then(function (res) {
+              let result = res.data;
+              if (result.success) {
+                self.$Message.info("操作成功");
+                self.loadTocs();
+                self.setToc(result.data);
+              } else {
+                self.$Message.error(result.status.message);
+              }
+            }).catch(function (error) {
+              self.$Message.error(error.message);
+            });
+          }
+        });
       }
     }
   }

@@ -44,6 +44,7 @@ public class CategoryConverter {
         categoryDO.setTitle(category.getTitle());
         categoryDO.setType(category.getType());
         categoryDO.setUrl(category.getUrl());
+        categoryDO.setShowType(category.getShowType());
 
         if(config.isTag()){
             categoryDO.setTags(tagConverter.toTagDOs(category.getTags()));
@@ -98,6 +99,7 @@ public class CategoryConverter {
         category.setTitle(categoryDO.getTitle());
         category.setType(categoryDO.getType());
         category.setUrl(categoryDO.getUrl());
+        category.setShowType(categoryDO.getShowType());
 
         category.setTags(tagConverter.toTags(categoryDO.getTags()));
         category.setTemplate(templateConverter.toTemplate(categoryDO.getTemplate()));

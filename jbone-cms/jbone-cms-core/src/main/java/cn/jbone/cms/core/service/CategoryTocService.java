@@ -42,10 +42,11 @@ public class CategoryTocService {
     }
 
 
-    public void addOrUpdate(CategoryTocDO categoryTocDO){
+    public CategoryTocDO addOrUpdate(CategoryTocDO categoryTocDO){
         checkParam(categoryTocDO);
         CategoryToc categoryToc = categoryTocConverter.toCategoryToc(categoryTocDO);
         categoryTocRepository.save(categoryToc);
+        return get(categoryToc.getId());
     }
 
     private void checkParam(CategoryTocDO categoryTocDO){
@@ -57,7 +58,7 @@ public class CategoryTocService {
         if(category == null){
             return Collections.emptyList();
         }
-        List<CategoryToc> categoryTocs = categoryTocRepository.findAllByCategoryAndPid(category,0);
+        List<CategoryToc> categoryTocs = categoryTocRepository.findAllByCategoryAndPidOrderByOrders(category,0);
         return categoryTocConverter.toCategoryTocDOs(categoryTocs);
     }
 }

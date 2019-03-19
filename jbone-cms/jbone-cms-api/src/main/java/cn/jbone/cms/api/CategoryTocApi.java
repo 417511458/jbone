@@ -16,7 +16,7 @@ public interface CategoryTocApi {
     Result<CategoryTocDO> get(@RequestParam("id") Long id);
 
     @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST})
-    Result<Void> addOrUpdate(@RequestBody CategoryTocDO categoryTocDO);
+    Result<CategoryTocDO> addOrUpdate(@RequestBody CategoryTocDO categoryTocDO);
 
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
     Result<Void> delete(@RequestParam("id") Long id);

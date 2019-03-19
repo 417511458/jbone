@@ -1,6 +1,7 @@
 package cn.jbone.cms.core.dao.entity;
 
 import cn.jbone.cms.common.enums.BooleanEnum;
+import cn.jbone.cms.common.enums.CategoryShowTypeEnum;
 import cn.jbone.cms.common.enums.CategoryTypeEnum;
 import cn.jbone.cms.common.enums.StatusEnum;
 import lombok.Data;
@@ -79,6 +80,13 @@ public class Category extends BaseEntity {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private CategoryTypeEnum type;
+
+    /**
+     * 分类展示方式
+     */
+    @Column(name = "show_type")
+    @Enumerated(EnumType.STRING)
+    private CategoryShowTypeEnum showType;
 
     /**
      * 是否展示在导航条上

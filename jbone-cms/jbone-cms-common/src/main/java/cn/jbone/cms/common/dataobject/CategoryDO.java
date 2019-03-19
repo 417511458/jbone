@@ -1,6 +1,7 @@
 package cn.jbone.cms.common.dataobject;
 
 import cn.jbone.cms.common.enums.BooleanEnum;
+import cn.jbone.cms.common.enums.CategoryShowTypeEnum;
 import cn.jbone.cms.common.enums.CategoryTypeEnum;
 import cn.jbone.cms.common.enums.StatusEnum;
 import lombok.Data;
@@ -61,6 +62,8 @@ public class CategoryDO {
      * 文章分类
      */
     private CategoryTypeEnum type;
+
+    private CategoryShowTypeEnum showType;
 
     /**
      * 是否展示在导航条上

@@ -33,14 +33,15 @@ public class CategoryTocApiImpl implements CategoryTocApi {
     }
 
     @Override
-    public Result<Void> addOrUpdate(@RequestBody CategoryTocDO categoryTocDO) {
+    public Result<CategoryTocDO> addOrUpdate(@RequestBody CategoryTocDO categoryTocDO) {
+        CategoryTocDO categoryToc = null;
         try {
-            categoryTocService.addOrUpdate(categoryTocDO);
+            categoryToc = categoryTocService.addOrUpdate(categoryTocDO);
         } catch (Exception e) {
             logger.warn("CategoryToc addOrUpdate error.",e);
             return Result.wrap500Error(e.getMessage());
         }
-        return Result.wrapSuccess();
+        return Result.wrapSuccess(categoryToc);
     }
 
     @Override

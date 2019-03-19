@@ -2,6 +2,8 @@ package cn.jbone.cms.core.converter;
 
 import cn.jbone.cms.common.dataobject.CategoryTocDO;
 import cn.jbone.cms.core.dao.entity.CategoryToc;
+import cn.jbone.cms.core.dao.repository.ArticleRepository;
+import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import cn.jbone.cms.core.dao.repository.CategoryTocRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,10 @@ public class CategoryTocConverter {
     CategoryConverter categoryConverter;
     @Autowired
     CategoryTocRepository categoryTocRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
+    @Autowired
+    ArticleRepository articleRepository;
 
     public CategoryTocDO toCategoryTocDO(CategoryToc categoryToc){
         if(categoryToc == null){
@@ -65,9 +71,13 @@ public class CategoryTocConverter {
         if(categoryToc == null){
             categoryToc = new CategoryToc();
         }
+        if(categoryTocDO.getArticle() != null && categoryTocDO.getArticle().getId() > 0){
+            categoryToc.setArticle(articleRepository.getOne(categoryTocDO.getArticle().getId()));
+        }
+        if(categoryTocDO.getCategory() != null && categoryTocDO.getCategory().getId() > 0){
+            categoryToc.setCategory(categoryRepository.getOne(categoryTocDO.getCategory().getId()));
+        }
 
-        categoryToc.setArticle(articleConverter.toArticle(categoryTocDO.getArticle()));
-        categoryToc.setCategory(categoryConverter.toCategory(categoryTocDO.getCategory()));
         categoryToc.setFrontCover(categoryTocDO.getFrontCover());
         categoryToc.setOrders(categoryTocDO.getOrders());
         categoryToc.setPid(categoryTocDO.getPid());
