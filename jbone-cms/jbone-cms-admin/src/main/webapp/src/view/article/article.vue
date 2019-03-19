@@ -79,6 +79,10 @@
             <Option v-for="tag in modal.tags" :value="tag.id" :key="tag.name">{{ tag.name }}</Option>
           </Select>
         </FormItem>
+        <FormItem label="封面图" prop="frontCover" >
+          <i-input v-model="modal.data.frontCover" clearable placeholder="封面图"></i-input>
+          <img :src="modal.data.frontCover" />
+        </FormItem>
 
         <FormItem label="文章内容" prop="articleData.content" >
           <div class="edit_container" id="editor">

@@ -72,4 +72,10 @@ export default {
 .editor-wrapper *{
   z-index: 100 !important;
 }
+.w-e-menu{
+  z-index: 2 !important;
+}
+.w-e-text-container{
+  z-index: 1 !important;
+}
 </style>
