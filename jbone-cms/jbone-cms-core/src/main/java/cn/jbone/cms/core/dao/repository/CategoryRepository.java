@@ -1,5 +1,6 @@
 package cn.jbone.cms.core.dao.repository;
 
+import cn.jbone.cms.common.enums.CategoryTypeEnum;
 import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.cms.core.dao.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,7 @@ public interface CategoryRepository extends JpaRepository<Category,Long>, JpaSpe
     long countByPid(long pid);
 
     long countById(long id);
+
+    long countByType(CategoryTypeEnum type);
 
 }
