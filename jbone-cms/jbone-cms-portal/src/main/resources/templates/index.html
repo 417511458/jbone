@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" th:content="${settings.description}" />
+  <meta name="keywords" th:content="${settings.keywords}" />
+  <meta name="author" content="" />
+
+  <title th:text="${settings.title}">CMS标题 - 未配置</title>
+  <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+</head>
+
+<body>
+<div th:replace="/layout/css :: #css"></div>
+
+  <!-- Navigation -->
+<div th:replace="/layout/header :: header"></div>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('img/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1 th:text="${settings.home_title}">首页标题 - 未配置</h1>
+            <span class="subheading" th:text="${settings.home_description}">首页说明 - 未配置</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto" th:if="${pagedArticles != null && pagedArticles.total > 0}">
+        <div class="post-preview" th:each="article,articleStat : ${pagedArticles.datas}">
+          <a href="post.html">
+            <h2 class="post-title" th:text="${article.title}">
+              文章标题
+            </h2>
+            <h3 class="post-subtitle" th:text="${article.description}">
+              文章描述
+            </h3>
+          </a>
+          <p class="post-meta">Posted by
+            <a href="#">Start Bootstrap</a>
+            on September 24, 2019</p>
+          <hr>
+        </div>
+
+        <!-- Pager -->
+        <div class="clearfix">
+          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div th:replace="/layout/footer :: footer"></div>
+
+  <div th:replace="/layout/js :: #js"></div>
+
+</body>
+
+</html>

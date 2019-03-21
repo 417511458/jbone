@@ -21,7 +21,7 @@ public interface TemplateApi {
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
     Result<TemplateDO> get(@RequestParam("id") Long id);
 
-    @RequestMapping(value = "/getAll",method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/getAll",method = {RequestMethod.GET})
     Result<List<TemplateDO>> getAll();
 
 }

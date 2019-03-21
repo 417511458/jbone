@@ -1,5 +1,6 @@
 package cn.jbone.cms.core.dao.repository;
 
+import cn.jbone.cms.common.enums.BooleanEnum;
 import cn.jbone.cms.common.enums.CategoryTypeEnum;
 import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.cms.core.dao.entity.Category;
@@ -12,9 +13,11 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category,Long>, JpaSpecificationExecutor<Category> {
 
-    List<Category> findAllByPid(long pid);
+    List<Category> findAllByPidOrderByOrders(long pid);
 
     List<Category> findAllByPidAndStatus(long pid, StatusEnum status);
+
+    List<Category> findAllByPidAndStatusAndInMenuOrderByOrders(long pid, StatusEnum status, BooleanEnum inMenu);
 
     long countByPid(long pid);
 

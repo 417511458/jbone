@@ -23,7 +23,7 @@ public interface LinkApi {
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
     Result<LinkDO> get(@RequestParam("id") Long id);
 
-    @RequestMapping(value = "/getAll",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "/getAll",method = {RequestMethod.GET})
     Result<List<LinkDO>> getAll();
 
 }

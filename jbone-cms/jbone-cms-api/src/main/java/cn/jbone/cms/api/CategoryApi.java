@@ -4,6 +4,7 @@ import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.CategoryRequestDO;
 import cn.jbone.cms.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
+import feign.Headers;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,14 +40,22 @@ public interface CategoryApi {
      * 获取栏目树
      * @return
      */
-    @RequestMapping(value = "/getCategoryTree",method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/getCategoryTree",method = {RequestMethod.GET})
     Result<List<CategoryDO>> getCategoryTree();
+
+    /**
+     * 获取栏目树
+     * @return
+     */
+    @RequestMapping(value = "/requestCategorysTree",method = {RequestMethod.POST},consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Headers("Content-Type: application/json")
+    Result<List<CategoryDO>> requestCategorysTree(@RequestBody CategoryRequestDO categoryRequestDO);
 
     /**
      * 获取栏目列表
      * @return
      */
-    @RequestMapping(value = "/requestCategorys",method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/requestCategorys",method = {RequestMethod.POST})
     Result<PagedResponseDO<CategoryDO>> requestCategorys(@RequestBody CategoryRequestDO categoryRequestDO);
 
 }

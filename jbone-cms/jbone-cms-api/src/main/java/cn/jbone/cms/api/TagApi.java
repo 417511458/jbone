@@ -11,13 +11,13 @@ import java.util.List;
 @RequestMapping("/tag")
 public interface TagApi {
 
-    @RequestMapping(value = "/getAll",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "/getAll",method = {RequestMethod.GET})
     Result<List<TagDO>> getAll();
 
-    @RequestMapping(value = "/getByName",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "/getByName",method = {RequestMethod.GET})
     Result<List<TagDO>> getByName(@RequestParam("name")String name);
 
-    @RequestMapping(value = "/getById",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "/getById",method = {RequestMethod.GET})
     Result<TagDO> getById(@RequestParam("id")Long id);
 
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})

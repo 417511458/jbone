@@ -1,0 +1,9 @@
+{
+  "@class" : "org.apereo.cas.services.RegexRegisteredService",
+  "serviceId" : "^http://jbone-cms-portal.majunwei.com.*",
+  "name" : "Jbone Cms 门户",
+  "id" : 50003,
+  "description" : "Jbone Cms 门户",
+  "logoutType" : "BACK_CHANNEL",
+  "logoutUrl" : "http://jbone-cms-portal.majunwei.com:50003/cas?client_name=CasClient"
+}

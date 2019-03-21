@@ -11,6 +11,7 @@ import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,6 +64,18 @@ public class CategoryApiImpl implements CategoryApi {
             categoryDOS = categoryService.getCategoryTree();
         }catch (Exception e) {
             logger.warn("category getCategoryTree error.",e);
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess(categoryDOS);
+    }
+
+    @RequestMapping(value = "/requestCategorysTree", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Result<List<CategoryDO>> requestCategorysTree(@RequestBody CategoryRequestDO categoryRequestDO) {
+        List<CategoryDO> categoryDOS = null;
+        try {
+            categoryDOS = categoryService.requestCategorysTree(categoryRequestDO);
+        }catch (Exception e) {
+            logger.warn("category requestCategorysTree error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess(categoryDOS);

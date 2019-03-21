@@ -129,8 +129,7 @@
             {validator: validateName, trigger: 'blur'}
           ],
           settingValue: [
-            {required: true, message: '配置值不能为空', trigger: 'blur'},
-            {validator: validateName, trigger: 'blur'},
+            {required: true, message: '配置值不能为空', trigger: 'blur'}
           ]
         },
 

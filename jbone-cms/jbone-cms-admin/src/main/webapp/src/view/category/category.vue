@@ -80,6 +80,10 @@
           <InputNumber v-model="modal.data.orders" clearable  placeholder="排序号"></InputNumber>
         </FormItem>
 
+        <FormItem label="封面图" prop="frontCover" >
+          <i-input v-model="modal.data.frontCover" clearable  placeholder="封面图"></i-input>
+        </FormItem>
+
         <FormItem label="栏目链接" prop="url" >
           <i-input v-model="modal.data.url" clearable  placeholder="栏目链接"></i-input>
         </FormItem>
@@ -238,7 +242,8 @@
             type: 'CATEGORY',
             inMenu: 'FALSE',
             status: 'PUBLISH',
-            showType: 'LIST'
+            showType: 'LIST',
+            frontCover: ''
 
           }
         },
@@ -335,7 +340,8 @@
           type: 'CATEGORY',
           inMenu: 'FALSE',
           status: 'PUBLISH',
-          showType: 'LIST'
+          showType: 'LIST',
+          frontCover: ''
         };
       },
 
@@ -354,7 +360,8 @@
           type: 'CATEGORY',
           inMenu: 'FALSE',
           status: 'PUBLISH',
-          showType: 'LIST'
+          showType: 'LIST',
+          frontCover: ''
         };
 
         let self = this;
@@ -373,7 +380,8 @@
               type: result.data.type,
               inMenu: result.data.inMenu,
               status: result.data.status,
-              showType: result.data.showType
+              showType: result.data.showType,
+              frontCover: result.data.frontCover
             };
           }else{
             self.$Message.error(result.status.message);

@@ -1,18 +1,15 @@
 package cn.jbone.cms.core.service;
 
-import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.CategoryRequestDO;
 import cn.jbone.cms.common.dataobject.PagedResponseDO;
 import cn.jbone.cms.common.enums.CategoryTypeEnum;
 import cn.jbone.cms.core.converter.CategoryConverter;
 import cn.jbone.cms.core.converter.CategoryFieldConfig;
-import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.entity.Category;
 import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
-import cn.jbone.common.rpc.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,11 +46,31 @@ public class CategoryService {
     }
 
     private List<CategoryDO> getCategoryByPid(Long pid){
-        List<Category> categories = categoryRepository.findAllByPid(pid);
+        List<Category> categories = categoryRepository.findAllByPidOrderByOrders(pid);
         List<CategoryDO> categoryDOS = categoryConverter.toCategoryDOs(categories, CategoryFieldConfig.build());
         if(!CollectionUtils.isEmpty(categoryDOS)){
             for (CategoryDO categoryDO : categoryDOS){
                 categoryDO.setChildren(getCategoryByPid(categoryDO.getId()));
+            }
+        }
+        return categoryDOS;
+    }
+
+    /**
+     * 根据查询条件获取栏目树
+     * @param categoryRequestDO
+     * @return
+     */
+    public List<CategoryDO> requestCategorysTree(CategoryRequestDO categoryRequestDO){
+        return requestCategorysTree(0l,categoryRequestDO);
+    }
+
+    private List<CategoryDO> requestCategorysTree(Long pid,CategoryRequestDO categoryRequestDO){
+        List<Category> categories = categoryRepository.findAllByPidAndStatusAndInMenuOrderByOrders(pid,categoryRequestDO.getStatus(),categoryRequestDO.getInMenu());
+        List<CategoryDO> categoryDOS = categoryConverter.toCategoryDOs(categories, CategoryFieldConfig.buildSimple());
+        if(!CollectionUtils.isEmpty(categoryDOS)){
+            for (CategoryDO categoryDO : categoryDOS){
+                categoryDO.setChildren(requestCategorysTree(categoryDO.getId(),categoryRequestDO));
             }
         }
         return categoryDOS;

@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "article")
+@Table(name = "settings")
 public class Settings extends BaseEntity {
 
     @Id
