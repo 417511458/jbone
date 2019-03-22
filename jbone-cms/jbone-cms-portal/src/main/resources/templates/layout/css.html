@@ -5,17 +5,21 @@
     <title>JS</title>
 </head>
 <body>
-<div id="css">
-    <!-- Bootstrap core CSS -->
-    <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+<div th:fragment="css">
+    <link th:href="@{css/main.css}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+    <!--
+    CSS
+    ============================================= -->
+    <link rel="stylesheet" th:href="@{css/linearicons.css}" />
+    <link rel="stylesheet" th:href="@{css/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{css/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{css/magnific-popup.css}" />
+    <link rel="stylesheet" th:href="@{css/nice-select.css}" />
+    <link rel="stylesheet" th:href="@{css/animate.min.css}" />
+    <link rel="stylesheet" th:href="@{css/owl.carousel.css}" />
 
-    <!-- Custom fonts for this template -->
-    <link th:href="@{vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css" />
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' />
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
-
-    <!-- Custom styles for this template -->
-    <link th:href="@{css/cms.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{css/main.css}" />
 </div>
 </body>
 </html>

@@ -6,22 +6,27 @@
 </head>
 <body>
 <div th:fragment="footer">
-    <!-- Footer -->
-    <footer>
+    <!-- start footer Area -->
+    <footer class="footer-area section-gap">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                    <ul class="list-inline text-center">
-                        <li class="list-inline-item">
-                            <a th:href="${settings.contact_github}" target="_blank">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <p class="copyright text-muted" th:text="${settings.copyright}">Copyright</p>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h4>关于我</h4>
+                        <p  th:text="${settings.aboutme}">
+
+                        </p>
+                        <p class="footer-text" th:text="${settings.copyright}"></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 social-widget">
+                    <div class="single-footer-widget">
+                        <h4>联系我</h4>
+                        <div class="footer-social d-flex align-items-center">
+                            <a th:href="${settings.contact_github}"><i class="fa fa-github"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

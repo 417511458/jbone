@@ -16,7 +16,7 @@ public class ArticleService {
 
     public PagedResponseDO<ArticleResponseDO> findArticles(ArticleCommonRequestDO articleRequestDO){
         Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleRequestDO);
-        if(result.isSuccess()){
+        if(result != null && result.isSuccess()){
             return result.getData();
         }
         return null;
