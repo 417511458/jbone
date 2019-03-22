@@ -84,6 +84,14 @@ public class TagService {
         return tagConverter.toTagDO(tag);
     }
 
+    public List<TagDO> findTagCloud(){
+        long count = tagRepository.articleTagCount();
+        if(count <= 0){
+            return null;
+        }
+        List<Tag> tagList = tagRepository.findTagCloud();
+        return fillArticleCount(tagList);
+    }
     /**
      * 通用查询
      * @return

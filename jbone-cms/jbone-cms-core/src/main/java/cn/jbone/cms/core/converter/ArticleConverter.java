@@ -11,6 +11,7 @@ import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import cn.jbone.cms.core.dao.repository.TemplateRepository;
 import cn.jbone.common.rpc.Result;
+import cn.jbone.common.utils.DateUtil;
 import cn.jbone.sys.api.UserApi;
 import cn.jbone.sys.common.UserRequestDO;
 import cn.jbone.sys.common.UserResponseDO;
@@ -68,6 +69,8 @@ public class ArticleConverter {
         articleResponseDO.setTitle(article.getTitle());
         articleResponseDO.setAddTime(article.getAddTime().getTime());
         articleResponseDO.setUpdateTime(article.getUpdateTime().getTime());
+        articleResponseDO.setAddTimeText(DateUtil.formateDate(article.getAddTime(),DateUtil.DATE_FORMAT));
+        articleResponseDO.setUpdateTimeText(DateUtil.formateDate(article.getUpdateTime(),DateUtil.DATE_FORMAT));
 
         UserRequestDO userRequestDO = UserRequestDO.buildSimple(article.getCreator());
         Result<UserResponseDO> responseResult =  userApi.commonRequest(userRequestDO);

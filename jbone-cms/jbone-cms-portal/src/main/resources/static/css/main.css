@@ -3441,7 +3441,7 @@ dl.accordion.time-line:before {
   width: 60%;
   height: 1%;
 }
-
+ads-widget
 .top-category-widget-area .single-cat-widget:hover .overlay-bg {
   background: rgba(132, 144, 255, 0.85);
   margin: 7%;
@@ -3458,11 +3458,14 @@ dl.accordion.time-line:before {
 }
 
 .post-content-area {
+  padding-top: 10px;
   background-color: #f9f9ff;
 }
 
 .post-content-area .single-post {
-  margin-bottom: 50px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 25px;
 }
 
 .post-content-area .single-post .meta-details {

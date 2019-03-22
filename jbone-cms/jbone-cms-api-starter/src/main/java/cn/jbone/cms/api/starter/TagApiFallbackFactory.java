@@ -29,6 +29,12 @@ public class TagApiFallbackFactory implements FallbackFactory<TagApi> {
             }
 
             @Override
+            public Result<List<TagDO>> findTagCloud() {
+                logger.error("rpc findTagCloud broke",throwable);
+                return Result.wrapProtectedError();
+            }
+
+            @Override
             public Result<List<TagDO>> getByName(String name) {
                 logger.error("rpc getByName broke",throwable);
                 return Result.wrapProtectedError();

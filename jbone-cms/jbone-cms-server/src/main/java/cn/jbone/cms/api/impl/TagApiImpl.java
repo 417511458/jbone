@@ -35,6 +35,18 @@ public class TagApiImpl implements TagApi {
     }
 
     @Override
+    public Result<List<TagDO>> findTagCloud() {
+        List<TagDO> tagDOS;
+        try {
+            tagDOS = tagService.findTagCloud();
+        } catch (Exception e) {
+            logger.warn("Tag findTagCloud error.",e);
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess(tagDOS);
+    }
+
+    @Override
     public Result<List<TagDO>> getByName(String name) {
         List<TagDO> tagDOS;
         try {

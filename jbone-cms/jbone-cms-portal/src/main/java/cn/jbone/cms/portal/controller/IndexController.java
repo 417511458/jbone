@@ -5,6 +5,7 @@ import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.common.dataobject.PagedResponseDO;
 import cn.jbone.cms.portal.service.ArticleService;
 import cn.jbone.cms.portal.service.CommonService;
+import cn.jbone.cms.portal.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,6 +18,8 @@ public class IndexController {
     private CommonService commonService;
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private TagService tagService;
 
     @RequestMapping("/")
     public String index(ModelMap modelMap){
@@ -31,6 +34,9 @@ public class IndexController {
 
         PagedResponseDO<ArticleResponseDO> pagedResponseDO = articleService.findArticles(articleCommonRequestDO);
         modelMap.addAttribute("pagedArticles",pagedResponseDO);
+
+        modelMap.addAttribute("hotArticles",articleService.findHotArticles());
+        modelMap.addAttribute("tagCloud",tagService.findTagCloud());
 
         return "index";
     }

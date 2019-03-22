@@ -14,6 +14,9 @@ public interface TagApi {
     @RequestMapping(value = "/getAll",method = {RequestMethod.GET})
     Result<List<TagDO>> getAll();
 
+    @RequestMapping(value = "/findTagCloud",method = {RequestMethod.GET})
+    Result<List<TagDO>> findTagCloud();
+
     @RequestMapping(value = "/getByName",method = {RequestMethod.GET})
     Result<List<TagDO>> getByName(@RequestParam("name")String name);
 

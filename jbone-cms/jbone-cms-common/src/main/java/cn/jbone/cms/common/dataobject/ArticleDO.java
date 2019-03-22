@@ -81,4 +81,8 @@ public class ArticleDO {
     private Long addTime;
 
     private Long updateTime;
+
+    private String addTimeText;
+
+    private String updateTimeText;
 }

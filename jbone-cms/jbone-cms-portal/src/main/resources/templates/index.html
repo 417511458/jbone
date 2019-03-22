@@ -45,17 +45,17 @@
       <div class="col-lg-8 posts-list" th:if="${pagedArticles != null && pagedArticles.total > 0}">
         <div class="single-post row" th:each="article,articleStat : ${pagedArticles.datas}">
           <div class="col-lg-3  col-md-3 meta-details">
-            <ul class="tags">
-              <li><a href="#">Food,</a></li>
-              <li><a href="#">Technology,</a></li>
-              <li><a href="#">Politics,</a></li>
-              <li><a href="#">Lifestyle</a></li>
+            <ul class="tags" th:if="${not #lists.isEmpty(article.tags)}">
+
+              <li th:each="tag,tagStat : ${article.tags}">
+                <a th:href="@{/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.getName()}">标签</a>
+              </li>
             </ul>
             <div class="user-details row">
-              <p class="user-name col-lg-12 col-md-12 col-6"><a href="#">Mark wiens</a> <span class="lnr lnr-user"></span></p>
-              <p class="date col-lg-12 col-md-12 col-6"><a href="#">12 Dec, 2017</a> <span class="lnr lnr-calendar-full"></span></p>
-              <p class="view col-lg-12 col-md-12 col-6"><a href="#">1.2M Views</a> <span class="lnr lnr-eye"></span></p>
-              <p class="comments col-lg-12 col-md-12 col-6"><a href="#">06 Comments</a> <span class="lnr lnr-bubble"></span></p>
+              <p class="user-name col-lg-12 col-md-12 col-6" th:if="${article.author != null}"><a href="#" th:text="${article.author.baseInfo.realname}">用户名</a> <span class="lnr lnr-user"></span></p>
+              <p class="date col-lg-12 col-md-12 col-6"><a href="#" th:text="${article.addTimeText}"></a> <span class="lnr lnr-calendar-full"></span></p>
+              <p class="view col-lg-12 col-md-12 col-6"><a href="#" th:text="${article.hits}"></a> <span class="lnr lnr-eye"></span></p>
+              <!--<p class="comments col-lg-12 col-md-12 col-6"><a href="#">06 Comments</a> <span class="lnr lnr-bubble"></span></p>-->
             </div>
           </div>
           <div class="col-lg-9 col-md-9 ">
@@ -67,24 +67,27 @@
             </p>
             <a th:href="@{/article/{articleId}(articleId=${article.id})}" class="primary-btn">阅读全文</a>
           </div>
+            <hr>
         </div>
 
-        <nav class="blog-pagination justify-content-center d-flex">
+        <!-- 分页组件 -->
+        <nav class="blog-pagination justify-content-center d-flex" th:if="${pagedArticles.pagination != null}">
           <ul class="pagination">
-            <li class="page-item">
-              <a href="#" class="page-link" aria-label="Previous">
+            <li class="page-item" th:if="${pagedArticles.pagination.showLastButton}">
+              <a th:href="@{/page/{pageNum}(pageNum=${pagedArticles.pagination.lastPage})}" class="page-link" aria-label="Previous">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-left"></span>
 		                                    </span>
               </a>
             </li>
-            <li class="page-item"><a href="#" class="page-link">01</a></li>
-            <li class="page-item active"><a href="#" class="page-link">02</a></li>
-            <li class="page-item"><a href="#" class="page-link">03</a></li>
-            <li class="page-item"><a href="#" class="page-link">04</a></li>
-            <li class="page-item"><a href="#" class="page-link">09</a></li>
-            <li class="page-item">
-              <a href="#" class="page-link" aria-label="Next">
+
+
+            <li th:class="${page.pageNum == pagedArticles.pageNum} ? 'page-item active' : 'page-item'" th:each="page,pageStat : ${pagedArticles.pagination.pages}">
+              <a th:href="@{/page/{pageNum}(pageNum=${page.pageNum})}" class="page-link" th:text="${page.text}">01</a>
+            </li>
+
+            <li class="page-item" th:if="${pagedArticles.pagination.showNextButton}">
+              <a th:href="@{/page/{pageNum}(pageNum=${pagedArticles.pagination.nextPage})}" class="page-link" aria-label="Next">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-right"></span>
 		                                    </span>
@@ -93,59 +96,36 @@
           </ul>
         </nav>
       </div>
+
       <div class="col-lg-4 sidebar-widgets">
         <div class="widget-wrap">
+          <!-- 搜索 -->
           <div class="single-sidebar-widget search-widget">
             <form class="search-form" action="#">
-              <input placeholder="Search Posts" name="search" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'" >
+              <input placeholder="搜索文章" name="search" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = '搜索文章'" >
               <button type="submit"><i class="fa fa-search"></i></button>
             </form>
           </div>
 
-          <div class="single-sidebar-widget popular-post-widget">
+          <!-- 热门文章 -->
+          <div class="single-sidebar-widget popular-post-widget" th:if="${hotArticles != null}">
             <h4 class="popular-title">热门文章</h4>
             <div class="popular-post-list">
-              <div class="single-post-list d-flex flex-row align-items-center">
-                <div class="thumb">
-                  <img class="img-fluid" src="img/blog/pp1.jpg" alt="">
-                </div>
+              <div class="single-post-list d-flex flex-row align-items-center" th:each="article,articleStat : ${hotArticles}">
                 <div class="details">
-                  <a href="blog-single.html"><h6>Space The Final Frontier</h6></a>
-                  <p>02 Hours ago</p>
-                </div>
-              </div>
-              <div class="single-post-list d-flex flex-row align-items-center">
-                <div class="thumb">
-                  <img class="img-fluid" src="img/blog/pp2.jpg" alt="">
-                </div>
-                <div class="details">
-                  <a href="blog-single.html"><h6>The Amazing Hubble</h6></a>
-                  <p>02 Hours ago</p>
-                </div>
-              </div>
-              <div class="single-post-list d-flex flex-row align-items-center">
-                <div class="thumb">
-                  <img class="img-fluid" src="img/blog/pp3.jpg" alt="">
-                </div>
-                <div class="details">
-                  <a href="blog-single.html"><h6>Astronomy Or Astrology</h6></a>
-                  <p>02 Hours ago</p>
-                </div>
-              </div>
-              <div class="single-post-list d-flex flex-row align-items-center">
-                <div class="thumb">
-                  <img class="img-fluid" src="img/blog/pp4.jpg" alt="">
-                </div>
-                <div class="details">
-                  <a href="blog-single.html"><h6>Asteroids telescope</h6></a>
-                  <p>02 Hours ago</p>
+                  <a th:href="@{/article/{aritcleId}(articleId=${article.id})}"><h6 th:text="${article.title}">Space The Final Frontier</h6></a>
+                  <p th:text="${article.addTimeText}"></p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="single-sidebar-widget ads-widget">
-            <a href="#"><img class="img-fluid" src="img/blog/ads-banner.jpg" alt=""></a>
+
+          <!-- 广告位 -->
+          <div class="single-sidebar-widget ads-widget" th:if="${settings.ads != null && settings.ads == 'true'}" >
+            <a th:href="${settings.ads_url}" target="_blank"><img class="img-fluid" th:src="${settings.ads_img}" alt=""></a>
           </div>
+
+          <!-- 热门专题 -->
           <div class="single-sidebar-widget post-category-widget">
             <h4 class="category-title">热门专题</h4>
             <ul class="cat-list">
@@ -194,21 +174,13 @@
             </ul>
           </div>
 
-          <div class="single-sidebar-widget tag-cloud-widget">
+          <!-- 标签云 -->
+          <div class="single-sidebar-widget tag-cloud-widget" th:if="${tagCloud != null}">
             <h4 class="tagcloud-title">标签云</h4>
             <ul>
-              <li><a href="#">Technology</a></li>
-              <li><a href="#">Fashion</a></li>
-              <li><a href="#">Architecture</a></li>
-              <li><a href="#">Fashion</a></li>
-              <li><a href="#">Food</a></li>
-              <li><a href="#">Technology</a></li>
-              <li><a href="#">Lifestyle</a></li>
-              <li><a href="#">Art</a></li>
-              <li><a href="#">Adventure</a></li>
-              <li><a href="#">Food</a></li>
-              <li><a href="#">Lifestyle</a></li>
-              <li><a href="#">Adventure</a></li>
+              <li th:each="tag,tagStat : ${tagCloud}">
+                  <a th:href="@{/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.name}">标签名</a>
+              </li>
             </ul>
           </div>
         </div>

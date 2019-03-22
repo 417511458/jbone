@@ -6,34 +6,6 @@
 </head>
 <body>
 <div th:fragment="header">
-    <!--
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="/" th:text="${settings.brand}">Brand</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item" th:each="menu,menuStat : ${menus}" th:class="${#lists.isEmpty(menu.children)}? 'nav-item' : 'nav-item dropdown submenu'">
-                        <a class="nav-link" th:href="@{/category/{menuId}(menuId=${menu.id})}" th:if="${#lists.isEmpty(menu.children) && menu.url == ''}" th:text="${menu.title}">菜单标题</a>
-                        <a class="nav-link" th:href="${menu.url}" th:target="${menu.target}" th:if="${#lists.isEmpty(menu.children) && menu.url != ''}" th:text="${menu.title}">菜单标题</a>
-                        <a class="nav-link dropdown-toggle" th:if="${not #lists.isEmpty(menu.children)}" href="#" th:id="'navbarDropdown' + ${menu.id}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${menu.title}">菜单标题</a>
-
-                        <ul class="dropdown-menu" th:attr="aria-labelledby='navbarDropdown' + ${menu.id}" th:if="${not #lists.isEmpty(menu.children)}">
-                            <li class="nav-item" th:each="submenu,submenuStat : ${menu.children}">
-                                <a class="nav-link" th:href="@{/category/{menuId}(menuId=${submenu.id})}" th:if="${submenu.url == ''}" th:text="${submenu.title}">菜单标题</a>
-                                <a class="nav-link" th:href="${submenu.url}" th:target="${submenu.target}" th:if="${submenu.url != ''}" th:text="${submenu.title}">菜单标题</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    -->
-
     <header id="header" class="parent-active">
         <div class="container main-menu parent-active">
             <div class="row align-items-center justify-content-between d-flex parent-active">
