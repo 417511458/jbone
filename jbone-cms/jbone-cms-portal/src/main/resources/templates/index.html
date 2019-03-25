@@ -74,7 +74,7 @@
         <nav class="blog-pagination justify-content-center d-flex" th:if="${pagedArticles.pagination != null}">
           <ul class="pagination">
             <li class="page-item" th:if="${pagedArticles.pagination.showLastButton}">
-              <a th:href="@{/page/{pageNum}(pageNum=${pagedArticles.pagination.lastPage})}" class="page-link" aria-label="Previous">
+              <a th:href="@{/(p=${pagedArticles.pagination.lastPage})}" class="page-link" aria-label="Previous">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-left"></span>
 		                                    </span>
@@ -83,11 +83,11 @@
 
 
             <li th:class="${page.pageNum == pagedArticles.pageNum} ? 'page-item active' : 'page-item'" th:each="page,pageStat : ${pagedArticles.pagination.pages}">
-              <a th:href="@{/page/{pageNum}(pageNum=${page.pageNum})}" class="page-link" th:text="${page.text}">01</a>
+              <a th:href="@{/(p=${page.pageNum})}" class="page-link" th:text="${page.text}">01</a>
             </li>
 
             <li class="page-item" th:if="${pagedArticles.pagination.showNextButton}">
-              <a th:href="@{/page/{pageNum}(pageNum=${pagedArticles.pagination.nextPage})}" class="page-link" aria-label="Next">
+              <a th:href="@{/(p=${pagedArticles.pagination.nextPage})}" class="page-link" aria-label="Next">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-right"></span>
 		                                    </span>
@@ -97,94 +97,9 @@
         </nav>
       </div>
 
-      <div class="col-lg-4 sidebar-widgets">
-        <div class="widget-wrap">
-          <!-- 搜索 -->
-          <div class="single-sidebar-widget search-widget">
-            <form class="search-form" action="#">
-              <input placeholder="搜索文章" name="search" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = '搜索文章'" >
-              <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
-          </div>
+      <!-- 右侧公共模块，搜索、热门文章、广告、标签云 -->
+      <div th:include="/layout/right :: right" class="col-lg-4 sidebar-widgets"></div>
 
-          <!-- 热门文章 -->
-          <div class="single-sidebar-widget popular-post-widget" th:if="${hotArticles != null}">
-            <h4 class="popular-title">热门文章</h4>
-            <div class="popular-post-list">
-              <div class="single-post-list d-flex flex-row align-items-center" th:each="article,articleStat : ${hotArticles}">
-                <div class="details">
-                  <a th:href="@{/article/{aritcleId}(articleId=${article.id})}"><h6 th:text="${article.title}">Space The Final Frontier</h6></a>
-                  <p th:text="${article.addTimeText}"></p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 广告位 -->
-          <div class="single-sidebar-widget ads-widget" th:if="${settings.ads != null && settings.ads == 'true'}" >
-            <a th:href="${settings.ads_url}" target="_blank"><img class="img-fluid" th:src="${settings.ads_img}" alt=""></a>
-          </div>
-
-          <!-- 热门专题 -->
-          <div class="single-sidebar-widget post-category-widget">
-            <h4 class="category-title">热门专题</h4>
-            <ul class="cat-list">
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Technology</p>
-                  <p>37</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Lifestyle</p>
-                  <p>24</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Fashion</p>
-                  <p>59</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Art</p>
-                  <p>29</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Food</p>
-                  <p>15</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Architecture</p>
-                  <p>09</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Adventure</p>
-                  <p>44</p>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <!-- 标签云 -->
-          <div class="single-sidebar-widget tag-cloud-widget" th:if="${tagCloud != null}">
-            <h4 class="tagcloud-title">标签云</h4>
-            <ul>
-              <li th:each="tag,tagStat : ${tagCloud}">
-                  <a th:href="@{/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.name}">标签名</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
