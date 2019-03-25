@@ -48,14 +48,14 @@
             <ul class="tags" th:if="${not #lists.isEmpty(article.tags)}">
 
               <li th:each="tag,tagStat : ${article.tags}">
-                <a th:href="@{/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.getName()}">标签</a>
+                <a th:href="@{/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.name}">标签</a>
               </li>
             </ul>
             <div class="user-details row">
               <p class="user-name col-lg-12 col-md-12 col-6" th:if="${article.author != null}"><a href="#" th:text="${article.author.baseInfo.realname}">用户名</a> <span class="lnr lnr-user"></span></p>
               <p class="date col-lg-12 col-md-12 col-6"><a href="#" th:text="${article.addTimeText}"></a> <span class="lnr lnr-calendar-full"></span></p>
               <p class="view col-lg-12 col-md-12 col-6"><a href="#" th:text="${article.hits}"></a> <span class="lnr lnr-eye"></span></p>
-              <!--<p class="comments col-lg-12 col-md-12 col-6"><a href="#">06 Comments</a> <span class="lnr lnr-bubble"></span></p>-->
+              <p class="comments col-lg-12 col-md-12 col-6"><a href="#" th:text="${article.commentCount}"></a> <span class="lnr lnr-bubble"></span></p>
             </div>
           </div>
           <div class="col-lg-9 col-md-9 ">

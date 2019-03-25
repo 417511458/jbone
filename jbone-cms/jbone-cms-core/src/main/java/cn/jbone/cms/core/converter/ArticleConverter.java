@@ -6,10 +6,7 @@ import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.entity.ArticleData;
 import cn.jbone.cms.core.dao.entity.Tag;
-import cn.jbone.cms.core.dao.repository.ArticleDataRepository;
-import cn.jbone.cms.core.dao.repository.ArticleRepository;
-import cn.jbone.cms.core.dao.repository.CategoryRepository;
-import cn.jbone.cms.core.dao.repository.TemplateRepository;
+import cn.jbone.cms.core.dao.repository.*;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.common.utils.DateUtil;
 import cn.jbone.sys.api.UserApi;
@@ -48,6 +45,9 @@ public class ArticleConverter {
     @Autowired
     private UserApi userApi;
 
+    @Autowired
+    private CommentRepository commentRepository;
+
     public ArticleResponseDO toArticleDO(Article article){
         if(article == null){
             return null;
@@ -71,6 +71,7 @@ public class ArticleConverter {
         articleResponseDO.setUpdateTime(article.getUpdateTime().getTime());
         articleResponseDO.setAddTimeText(DateUtil.formateDate(article.getAddTime(),DateUtil.DATE_FORMAT));
         articleResponseDO.setUpdateTimeText(DateUtil.formateDate(article.getUpdateTime(),DateUtil.DATE_FORMAT));
+        articleResponseDO.setCommentCount(commentRepository.countByArticleId(article.getId()));
 
         UserRequestDO userRequestDO = UserRequestDO.buildSimple(article.getCreator());
         Result<UserResponseDO> responseResult =  userApi.commonRequest(userRequestDO);

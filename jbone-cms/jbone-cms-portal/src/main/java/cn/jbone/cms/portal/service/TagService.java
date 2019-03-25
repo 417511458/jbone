@@ -20,4 +20,12 @@ public class TagService {
         }
         return null;
     }
+
+    public TagDO findById(Long id){
+        Result<TagDO> result = tagApi.getById(id);
+        if(result != null && result.isSuccess()){
+            return result.getData();
+        }
+        return null;
+    }
 }

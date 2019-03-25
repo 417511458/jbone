@@ -6,6 +6,7 @@ import cn.jbone.cms.core.converter.ArticleConverter;
 import cn.jbone.cms.core.dao.entity.*;
 import cn.jbone.cms.core.dao.repository.ArticleDataRepository;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
+import cn.jbone.cms.core.dao.repository.TagRepository;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.sys.api.UserApi;
 import org.apache.commons.lang3.StringUtils;
@@ -36,6 +37,8 @@ public class ArticleService {
 
     @Autowired
     private UserApi userApi;
+    @Autowired
+    private TagRepository tagRepository;
 
     public ArticleResponseDO addOrUpdateArticle(ArticleRequestDO articleRequestDO){
         checkParam(articleRequestDO);
@@ -173,14 +176,13 @@ public class ArticleService {
             }
 
 
+            // tag的In查询
             if(!CollectionUtils.isEmpty(articleCommonRequestDO.getTagIds())){
-                CriteriaBuilder.In<Tag> tags =  criteriaBuilder.in(root.get("tags"));
-                for (Long tagId : articleCommonRequestDO.getTagIds()){
-                    Tag tag = new Tag();
-                    tag.setId(tagId);
-                    tags.value(tag);
+                List<Tag> tagList = tagRepository.findByIdIn(articleCommonRequestDO.getTagIds());
+                if(!CollectionUtils.isEmpty(tagList)){
+                    Join<Article,Tag> articleTagListJoin = root.join("tags",JoinType.INNER);
+                    predicates.add(articleTagListJoin.in(tagList));
                 }
-                predicates.add(tags);
             }
 
             if(articleCommonRequestDO.getCreator() != null && articleCommonRequestDO.getCreator() > 0){

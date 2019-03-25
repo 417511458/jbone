@@ -26,8 +26,8 @@
   <div class="container">
     <div class="row d-flex align-items-center justify-content-center">
       <div class="about-content col-lg-12">
-        <h1 class="text-white" th:text="'搜索文章:&nbsp;' + ${keywords}">
-          搜索文章
+        <h1 class="text-white" th:text="${tag.name}">
+          Tag
         </h1>
         <!--
         <p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="elements.html"> Elements</a></p>
@@ -73,7 +73,7 @@
         <nav class="blog-pagination justify-content-center d-flex" th:if="${pagedArticles.pagination != null}">
           <ul class="pagination">
             <li class="page-item" th:if="${pagedArticles.pagination.showLastButton}">
-              <a th:href="@{/search(p=${pagedArticles.pagination.lastPage},keywords=${keywords})}" class="page-link" aria-label="Previous">
+              <a th:href="@{/tag/{tagId}(p=${pagedArticles.pagination.lastPage},tagId=${tag.id})}" class="page-link" aria-label="Previous">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-left"></span>
 		                                    </span>
@@ -82,11 +82,11 @@
 
 
             <li th:class="${page.pageNum == pagedArticles.pageNum} ? 'page-item active' : 'page-item'" th:each="page,pageStat : ${pagedArticles.pagination.pages}">
-              <a th:href="@{/search(p=${page.pageNum},keywords=${keywords})}" class="page-link" th:text="${page.text}">01</a>
+              <a th:href="@{/tag/{tagId}(p=${page.pageNum},tagId=${tag.id})}" class="page-link" th:text="${page.text}">01</a>
             </li>
 
             <li class="page-item" th:if="${pagedArticles.pagination.showNextButton}">
-              <a th:href="@{/search(p=${pagedArticles.pagination.nextPage},keywords=${keywords})}" class="page-link" aria-label="Next">
+              <a th:href="@{/tag/{tagId}(p=${pagedArticles.pagination.nextPage},tagId=${tag.id})}" class="page-link" aria-label="Next">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-right"></span>
 		                                    </span>
@@ -96,7 +96,7 @@
         </nav>
       </div>
       <div class="col-lg-8 posts-list" th:unless="${pagedArticles != null && pagedArticles.total > 0}">
-        <div class="alert alert-danger" role="alert"><h1>未搜索到关于'<font th:text="${keywords}"></font>'的文章</h1></div>
+        <div class="alert alert-danger" role="alert"><h1>未搜索到关于'<font th:text="${tag.name}"></font>'的文章</h1></div>
       </div>
       <!-- 右侧公共模块，搜索、热门文章、广告、标签云 -->
       <div th:include="/layout/right :: right" class="col-lg-4 sidebar-widgets"></div>
