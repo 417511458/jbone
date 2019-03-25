@@ -49,4 +49,23 @@ public class ArticleCommonRequestDO extends SearchListDTO {
      */
     private Integer creator;
 
+    public static int DEFAULT_SIZE = 10;
+
+    public static ArticleCommonRequestDO build(){
+        return build(1,DEFAULT_SIZE);
+    }
+
+    public static ArticleCommonRequestDO build(int pageNumber){
+        return build(pageNumber,DEFAULT_SIZE);
+    }
+
+    public static ArticleCommonRequestDO build(int pageNumber,int pageSize){
+        ArticleCommonRequestDO articleCommonRequestDO = new ArticleCommonRequestDO();
+        articleCommonRequestDO.setPageNumber(pageNumber);
+        articleCommonRequestDO.setPageSize(pageSize);
+        articleCommonRequestDO.setSortName("addTime");
+        articleCommonRequestDO.setSortOrder("desc");
+        return articleCommonRequestDO;
+    }
+
 }

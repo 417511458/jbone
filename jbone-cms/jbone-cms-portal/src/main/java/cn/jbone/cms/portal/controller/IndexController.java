@@ -24,11 +24,7 @@ public class IndexController {
 
         int pageNumber = (p == null) ? 1 : p;
 
-        ArticleCommonRequestDO articleCommonRequestDO = new ArticleCommonRequestDO();
-        articleCommonRequestDO.setPageNumber(pageNumber);
-        articleCommonRequestDO.setPageSize(10);
-        articleCommonRequestDO.setSortName("addTime");
-        articleCommonRequestDO.setSortOrder("desc");
+        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build(pageNumber);
 
         modelMap.addAttribute("pagedArticles",articleService.findArticles(articleCommonRequestDO));
 

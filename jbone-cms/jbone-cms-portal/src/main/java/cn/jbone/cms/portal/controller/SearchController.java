@@ -29,11 +29,7 @@ public class SearchController {
 
         int pageNumber = (p == null) ? 1 : p;
 
-        ArticleCommonRequestDO articleCommonRequestDO = new ArticleCommonRequestDO();
-        articleCommonRequestDO.setPageNumber(pageNumber);
-        articleCommonRequestDO.setPageSize(10);
-        articleCommonRequestDO.setSortName("addTime");
-        articleCommonRequestDO.setSortOrder("desc");
+        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build(pageNumber);
 
         if(StringUtils.isNotBlank(keywords)){
             articleCommonRequestDO.setTitle(keywords);

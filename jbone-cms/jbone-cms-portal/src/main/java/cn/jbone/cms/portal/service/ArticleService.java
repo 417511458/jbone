@@ -29,13 +29,11 @@ public class ArticleService {
     }
 
     public List<ArticleResponseDO> findHotArticles(){
-        ArticleCommonRequestDO articleRequestDO = new ArticleCommonRequestDO();
-        articleRequestDO.setSortOrder("desc");
-        articleRequestDO.setSortName("hits");
-        articleRequestDO.setPageSize(10);
-        articleRequestDO.setPageNumber(1);
+        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build();
+        articleCommonRequestDO.setSortOrder("desc");
+        articleCommonRequestDO.setSortName("hits");
 
-        Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleRequestDO);
+        Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleCommonRequestDO);
         if(result != null && result.isSuccess()){
             PagedResponseDO<ArticleResponseDO> data = result.getData();
             if(data != null){

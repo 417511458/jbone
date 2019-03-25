@@ -33,11 +33,7 @@ public class TagController {
 
         int pageNumber = (p == null) ? 1 : p;
 
-        ArticleCommonRequestDO articleCommonRequestDO = new ArticleCommonRequestDO();
-        articleCommonRequestDO.setPageNumber(pageNumber);
-        articleCommonRequestDO.setPageSize(10);
-        articleCommonRequestDO.setSortName("addTime");
-        articleCommonRequestDO.setSortOrder("desc");
+        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build(pageNumber);
 
         if(tagId > 0){
             articleCommonRequestDO.setTagIds(Arrays.asList(tagId));
