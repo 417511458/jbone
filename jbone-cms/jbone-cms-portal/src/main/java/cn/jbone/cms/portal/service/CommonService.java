@@ -26,10 +26,24 @@ public class CommonService {
     @Autowired
     private CategoryApi categoryApi;
 
+    @Autowired
+    private ArticleService articleService;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private LinkService linkService;
+
     public void setCommonProperties(ModelMap modelMap){
         setSettings(modelMap);
         setMenus(modelMap);
     }
+
+    public void setCommonModuleDatas(ModelMap modelMap){
+        modelMap.addAttribute("hotArticles",articleService.findHotArticles());
+        modelMap.addAttribute("tagCloud",tagService.findTagCloud());
+        modelMap.addAttribute("links",linkService.findAll());
+    }
+
 
     private void setMenus(ModelMap modelMap){
         CategoryRequestDO categoryRequestDO = new CategoryRequestDO();

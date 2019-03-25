@@ -10,8 +10,8 @@
         <div class="widget-wrap">
             <!-- 搜索 -->
             <div class="single-sidebar-widget search-widget">
-                <form class="search-form" action="#">
-                    <input placeholder="搜索文章" name="search" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = '搜索文章'" >
+                <form class="search-form" th:action="@{/search}">
+                    <input placeholder="搜索文章" name="keywords" id="keywords" type="text" th:value="${keywords}" onfocus="this.placeholder = ''" onblur="this.placeholder = '搜索文章'" >
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
