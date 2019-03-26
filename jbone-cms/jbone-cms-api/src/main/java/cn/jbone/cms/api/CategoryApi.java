@@ -24,6 +24,7 @@ public interface CategoryApi {
     @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST})
     Result<Void> addOrUpdate(@RequestBody CategoryDO categoryDO);
 
+
     /**
      * 删除栏目
      * @param id
