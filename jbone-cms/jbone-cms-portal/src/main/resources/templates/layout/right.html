@@ -8,6 +8,22 @@
 <div th:fragment="right">
         <!-- 右侧模版，包含搜索、热门文章、广告位、标签云，这里一般用于列表页，如首页、栏目列表、搜索列表等 -->
         <div class="widget-wrap">
+
+            <!-- 栏目子分类 -->
+            <div class="single-sidebar-widget post-category-widget" th:if="${category != null && not #lists.isEmpty(category.children)}">
+                <h4 class="category-title">子栏目</h4>
+                <ul class="cat-list">
+                    <li th:each="cate,cateStat : ${category.children}">
+                        <a th:href="@{/category/{cateId}(cateId=${cate.id})}" th:if="${cate.url == ''}" th:text="${cate.title}" class="d-flex justify-content-between">
+                            <p th:text="${cate.title}">文章标题</p>
+                        </a>
+                        <a th:href="${cate.url}" th:target="${cate.target}" th:if="${cate.url != ''}" th:text="${cate.title}" class="d-flex justify-content-between">
+                            <p th:text="${cate.title}">文章标题</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
             <!-- 搜索 -->
             <div class="single-sidebar-widget search-widget">
                 <form class="search-form" th:action="@{/search}">
@@ -15,6 +31,8 @@
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
+
+
 
             <!-- 热门文章 -->
             <div class="single-sidebar-widget post-category-widget" th:if="${hotArticles != null}">

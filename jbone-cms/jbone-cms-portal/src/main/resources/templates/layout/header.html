@@ -15,9 +15,10 @@
                 <nav id="nav-menu-container" class="parent-active">
                     <ul class="nav-menu sf-js-enabled sf-arrows parent-active" style="touch-action: pan-y;">
                         <li th:each="menu,menuStat : ${menus}" th:class="${#lists.isEmpty(menu.children)}? '' : 'menu-has-children'">
-                            <a th:href="@{/category/{menuId}(menuId=${menu.id})}" th:if="${#lists.isEmpty(menu.children) && menu.url == ''}" th:text="${menu.title}">菜单标题</a>
-                            <a th:href="${menu.url}" th:target="${menu.target}" th:if="${#lists.isEmpty(menu.children) && menu.url != ''}" th:text="${menu.title}">菜单标题</a>
-                            <a th:if="${not #lists.isEmpty(menu.children)}" href="#" th:text="${menu.title}" class="sf-with-ul">菜单标题</a>
+                            <a th:if="${#lists.isEmpty(menu.children) && menu.url == ''}" th:href="@{/category/{menuId}(menuId=${menu.id})}"  th:text="${menu.title}">菜单标题</a>
+                            <a th:if="${#lists.isEmpty(menu.children) && menu.url != ''}" th:href="${menu.url}" th:target="${menu.target}"  th:text="${menu.title}">菜单标题</a>
+                            <a th:if="${not #lists.isEmpty(menu.children) && menu.url == ''}" th:href="@{/category/{menuId}(menuId=${menu.id})}" th:text="${menu.title}" class="sf-with-ul">菜单标题</a>
+                            <a th:if="${not #lists.isEmpty(menu.children) && menu.url != ''}" th:href="${menu.url}" th:target="${menu.target}" th:text="${menu.title}" class="sf-with-ul">菜单标题</a>
 
                             <ul style="display: none;" th:if="${not #lists.isEmpty(menu.children)}">
                                 <li th:each="submenu,submenuStat : ${menu.children}">

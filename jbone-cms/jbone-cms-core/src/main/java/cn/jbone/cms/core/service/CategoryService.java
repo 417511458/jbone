@@ -62,7 +62,7 @@ public class CategoryService {
      * @return
      */
     public List<CategoryDO> requestCategorysTree(CategoryRequestDO categoryRequestDO){
-        return requestCategorysTree(0l,categoryRequestDO);
+        return requestCategorysTree(categoryRequestDO.getPid(),categoryRequestDO);
     }
 
     private List<CategoryDO> requestCategorysTree(Long pid,CategoryRequestDO categoryRequestDO){

@@ -55,10 +55,11 @@ public class CategoryController {
         if(categoryDO.getType() == CategoryTypeEnum.SPECIAL){
             pageName = PAGE_SPECIAL;
         }
+
         //普通分类文章
         else if(categoryDO.getType() == CategoryTypeEnum.CATEGORY){
-
-
+            articleCommonRequestDO.setCategoryId(categoryId);
+            pagedArticles = articleService.findArticles(articleCommonRequestDO);
         }
         //标签虚拟分类
         else if(categoryDO.getType() == CategoryTypeEnum.TAG){

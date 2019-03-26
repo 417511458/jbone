@@ -15,5 +15,6 @@ public class CategoryRequestDO extends SearchListDTO {
     private CategoryTypeEnum type;  //分类类型
     private StatusEnum status;
     private BooleanEnum inMenu;
+    private long pid = 0l;
 
 }

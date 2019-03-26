@@ -8,7 +8,7 @@
   <meta name="keywords" th:content="${settings.keywords}" />
   <meta name="author" content="" />
 
-  <title th:text="${settings.title}">CMS标题 - 未配置</title>
+  <title th:text="${keywords} + ' - ' + ${settings.title}">CMS标题 - 未配置</title>
   <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
 
 

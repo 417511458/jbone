@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" th:content="${settings.description}" />
-  <meta name="keywords" th:content="${settings.keywords}" />
+  <meta name="description" th:content="${category.description}" />
+  <meta name="keywords" th:content="${category.keywords}" />
   <meta name="author" content="" />
 
-  <title th:text="${settings.title}">CMS标题 - 未配置</title>
+  <title th:text="${category.title} + ' - ' + ${settings.title}">CMS标题 - 未配置</title>
   <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
 
 
@@ -30,7 +30,7 @@
           栏目标题
         </h1>
         <p class="text-white" th:text="${category.description}">栏目描述</p>
-      </div>
+    </div>
     </div>
   </div>
 </section>
