@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" th:content="${article.description}" />
+  <meta name="keywords" th:content="${article.keywords}" />
+  <meta name="author" content="" />
+
+  <title th:text="${article.title} + ' - ' + ${settings.title}">CMS标题 - 未配置</title>
+  <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+
+  <style>
+    #bdshare_weixin_qrcode_dialog_qr table {
+      width: auto !important;
+    }
+  </style>
+
+</head>
+
+<body class="parent-active" style="display: block;">
+
+
+<div th:replace="/layout/css :: css"></div>
+<div th:replace="/layout/js :: js"></div>
+<div th:replace="/layout/header :: header"></div>
+
+<!-- start banner Area -->
+<section class="relative about-banner" id="home">
+  <div class="overlay overlay-bg"></div>
+  <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="about-content col-lg-12">
+        <h1 class="text-white" th:text="${article.title}">
+          文章标题
+        </h1>
+        <p class="text-white" th:text="${article.description}">文章描述</p>
+        <div class="text-white">
+          <ul class="article-meta">
+            <li class="user-name " th:if="${article.author != null}"><span class="lnr lnr-user"></span><a href="#" th:text="${article.author.baseInfo.realname}">用户名</a> </li>
+            <li class="date"><span class="lnr lnr-calendar-full"></span> <a href="#" th:text="${article.addTimeText}"></a> </li>
+            <li class="view"> <span class="lnr lnr-eye"></span><a href="#" th:text="${article.hits}"></a></li>
+            <li class="comments"> <span class="lnr lnr-bubble"></span><a href="#" th:text="${article.commentCount}"></a></li>
+            <li> <span class="lnr lnr-tag"></span></li>
+            <li th:if="${not #lists.isEmpty(article.tags)}" th:each="tag,tagStat : ${article.tags}">
+              <a th:href="@{/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.name}">标签</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+<!-- End banner Area -->
+
+<section class="post-content-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 posts-list">
+        <div class="single-post row">
+          <div class="col-lg-12">
+            <div class="feature-img">
+              <img class="img-fluid" th:src="${article.frontCover}" alt="">
+            </div>
+          </div>
+          <div class="col-lg-12 post-content" th:utext="${article.articleData.content}">
+            文章内容
+          </div>
+        </div>
+        <div class="navigation-area">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+              <div class="thumb">
+                <a href="#"><img class="img-fluid" src="img/blog/prev.jpg" alt=""></a>
+              </div>
+              <div class="arrow">
+                <a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
+              </div>
+              <div class="detials">
+                <p>Prev Post</p>
+                <a href="#"><h4>Space The Final Frontier</h4></a>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+              <div class="detials">
+                <p>Next Post</p>
+                <a href="#"><h4>Telescopes 101</h4></a>
+              </div>
+              <div class="arrow">
+                <a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
+              </div>
+              <div class="thumb">
+                <a href="#"><img class="img-fluid" src="img/blog/next.jpg" alt=""></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comments-area">
+          <h4>05 Comments</h4>
+          <div class="comment-list">
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex">
+                <div class="thumb">
+                  <img src="img/blog/c1.jpg" alt="">
+                </div>
+                <div class="desc">
+                  <h5><a href="#">Emilly Blunt</a></h5>
+                  <p class="date">December 4, 2017 at 3:12 pm </p>
+                  <p class="comment">
+                    Never say goodbye till the end comes!
+                  </p>
+                </div>
+              </div>
+              <div class="reply-btn">
+                <a href="" class="btn-reply text-uppercase">reply</a>
+              </div>
+            </div>
+          </div>
+          <div class="comment-list left-padding">
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex">
+                <div class="thumb">
+                  <img src="img/blog/c2.jpg" alt="">
+                </div>
+                <div class="desc">
+                  <h5><a href="#">Elsie Cunningham</a></h5>
+                  <p class="date">December 4, 2017 at 3:12 pm </p>
+                  <p class="comment">
+                    Never say goodbye till the end comes!
+                  </p>
+                </div>
+              </div>
+              <div class="reply-btn">
+                <a href="" class="btn-reply text-uppercase">reply</a>
+              </div>
+            </div>
+          </div>
+          <div class="comment-list left-padding">
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex">
+                <div class="thumb">
+                  <img src="img/blog/c3.jpg" alt="">
+                </div>
+                <div class="desc">
+                  <h5><a href="#">Annie Stephens</a></h5>
+                  <p class="date">December 4, 2017 at 3:12 pm </p>
+                  <p class="comment">
+                    Never say goodbye till the end comes!
+                  </p>
+                </div>
+              </div>
+              <div class="reply-btn">
+                <a href="" class="btn-reply text-uppercase">reply</a>
+              </div>
+            </div>
+          </div>
+          <div class="comment-list">
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex">
+                <div class="thumb">
+                  <img src="img/blog/c4.jpg" alt="">
+                </div>
+                <div class="desc">
+                  <h5><a href="#">Maria Luna</a></h5>
+                  <p class="date">December 4, 2017 at 3:12 pm </p>
+                  <p class="comment">
+                    Never say goodbye till the end comes!
+                  </p>
+                </div>
+              </div>
+              <div class="reply-btn">
+                <a href="" class="btn-reply text-uppercase">reply</a>
+              </div>
+            </div>
+          </div>
+          <div class="comment-list">
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex">
+                <div class="thumb">
+                  <img src="img/blog/c5.jpg" alt="">
+                </div>
+                <div class="desc">
+                  <h5><a href="#">Ina Hayes</a></h5>
+                  <p class="date">December 4, 2017 at 3:12 pm </p>
+                  <p class="comment">
+                    Never say goodbye till the end comes!
+                  </p>
+                </div>
+              </div>
+              <div class="reply-btn">
+                <a href="" class="btn-reply text-uppercase">reply</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comment-form">
+          <h4>Leave a Comment</h4>
+          <form>
+            <div class="form-group form-inline">
+              <div class="form-group col-lg-6 col-md-12 name">
+                <input type="text" class="form-control" id="name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+              </div>
+              <div class="form-group col-lg-6 col-md-12 email">
+                <input type="email" class="form-control" id="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="subject" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
+            </div>
+            <div class="form-group">
+              <textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+            </div>
+            <a href="#" class="primary-btn text-uppercase">Post Comment</a>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-8 posts-list" th:if="${article == null}">
+        <div class="alert alert-danger" role="alert"><h1>未找到的文章</h1></div>
+      </div>
+      <!-- 右侧公共模块，搜索、热门文章、广告、标签云 -->
+      <div th:include="/layout/right :: right" class="col-lg-4 sidebar-widgets"></div>
+
+    </div>
+  </div>
+</section>
+<!-- End post-content Area -->
+
+  <div th:replace="/layout/footer :: footer"></div>
+
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"right","bdTop":"250"}};(document.getElementsByTagName('head')[0] || document.body).appendChild(document.createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5);</script>
+</body>
+
+</html>

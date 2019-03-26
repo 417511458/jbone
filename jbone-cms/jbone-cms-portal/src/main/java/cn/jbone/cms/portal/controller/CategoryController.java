@@ -1,6 +1,7 @@
 package cn.jbone.cms.portal.controller;
 
 import cn.jbone.cms.common.dataobject.*;
+import cn.jbone.cms.common.enums.CategoryShowTypeEnum;
 import cn.jbone.cms.common.enums.CategoryTypeEnum;
 import cn.jbone.cms.portal.service.ArticleService;
 import cn.jbone.cms.portal.service.CategoryService;
@@ -58,8 +59,18 @@ public class CategoryController {
 
         //普通分类文章
         else if(categoryDO.getType() == CategoryTypeEnum.CATEGORY){
-            articleCommonRequestDO.setCategoryId(categoryId);
-            pagedArticles = articleService.findArticles(articleCommonRequestDO);
+
+            //列表展示，返回到列表页
+            if(categoryDO.getShowType() == CategoryShowTypeEnum.LIST){
+                pageName = PAGE_CATEGORY;
+                articleCommonRequestDO.setCategoryId(categoryId);
+                pagedArticles = articleService.findArticles(articleCommonRequestDO);
+            }
+            //第一篇文章，跳转到文章详情页
+            else if(categoryDO.getShowType() == CategoryShowTypeEnum.FIRSTARTICLE){
+
+            }
+
         }
         //标签虚拟分类
         else if(categoryDO.getType() == CategoryTypeEnum.TAG){
