@@ -100,6 +100,15 @@ public class JboneCmsApiStarterConfiguration {
     }
 
     @Bean
+    public CommentApi getCommentApi(Decoder decoder, Encoder encoder, Client client){
+        CommentApi api = HystrixFeign.builder().client(client).setterFactory(getCommandSetter(CommentApi.class))
+                .encoder(encoder)
+                .decoder(decoder).contract(new SpringMvcContract())
+                .target(CommentApi.class, jboneConfiguration.getRpc().getCmsServer().getProtocol() + "://" + jboneConfiguration.getRpc().getCmsServer().getName().toUpperCase(),getCommentApiFallbackFactory());
+        return api;
+    }
+
+    @Bean
     public ArticleApiFallbackFactory getArticleApiFallbackFactory(){
         return new ArticleApiFallbackFactory();
     }
@@ -137,6 +146,11 @@ public class JboneCmsApiStarterConfiguration {
     @Bean
     public TemplateApiFallbackFactory getTemplateApiFallbackFactory(){
         return new TemplateApiFallbackFactory();
+    }
+
+    @Bean
+    public CommentApiFallbackFactory getCommentApiFallbackFactory(){
+        return new CommentApiFallbackFactory();
     }
 
     /**

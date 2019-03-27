@@ -37,7 +37,6 @@ public class CategoryController {
 
     @RequestMapping("category/{categoryId}")
     public String index(ModelMap modelMap, @PathVariable(value="categoryId") long categoryId, @RequestParam(value="p",required = false) Integer p){
-        commonService.setCommonProperties(modelMap);
         commonService.setCommonModuleDatas(modelMap);
 
         CategoryDO categoryDO = categoryService.findById(categoryId);

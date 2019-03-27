@@ -94,122 +94,43 @@
           </div>
         </div>
         <div class="comments-area">
-          <h4>05 Comments</h4>
-          <div class="comment-list">
+          <h4 th:text="'共' + ${article.commentCount} + '条评论'">评论数</h4>
+          <div class="comment-list" th:if="${article.commentCount > 0}" th:each="comment,commentStat : ${comments}">
             <div class="single-comment justify-content-between d-flex">
               <div class="user justify-content-between d-flex">
-                <div class="thumb">
-                  <img src="img/blog/c1.jpg" alt="">
+                <div class="thumb" >
+                  <img th:if="${comment.author != null}" th:src="${comment.author.baseInfo.avatar}" alt="">
+                  <img th:if="${comment.author == null}" th:src="@{/img/notfounduser.png}" alt="">
                 </div>
                 <div class="desc">
-                  <h5><a href="#">Emilly Blunt</a></h5>
-                  <p class="date">December 4, 2017 at 3:12 pm </p>
-                  <p class="comment">
-                    Never say goodbye till the end comes!
+                  <h5>
+                    <a href="#" th:if="${comment.author != null}" th:text="${comment.author.baseInfo.realname}"></a>
+                    <a href="#" th:if="${comment.author == null}"> 匿名用户</a>
+                  </h5>
+                  <p class="date" th:text="${comment.addTimeText}"></p>
+                  <p class="comment" th:text="${comment.content}">
                   </p>
                 </div>
               </div>
-              <div class="reply-btn">
+              <!--<div class="reply-btn">
                 <a href="" class="btn-reply text-uppercase">reply</a>
-              </div>
-            </div>
-          </div>
-          <div class="comment-list left-padding">
-            <div class="single-comment justify-content-between d-flex">
-              <div class="user justify-content-between d-flex">
-                <div class="thumb">
-                  <img src="img/blog/c2.jpg" alt="">
-                </div>
-                <div class="desc">
-                  <h5><a href="#">Elsie Cunningham</a></h5>
-                  <p class="date">December 4, 2017 at 3:12 pm </p>
-                  <p class="comment">
-                    Never say goodbye till the end comes!
-                  </p>
-                </div>
-              </div>
-              <div class="reply-btn">
-                <a href="" class="btn-reply text-uppercase">reply</a>
-              </div>
-            </div>
-          </div>
-          <div class="comment-list left-padding">
-            <div class="single-comment justify-content-between d-flex">
-              <div class="user justify-content-between d-flex">
-                <div class="thumb">
-                  <img src="img/blog/c3.jpg" alt="">
-                </div>
-                <div class="desc">
-                  <h5><a href="#">Annie Stephens</a></h5>
-                  <p class="date">December 4, 2017 at 3:12 pm </p>
-                  <p class="comment">
-                    Never say goodbye till the end comes!
-                  </p>
-                </div>
-              </div>
-              <div class="reply-btn">
-                <a href="" class="btn-reply text-uppercase">reply</a>
-              </div>
-            </div>
-          </div>
-          <div class="comment-list">
-            <div class="single-comment justify-content-between d-flex">
-              <div class="user justify-content-between d-flex">
-                <div class="thumb">
-                  <img src="img/blog/c4.jpg" alt="">
-                </div>
-                <div class="desc">
-                  <h5><a href="#">Maria Luna</a></h5>
-                  <p class="date">December 4, 2017 at 3:12 pm </p>
-                  <p class="comment">
-                    Never say goodbye till the end comes!
-                  </p>
-                </div>
-              </div>
-              <div class="reply-btn">
-                <a href="" class="btn-reply text-uppercase">reply</a>
-              </div>
-            </div>
-          </div>
-          <div class="comment-list">
-            <div class="single-comment justify-content-between d-flex">
-              <div class="user justify-content-between d-flex">
-                <div class="thumb">
-                  <img src="img/blog/c5.jpg" alt="">
-                </div>
-                <div class="desc">
-                  <h5><a href="#">Ina Hayes</a></h5>
-                  <p class="date">December 4, 2017 at 3:12 pm </p>
-                  <p class="comment">
-                    Never say goodbye till the end comes!
-                  </p>
-                </div>
-              </div>
-              <div class="reply-btn">
-                <a href="" class="btn-reply text-uppercase">reply</a>
-              </div>
+              </div>-->
             </div>
           </div>
         </div>
-        <div class="comment-form">
-          <h4>Leave a Comment</h4>
-          <form>
-            <div class="form-group form-inline">
-              <div class="form-group col-lg-6 col-md-12 name">
-                <input type="text" class="form-control" id="name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
-              </div>
-              <div class="form-group col-lg-6 col-md-12 email">
-                <input type="email" class="form-control" id="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
-              </div>
-            </div>
+        <div class="comment-form" th:if="${CURR_USER != null}">
+          <h4>发表评论</h4>
+          <form id="commentForm" th:action="@{/article/submitComment}">
+            <input type="hidden" id="articleId" name="articleId" th:value="${article.id}">
             <div class="form-group">
-              <input type="text" class="form-control" id="subject" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
+              <textarea class="form-control mb-10" rows="5" id="content" name="content" placeholder="请文明发言" onfocus="this.placeholder = ''" onblur="this.placeholder = '请文明发言'" required=""></textarea>
             </div>
-            <div class="form-group">
-              <textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
-            </div>
-            <a href="#" class="primary-btn text-uppercase">Post Comment</a>
+            <div id="commentAlert" class="alert alert-danger" style="display: none;" role="alert">请输入评论内容</div>
+            <a href="javascript:submitComment()" class="primary-btn text-uppercase">发表</a>
           </form>
+        </div>
+        <div class="comment-form" th:if="${CURR_USER == null}">
+          <h4>请先<a th:href="@{/login}">登录</a>，再发言!</h4>
         </div>
       </div>
       <div class="col-lg-8 posts-list" th:if="${article == null}">
@@ -225,7 +146,36 @@
 
   <div th:replace="/layout/footer :: footer"></div>
 
-
+<script>
+  function submitComment(){
+    var content = $("#content").val();
+    var contentProp = "请输入评论内容";
+    if(content == null || content == ""){
+      $("#commentAlert").show();
+      $("#commentAlert").text(contentProp);
+      return;
+    }else{
+      $("#commentAlert").hide();
+    }
+    $.ajax({
+      type : "POST", //提交方式
+      url : "/article/submitComment",//路径
+      data : {
+        "articleId" : $("#articleId").val(),
+        "content": content
+      },//数据，这里使用的是Json格式进行传输
+      success : function(result) {//返回数据根据结果进行相应的处理
+        console.info(result);
+        if ( result.success ) {
+          window.location.reload();
+        } else {
+          $("#commentAlert").show();
+          $("#commentAlert").text(result.status.message);
+        }
+      }
+    });
+  }
+</script>
 <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"right","bdTop":"250"}};(document.getElementsByTagName('head')[0] || document.body).appendChild(document.createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5);</script>
 </body>
 

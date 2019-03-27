@@ -24,7 +24,6 @@ public class SearchController {
 
     @RequestMapping("search")
     public String index(ModelMap modelMap, @RequestParam(value="keywords",required = false) String keywords,@RequestParam(value="p",required = false) Integer p){
-        commonService.setCommonProperties(modelMap);
         commonService.setCommonModuleDatas(modelMap);
 
         int pageNumber = (p == null) ? 1 : p;

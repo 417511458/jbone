@@ -28,7 +28,6 @@ public class TagController {
 
     @RequestMapping("tag/{tagId}")
     public String index(ModelMap modelMap, @PathVariable(value="tagId") long tagId, @RequestParam(value="p",required = false) Integer p){
-        commonService.setCommonProperties(modelMap);
         commonService.setCommonModuleDatas(modelMap);
 
         int pageNumber = (p == null) ? 1 : p;

@@ -23,6 +23,8 @@ public class ArticleService {
     private ArticleApi articleApi;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CommentService commentService;
 
     public PagedResponseDO<ArticleResponseDO> findArticles(ArticleCommonRequestDO articleRequestDO){
         Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleRequestDO);
@@ -60,6 +62,7 @@ public class ArticleService {
     }
 
     public void toArticleDetail(ModelMap modelMap,Long id){
+        articleApi.hits(id); //增加阅读量
         ArticleResponseDO article = findById(id);
         if(article == null){
             return;
@@ -73,6 +76,7 @@ public class ArticleService {
         modelMap.addAttribute("article",article);
         modelMap.addAttribute("lastArticle",getLastOrNextArticle(article,SpecificationUtils.GREATER_THAN));
         modelMap.addAttribute("nextArticle",getLastOrNextArticle(article,SpecificationUtils.LESS_THAN));
+        modelMap.addAttribute("comments",commentService.getByArticleId(id));
     }
 
     //上一篇文章

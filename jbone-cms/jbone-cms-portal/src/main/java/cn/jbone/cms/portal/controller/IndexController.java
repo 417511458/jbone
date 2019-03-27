@@ -19,9 +19,7 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index(ModelMap modelMap, @RequestParam(value="p",required = false) Integer p){
-        commonService.setCommonProperties(modelMap);
         commonService.setCommonModuleDatas(modelMap);
-
         int pageNumber = (p == null) ? 1 : p;
 
         ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build(pageNumber);

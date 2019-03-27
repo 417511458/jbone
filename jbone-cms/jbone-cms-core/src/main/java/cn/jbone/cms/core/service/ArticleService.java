@@ -70,6 +70,21 @@ public class ArticleService {
         return articleResponseDO;
     }
 
+    /**
+     * 增加文章点击量
+     * @param id
+     */
+    public void hits(Long id){
+        if(id == null || id < 0){
+            return ;
+        }
+        Article article = articleRepository.getOne(id);
+        if(article != null){
+            article.setHits(article.getHits() + 1);
+            articleRepository.save(article);
+        }
+    }
+
     public void deleteArticle(Long id){
         if(!articleRepository.existsById(id)){
             throw new ObjectNotFoundException("文章不存在.");

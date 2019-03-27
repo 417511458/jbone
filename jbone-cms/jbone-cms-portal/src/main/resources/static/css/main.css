@@ -4109,6 +4109,11 @@ ads-widget
   margin-right: 20px;
 }
 
+.comments-area .thumb img {
+  max-width: 60px;
+  max-height: 60px;
+}
+
 .comments-area .date {
   font-size: 13px;
   color: #cccccc;
@@ -4142,6 +4147,7 @@ ads-widget
   border: 1px solid #eee;
   padding: 50px 20px;
   margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .comment-form h4 {

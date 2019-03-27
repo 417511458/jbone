@@ -72,6 +72,17 @@ public class ArticleApiImpl implements ArticleApi {
     }
 
     @Override
+    public Result<Void> hits(Long id) {
+        try {
+            articleService.hits(id);
+        } catch (Exception e) {
+            logger.warn("article hits error.",e);
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess();
+    }
+
+    @Override
     public Result<PagedResponseDO<ArticleResponseDO>> commonRequest(@RequestBody ArticleCommonRequestDO articleCommonRequestDO) {
         PagedResponseDO<ArticleResponseDO> pagedResponseDO = null;
         try {

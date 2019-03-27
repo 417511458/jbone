@@ -25,6 +25,9 @@ public interface ArticleApi {
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
     Result<ArticleResponseDO> get(@RequestParam("id") Long id);
 
+    @RequestMapping(value = "/hits",method = {RequestMethod.GET})
+    Result<Void> hits(@RequestParam("id") Long id);
+
     @RequestMapping(value = "/commonRequest",method = {RequestMethod.POST})
     Result<PagedResponseDO<ArticleResponseDO>> commonRequest(@RequestBody ArticleCommonRequestDO articleCommonRequestDO);
 

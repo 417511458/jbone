@@ -46,6 +46,12 @@ public class ArticleApiFallbackFactory implements FallbackFactory<ArticleApi> {
             }
 
             @Override
+            public Result<Void> hits(Long id) {
+                logger.error("rpc hits broke",throwable);
+                return Result.wrapProtectedError();
+            }
+
+            @Override
             public Result<PagedResponseDO<ArticleResponseDO>> commonRequest(ArticleCommonRequestDO articleCommonRequestDO) {
                 logger.error("rpc commonRequest broke",throwable);
                 return Result.wrapProtectedError();
