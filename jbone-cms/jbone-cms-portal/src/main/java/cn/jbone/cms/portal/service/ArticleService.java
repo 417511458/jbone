@@ -6,10 +6,14 @@ import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
+import cn.jbone.common.utils.DateUtil;
+import cn.jbone.common.utils.SpecificationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -67,5 +71,26 @@ public class ArticleService {
         }
         modelMap.addAttribute("category",categoryDO);
         modelMap.addAttribute("article",article);
+        modelMap.addAttribute("lastArticle",getLastOrNextArticle(article,SpecificationUtils.GREATER_THAN));
+        modelMap.addAttribute("nextArticle",getLastOrNextArticle(article,SpecificationUtils.LESS_THAN));
     }
+
+    //上一篇文章
+    private ArticleResponseDO getLastOrNextArticle(ArticleResponseDO article,String key){
+        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build();
+        articleCommonRequestDO.setPageSize(1);
+        if(article.getCategory() != null){
+            articleCommonRequestDO.setCategoryId(article.getCategory().getId());
+        }
+        String conditionKey = SpecificationUtils.SEARCH_PREFIX  + "addTime_" + key;
+        String conditionValue = DateUtil.formateDate(new Date(article.getAddTime()),DateUtil.TIME_FORMAT);
+        articleCommonRequestDO.getCondition().put(conditionKey, conditionValue);
+
+        PagedResponseDO<ArticleResponseDO> result = findArticles(articleCommonRequestDO);
+        if (result != null && !CollectionUtils.isEmpty(result.getDatas())){
+            return  result.getDatas().get(0);
+        }
+        return null;
+    }
+
 }

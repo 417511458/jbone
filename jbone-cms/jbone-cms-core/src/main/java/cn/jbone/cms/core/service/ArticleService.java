@@ -8,6 +8,7 @@ import cn.jbone.cms.core.dao.repository.ArticleDataRepository;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.TagRepository;
 import cn.jbone.common.exception.ObjectNotFoundException;
+import cn.jbone.common.utils.SpecificationUtils;
 import cn.jbone.sys.api.UserApi;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -188,6 +189,12 @@ public class ArticleService {
             if(articleCommonRequestDO.getCreator() != null && articleCommonRequestDO.getCreator() > 0){
                 Path<Integer> creator = root.get("creator");
                 predicates.add(criteriaBuilder.equal(creator,articleCommonRequestDO.getCreator()));
+            }
+
+            //条件查询
+            List<Predicate> conditionPredicats = SpecificationUtils.generatePredicates(root,criteriaBuilder,articleCommonRequestDO.getCondition());
+            if(!CollectionUtils.isEmpty(conditionPredicats)){
+                predicates.addAll(conditionPredicats);
             }
 
             Predicate predicate = criteriaBuilder.and(predicates.toArray(new Predicate[]{}));

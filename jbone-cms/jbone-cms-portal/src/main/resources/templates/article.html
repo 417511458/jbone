@@ -42,7 +42,7 @@
             <li class="date"><span class="lnr lnr-calendar-full"></span> <a href="#" th:text="${article.addTimeText}"></a> </li>
             <li class="view"> <span class="lnr lnr-eye"></span><a href="#" th:text="${article.hits}"></a></li>
             <li class="comments"> <span class="lnr lnr-bubble"></span><a href="#" th:text="${article.commentCount}"></a></li>
-            <li> <span class="lnr lnr-tag"></span></li>
+            <li th:if="${not #lists.isEmpty(article.tags)}"> <span class="lnr lnr-tag"></span></li>
             <li th:if="${not #lists.isEmpty(article.tags)}" th:each="tag,tagStat : ${article.tags}">
               <a th:href="@{/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.name}">标签</a>
             </li>
@@ -65,34 +65,30 @@
               <img class="img-fluid" th:src="${article.frontCover}" alt="">
             </div>
           </div>
-          <div class="col-lg-12 post-content" th:utext="${article.articleData.content}">
+          <div class="col-lg-12 post-content" th:if="${article.articleData != null}" th:utext="${article.articleData.content}">
             文章内容
           </div>
         </div>
         <div class="navigation-area">
           <div class="row">
             <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
-              <div class="thumb">
-                <a href="#"><img class="img-fluid" src="img/blog/prev.jpg" alt=""></a>
-              </div>
               <div class="arrow">
-                <a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
+                <a href="#"><span class="lnr lnr-arrow-left"></span></a>
               </div>
               <div class="detials">
-                <p>Prev Post</p>
-                <a href="#"><h4>Space The Final Frontier</h4></a>
+                <p>上一篇</p>
+                <a th:if="${lastArticle != null}" th:href="@{/article/{articleId}(articleId=${lastArticle.id})}"><h4 th:text="${lastArticle.title}">文章标题</h4></a>
+                <a th:if="${lastArticle == null}" href="#"><h4>没有了</h4></a>
               </div>
             </div>
             <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
               <div class="detials">
-                <p>Next Post</p>
-                <a href="#"><h4>Telescopes 101</h4></a>
+                <p>下一篇</p>
+                <a th:if="${nextArticle != null}" th:href="@{/article/{articleId}(articleId=${nextArticle.id})}"><h4 th:text="${nextArticle.title}">文章标题</h4></a>
+                <a th:if="${nextArticle == null}" href="#"><h4>没有了</h4></a>
               </div>
               <div class="arrow">
-                <a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
-              </div>
-              <div class="thumb">
-                <a href="#"><img class="img-fluid" src="img/blog/next.jpg" alt=""></a>
+                <a href="#"><span class="lnr lnr-arrow-right"></span></a>
               </div>
             </div>
           </div>
