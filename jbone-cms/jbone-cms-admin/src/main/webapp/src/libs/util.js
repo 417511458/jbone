@@ -6,6 +6,17 @@ const { title, cookieExpires, useI18n } = config
 
 export const TOKEN_KEY = 'j_s_id';
 
+export const USER_ID_KEY = 'j_u_id';
+
+export const setUserId = (uid) => {
+  Cookies.set(USER_ID_KEY, uid, {expires: cookieExpires || 1});
+}
+export const getUserId = () => {
+  const uid = Cookies.get(USER_ID_KEY);
+  if (uid) return uid;
+  else return 0;
+}
+
 export const setToken = (token) => {
   Cookies.set(TOKEN_KEY, token, {expires: cookieExpires || 1});
 }
