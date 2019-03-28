@@ -77,7 +77,6 @@ public class TokenFilter extends ZuulFilter {
 
 
         requestContext.set(TOKEN,token);
-
         //将用户信息保存到上下文
         UserResponseDO userModel = session.getUserInfo();
         requestContext.set(USER,userModel);

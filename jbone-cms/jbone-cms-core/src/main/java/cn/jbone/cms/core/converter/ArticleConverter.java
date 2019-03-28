@@ -90,6 +90,27 @@ public class ArticleConverter {
         return articleResponseDO;
     }
 
+    public ArticleResponseDO toBaseArticleDO(Article article){
+        if(article == null){
+            return null;
+        }
+
+        ArticleResponseDO articleResponseDO = new ArticleResponseDO();
+        articleResponseDO.setCreator(article.getCreator());
+        articleResponseDO.setDescription(article.getDescription());
+        articleResponseDO.setFrontCover(article.getFrontCover());
+        articleResponseDO.setHits(article.getHits());
+        articleResponseDO.setKeywords(article.getKeywords());
+        articleResponseDO.setId(article.getId());
+        articleResponseDO.setStatus(article.getStatus());
+        articleResponseDO.setTitle(article.getTitle());
+        articleResponseDO.setAddTime(article.getAddTime().getTime());
+        articleResponseDO.setUpdateTime(article.getUpdateTime().getTime());
+        articleResponseDO.setAddTimeText(DateUtil.formateDate(article.getAddTime(),DateUtil.DATE_FORMAT));
+        articleResponseDO.setUpdateTimeText(DateUtil.formateDate(article.getUpdateTime(),DateUtil.DATE_FORMAT));
+        return articleResponseDO;
+    }
+
     public List<ArticleResponseDO> toArticleDOs(List<Article> articles){
         if(CollectionUtils.isEmpty(articles)){
             return null;

@@ -28,7 +28,7 @@ public class ArticleApiFallbackFactory implements FallbackFactory<ArticleApi> {
             }
 
             @Override
-            public Result<Void> delete(Long id) {
+            public Result<Void> delete(Long id, String token, Integer uid) {
                 logger.error("rpc delete broke",throwable);
                 return Result.wrapProtectedError();
             }

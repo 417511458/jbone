@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" th:content="${category.description}" />
+  <meta name="keywords" th:content="${category.keywords}" />
+  <meta name="author" content="" />
+
+  <title th:text="${category.title} + ' - ' + ${settings.title}">CMS标题 - 未配置</title>
+  <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+  <!-- Syntax Highlighter -->
+  <link rel="stylesheet" type="text/css" th:href="@{/js/vendor/syntax-highlighter/styles/shCore.css}" media="all">
+  <link rel="stylesheet" type="text/css" th:href="@{/js/vendor/syntax-highlighter/styles/shThemeDefault.css}" media="all">
+
+
+</head>
+
+<body class="parent-active" style="display: block;">
+
+<div th:replace="/layout/css :: css"></div>
+<link rel="stylesheet" th:href="@{/css/glyphicon.css}" />
+<link rel="stylesheet" th:href="@{/css/special.css}" />
+
+
+<aside class="left-sidebar">
+  <div class="logo">
+    <a href="#">
+      <h1 th:text="${category.title}"></h1>
+    </a>
+  </div>
+  <nav class="left-nav">
+      <div id="tree"></div>
+  </nav>
+</aside>
+
+<div id="main-wrapper">
+  <header id="header" class="parent-active" th:replace="/layout/header :: header"></header>
+    <div class="content-header" th:if="${categoryToc != null}">
+        <h1 th:text="${categoryToc.title}"></h1>
+    </div>
+  <div class="main-content post-content" th:if="${article != null && article.articleData != null}" th:utext="${article.articleData.content}">
+    文章内容
+  </div>
+</div>
+
+
+
+<script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/vendor/bootstrap.min.js}"></script>
+<script th:src="@{/js/vendor/bootstrap-treeview.min.js}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+<script th:src="@{/js/easing.min.js}"></script>
+<script th:src="@{/js/hoverIntent.js}"></script>
+<script th:src="@{/js/superfish.min.js}"></script>
+<script th:src="@{/js/jquery.ajaxchimp.min.js}"></script>
+<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/jquery.tabs.min.js}"></script>
+<script th:src="@{/js/jquery.nice-select.min.js}"></script>
+<script th:src="@{/js/isotope.pkgd.min.js}"></script>
+<script th:src="@{/js/waypoints.min.js}"></script>
+<script th:src="@{/js/jquery.counterup.min.js}"></script>
+<script th:src="@{/js/simple-skillbar.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/mail-script.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.nav.js}"></script>
+<script type="text/javascript" th:src="@{/js/vendor/syntax-highlighter/scripts/shCore.js}"></script>
+<script type="text/javascript" th:src="@{/js/vendor/syntax-highlighter/scripts/shBrushXml.js}"></script>
+<script type="text/javascript" th:src="@{/js/vendor/syntax-highlighter/scripts/shBrushCss.js}"></script>
+<script type="text/javascript" th:src="@{/js/vendor/syntax-highlighter/scripts/shBrushJScript.js}"></script>
+<script type="text/javascript" th:src="@{/js/vendor/syntax-highlighter/scripts/shBrushPhp.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+      SyntaxHighlighter.all();
+
+    $(document).ready(function() {
+        console.log( "ready!" );
+        var treeData = JSON.parse('[[${specialTree}]]');
+       //treeview 源码 https://github.com/jonmiles/bootstrap-treeview
+        console.log( treeData);
+        $('#tree').treeview({
+            // data: treeData,         // data is not optional
+            // levels: 3,
+            // backColor:'green',
+            enableLinks: true,
+            // showBorder: false,
+            backColor: '#f3f3f3',
+            selectedBackColor: '#8490ff',
+
+            color: "#428bca",
+            showBorder: false,
+            data: treeData
+        });
+
+      $('#tree').on('nodeSelected',function(event, data) {
+        console.log( event);
+        console.log( data);
+      });
+    });
+    /*]]>*/
+</script>
+</body>
+
+</html>

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RequestMapping("/article")
 public interface ArticleApi {
 
@@ -17,7 +19,7 @@ public interface ArticleApi {
     Result<ArticleResponseDO> addOrUpdate(@RequestBody ArticleRequestDO articleRequestDO);
 
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
-    Result<Void> delete(@RequestParam("id") Long id);
+    Result<Void> delete(@RequestParam("id") Long id, @RequestParam("token") String token,@RequestParam("userId") Integer userId);
 
     @RequestMapping(value = "/flushDelete",method = {RequestMethod.DELETE})
     Result<Void> flushDelete(@RequestParam("id") Long id);

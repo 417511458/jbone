@@ -72,11 +72,20 @@ public class ArticleService {
         if(article.getCategory() != null){
             categoryDO = categoryService.findById(article.getCategory().getId());
         }
+
+        toArticleDetail(modelMap,article,categoryDO);
+    }
+
+    public void toArticleDetail(ModelMap modelMap,ArticleResponseDO article,CategoryDO categoryDO){
+        if(article == null){
+            return;
+        }
+
         modelMap.addAttribute("category",categoryDO);
         modelMap.addAttribute("article",article);
         modelMap.addAttribute("lastArticle",getLastOrNextArticle(article,SpecificationUtils.GREATER_THAN));
         modelMap.addAttribute("nextArticle",getLastOrNextArticle(article,SpecificationUtils.LESS_THAN));
-        modelMap.addAttribute("comments",commentService.getByArticleId(id));
+        modelMap.addAttribute("comments",commentService.getByArticleId(article.getId()));
     }
 
     //上一篇文章
@@ -89,6 +98,21 @@ public class ArticleService {
         String conditionKey = SpecificationUtils.SEARCH_PREFIX  + "addTime_" + key;
         String conditionValue = DateUtil.formateDate(new Date(article.getAddTime()),DateUtil.TIME_FORMAT);
         articleCommonRequestDO.getCondition().put(conditionKey, conditionValue);
+
+        PagedResponseDO<ArticleResponseDO> result = findArticles(articleCommonRequestDO);
+        if (result != null && !CollectionUtils.isEmpty(result.getDatas())){
+            return  result.getDatas().get(0);
+        }
+        return null;
+    }
+
+    //第一篇文章
+    public ArticleResponseDO getFirstArticle(Long categoryId){
+        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build();
+        articleCommonRequestDO.setPageSize(1);
+        articleCommonRequestDO.setCategoryId(categoryId);
+        articleCommonRequestDO.setSortName("orders");
+        articleCommonRequestDO.setSortOrder("asc");
 
         PagedResponseDO<ArticleResponseDO> result = findArticles(articleCommonRequestDO);
         if (result != null && !CollectionUtils.isEmpty(result.getDatas())){

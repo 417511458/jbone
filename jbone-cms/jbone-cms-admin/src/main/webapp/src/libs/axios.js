@@ -106,7 +106,7 @@ class HttpRequest {
     });
   }
   request (options) {
-    const instance = axios.create({params:{token:getToken()}});
+    const instance = axios.create({params:{token:getToken(),userId:getUserId()}});
     options = Object.assign(this.getInsideConfig(), options);
     this.interceptors(instance, options.url);
     return instance(options);

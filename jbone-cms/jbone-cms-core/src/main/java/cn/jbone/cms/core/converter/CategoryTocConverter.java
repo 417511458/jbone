@@ -35,7 +35,7 @@ public class CategoryTocConverter {
         CategoryTocDO categoryTocDO = new CategoryTocDO();
         BeanUtils.copyProperties(categoryToc,categoryTocDO,"childCategoryToc","category","article");
 
-        categoryTocDO.setArticle(articleConverter.toArticleDO(categoryToc.getArticle()));
+        categoryTocDO.setArticle(articleConverter.toBaseArticleDO(categoryToc.getArticle()));
         categoryTocDO.setCategory(categoryConverter.toCategoryDO(categoryToc.getCategory(),CategoryFieldConfig.buildSimple()));
         categoryTocDO.setChildren(toCategoryTocDOs(categoryToc.getChildCategoryToc()));
 
