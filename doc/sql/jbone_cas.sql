@@ -4,7 +4,7 @@
  Source Server         : jbone_cas
  Source Server Type    : MySQL
  Source Server Version : 50711
- Source Host           : 121.42.174.77
+ Source Host           : 127.0.0.1
  Source Database       : jbone_cas
 
  Target Server Type    : MySQL

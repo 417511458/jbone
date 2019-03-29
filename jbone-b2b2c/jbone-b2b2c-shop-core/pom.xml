@@ -51,11 +51,6 @@
             <version>1.0.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>cn.jbone</groupId>
-            <artifactId>jbone-tag-api-starter</artifactId>
-            <version>1.0.0</version>
-        </dependency>
     </dependencies>
 
 </project>

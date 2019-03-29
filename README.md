@@ -41,7 +41,6 @@ QQ群：547104190
     * jbone-sys-api-starter : 基于Spring Cloud Feign的调用实现
     * jbone-sys-core : 系统管理核心
     * jbone-sys-server : 系统管理服务
-* jbone-tag ：全平台标签系统
 * jbone-cms ：内容管理模块
 * jbone-bpm : 工作流模块
 * jbone-common : 共用模块
@@ -154,7 +153,6 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 127.0.0.1 jbone-sm-admin.majunwei.com
 127.0.0.1 jbone-sys-admin.majunwei.com
 127.0.0.1 jbone-sm-zipkinserver.majunwei.com
-127.0.0.1 jbone-tag-admin.majunwei.com
 127.0.0.1 jbone-eb-portal.majunwei.com
 127.0.0.1 jbone-eb-manager.majunwei.com
 127.0.0.1 jbone-eb-consumer.majunwei.com

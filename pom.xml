@@ -14,7 +14,6 @@
         <module>jbone-bpm</module>
         <module>jbone-cms</module>
         <module>jbone-ui</module>
-        <module>jbone-tag</module>
         <module>jbone-errors</module>
         <module>jbone-b2b2c</module>
     </modules>

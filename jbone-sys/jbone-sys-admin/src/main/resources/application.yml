@@ -27,7 +27,7 @@ spring:
     username: jbone_sys
     password: Jbone_sys_666
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://121.42.174.77:3306/jbone_sys?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+    url: jdbc:mysql://127.0.0.1.77:3306/jbone_sys?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
 
 #
 # 以下为 zipkin客户端配置

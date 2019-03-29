@@ -3,9 +3,6 @@ package cn.jbone.b2b2c.shop.core.service;
 import cn.jbone.b2b2c.shop.api.dto.response.*;
 import cn.jbone.b2b2c.shop.core.dao.domain.*;
 import cn.jbone.b2b2c.shop.core.dao.repository.ShopInfoRepository;
-import cn.jbone.common.rpc.Result;
-import cn.jbone.tag.api.TagApi;
-import cn.jbone.tag.api.model.TagModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +15,6 @@ public class ShopReadService {
 
     @Autowired
     private ShopInfoRepository shopInfoRepository;
-
-    @Autowired
-    private TagApi tagApi;
 
     public ShopDetailsRespDTO getShopDetails(Long shopId){
         ShopInfoEntity shopInfoEntity = shopInfoRepository.getOne(shopId);
@@ -68,21 +62,7 @@ public class ShopReadService {
                 tagIdsSb.append(tagEntity.getTagId()).append(",");
             }
             String tagIds = tagIdsSb.substring(0,tagIdsSb.length()-1);
-            Result<List<TagModel>> result = tagApi.batchGetTags(tagIds);
-            if(result.isSuccess() && result.getData() != null && !result.getData().isEmpty()){
-                List<TagModel> tagModels = result.getData();
-                for (ShopTagEntity tagEntity:shopTagEntities){
-                    for (TagModel tagModel:tagModels){
-                        if(tagEntity.getTagId() == tagModel.getId()){
-                            ShopTagRespDTO shopTagRespDTO = new ShopTagRespDTO();
-                            shopTagRespDTO.setShopId(shopId);
-                            shopTagRespDTO.setTagId(tagEntity.getTagId());
-                            shopTagRespDTO.setTagName(tagModel.getName());
-                            shopTagRespDTOS.add(shopTagRespDTO);
-                        }
-                    }
-                }
-            }
+
 
             shopDetailsRespDTO.setShopTags(shopTagRespDTOS);
         }
