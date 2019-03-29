@@ -9,7 +9,6 @@ import cn.jbone.cms.portal.service.CommonService;
 import cn.jbone.cms.portal.service.TagService;
 import cn.jbone.cms.portal.vo.SpecialTreeVo;
 import cn.jbone.errors.PageCode;
-import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller

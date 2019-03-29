@@ -5,9 +5,10 @@ import cn.jbone.cms.common.dataobject.ArticleCommonRequestDO;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.PagedResponseDO;
+import cn.jbone.common.dataobject.SearchConditionDO;
+import cn.jbone.common.dataobject.SearchSortDO;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.common.utils.DateUtil;
-import cn.jbone.common.utils.SpecificationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -40,8 +41,9 @@ public class ArticleService {
 
     public List<ArticleResponseDO> findHotArticles(){
         ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build();
-        articleCommonRequestDO.setSortOrder("desc");
-        articleCommonRequestDO.setSortName("hits");
+        articleCommonRequestDO.clearSort();
+        articleCommonRequestDO.addSort(new SearchSortDO("hits",SearchSortDO.Direction.DESC));
+        articleCommonRequestDO.addSort(new SearchSortDO("addTime",SearchSortDO.Direction.DESC));
 
         Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleCommonRequestDO);
         if(result != null && result.isSuccess()){
@@ -83,21 +85,20 @@ public class ArticleService {
 
         modelMap.addAttribute("category",categoryDO);
         modelMap.addAttribute("article",article);
-        modelMap.addAttribute("lastArticle",getLastOrNextArticle(article,SpecificationUtils.GREATER_THAN));
-        modelMap.addAttribute("nextArticle",getLastOrNextArticle(article,SpecificationUtils.LESS_THAN));
+        modelMap.addAttribute("lastArticle",getLastOrNextArticle(article,SearchConditionDO.Operator.GREATER_THAN));
+        modelMap.addAttribute("nextArticle",getLastOrNextArticle(article,SearchConditionDO.Operator.LESS_THAN));
         modelMap.addAttribute("comments",commentService.getByArticleId(article.getId()));
     }
 
     //上一篇文章
-    private ArticleResponseDO getLastOrNextArticle(ArticleResponseDO article,String key){
+    private ArticleResponseDO getLastOrNextArticle(ArticleResponseDO article, SearchConditionDO.Operator operator){
         ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build();
         articleCommonRequestDO.setPageSize(1);
         if(article.getCategory() != null){
             articleCommonRequestDO.setCategoryId(article.getCategory().getId());
         }
-        String conditionKey = SpecificationUtils.SEARCH_PREFIX  + "addTime_" + key;
         String conditionValue = DateUtil.formateDate(new Date(article.getAddTime()),DateUtil.TIME_FORMAT);
-        articleCommonRequestDO.getCondition().put(conditionKey, conditionValue);
+        articleCommonRequestDO.addCondition(new SearchConditionDO("addTime",operator,conditionValue));
 
         PagedResponseDO<ArticleResponseDO> result = findArticles(articleCommonRequestDO);
         if (result != null && !CollectionUtils.isEmpty(result.getDatas())){
@@ -111,8 +112,7 @@ public class ArticleService {
         ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build();
         articleCommonRequestDO.setPageSize(1);
         articleCommonRequestDO.setCategoryId(categoryId);
-        articleCommonRequestDO.setSortName("orders");
-        articleCommonRequestDO.setSortOrder("asc");
+        articleCommonRequestDO.addSort(new SearchSortDO("orders",SearchSortDO.Direction.ASC));
 
         PagedResponseDO<ArticleResponseDO> result = findArticles(articleCommonRequestDO);
         if (result != null && !CollectionUtils.isEmpty(result.getDatas())){

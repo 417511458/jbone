@@ -1,13 +1,19 @@
 package cn.jbone.cms.common.dataobject;
 
 import cn.jbone.cms.common.enums.StatusEnum;
-import cn.jbone.common.api.dto.SearchListDTO;
+import cn.jbone.common.dataobject.SearchListDO;
+import cn.jbone.common.dataobject.SearchSortDO;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class ArticleCommonRequestDO extends SearchListDTO {
+public class ArticleCommonRequestDO extends SearchListDO {
+
+    /**
+     * 文章ID
+     */
+    private Long id;
 
     /**
      * 标题
@@ -63,8 +69,7 @@ public class ArticleCommonRequestDO extends SearchListDTO {
         ArticleCommonRequestDO articleCommonRequestDO = new ArticleCommonRequestDO();
         articleCommonRequestDO.setPageNumber(pageNumber);
         articleCommonRequestDO.setPageSize(pageSize);
-        articleCommonRequestDO.setSortName("addTime");
-        articleCommonRequestDO.setSortOrder("desc");
+        articleCommonRequestDO.addSort(new SearchSortDO("addTime", SearchSortDO.Direction.DESC));
         return articleCommonRequestDO;
     }
 

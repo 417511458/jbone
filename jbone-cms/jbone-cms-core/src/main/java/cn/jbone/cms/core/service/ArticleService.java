@@ -7,6 +7,7 @@ import cn.jbone.cms.core.dao.entity.*;
 import cn.jbone.cms.core.dao.repository.ArticleDataRepository;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.TagRepository;
+import cn.jbone.common.dataobject.SearchSortDO;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import cn.jbone.sys.api.UserApi;
@@ -110,14 +111,8 @@ public class ArticleService {
      */
     public PagedResponseDO<ArticleResponseDO> commonRequest(ArticleCommonRequestDO articleCommonRequestDO){
 
-
-        PageRequest pageRequest = null;
-        if(StringUtils.isNotBlank(articleCommonRequestDO.getSortName())){
-            pageRequest = PageRequest.of(articleCommonRequestDO.getPageNumber()-1,articleCommonRequestDO.getPageSize(), Sort.Direction.fromString(articleCommonRequestDO.getSortOrder()),articleCommonRequestDO.getSortName());
-        }else {
-            pageRequest = PageRequest.of(articleCommonRequestDO.getPageNumber()-1,articleCommonRequestDO.getPageSize());
-        }
-
+        Sort sort = SpecificationUtils.buildSort(articleCommonRequestDO.getSorts());
+        PageRequest pageRequest = PageRequest.of(articleCommonRequestDO.getPageNumber()-1,articleCommonRequestDO.getPageSize(),sort);
         Page<Article> articlePage =  articleRepository.findAll(new ArticleCommonRequestSpecification(articleCommonRequestDO),pageRequest);
 
         PagedResponseDO<ArticleResponseDO> responseDO = new PagedResponseDO<>();
@@ -155,6 +150,11 @@ public class ArticleService {
                 return criteriaQuery.getRestriction();
             }
             List<Predicate> predicates = new ArrayList<>();
+
+            if(articleCommonRequestDO.getId() != null && articleCommonRequestDO.getId() > 0){
+                Path<Long> id = root.get("id");
+                predicates.add(criteriaBuilder.equal(id,articleCommonRequestDO.getId()));
+            }
 
             if(StringUtils.isNotBlank(articleCommonRequestDO.getTitle())){
                 Path<String> title = root.get("title");
@@ -206,8 +206,8 @@ public class ArticleService {
                 predicates.add(criteriaBuilder.equal(creator,articleCommonRequestDO.getCreator()));
             }
 
-            //条件查询
-            List<Predicate> conditionPredicats = SpecificationUtils.generatePredicates(root,criteriaBuilder,articleCommonRequestDO.getCondition());
+            //补充条件查询
+            List<Predicate> conditionPredicats = SpecificationUtils.generatePredicates(root,criteriaBuilder,articleCommonRequestDO.getConditions());
             if(!CollectionUtils.isEmpty(conditionPredicats)){
                 predicates.addAll(conditionPredicats);
             }

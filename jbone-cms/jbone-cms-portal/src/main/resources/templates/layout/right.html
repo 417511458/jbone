@@ -38,10 +38,10 @@
             <div class="single-sidebar-widget post-category-widget" th:if="${hotArticles != null}">
                 <h4 class="category-title">热门文章</h4>
                 <ul class="cat-list">
-                    <li th:each="article,articleStat : ${hotArticles}">
-                        <a th:href="@{/article/{aritcleId}(articleId=${article.id})}" class="d-flex justify-content-between">
-                            <p th:text="${article.title}">文章标题</p>
-                            <p th:text="${article.hits}">点击数</p>
+                    <li th:each="art,articleStat : ${hotArticles}">
+                        <a th:href="@{/article/{artId}(artId=${art.id})}" class="d-flex justify-content-between">
+                            <p th:text="${art.title}">文章标题</p>
+                            <p th:text="${art.hits}">点击数</p>
                         </a>
                     </li>
                 </ul>

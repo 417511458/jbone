@@ -1,4 +1,5 @@
 import axios from '@/libs/api.request'
+import { getUserId } from '@/libs/util'
 
 let articleApi = {};
 
@@ -21,6 +22,7 @@ articleApi.getById = function(id){
 }
 
 articleApi.addOrUpdate = function(article){
+  article.creator = getUserId();
   return axios.request({
     url: 'cms/article/addOrUpdate',
     method: 'post',

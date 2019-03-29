@@ -33,8 +33,8 @@ public class ArticleController {
 
     @RequestMapping("article/{articleId}")
     public String index(ModelMap modelMap, @PathVariable(value="articleId") long articleId){
-        commonService.setCommonModuleDatas(modelMap);
         articleService.toArticleDetail(modelMap,articleId);
+        commonService.setCommonModuleDatas(modelMap);
         return "article";
     }
 

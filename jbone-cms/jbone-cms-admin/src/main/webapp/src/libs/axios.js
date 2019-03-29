@@ -36,10 +36,10 @@ class HttpRequest {
       },
       crossDomain: true,
       transformRequest: [function transformRequest(data, headers) {
-        if(data){
-          data.creator = getUserId();
-          data.userId = getUserId();
-        }
+        // if(data){
+          // data.creator = getUserId();
+          // data.userId = getUserId();
+        // }
 
         // console.info(data);
         /* 把类似content-type这种改成Content-Type */
