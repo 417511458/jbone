@@ -2,6 +2,7 @@ package cn.jbone.cms.core.converter;
 
 import cn.jbone.cms.common.dataobject.ArticleDO;
 import cn.jbone.cms.common.dataobject.ArticleDataDO;
+import cn.jbone.cms.common.dataobject.ArticleRequestConfigDO;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.entity.ArticleData;
@@ -48,15 +49,14 @@ public class ArticleConverter {
     @Autowired
     private CommentRepository commentRepository;
 
-    public ArticleResponseDO toArticleDO(Article article){
+    public ArticleResponseDO toArticleDO(Article article,ArticleRequestConfigDO config){
         if(article == null){
             return null;
         }
 
         ArticleResponseDO articleResponseDO = new ArticleResponseDO();
         articleResponseDO.setAllowComment(article.getAllowComment());
-        articleResponseDO.setArticleData(toArticleDataDO(article.getArticleData()));
-        articleResponseDO.setCategory(categoryConverter.toCategoryDO(article.getCategory(),CategoryFieldConfig.buildSimple()));
+
         articleResponseDO.setCreator(article.getCreator());
         articleResponseDO.setDescription(article.getDescription());
         articleResponseDO.setFrontCover(article.getFrontCover());
@@ -64,20 +64,49 @@ public class ArticleConverter {
         articleResponseDO.setKeywords(article.getKeywords());
         articleResponseDO.setId(article.getId());
         articleResponseDO.setStatus(article.getStatus());
-        articleResponseDO.setTags(tagConverter.toTagDOs(article.getTags()));
-        articleResponseDO.setTemplate(templateConverter.toTemplateDO(article.getTemplate()));
+
+
         articleResponseDO.setTitle(article.getTitle());
         articleResponseDO.setAddTime(article.getAddTime().getTime());
         articleResponseDO.setUpdateTime(article.getUpdateTime().getTime());
         articleResponseDO.setAddTimeText(DateUtil.formateDate(article.getAddTime(),DateUtil.DATE_FORMAT));
         articleResponseDO.setUpdateTimeText(DateUtil.formateDate(article.getUpdateTime(),DateUtil.DATE_FORMAT));
-        articleResponseDO.setCommentCount(commentRepository.countByArticleId(article.getId()));
 
-        UserRequestDO userRequestDO = UserRequestDO.buildSimple(article.getCreator());
-        Result<UserResponseDO> responseResult =  userApi.commonRequest(userRequestDO);
-        if(responseResult != null && responseResult.isSuccess()){
-            articleResponseDO.setAuthor(responseResult.getData());
+        if(config.isIncludeContent()){
+            articleResponseDO.setArticleData(toArticleDataDO(article.getArticleData()));
         }
+
+        //作者
+        if(config.isIncludeAuthor()){
+            UserRequestDO userRequestDO = UserRequestDO.buildSimple(article.getCreator());
+            Result<UserResponseDO> responseResult =  userApi.commonRequest(userRequestDO);
+            if(responseResult != null && responseResult.isSuccess()){
+                articleResponseDO.setAuthor(responseResult.getData());
+            }
+        }
+
+        //分类
+        if(config.isIncludeCategory()){
+            articleResponseDO.setCategory(categoryConverter.toCategoryDO(article.getCategory(),CategoryFieldConfig.buildSimple()));
+        }
+
+        //评论数
+        if(config.isIncludeCommentCount()){
+            articleResponseDO.setCommentCount(commentRepository.countByArticleId(article.getId()));
+        }
+
+        //模版
+        if(config.isIncludeTemplate()){
+            articleResponseDO.setTemplate(templateConverter.toTemplateDO(article.getTemplate()));
+        }
+
+        //标签
+        if(config.isIncludeTags()){
+            articleResponseDO.setTags(tagConverter.toTagDOs(article.getTags()));
+        }
+
+
+
 
         List<Long> tagIds = new ArrayList<>();
         if(!CollectionUtils.isEmpty(article.getTags())){
@@ -95,30 +124,17 @@ public class ArticleConverter {
             return null;
         }
 
-        ArticleResponseDO articleResponseDO = new ArticleResponseDO();
-        articleResponseDO.setCreator(article.getCreator());
-        articleResponseDO.setDescription(article.getDescription());
-        articleResponseDO.setFrontCover(article.getFrontCover());
-        articleResponseDO.setHits(article.getHits());
-        articleResponseDO.setKeywords(article.getKeywords());
-        articleResponseDO.setId(article.getId());
-        articleResponseDO.setStatus(article.getStatus());
-        articleResponseDO.setTitle(article.getTitle());
-        articleResponseDO.setAddTime(article.getAddTime().getTime());
-        articleResponseDO.setUpdateTime(article.getUpdateTime().getTime());
-        articleResponseDO.setAddTimeText(DateUtil.formateDate(article.getAddTime(),DateUtil.DATE_FORMAT));
-        articleResponseDO.setUpdateTimeText(DateUtil.formateDate(article.getUpdateTime(),DateUtil.DATE_FORMAT));
-        return articleResponseDO;
+        return toArticleDO(article,ArticleRequestConfigDO.build());
     }
 
-    public List<ArticleResponseDO> toArticleDOs(List<Article> articles){
+    public List<ArticleResponseDO> toArticleDOs(List<Article> articles, ArticleRequestConfigDO config){
         if(CollectionUtils.isEmpty(articles)){
             return null;
         }
 
         List<ArticleResponseDO> articleResponseDOS = new ArrayList<>();
         for (Article article : articles){
-            ArticleResponseDO articleResponseDO = toArticleDO(article);
+            ArticleResponseDO articleResponseDO = toArticleDO(article,config);
             if(articleResponseDO != null){
                 articleResponseDOS.add(articleResponseDO);
             }

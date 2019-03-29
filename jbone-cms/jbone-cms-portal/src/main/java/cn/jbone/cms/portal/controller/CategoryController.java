@@ -61,6 +61,7 @@ public class CategoryController {
         int pageNumber = (p == null) ? 1 : p;
 
         ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build(pageNumber);
+        articleCommonRequestDO.setConfig(ArticleRequestConfigDO.buildAll().includeContent(false));
 
         //专题文章
         if(categoryDO.getType() == CategoryTypeEnum.SPECIAL){

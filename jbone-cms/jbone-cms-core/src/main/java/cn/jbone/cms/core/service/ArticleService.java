@@ -7,7 +7,6 @@ import cn.jbone.cms.core.dao.entity.*;
 import cn.jbone.cms.core.dao.repository.ArticleDataRepository;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.TagRepository;
-import cn.jbone.common.dataobject.SearchSortDO;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import cn.jbone.sys.api.UserApi;
@@ -66,7 +65,7 @@ public class ArticleService {
             throw new ObjectNotFoundException("article is not found");
         }
 
-        ArticleResponseDO articleResponseDO = articleConverter.toArticleDO(article);
+        ArticleResponseDO articleResponseDO = articleConverter.toArticleDO(article,ArticleRequestConfigDO.buildAll());
 
         return articleResponseDO;
     }
@@ -119,7 +118,7 @@ public class ArticleService {
         responseDO.setTotal(articlePage.getTotalElements());
         responseDO.setPageNum(articlePage.getNumber() + 1);
         responseDO.setPageSize(articlePage.getSize());
-        responseDO.setDatas(articleConverter.toArticleDOs(articlePage.getContent()));
+        responseDO.setDatas(articleConverter.toArticleDOs(articlePage.getContent(),articleCommonRequestDO.getConfig()));
 
         return responseDO;
 

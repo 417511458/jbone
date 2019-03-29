@@ -73,4 +73,67 @@ public class ArticleCommonRequestDO extends SearchListDO {
         return articleCommonRequestDO;
     }
 
+
+    /**
+     * 链表式构建
+     */
+    public ArticleCommonRequestDO id(Long id){
+        this.id = id;
+        return this;
+    }
+
+    public ArticleCommonRequestDO title(String title){
+        this.title = title;
+        return this;
+    }
+
+    public ArticleCommonRequestDO keywords(String keywords){
+        this.keywords = keywords;
+        return this;
+    }
+
+    public ArticleCommonRequestDO description(String description){
+        this.description = description;
+        return this;
+    }
+
+    public ArticleCommonRequestDO statusList(List<StatusEnum> statusList){
+        this.statusList = statusList;
+        return this;
+    }
+
+    public ArticleCommonRequestDO categoryId(Long categoryId){
+        this.categoryId = categoryId;
+        return this;
+    }
+
+    public ArticleCommonRequestDO templateId(Long templateId){
+        this.templateId = templateId;
+        return this;
+    }
+
+    public ArticleCommonRequestDO tagIds(List<Long> tagIds){
+        this.tagIds = tagIds;
+        return this;
+    }
+
+    public ArticleCommonRequestDO creator(Integer creator){
+        this.creator = creator;
+        return this;
+    }
+
+    public ArticleCommonRequestDO pageSize(int pageSize){
+        super.setPageSize(pageSize);
+        return this;
+    }
+
+    public ArticleCommonRequestDO pageNumber(int pageNumber){
+        super.setPageNumber(pageNumber);
+        return this;
+    }
+
+    private ArticleRequestConfigDO config = new ArticleRequestConfigDO();
+
+
+
 }
