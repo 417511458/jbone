@@ -8,7 +8,7 @@ import {
   restoreTrash,
   getUnreadCount
 } from '@/api/user'
-import { setToken, getToken } from '@/libs/util'
+import { setToken, getToken,setUserId } from '@/libs/util'
 
 export default {
   state: {
@@ -103,6 +103,7 @@ export default {
               commit('setUserId', data.baseInfo.id);
               commit('setAccess', '');
               commit('setHasGetInfo', true);
+              setUserId(data.baseInfo.id);
               resolve(data);
             }else{
               reject(result.status.message);

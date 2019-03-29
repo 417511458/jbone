@@ -88,7 +88,8 @@ jbone:
     clientSessionTimeout: 1800000
     #权限过滤规则
     filterChainDefinition:
-#      "[/actuator/**]": anon  #不过滤监控端口，此处巨坑，升级到2。0之后必须用[]括起来，否则会规律所有符号.
+      "[/actuator/**]": anon  #不过滤监控端口，此处巨坑，升级到2。0之后必须用[]括起来，否则会规律所有符号.
+      "[/login]": authc
       "[/**]": anon
   #当前系统名，在系统管理里面对应的名字
   sys:

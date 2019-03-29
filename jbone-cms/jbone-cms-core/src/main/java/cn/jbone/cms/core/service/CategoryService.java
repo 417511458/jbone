@@ -1,15 +1,16 @@
 package cn.jbone.cms.core.service;
 
 import cn.jbone.cms.common.dataobject.CategoryDO;
-import cn.jbone.cms.common.dataobject.CategoryRequestDO;
-import cn.jbone.cms.common.dataobject.PagedResponseDO;
+import cn.jbone.cms.common.dataobject.config.CategoryFieldConfigDO;
+import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.cms.common.enums.CategoryTypeEnum;
 import cn.jbone.cms.core.converter.CategoryConverter;
-import cn.jbone.cms.core.converter.CategoryFieldConfig;
 import cn.jbone.cms.core.dao.entity.Category;
 import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
+import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,7 @@ public class CategoryService {
 
     private List<CategoryDO> getCategoryByPid(Long pid){
         List<Category> categories = categoryRepository.findAllByPidOrderByOrders(pid);
-        List<CategoryDO> categoryDOS = categoryConverter.toCategoryDOs(categories, CategoryFieldConfig.build());
+        List<CategoryDO> categoryDOS = categoryConverter.toCategoryDOs(categories, CategoryFieldConfigDO.build());
         if(!CollectionUtils.isEmpty(categoryDOS)){
             for (CategoryDO categoryDO : categoryDOS){
                 categoryDO.setChildren(getCategoryByPid(categoryDO.getId()));
@@ -58,19 +59,19 @@ public class CategoryService {
 
     /**
      * 根据查询条件获取栏目树
-     * @param categoryRequestDO
+     * @param categorySearchDO
      * @return
      */
-    public List<CategoryDO> requestCategorysTree(CategoryRequestDO categoryRequestDO){
-        return requestCategorysTree(0l,categoryRequestDO);
+    public List<CategoryDO> requestCategorysTree(CategorySearchDO categorySearchDO){
+        return requestCategorysTree(categorySearchDO.getPid(), categorySearchDO);
     }
 
-    private List<CategoryDO> requestCategorysTree(Long pid,CategoryRequestDO categoryRequestDO){
-        List<Category> categories = categoryRepository.findAllByPidAndStatusAndInMenuOrderByOrders(pid,categoryRequestDO.getStatus(),categoryRequestDO.getInMenu());
-        List<CategoryDO> categoryDOS = categoryConverter.toCategoryDOs(categories, CategoryFieldConfig.buildSimple());
+    private List<CategoryDO> requestCategorysTree(Long pid, CategorySearchDO categorySearchDO){
+        List<Category> categories = categoryRepository.findAllByPidAndStatusAndInMenuOrderByOrders(pid, categorySearchDO.getStatus(), categorySearchDO.getInMenu());
+        List<CategoryDO> categoryDOS = categoryConverter.toCategoryDOs(categories, CategoryFieldConfigDO.build());
         if(!CollectionUtils.isEmpty(categoryDOS)){
             for (CategoryDO categoryDO : categoryDOS){
-                categoryDO.setChildren(requestCategorysTree(categoryDO.getId(),categoryRequestDO));
+                categoryDO.setChildren(requestCategorysTree(categoryDO.getId(), categorySearchDO));
             }
         }
         return categoryDOS;
@@ -78,7 +79,7 @@ public class CategoryService {
 
     public CategoryDO get(Long id){
         Category category = categoryRepository.getOne(id);
-        return categoryConverter.toCategoryDO(category,CategoryFieldConfig.build());
+        return categoryConverter.toCategoryDO(category,CategoryFieldConfigDO.buildAll());
     }
 
     public void delete(Long id){
@@ -118,24 +119,22 @@ public class CategoryService {
 
     /**
      * 请求分类列表
-     * @param categoryRequestDO
+     * @param categorySearchDO
      * @return
      */
-    public PagedResponseDO<CategoryDO> requestCategorys(CategoryRequestDO categoryRequestDO){
+    public PagedResponseDO<CategoryDO> requestCategorys(CategorySearchDO categorySearchDO){
         PageRequest pageRequest = null;
-        if(StringUtils.isNotBlank(categoryRequestDO.getSortName())){
-            pageRequest = PageRequest.of(categoryRequestDO.getPageNumber()-1,categoryRequestDO.getPageSize(), Sort.Direction.fromString(categoryRequestDO.getSortOrder()),categoryRequestDO.getSortName());
-        }else {
-            pageRequest = PageRequest.of(categoryRequestDO.getPageNumber()-1,categoryRequestDO.getPageSize());
-        }
 
-        Page<Category> articlePage =  categoryRepository.findAll(new CategoryCommonRequestSpecification(categoryRequestDO),pageRequest);
+        Sort sort = SpecificationUtils.buildSort(categorySearchDO.getSorts());
+        pageRequest = PageRequest.of(categorySearchDO.getPageNumber()-1, categorySearchDO.getPageSize(), sort);
+
+        Page<Category> articlePage =  categoryRepository.findAll(new CategoryCommonRequestSpecification(categorySearchDO),pageRequest);
 
         PagedResponseDO<CategoryDO> responseDO = new PagedResponseDO<>();
         responseDO.setTotal(articlePage.getTotalElements());
         responseDO.setPageNum(articlePage.getNumber() + 1);
         responseDO.setPageSize(articlePage.getSize());
-        responseDO.setDatas(categoryConverter.toCategoryDOs(articlePage.getContent(),CategoryFieldConfig.buildSimple()));
+        responseDO.setDatas(categoryConverter.toCategoryDOs(articlePage.getContent(), categorySearchDO.getConfig()));
 
         return responseDO;
     }
@@ -144,26 +143,32 @@ public class CategoryService {
      * 分类模糊查询
      */
     private class CategoryCommonRequestSpecification implements Specification<Category> {
-        private CategoryRequestDO categoryRequestDO;
-        public CategoryCommonRequestSpecification(CategoryRequestDO categoryRequestDO){
-            this.categoryRequestDO = categoryRequestDO;
+        private CategorySearchDO categorySearchDO;
+        public CategoryCommonRequestSpecification(CategorySearchDO categorySearchDO){
+            this.categorySearchDO = categorySearchDO;
         }
 
         @Override
         public Predicate toPredicate(Root<Category> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-            if(categoryRequestDO == null){
+            if(categorySearchDO == null){
                 return criteriaQuery.getRestriction();
             }
             List<Predicate> predicates = new ArrayList<>();
 
-            if(StringUtils.isNotBlank(categoryRequestDO.getTitle())){
+            if(StringUtils.isNotBlank(categorySearchDO.getTitle())){
                 Path<String> title = root.get("title");
-                predicates.add(criteriaBuilder.like(title,"%" + categoryRequestDO.getTitle() + "%"));
+                predicates.add(criteriaBuilder.like(title,"%" + categorySearchDO.getTitle() + "%"));
             }
 
-            if(categoryRequestDO.getType() != null){
+            if(categorySearchDO.getType() != null){
                 Path<CategoryTypeEnum> type = root.get("type");
-                predicates.add(criteriaBuilder.equal(type,categoryRequestDO.getType()));
+                predicates.add(criteriaBuilder.equal(type, categorySearchDO.getType()));
+            }
+
+            //补充条件查询
+            List<Predicate> conditionPredicats = SpecificationUtils.generatePredicates(root,criteriaBuilder, categorySearchDO.getConditions());
+            if(!CollectionUtils.isEmpty(conditionPredicats)){
+                predicates.addAll(conditionPredicats);
             }
 
             Predicate predicate = criteriaBuilder.and(predicates.toArray(new Predicate[]{}));

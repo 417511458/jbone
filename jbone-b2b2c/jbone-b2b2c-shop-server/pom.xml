@@ -28,11 +28,6 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-tag-api-starter</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.jbone</groupId>
             <artifactId>jbone-b2b2c-shop-core</artifactId>
             <version>1.0.0</version>
         </dependency>

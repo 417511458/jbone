@@ -24,6 +24,8 @@ public class DateUtil extends DateUtils {
         SimpleDateFormat dateFormat = null;
         if(pattern.indexOf("/") != -1){
             dateFormat = new SimpleDateFormat(DATEPICKER_FORMAT);
+        }else if(pattern.indexOf(":") != -1){
+            dateFormat = new SimpleDateFormat(TIME_FORMAT);
         }else{
             dateFormat = new SimpleDateFormat(DATE_FORMAT);
         }

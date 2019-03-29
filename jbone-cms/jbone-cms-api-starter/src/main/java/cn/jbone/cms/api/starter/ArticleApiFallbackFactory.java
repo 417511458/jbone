@@ -1,10 +1,10 @@
 package cn.jbone.cms.api.starter;
 
 import cn.jbone.cms.api.ArticleApi;
-import cn.jbone.cms.common.dataobject.ArticleCommonRequestDO;
+import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.common.dataobject.ArticleRequestDO;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
-import cn.jbone.cms.common.dataobject.PagedResponseDO;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class ArticleApiFallbackFactory implements FallbackFactory<ArticleApi> {
             }
 
             @Override
-            public Result<Void> delete(Long id) {
+            public Result<Void> delete(Long id, String token, Integer uid) {
                 logger.error("rpc delete broke",throwable);
                 return Result.wrapProtectedError();
             }
@@ -46,7 +46,13 @@ public class ArticleApiFallbackFactory implements FallbackFactory<ArticleApi> {
             }
 
             @Override
-            public Result<PagedResponseDO<ArticleResponseDO>> commonRequest(ArticleCommonRequestDO articleCommonRequestDO) {
+            public Result<Void> hits(Long id) {
+                logger.error("rpc hits broke",throwable);
+                return Result.wrapProtectedError();
+            }
+
+            @Override
+            public Result<PagedResponseDO<ArticleResponseDO>> commonRequest(ArticleSearchDO articleSearchDO) {
                 logger.error("rpc commonRequest broke",throwable);
                 return Result.wrapProtectedError();
             }

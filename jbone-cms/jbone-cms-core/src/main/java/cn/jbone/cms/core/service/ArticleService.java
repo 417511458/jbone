@@ -1,12 +1,17 @@
 package cn.jbone.cms.core.service;
 
 import cn.jbone.cms.common.dataobject.*;
+import cn.jbone.cms.common.dataobject.config.ArticleFiledConfigDO;
+import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.cms.core.converter.ArticleConverter;
 import cn.jbone.cms.core.dao.entity.*;
 import cn.jbone.cms.core.dao.repository.ArticleDataRepository;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
+import cn.jbone.cms.core.dao.repository.TagRepository;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.ObjectNotFoundException;
+import cn.jbone.common.utils.SpecificationUtils;
 import cn.jbone.sys.api.UserApi;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +41,8 @@ public class ArticleService {
 
     @Autowired
     private UserApi userApi;
+    @Autowired
+    private TagRepository tagRepository;
 
     public ArticleResponseDO addOrUpdateArticle(ArticleRequestDO articleRequestDO){
         checkParam(articleRequestDO);
@@ -61,9 +68,24 @@ public class ArticleService {
             throw new ObjectNotFoundException("article is not found");
         }
 
-        ArticleResponseDO articleResponseDO = articleConverter.toArticleDO(article);
+        ArticleResponseDO articleResponseDO = articleConverter.toArticleDO(article, ArticleFiledConfigDO.buildAll());
 
         return articleResponseDO;
+    }
+
+    /**
+     * 增加文章点击量
+     * @param id
+     */
+    public void hits(Long id){
+        if(id == null || id < 0){
+            return ;
+        }
+        Article article = articleRepository.getOne(id);
+        if(article != null){
+            article.setHits(article.getHits() + 1);
+            articleRepository.save(article);
+        }
     }
 
     public void deleteArticle(Long id){
@@ -86,26 +108,20 @@ public class ArticleService {
 
     /**
      * 通用查询
-     * @param articleCommonRequestDO
+     * @param articleSearchDO
      * @return
      */
-    public PagedResponseDO<ArticleResponseDO> commonRequest(ArticleCommonRequestDO articleCommonRequestDO){
+    public PagedResponseDO<ArticleResponseDO> commonRequest(ArticleSearchDO articleSearchDO){
 
-
-        PageRequest pageRequest = null;
-        if(StringUtils.isNotBlank(articleCommonRequestDO.getSortName())){
-            pageRequest = PageRequest.of(articleCommonRequestDO.getPageNumber()-1,articleCommonRequestDO.getPageSize(), Sort.Direction.fromString(articleCommonRequestDO.getSortOrder()),articleCommonRequestDO.getSortName());
-        }else {
-            pageRequest = PageRequest.of(articleCommonRequestDO.getPageNumber()-1,articleCommonRequestDO.getPageSize());
-        }
-
-        Page<Article> articlePage =  articleRepository.findAll(new ArticleCommonRequestSpecification(articleCommonRequestDO),pageRequest);
+        Sort sort = SpecificationUtils.buildSort(articleSearchDO.getSorts());
+        PageRequest pageRequest = PageRequest.of(articleSearchDO.getPageNumber()-1, articleSearchDO.getPageSize(),sort);
+        Page<Article> articlePage =  articleRepository.findAll(new ArticleCommonRequestSpecification(articleSearchDO),pageRequest);
 
         PagedResponseDO<ArticleResponseDO> responseDO = new PagedResponseDO<>();
         responseDO.setTotal(articlePage.getTotalElements());
         responseDO.setPageNum(articlePage.getNumber() + 1);
         responseDO.setPageSize(articlePage.getSize());
-        responseDO.setDatas(articleConverter.toArticleDOs(articlePage.getContent()));
+        responseDO.setDatas(articleConverter.toArticleDOs(articlePage.getContent(), articleSearchDO.getConfig()));
 
         return responseDO;
 
@@ -125,67 +141,77 @@ public class ArticleService {
      * 8、按作者搜索
      */
     private class ArticleCommonRequestSpecification implements Specification<Article> {
-        private ArticleCommonRequestDO articleCommonRequestDO;
-        public ArticleCommonRequestSpecification(ArticleCommonRequestDO articleCommonRequestDO){
-            this.articleCommonRequestDO = articleCommonRequestDO;
+        private ArticleSearchDO articleSearchDO;
+        public ArticleCommonRequestSpecification(ArticleSearchDO articleSearchDO){
+            this.articleSearchDO = articleSearchDO;
         }
 
         @Override
         public Predicate toPredicate(Root<Article> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-            if(articleCommonRequestDO == null){
+            if(articleSearchDO == null){
                 return criteriaQuery.getRestriction();
             }
             List<Predicate> predicates = new ArrayList<>();
 
-            if(StringUtils.isNotBlank(articleCommonRequestDO.getTitle())){
+            if(articleSearchDO.getId() != null && articleSearchDO.getId() > 0){
+                Path<Long> id = root.get("id");
+                predicates.add(criteriaBuilder.equal(id, articleSearchDO.getId()));
+            }
+
+            if(StringUtils.isNotBlank(articleSearchDO.getTitle())){
                 Path<String> title = root.get("title");
-                predicates.add(criteriaBuilder.like(title,"%" + articleCommonRequestDO.getTitle() + "%"));
+                predicates.add(criteriaBuilder.like(title,"%" + articleSearchDO.getTitle() + "%"));
             }
 
 
-            if(StringUtils.isNotBlank(articleCommonRequestDO.getKeywords())){
+            if(StringUtils.isNotBlank(articleSearchDO.getKeywords())){
                 Path<String> keyWords = root.get("keywords");
-                predicates.add(criteriaBuilder.like(keyWords,"%" + articleCommonRequestDO.getKeywords() + "%"));
+                predicates.add(criteriaBuilder.like(keyWords,"%" + articleSearchDO.getKeywords() + "%"));
             }
 
 
-            if(StringUtils.isNotBlank(articleCommonRequestDO.getDescription())){
+            if(StringUtils.isNotBlank(articleSearchDO.getDescription())){
                 Path<String> description = root.get("description");
-                predicates.add(criteriaBuilder.like(description,"%" + articleCommonRequestDO.getDescription() + "%"));
+                predicates.add(criteriaBuilder.like(description,"%" + articleSearchDO.getDescription() + "%"));
             }
 
-            if(!CollectionUtils.isEmpty(articleCommonRequestDO.getStatusList())){
+            if(!CollectionUtils.isEmpty(articleSearchDO.getStatusList())){
                 CriteriaBuilder.In<StatusEnum> statusList =  criteriaBuilder.in(root.get("status"));
-                for (StatusEnum statusEnum : articleCommonRequestDO.getStatusList()){
+                for (StatusEnum statusEnum : articleSearchDO.getStatusList()){
                     statusList.value(statusEnum);
                 }
                 predicates.add(statusList);
             }
 
-            if(articleCommonRequestDO.getCategoryId() != null && articleCommonRequestDO.getCategoryId() > 0){
+            if(articleSearchDO.getCategoryId() != null && articleSearchDO.getCategoryId() > 0){
                 Join<Article,Category> categoryJoin = root.join("category",JoinType.INNER);
-                predicates.add(criteriaBuilder.equal(categoryJoin.get("id"),articleCommonRequestDO.getCategoryId()));
+                predicates.add(criteriaBuilder.equal(categoryJoin.get("id"), articleSearchDO.getCategoryId()));
             }
 
-            if(articleCommonRequestDO.getTemplateId() != null && articleCommonRequestDO.getTemplateId() > 0){
+            if(articleSearchDO.getTemplateId() != null && articleSearchDO.getTemplateId() > 0){
                 Join<Template,Template> templateJoin = root.join("template",JoinType.INNER);
-                predicates.add(criteriaBuilder.equal(templateJoin.get("id"),articleCommonRequestDO.getTemplateId()));
+                predicates.add(criteriaBuilder.equal(templateJoin.get("id"), articleSearchDO.getTemplateId()));
             }
 
 
-            if(!CollectionUtils.isEmpty(articleCommonRequestDO.getTagIds())){
-                CriteriaBuilder.In<Tag> tags =  criteriaBuilder.in(root.get("tags"));
-                for (Long tagId : articleCommonRequestDO.getTagIds()){
-                    Tag tag = new Tag();
-                    tag.setId(tagId);
-                    tags.value(tag);
+            // tag的In查询
+            if(!CollectionUtils.isEmpty(articleSearchDO.getTagIds())){
+                List<Tag> tagList = tagRepository.findByIdIn(articleSearchDO.getTagIds());
+                if(!CollectionUtils.isEmpty(tagList)){
+                    Join<Article,Tag> articleTagListJoin = root.join("tags",JoinType.INNER);
+                    predicates.add(articleTagListJoin.in(tagList));
                 }
-                predicates.add(tags);
             }
 
-            if(articleCommonRequestDO.getCreator() != null && articleCommonRequestDO.getCreator() > 0){
+            if(articleSearchDO.getCreator() != null && articleSearchDO.getCreator() > 0){
                 Path<Integer> creator = root.get("creator");
-                predicates.add(criteriaBuilder.equal(creator,articleCommonRequestDO.getCreator()));
+                predicates.add(criteriaBuilder.equal(creator, articleSearchDO.getCreator()));
+            }
+
+            //补充条件查询
+            List<Predicate> conditionPredicats = SpecificationUtils.generatePredicates(root,criteriaBuilder, articleSearchDO.getConditions());
+            if(!CollectionUtils.isEmpty(conditionPredicats)){
+                predicates.addAll(conditionPredicats);
             }
 
             Predicate predicate = criteriaBuilder.and(predicates.toArray(new Predicate[]{}));

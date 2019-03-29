@@ -1,0 +1,293 @@
+body{
+  background-color:#FFF;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size:16px;
+  line-height:18px;
+  color:#777;
+}
+
+p{
+  margin:0;
+}
+
+a {
+  color: #aa0a5f;
+}
+
+a, a:hover, a:focus{
+  text-decoration: none;
+  outline: 0;
+}
+h1, h2, h3,
+h4, h5, h6 {
+  color: #333;
+  margin:0;
+  font-weight: normal;
+}
+
+h1 { font-size: 28px;}
+h2 { font-size: 24px;}
+h3 { font-size: 18px;}
+h5 { font-size: 16px;}
+h6 { font-size: 14px;}
+
+strong {
+  letter-s;
+  Dacing: 1px;
+}
+
+code {
+  background-color: #ddd;
+  border-radius: 3px;
+  color: #000;
+  font-size: 85%;
+  margin: 0;
+  padding: 5px 10px;
+}
+
+code a {
+  color: #333;
+}
+
+code a:hover {
+  text-decoration: underline;
+}
+
+section p {
+  line-height: 28px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+
+.tan {
+  margin-bottom: 10px;
+}
+
+.fifteen{
+  margin-bottom: 15px;
+}
+
+.twenty{
+  margin-bottom: 20px;
+}
+
+.center {
+  text-align: center;
+}
+
+.title {
+  margin: 50px 0 30px;
+}
+
+.syntaxhighlighter {
+  border: 1px solid #efefef;
+  max-height: 100% !important;
+  padding: 20px 0;
+}
+
+
+.main-content {
+  padding: 50px;
+}
+
+.main-content section {
+  margin: 0 5%;
+}
+
+
+.left-sidebar {
+  background-color: #f3f3f3;
+  float: left;
+  min-height: 100%;
+  position: fixed;
+  width: 18%;
+  height: 100%;
+  overflow: auto;
+}
+
+.logo {
+  padding-bottom: 30px;
+  padding-left: 30px;
+  padding-top: 70px;
+}
+
+.left-nav ul {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+
+.left-nav ul li a {
+  color: #222;
+  /*display: block;*/
+  /*padding: 10px 35px;*/
+  -webkit-transition: all 0.3s ease-in 0s;
+  -moz-transition: all 0.3s ease-in 0s;
+  -ms-transition: all 0.3s ease-in 0s;
+  -o-transition: all 0.3s ease-in 0s;
+  transition: all 0.3s ease-in 0s;
+}
+
+.left-nav ul li a:hover, .left-nav ul li .current {
+  background-color: #8490ff;
+  color: #fff;
+}
+
+
+#main-wrapper {
+  float: left;
+  margin-left: 18%;
+  width: 82%;
+
+}
+
+.content-header {
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  margin-top: 30px;
+  padding: 30px 0 35px;
+  text-align: center;
+}
+
+.welcome {
+  font-size: 16px;
+  line-height: 26px;
+  margin: 35px auto 0;
+}
+
+.features {
+  margin-top: 50px;
+}
+
+.features ul li {
+  list-style: square outside none;
+  margin-bottom: 15px;
+}
+
+.features > ul {
+  padding-left: 18px;
+}
+
+.author {
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  margin-top: 50px;
+  padding: 30px 0;
+}
+
+.author-info {
+  font-size: 18px;
+  line-height: 28px;
+  margin: 0 auto;
+  width: 50%;
+}
+
+.section-content {
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.section-content li {
+  margin-bottom: 15px;
+}
+
+.section-content a:hover {
+  text-decoration: underline;
+}
+
+.script-source li {
+  list-style: square outside none;
+  margin-bottom: 10px;
+}
+
+#twitter-feed li,
+#flickr li {
+  line-height: 25px;
+  margin-bottom: 10px;
+}
+
+#twitter-feed img {
+  border: 1px solid #ddd;
+  box-shadow: 2px 3px 3px #ddd;
+  height: auto;
+  margin-top: 10px;
+  max-width: 100%;
+}
+
+
+
+
+
+
+/** 专题头部样式 **/
+
+#header {
+  position: relative;
+  left: 0;
+  top: 0;
+  right: 0;
+  transition: all 0.5s;
+  z-index: 997;
+  background: #fff;
+}
+
+#header #logo{
+  color: #222;
+}
+#header.header-scrolled {
+  box-shadow: none;
+}
+
+#header.header-scrolled .main-menu {
+  border-color: transparent;
+}
+
+
+/* 树形菜单 */
+.treeview .list-group-item{
+  cursor:pointer;
+  background-color: #f3f3f3;
+}
+
+.treeview .list-group-item:first-child {
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+}
+
+.treeview .list-group-item:last-child {
+  border-bottom-right-radius: 0rem;
+  border-bottom-left-radius: 0rem;
+}
+
+.treeview span.indent{
+  margin-left:10px;
+  margin-right:10px
+}
+.treeview span.icon{
+  width:12px;
+  margin-right:5px
+}
+.treeview .node-disabled{
+  color:silver;
+  cursor:not-allowed
+}
+.node-tree{
+  color:#222;
+  border:none;
+}
+.node-tree:not(.node-disabled):hover{
+  background-color:#8490ff;
+  color: #fff;
+}
+

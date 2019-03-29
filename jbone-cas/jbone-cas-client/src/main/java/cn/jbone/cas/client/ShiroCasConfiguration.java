@@ -201,8 +201,15 @@ public class ShiroCasConfiguration {
         if(jboneConfiguration.getCas().getFilterChainDefinition() != null){
             filterChainDefinitionMap.putAll(jboneConfiguration.getCas().getFilterChainDefinition());
         }
+
+        //如果配置了/**，则优先自定义的过滤规则，如果没有配置，则全部由cas过滤
         String common = filterChainDefinitionMap.get("/**");
-        filterChainDefinitionMap.put("/**", "security" + (StringUtils.isNotBlank(common) ? ("," + common) : ""));
+        if(StringUtils.isBlank(common)){
+            filterChainDefinitionMap.put("/**", "security");
+        }else if(!common.equals("anon")){
+            filterChainDefinitionMap.put("/**", "security," + common);
+        }
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
     }
 

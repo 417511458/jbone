@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
-import { getToken } from '@/libs/util'
+import { getToken,getUserId } from '@/libs/util'
 // import { Spin } from 'iview'
 import Vue from 'vue'
 
@@ -36,6 +36,11 @@ class HttpRequest {
       },
       crossDomain: true,
       transformRequest: [function transformRequest(data, headers) {
+        // if(data){
+          // data.creator = getUserId();
+          // data.userId = getUserId();
+        // }
+
         // console.info(data);
         /* 把类似content-type这种改成Content-Type */
         let keys = Object.keys(headers);
@@ -101,7 +106,7 @@ class HttpRequest {
     });
   }
   request (options) {
-    const instance = axios.create({params:{token:getToken()}});
+    const instance = axios.create({params:{token:getToken(),userId:getUserId()}});
     options = Object.assign(this.getInsideConfig(), options);
     this.interceptors(instance, options.url);
     return instance(options);

@@ -72,7 +72,8 @@
           name: '',
           totalRecord: 0,
           pageSize: 10,
-          pageNumber: 1
+          pageNumber: 1,
+          includeArticleCount: true
         },
         tagcloud: {
           operation: {

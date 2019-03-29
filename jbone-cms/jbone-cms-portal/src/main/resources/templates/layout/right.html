@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="right">
+        <!-- 右侧模版，包含搜索、热门文章、广告位、标签云，这里一般用于列表页，如首页、栏目列表、搜索列表等 -->
+        <div class="widget-wrap">
+
+            <!-- 栏目子分类 -->
+            <div class="single-sidebar-widget post-category-widget" th:if="${category != null && not #lists.isEmpty(category.children)}">
+                <h4 class="category-title">子栏目</h4>
+                <ul class="cat-list">
+                    <li th:each="cate,cateStat : ${category.children}">
+                        <a th:href="@{/category/{cateId}(cateId=${cate.id})}" th:if="${cate.url == ''}" th:text="${cate.title}" class="d-flex justify-content-between">
+                            <p th:text="${cate.title}">文章标题</p>
+                        </a>
+                        <a th:href="${cate.url}" th:target="${cate.target}" th:if="${cate.url != ''}" th:text="${cate.title}" class="d-flex justify-content-between">
+                            <p th:text="${cate.title}">文章标题</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 搜索 -->
+            <div class="single-sidebar-widget search-widget">
+                <form class="search-form" th:action="@{/search}">
+                    <input placeholder="搜索文章" name="keywords" id="keywords" type="text" th:value="${keywords}" onfocus="this.placeholder = ''" onblur="this.placeholder = '搜索文章'" >
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+
+
+
+            <!-- 热门文章 -->
+            <div class="single-sidebar-widget post-category-widget" th:if="${hotArticles != null}">
+                <h4 class="category-title">热门文章</h4>
+                <ul class="cat-list">
+                    <li th:each="art,articleStat : ${hotArticles}">
+                        <a th:href="@{/article/{artId}(artId=${art.id})}" class="d-flex justify-content-between">
+                            <p th:text="${art.title}">文章标题</p>
+                            <p th:text="${art.hits}">点击数</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 广告位 -->
+            <div class="single-sidebar-widget ads-widget" th:if="${settings.ads != null && settings.ads == 'true'}" >
+                <a th:href="${settings.ads_url}" target="_blank"><img class="img-fluid" th:src="${settings.ads_img}" alt=""></a>
+            </div>
+
+            <!-- 标签云 -->
+            <div class="single-sidebar-widget tag-cloud-widget" th:if="${tagCloud != null}">
+                <h4 class="tagcloud-title">标签云</h4>
+                <ul>
+                    <li th:each="tag,tagStat : ${tagCloud}">
+                        <a th:href="@{/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.name}">标签名</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</div>
+</body>
+</html>

@@ -17,7 +17,6 @@ public class RpcProperties implements Serializable {
     private CmsServerProperties cmsServer = new CmsServerProperties();
     private EbPortalServerProperties ebPortalServer = new EbPortalServerProperties();
     private ShopServerProperties shopServer = new ShopServerProperties();
-    private TagServerProperties tagServer = new TagServerProperties();
     private ItemServerProperties itemServer = new ItemServerProperties();
     private DecorationServerProperties decorationServer = new DecorationServerProperties();
 

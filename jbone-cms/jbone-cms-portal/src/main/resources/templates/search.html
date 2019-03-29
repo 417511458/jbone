@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" th:content="${settings.description}" />
+  <meta name="keywords" th:content="${settings.keywords}" />
+  <meta name="author" content="" />
+
+  <title th:text="${keywords} + ' - ' + ${settings.title}">CMS标题 - 未配置</title>
+  <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+
+
+</head>
+
+<body class="parent-active" style="display: block;">
+
+<div th:replace="/layout/css :: css"></div>
+<div th:replace="/layout/js :: js"></div>
+<header id="header" class="parent-active" th:replace="/layout/header :: header"></header>
+
+<!-- start banner Area -->
+<section class="relative about-banner" id="home">
+  <div class="overlay overlay-bg"></div>
+  <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="about-content col-lg-12">
+        <h1 class="text-white" th:text="'搜索文章:&nbsp;' + ${keywords}">
+          搜索文章
+        </h1>
+        <!--
+        <p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="elements.html"> Elements</a></p>
+        -->
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End banner Area -->
+
+<section class="post-content-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 posts-list" th:if="${pagedArticles != null && pagedArticles.total > 0}">
+        <div class="single-post row" th:each="article,articleStat : ${pagedArticles.datas}">
+          <div class="col-lg-3  col-md-3 meta-details">
+            <ul class="tags" th:if="${not #lists.isEmpty(article.tags)}">
+
+              <li th:each="tag,tagStat : ${article.tags}">
+                <a th:href="@{/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.name}">标签</a>
+              </li>
+            </ul>
+            <div class="user-details row">
+              <p class="user-name col-lg-12 col-md-12 col-6" th:if="${article.author != null}"><a href="#" th:text="${article.author.baseInfo.realname}">用户名</a> <span class="lnr lnr-user"></span></p>
+              <p class="date col-lg-12 col-md-12 col-6"><a href="#" th:text="${article.addTimeText}"></a> <span class="lnr lnr-calendar-full"></span></p>
+              <p class="view col-lg-12 col-md-12 col-6"><a href="#" th:text="${article.hits}"></a> <span class="lnr lnr-eye"></span></p>
+              <p class="comments col-lg-12 col-md-12 col-6"><a href="#" th:text="${article.commentCount}"></a> <span class="lnr lnr-bubble"></span></p>
+            </div>
+          </div>
+          <div class="col-lg-9 col-md-9 ">
+            <div class="feature-img">
+              <img class="img-fluid" th:src="${article.frontCover}" alt="">
+            </div>
+            <a class="posts-title" th:href="@{/article/{articleId}(articleId=${article.id})}"><h3 th:text="${article.title}"></h3></a>
+            <p class="excert" th:text="${article.description}">
+            </p>
+            <a th:href="@{/article/{articleId}(articleId=${article.id})}" class="primary-btn">阅读全文</a>
+          </div>
+            <hr>
+        </div>
+
+        <!-- 分页组件 -->
+        <nav class="blog-pagination justify-content-center d-flex" th:if="${pagedArticles.pagination != null}">
+          <ul class="pagination">
+            <li class="page-item" th:if="${pagedArticles.pagination.showLastButton}">
+              <a th:href="@{/search(p=${pagedArticles.pagination.lastPage},keywords=${keywords})}" class="page-link" aria-label="Previous">
+		                                    <span aria-hidden="true">
+		                                        <span class="lnr lnr-chevron-left"></span>
+		                                    </span>
+              </a>
+            </li>
+
+
+            <li th:class="${page.pageNum == pagedArticles.pageNum} ? 'page-item active' : 'page-item'" th:each="page,pageStat : ${pagedArticles.pagination.pages}">
+              <a th:href="@{/search(p=${page.pageNum},keywords=${keywords})}" class="page-link" th:text="${page.text}">01</a>
+            </li>
+
+            <li class="page-item" th:if="${pagedArticles.pagination.showNextButton}">
+              <a th:href="@{/search(p=${pagedArticles.pagination.nextPage},keywords=${keywords})}" class="page-link" aria-label="Next">
+		                                    <span aria-hidden="true">
+		                                        <span class="lnr lnr-chevron-right"></span>
+		                                    </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-lg-8 posts-list" th:unless="${pagedArticles != null && pagedArticles.total > 0}">
+        <div class="alert alert-danger" role="alert"><h1>未搜索到关于'<font th:text="${keywords}"></font>'的文章</h1></div>
+      </div>
+      <!-- 右侧公共模块，搜索、热门文章、广告、标签云 -->
+      <div th:include="/layout/right :: right" class="col-lg-4 sidebar-widgets"></div>
+
+    </div>
+  </div>
+</section>
+<!-- End post-content Area -->
+
+  <div th:replace="/layout/footer :: footer"></div>
+
+
+
+</body>
+
+</html>

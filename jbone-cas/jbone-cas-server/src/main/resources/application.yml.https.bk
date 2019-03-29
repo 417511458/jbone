@@ -60,7 +60,7 @@ cas:
     jpa:
       healthQuery: select now()
       isolateInternalQueries: false
-      url: jdbc:mysql://121.42.174.77:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+      url: jdbc:mysql://127.0.0.1:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
       failFastTimeout: 1
       dialect: org.hibernate.dialect.MySQL5Dialect
       leakThreshold: 10
@@ -89,7 +89,7 @@ cas:
         jpaLockingTimeout: 3600
         healthQuery: select now()
         isolateInternalQueries: false
-        url: jdbc:mysql://121.42.174.77:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+        url: jdbc:mysql://127.0.0.1:3306/jbone_cas?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
         failFastTimeout: 1
         dialect: org.hibernate.dialect.MySQL5Dialect
         leakThreshold: 10

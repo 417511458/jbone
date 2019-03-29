@@ -16,6 +16,7 @@
           <Button @click="toAddModel(scope.row.id)" type="primary" size="small" style="margin-left: 5px">添加下级栏目</Button>
           <Button @click="handleDelete(scope.row.id)" type="error" size="small" style="margin-left: 5px">删除</Button>
           <Button @click="handleEditSpecial(scope.row.id,scope.row.title)" type="error" size="small" style="margin-left: 5px" v-if="scope.row.type == 'SPECIAL'">编辑专题</Button>
+          <Button @click="handleEditTag(scope.row.id,scope.row.title)" type="error" size="small" style="margin-left: 5px" v-if="scope.row.type == 'TAG'">编辑标签</Button>
         </template>
         <template slot="type" slot-scope="scope">
           <span v-if="scope.row.type == 'CATEGORY'">普通栏目</span>
@@ -165,6 +166,30 @@
       <div slot="footer">
       </div>
     </Modal>
+
+
+    <Modal :title="title" v-model="tagModal.showModal" :mask-closable="false" width="650">
+
+      <p slot="header">
+        <Icon type="ios-information-circle"></Icon>
+        <span> 编辑专题标签 【{{tagModal.title}}】</span>
+      </p>
+      <div class="drag-box-card">
+            <!-- 切记设置list1和list2属性时，一定要添加.sync修饰符 -->
+            <drag-list :list1.sync="tagModal.data.tagList" :list2.sync="tagModal.data.selectedTagList" :dropConClass="tagModal.dropConClass" @on-change="handleDragChange">
+              <h3 slot="left-title">所有标签</h3>
+              <Card class="drag-item" slot="left" slot-scope="left">{{ left.itemLeft.name }}</Card>
+              <h3 slot="right-title">已选中标签</h3>
+              <Card class="drag-item" slot="right" slot-scope="right">{{ right.itemRight.name }}</Card>
+            </drag-list>
+
+          </div>
+      <div slot="footer">
+        <Button type="primary" size="large" long :loading="loading" @click="updateTag">保存</Button>
+      </div>
+    </Modal>
+
+
   </div>
 </template>
 <script>
@@ -172,10 +197,12 @@
   import categoryApi from '@/api/category'
   import categoryTocApi from '@/api/categoryToc'
   import articleApi from '@/api/article'
+  import tagApi from '@/api/tag'
   import InputNumber from "iview/src/components/input-number/input-number";
+  import DragList from '_c/drag-list'
 
   export default {
-    components: {InputNumber,Tree},
+    components: {InputNumber,Tree,DragList},
     data() {
       const validateName = (rule, value, callback) => {
         if (value) {
@@ -243,7 +270,8 @@
             inMenu: 'FALSE',
             status: 'PUBLISH',
             showType: 'LIST',
-            frontCover: ''
+            frontCover: '',
+            tags: []
 
           }
         },
@@ -287,8 +315,19 @@
               message : ''
             }
           }
+        },
 
-
+        tagModal:{
+          title: '编辑标签',
+          showModal: false,
+          data: {
+            tagList:[],
+            selectedTagList:[]
+          },
+          dropConClass: {
+            left: ['drop-box', 'left-drop-box'],
+            right: ['drop-box', 'right-drop-box']
+          }
         },
 
         ruleValidate: {
@@ -361,7 +400,8 @@
           inMenu: 'FALSE',
           status: 'PUBLISH',
           showType: 'LIST',
-          frontCover: ''
+          frontCover: '',
+          tags: []
         };
 
         let self = this;
@@ -381,7 +421,8 @@
               inMenu: result.data.inMenu,
               status: result.data.status,
               showType: result.data.showType,
-              frontCover: result.data.frontCover
+              frontCover: result.data.frontCover,
+              tags: result.data.tags
             };
           }else{
             self.$Message.error(result.status.message);
@@ -390,6 +431,7 @@
           self.$Message.error(error.message);
         });
       },
+
       setTableMessage(message) {
         this.table.operation.success = false;
         this.table.operation.message = message;
@@ -634,7 +676,96 @@
             });
           }
         });
+      },
+
+      handleEditTag(id,title){
+        this.tagModal.showModal = true;
+        let self = this;
+
+        tagApi.getAll().then(function (res) {
+          if (res.data.success) {
+            self.tagModal.data.tagList = res.data.data;
+            self.filterDrapDatas();
+          }else{
+            self.$Message.error(res.data.status.message);
+          }
+        }).catch(function (error) {
+          self.$Message.error(error.message);
+        });
+
+        categoryApi.getById(id).then(function (res) {
+          let result = res.data;
+          if(result.success){
+            self.modal.data = {
+              id: result.data.id,
+              pid: result.data.pid,
+              title: result.data.title,
+              url: result.data.url,
+              target: result.data.target,
+              orders: result.data.orders,
+              keywords: result.data.keywords,
+              description: result.data.description,
+              type: result.data.type,
+              inMenu: result.data.inMenu,
+              status: result.data.status,
+              showType: result.data.showType,
+              frontCover: result.data.frontCover,
+              tags: result.data.tags
+            };
+            if(result.data.tags == null){
+              self.tagModal.data.selectedTagList = [];
+            }else{
+              self.tagModal.data.selectedTagList = result.data.tags;
+              self.filterDrapDatas();
+            }
+
+          }else{
+            self.$Message.error(result.status.message);
+          }
+        }).catch(function (error) {
+          self.$Message.error(error.message);
+        });
+      },
+
+      //过滤已选中的标签
+      filterDrapDatas(){
+        let self = this;
+        self.tagModal.data.tagList = self.tagModal.data.tagList.filter(function(item) {
+          let itemResult = true;
+          self.tagModal.data.selectedTagList.forEach(function(sitem, index, arr) {
+            if(sitem.id == item.id){
+              itemResult = false;
+            }
+          });
+          return itemResult;
+        });
+      },
+
+      updateTag(){
+        console.info(this.tagModal.data.selectedTagList);
+        this.modal.data.tags = this.tagModal.data.selectedTagList;
+        let self = this;
+        categoryApi.addOrUpdate(this.modal.data).then(function (res) {
+          let result = res.data;
+          if (result.success) {
+            self.$Message.info("操作成功");
+          } else {
+            self.$Message.error(result.status.message);
+          }
+        }).catch(function (error) {
+          self.$Message.error(error.message);
+        });
+        this.tagModal.showModal = false;
+      },
+
+      handleDragChange({ src, target, oldIndex, newIndex }){
+        console.info(src);
+        console.info(target);
+        console.info(oldIndex);
+        console.info(newIndex);
       }
+
+
     }
   }
 </script>
@@ -642,5 +773,30 @@
 <style lang="less">
   .ivu-page {
     margin-top: 10px;
+  }
+  .drag-list-wrapper .drag-list-con {
+    overflow-y: scroll;
+  }
+  .drag-box-card{
+    display: inline-block;
+    width: 600px;
+    height: 560px;
+    .drag-item{
+      margin: 10px;
+    }
+    h3{
+      padding: 10px 15px;
+    }
+    .drop-box{
+      border: 1px solid #eeeeee;
+      height: 455px;
+      border-radius: 5px;
+    }
+    .left-drop-box{
+      margin-right: 10px;
+    }
+    .right-drop-box{
+      //
+    }
   }
 </style>

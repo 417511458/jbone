@@ -13,6 +13,8 @@ import java.util.List;
 public interface TagRepository extends JpaRepository<Tag,Long>, JpaSpecificationExecutor<Tag> {
     List<Tag> findByNameContaining(String name);
 
+    List<Tag> findByIdIn(List<Long> ids);
+
     @Query(value = "SELECT count(*) FROM ARTICLE_TAG", nativeQuery = true)
     long articleTagCount();
 

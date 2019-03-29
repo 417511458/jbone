@@ -1,6 +1,7 @@
 package cn.jbone.cms.core.converter;
 
 import cn.jbone.cms.common.dataobject.CategoryDO;
+import cn.jbone.cms.common.dataobject.config.CategoryFieldConfigDO;
 import cn.jbone.cms.core.dao.entity.Category;
 import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,7 @@ public class CategoryConverter {
     @Autowired
     private CategoryRepository categoryRepository;
 
-
-    public CategoryDO toCategoryDO(Category category,CategoryFieldConfig config){
+    public CategoryDO toCategoryDO(Category category, CategoryFieldConfigDO config){
         if(category == null){
             return null;
         }
@@ -46,20 +46,20 @@ public class CategoryConverter {
         categoryDO.setUrl(category.getUrl());
         categoryDO.setShowType(category.getShowType());
 
-        if(config.isTag()){
+        if(config.isIncludeTag()){
             categoryDO.setTags(tagConverter.toTagDOs(category.getTags()));
         }
-        if(config.isTemplate()){
+        if(config.isIncludeTemplate()){
             categoryDO.setTemplate(templateConverter.toTemplateDO(category.getTemplate()));
         }
-        if(config.isChilds()){
+        if(config.isIncludeChilds()){
             categoryDO.setChildren(toCategoryDOs(category.getChildCategory(),config));
         }
 
         return categoryDO;
     }
 
-    public List<CategoryDO> toCategoryDOs(List<Category> categorys,CategoryFieldConfig config){
+    public List<CategoryDO> toCategoryDOs(List<Category> categorys,CategoryFieldConfigDO config){
         if(CollectionUtils.isEmpty(categorys)){
             return null;
         }

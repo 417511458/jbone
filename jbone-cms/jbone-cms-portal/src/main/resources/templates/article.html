@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" th:content="${article.description}" />
+  <meta name="keywords" th:content="${article.keywords}" />
+  <meta name="author" content="" />
+
+  <title th:text="${article.title} + ' - ' + ${settings.title}">CMS标题 - 未配置</title>
+  <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+
+  <style>
+    #bdshare_weixin_qrcode_dialog_qr table {
+      width: auto !important;
+    }
+  </style>
+
+</head>
+
+<body class="parent-active" style="display: block;">
+
+
+<div th:replace="/layout/css :: css"></div>
+<div th:replace="/layout/js :: js"></div>
+<header id="header" class="parent-active" th:replace="/layout/header :: header"></header>
+
+<!-- start banner Area -->
+<section class="relative about-banner" id="home">
+  <div class="overlay overlay-bg"></div>
+  <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="about-content col-lg-12">
+        <h1 class="text-white" th:text="${article.title}">
+          文章标题
+        </h1>
+        <p class="text-white" th:text="${article.description}">文章描述</p>
+        <div class="text-white">
+          <ul class="article-meta">
+            <li class="user-name " th:if="${article.author != null}"><span class="lnr lnr-user"></span><a href="#" th:text="${article.author.baseInfo.realname}">用户名</a> </li>
+            <li class="date"><span class="lnr lnr-calendar-full"></span> <a href="#" th:text="${article.addTimeText}"></a> </li>
+            <li class="view"> <span class="lnr lnr-eye"></span><a href="#" th:text="${article.hits}"></a></li>
+            <li class="comments"> <span class="lnr lnr-bubble"></span><a href="#" th:text="${article.commentCount}"></a></li>
+            <li th:if="${not #lists.isEmpty(article.tags)}"> <span class="lnr lnr-tag"></span></li>
+            <li th:if="${not #lists.isEmpty(article.tags)}" th:each="tag,tagStat : ${article.tags}">
+              <a th:href="@{/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.name}">标签</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+<!-- End banner Area -->
+
+<section class="post-content-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 posts-list">
+        <div class="single-post row">
+          <div class="col-lg-12">
+            <div class="feature-img">
+              <img class="img-fluid" th:src="${article.frontCover}" alt="">
+            </div>
+          </div>
+          <div class="col-lg-12 post-content" th:if="${article.articleData != null}" th:utext="${article.articleData.content}">
+            文章内容
+          </div>
+        </div>
+        <div class="navigation-area">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+              <div class="arrow">
+                <a href="#"><span class="lnr lnr-arrow-left"></span></a>
+              </div>
+              <div class="detials">
+                <p>上一篇</p>
+                <a th:if="${lastArticle != null}" th:href="@{/article/{articleId}(articleId=${lastArticle.id})}"><h4 th:text="${lastArticle.title}">文章标题</h4></a>
+                <a th:if="${lastArticle == null}" href="#"><h4>没有了</h4></a>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+              <div class="detials">
+                <p>下一篇</p>
+                <a th:if="${nextArticle != null}" th:href="@{/article/{articleId}(articleId=${nextArticle.id})}"><h4 th:text="${nextArticle.title}">文章标题</h4></a>
+                <a th:if="${nextArticle == null}" href="#"><h4>没有了</h4></a>
+              </div>
+              <div class="arrow">
+                <a href="#"><span class="lnr lnr-arrow-right"></span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comments-area">
+          <h4 th:text="'共' + ${article.commentCount} + '条评论'">评论数</h4>
+          <div class="comment-list" th:if="${article.commentCount > 0}" th:each="comment,commentStat : ${comments}">
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex">
+                <div class="thumb" >
+                  <img th:if="${comment.author != null}" th:src="${comment.author.baseInfo.avatar}" alt="">
+                  <img th:if="${comment.author == null}" th:src="@{/img/notfounduser.png}" alt="">
+                </div>
+                <div class="desc">
+                  <h5>
+                    <a href="#" th:if="${comment.author != null}" th:text="${comment.author.baseInfo.realname}"></a>
+                    <a href="#" th:if="${comment.author == null}"> 匿名用户</a>
+                  </h5>
+                  <p class="date" th:text="${comment.addTimeText}"></p>
+                  <p class="comment" th:text="${comment.content}">
+                  </p>
+                </div>
+              </div>
+              <!--<div class="reply-btn">
+                <a href="" class="btn-reply text-uppercase">reply</a>
+              </div>-->
+            </div>
+          </div>
+        </div>
+        <div class="comment-form" th:if="${CURR_USER != null}">
+          <h4>发表评论</h4>
+          <form id="commentForm" th:action="@{/article/submitComment}">
+            <input type="hidden" id="articleId" name="articleId" th:value="${article.id}">
+            <div class="form-group">
+              <textarea class="form-control mb-10" rows="5" id="content" name="content" placeholder="请文明发言" onfocus="this.placeholder = ''" onblur="this.placeholder = '请文明发言'" required=""></textarea>
+            </div>
+            <div id="commentAlert" class="alert alert-danger" style="display: none;" role="alert">请输入评论内容</div>
+            <a href="javascript:submitComment()" class="primary-btn text-uppercase">发表</a>
+          </form>
+        </div>
+        <div class="comment-form" th:if="${CURR_USER == null}">
+          <h4>请先<a th:href="@{/login}">登录</a>，再发言!</h4>
+        </div>
+      </div>
+      <div class="col-lg-8 posts-list" th:if="${article == null}">
+        <div class="alert alert-danger" role="alert"><h1>未找到的文章</h1></div>
+      </div>
+      <!-- 右侧公共模块，搜索、热门文章、广告、标签云 -->
+      <div th:include="/layout/right :: right" class="col-lg-4 sidebar-widgets"></div>
+
+    </div>
+  </div>
+</section>
+<!-- End post-content Area -->
+
+  <div th:replace="/layout/footer :: footer"></div>
+
+<script>
+  function submitComment(){
+    var content = $("#content").val();
+    var contentProp = "请输入评论内容";
+    if(content == null || content == ""){
+      $("#commentAlert").show();
+      $("#commentAlert").text(contentProp);
+      return;
+    }else{
+      $("#commentAlert").hide();
+    }
+    $.ajax({
+      type : "POST", //提交方式
+      url : "/article/submitComment",//路径
+      data : {
+        "articleId" : $("#articleId").val(),
+        "content": content
+      },//数据，这里使用的是Json格式进行传输
+      success : function(result) {//返回数据根据结果进行相应的处理
+        console.info(result);
+        if ( result.success ) {
+          window.location.reload();
+        } else {
+          $("#commentAlert").show();
+          $("#commentAlert").text(result.status.message);
+        }
+      }
+    });
+  }
+</script>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"right","bdTop":"250"}};(document.getElementsByTagName('head')[0] || document.body).appendChild(document.createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5);</script>
+</body>
+
+</html>

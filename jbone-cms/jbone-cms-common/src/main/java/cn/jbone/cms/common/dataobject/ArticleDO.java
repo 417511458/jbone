@@ -36,6 +36,11 @@ public class ArticleDO {
      */
     private int hits = 0;
 
+    /**
+     * 评论数
+     */
+    private long commentCount = 0;
+
     private int orders = 0;
 
     /**
@@ -85,4 +90,5 @@ public class ArticleDO {
     private String addTimeText;
 
     private String updateTimeText;
+
 }
