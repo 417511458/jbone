@@ -1,9 +1,12 @@
-package cn.jbone.cms.common.dataobject;
+package cn.jbone.common.dataobject;
 
 import lombok.Data;
 
 import java.util.List;
 
+/**
+ * 分页组件
+ */
 @Data
 public class PaginationDO {
     private boolean showLastButton;     //是否展示上一页

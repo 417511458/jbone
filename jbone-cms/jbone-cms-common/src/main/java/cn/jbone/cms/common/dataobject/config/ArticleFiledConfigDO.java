@@ -1,9 +1,9 @@
-package cn.jbone.cms.common.dataobject;
+package cn.jbone.cms.common.dataobject.config;
 
 import lombok.Data;
 
 @Data
-public class ArticleRequestConfigDO {
+public class ArticleFiledConfigDO {
 
     private boolean includeTags = false;
     private boolean includeCategory = false;
@@ -12,8 +12,8 @@ public class ArticleRequestConfigDO {
     private boolean includeContent = false;
     private boolean includeCommentCount = false;
 
-    public ArticleRequestConfigDO(){}
-    public ArticleRequestConfigDO(boolean includeTags,boolean includeCategory,boolean includeTemplate,boolean includeAuthor,boolean includeContent,boolean includeCommentCount){
+    public ArticleFiledConfigDO(){}
+    public ArticleFiledConfigDO(boolean includeTags, boolean includeCategory, boolean includeTemplate, boolean includeAuthor, boolean includeContent, boolean includeCommentCount){
         this.includeAuthor = includeAuthor;
         this.includeCategory = includeCategory;
         this.includeTags = includeTags;
@@ -22,38 +22,38 @@ public class ArticleRequestConfigDO {
         this.includeCommentCount = includeCommentCount;
     }
 
-    public static ArticleRequestConfigDO build(){
-        return new ArticleRequestConfigDO();
+    public static ArticleFiledConfigDO build(){
+        return new ArticleFiledConfigDO();
     }
 
-    public static ArticleRequestConfigDO buildAll(){
+    public static ArticleFiledConfigDO buildAll(){
         return build().includeAuthor(true).includeCategory(true).includeContent(true).includeTags(true).includeTemplate(true).includeCommentCount(true);
     }
 
-    public ArticleRequestConfigDO includeTags(boolean includeTags){
+    public ArticleFiledConfigDO includeTags(boolean includeTags){
         this.includeTags = includeTags;
         return this;
     }
-    public ArticleRequestConfigDO includeCategory(boolean includeCategory){
+    public ArticleFiledConfigDO includeCategory(boolean includeCategory){
         this.includeCategory = includeCategory;
         return this;
     }
-    public ArticleRequestConfigDO includeTemplate(boolean includeTemplate){
+    public ArticleFiledConfigDO includeTemplate(boolean includeTemplate){
         this.includeTemplate = includeTemplate;
         return this;
     }
 
-    public ArticleRequestConfigDO includeAuthor(boolean includeAuthor){
+    public ArticleFiledConfigDO includeAuthor(boolean includeAuthor){
         this.includeAuthor = includeAuthor;
         return this;
     }
 
-    public ArticleRequestConfigDO includeContent(boolean includeContent){
+    public ArticleFiledConfigDO includeContent(boolean includeContent){
         this.includeContent = includeContent;
         return this;
     }
 
-    public ArticleRequestConfigDO includeCommentCount(boolean includeCommentCount){
+    public ArticleFiledConfigDO includeCommentCount(boolean includeCommentCount){
         this.includeCommentCount = includeCommentCount;
         return this;
     }

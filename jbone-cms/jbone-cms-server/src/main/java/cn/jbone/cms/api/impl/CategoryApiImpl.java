@@ -3,8 +3,8 @@ package cn.jbone.cms.api.impl;
 
 import cn.jbone.cms.api.CategoryApi;
 import cn.jbone.cms.common.dataobject.CategoryDO;
-import cn.jbone.cms.common.dataobject.CategoryRequestDO;
-import cn.jbone.cms.common.dataobject.PagedResponseDO;
+import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.cms.core.service.CategoryService;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.rpc.Result;
@@ -70,10 +70,10 @@ public class CategoryApiImpl implements CategoryApi {
     }
 
     @RequestMapping(value = "/requestCategorysTree", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Result<List<CategoryDO>> requestCategorysTree(@RequestBody CategoryRequestDO categoryRequestDO) {
+    public Result<List<CategoryDO>> requestCategorysTree(@RequestBody CategorySearchDO categorySearchDO) {
         List<CategoryDO> categoryDOS = null;
         try {
-            categoryDOS = categoryService.requestCategorysTree(categoryRequestDO);
+            categoryDOS = categoryService.requestCategorysTree(categorySearchDO);
         }catch (Exception e) {
             logger.warn("category requestCategorysTree error.",e);
             return Result.wrap500Error(e.getMessage());
@@ -82,10 +82,10 @@ public class CategoryApiImpl implements CategoryApi {
     }
 
     @Override
-    public Result<PagedResponseDO<CategoryDO>> requestCategorys(CategoryRequestDO categoryRequestDO) {
+    public Result<PagedResponseDO<CategoryDO>> requestCategorys(CategorySearchDO categorySearchDO) {
         PagedResponseDO<CategoryDO> pagedResponseDO = null;
         try {
-            pagedResponseDO = categoryService.requestCategorys(categoryRequestDO);
+            pagedResponseDO = categoryService.requestCategorys(categorySearchDO);
         } catch (Exception e) {
             logger.warn("category requestCategorys error.",e);
             return Result.wrap500Error(e.getMessage());

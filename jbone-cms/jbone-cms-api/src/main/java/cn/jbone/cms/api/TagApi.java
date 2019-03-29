@@ -1,7 +1,7 @@
 package cn.jbone.cms.api;
 
-import cn.jbone.cms.common.dataobject.PagedResponseDO;
-import cn.jbone.cms.common.dataobject.TagCommonRequestDO;
+import cn.jbone.common.dataobject.PagedResponseDO;
+import cn.jbone.cms.common.dataobject.search.TagSearchDO;
 import cn.jbone.cms.common.dataobject.TagDO;
 import cn.jbone.common.rpc.Result;
 import org.springframework.web.bind.annotation.*;
@@ -30,5 +30,5 @@ public interface TagApi {
     Result<Void> addOrUpdate(@RequestBody TagDO tagDO);
 
     @RequestMapping(value = "/commonRequest",method = {RequestMethod.POST})
-    Result<PagedResponseDO<TagDO>> commonRequest(@RequestBody TagCommonRequestDO tagCommonRequestDO);
+    Result<PagedResponseDO<TagDO>> commonRequest(@RequestBody TagSearchDO tagSearchDO);
 }

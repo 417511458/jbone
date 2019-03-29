@@ -27,8 +27,11 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
     private static List<String> excludeUris = new ArrayList<>();
 
     static {
+        //登录、注销
         excludeUris.add("/login");
         excludeUris.add("/logout");
+
+        //静态文件
         excludeUris.add(".css");
         excludeUris.add(".js");
         excludeUris.add(".jpg");
@@ -37,7 +40,18 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
         excludeUris.add(".png");
         excludeUris.add(".ico");
         excludeUris.add(".html");
+
+        //字体文件
+        excludeUris.add(".otf");
+        excludeUris.add(".eot");
+        excludeUris.add(".svg");
+        excludeUris.add(".ttf");
+        excludeUris.add(".woff");
+        excludeUris.add(".woff2");
+
     }
+
+
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {

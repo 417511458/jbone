@@ -1,12 +1,8 @@
 package cn.jbone.cms.portal.controller;
 
-import cn.jbone.cms.common.dataobject.ArticleCommonRequestDO;
-import cn.jbone.cms.common.dataobject.ArticleResponseDO;
-import cn.jbone.cms.common.dataobject.PagedResponseDO;
+import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.portal.service.ArticleService;
 import cn.jbone.cms.portal.service.CommonService;
-import cn.jbone.cms.portal.service.LinkService;
-import cn.jbone.cms.portal.service.TagService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,13 +24,13 @@ public class SearchController {
 
         int pageNumber = (p == null) ? 1 : p;
 
-        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build(pageNumber);
+        ArticleSearchDO articleSearchDO = ArticleSearchDO.build(pageNumber);
 
         if(StringUtils.isNotBlank(keywords)){
-            articleCommonRequestDO.setTitle(keywords);
+            articleSearchDO.setTitle(keywords);
         }
 
-        modelMap.addAttribute("pagedArticles",articleService.findArticles(articleCommonRequestDO));
+        modelMap.addAttribute("pagedArticles",articleService.findArticles(articleSearchDO));
 
         modelMap.addAttribute("keywords",keywords);
 

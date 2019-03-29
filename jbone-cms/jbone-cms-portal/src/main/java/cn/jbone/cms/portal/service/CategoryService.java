@@ -2,11 +2,9 @@ package cn.jbone.cms.portal.service;
 
 import cn.jbone.cms.api.CategoryApi;
 import cn.jbone.cms.api.CategoryTocApi;
-import cn.jbone.cms.api.TagApi;
 import cn.jbone.cms.common.dataobject.CategoryDO;
-import cn.jbone.cms.common.dataobject.CategoryRequestDO;
+import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
 import cn.jbone.cms.common.dataobject.CategoryTocDO;
-import cn.jbone.cms.common.dataobject.TagDO;
 import cn.jbone.cms.common.enums.BooleanEnum;
 import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.common.rpc.Result;
@@ -35,11 +33,11 @@ public class CategoryService {
     }
 
     public List<CategoryDO> getChildren(Long pid){
-        CategoryRequestDO categoryRequestDO = new CategoryRequestDO();
-        categoryRequestDO.setStatus(StatusEnum.PUBLISH);
-        categoryRequestDO.setInMenu(BooleanEnum.TRUE);
-        categoryRequestDO.setPid(pid);
-        Result<List<CategoryDO>> result =  categoryApi.requestCategorysTree(categoryRequestDO);
+        CategorySearchDO categorySearchDO = new CategorySearchDO();
+        categorySearchDO.setStatus(StatusEnum.PUBLISH);
+        categorySearchDO.setInMenu(BooleanEnum.TRUE);
+        categorySearchDO.setPid(pid);
+        Result<List<CategoryDO>> result =  categoryApi.requestCategorysTree(categorySearchDO);
         if(result != null && result.isSuccess()){
             return result.getData();
         }

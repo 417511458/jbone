@@ -2,6 +2,8 @@ package cn.jbone.cms.api.starter;
 
 import cn.jbone.cms.api.CategoryApi;
 import cn.jbone.cms.common.dataobject.*;
+import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
@@ -45,13 +47,13 @@ public class CategoryApiFallbackFactory implements FallbackFactory<CategoryApi> 
             }
 
             @Override
-            public Result<List<CategoryDO>> requestCategorysTree(CategoryRequestDO categoryRequestDO) {
+            public Result<List<CategoryDO>> requestCategorysTree(CategorySearchDO categorySearchDO) {
                 logger.error("rpc requestCategorysTree broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<PagedResponseDO<CategoryDO>> requestCategorys(CategoryRequestDO categoryRequestDO) {
+            public Result<PagedResponseDO<CategoryDO>> requestCategorys(CategorySearchDO categorySearchDO) {
                 logger.error("rpc requestCategorys broke",throwable);
                 return Result.wrapProtectedError();
             }

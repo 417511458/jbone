@@ -1,10 +1,10 @@
 package cn.jbone.cms.portal.service;
 
 import cn.jbone.cms.api.ArticleApi;
-import cn.jbone.cms.common.dataobject.ArticleCommonRequestDO;
+import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.common.dataobject.CategoryDO;
-import cn.jbone.cms.common.dataobject.PagedResponseDO;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.dataobject.SearchConditionDO;
 import cn.jbone.common.dataobject.SearchSortDO;
 import cn.jbone.common.rpc.Result;
@@ -27,7 +27,7 @@ public class ArticleService {
     @Autowired
     private CommentService commentService;
 
-    public PagedResponseDO<ArticleResponseDO> findArticles(ArticleCommonRequestDO articleRequestDO){
+    public PagedResponseDO<ArticleResponseDO> findArticles(ArticleSearchDO articleRequestDO){
         Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleRequestDO);
         if(result != null && result.isSuccess()){
             PagedResponseDO<ArticleResponseDO> data = result.getData();
@@ -40,12 +40,12 @@ public class ArticleService {
     }
 
     public List<ArticleResponseDO> findHotArticles(){
-        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build();
-        articleCommonRequestDO.clearSort();
-        articleCommonRequestDO.addSort(new SearchSortDO("hits",SearchSortDO.Direction.DESC));
-        articleCommonRequestDO.addSort(new SearchSortDO("addTime",SearchSortDO.Direction.DESC));
+        ArticleSearchDO articleSearchDO = ArticleSearchDO.build();
+        articleSearchDO.clearSort();
+        articleSearchDO.addSort(new SearchSortDO("hits",SearchSortDO.Direction.DESC));
+        articleSearchDO.addSort(new SearchSortDO("addTime",SearchSortDO.Direction.DESC));
 
-        Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleCommonRequestDO);
+        Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleSearchDO);
         if(result != null && result.isSuccess()){
             PagedResponseDO<ArticleResponseDO> data = result.getData();
             if(data != null){
@@ -92,15 +92,15 @@ public class ArticleService {
 
     //上一篇文章
     private ArticleResponseDO getLastOrNextArticle(ArticleResponseDO article, SearchConditionDO.Operator operator){
-        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build();
-        articleCommonRequestDO.setPageSize(1);
+        ArticleSearchDO articleSearchDO = ArticleSearchDO.build();
+        articleSearchDO.setPageSize(1);
         if(article.getCategory() != null){
-            articleCommonRequestDO.setCategoryId(article.getCategory().getId());
+            articleSearchDO.setCategoryId(article.getCategory().getId());
         }
         String conditionValue = DateUtil.formateDate(new Date(article.getAddTime()),DateUtil.TIME_FORMAT);
-        articleCommonRequestDO.addCondition(new SearchConditionDO("addTime",operator,conditionValue));
+        articleSearchDO.addCondition(new SearchConditionDO("addTime",operator,conditionValue));
 
-        PagedResponseDO<ArticleResponseDO> result = findArticles(articleCommonRequestDO);
+        PagedResponseDO<ArticleResponseDO> result = findArticles(articleSearchDO);
         if (result != null && !CollectionUtils.isEmpty(result.getDatas())){
             return  result.getDatas().get(0);
         }
@@ -109,12 +109,12 @@ public class ArticleService {
 
     //第一篇文章
     public ArticleResponseDO getFirstArticle(Long categoryId){
-        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build();
-        articleCommonRequestDO.setPageSize(1);
-        articleCommonRequestDO.setCategoryId(categoryId);
-        articleCommonRequestDO.addSort(new SearchSortDO("orders",SearchSortDO.Direction.ASC));
+        ArticleSearchDO articleSearchDO = ArticleSearchDO.build();
+        articleSearchDO.setPageSize(1);
+        articleSearchDO.setCategoryId(categoryId);
+        articleSearchDO.addSort(new SearchSortDO("orders",SearchSortDO.Direction.ASC));
 
-        PagedResponseDO<ArticleResponseDO> result = findArticles(articleCommonRequestDO);
+        PagedResponseDO<ArticleResponseDO> result = findArticles(articleSearchDO);
         if (result != null && !CollectionUtils.isEmpty(result.getDatas())){
             return  result.getDatas().get(0);
         }

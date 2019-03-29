@@ -1,6 +1,8 @@
 package cn.jbone.cms.portal.controller;
 
 import cn.jbone.cms.common.dataobject.*;
+import cn.jbone.cms.common.dataobject.config.ArticleFiledConfigDO;
+import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.common.enums.CategoryShowTypeEnum;
 import cn.jbone.cms.common.enums.CategoryTypeEnum;
 import cn.jbone.cms.portal.service.ArticleService;
@@ -8,6 +10,7 @@ import cn.jbone.cms.portal.service.CategoryService;
 import cn.jbone.cms.portal.service.CommonService;
 import cn.jbone.cms.portal.service.TagService;
 import cn.jbone.cms.portal.vo.SpecialTreeVo;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.errors.PageCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +63,8 @@ public class CategoryController {
 
         int pageNumber = (p == null) ? 1 : p;
 
-        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build(pageNumber);
-        articleCommonRequestDO.setConfig(ArticleRequestConfigDO.buildAll().includeContent(false));
+        ArticleSearchDO articleSearchDO = ArticleSearchDO.build(pageNumber);
+        articleSearchDO.setConfig(ArticleFiledConfigDO.buildAll().includeContent(false));
 
         //专题文章
         if(categoryDO.getType() == CategoryTypeEnum.SPECIAL){
@@ -84,8 +87,8 @@ public class CategoryController {
             //列表展示，返回到列表页
             if(categoryDO.getShowType() == CategoryShowTypeEnum.LIST){
                 pageName = PAGE_CATEGORY;
-                articleCommonRequestDO.setCategoryId(categoryId);
-                pagedArticles = articleService.findArticles(articleCommonRequestDO);
+                articleSearchDO.setCategoryId(categoryId);
+                pagedArticles = articleService.findArticles(articleSearchDO);
             }
             //第一篇文章，跳转到文章详情页
             else if(categoryDO.getShowType() == CategoryShowTypeEnum.FIRSTARTICLE){
@@ -105,10 +108,10 @@ public class CategoryController {
                 for (TagDO tagDO : categoryDO.getTags()){
                     tagIds.add(tagDO.getId());
                 }
-                articleCommonRequestDO.setTagIds(tagIds);
+                articleSearchDO.setTagIds(tagIds);
             }
 
-            pagedArticles = articleService.findArticles(articleCommonRequestDO);
+            pagedArticles = articleService.findArticles(articleSearchDO);
         }
 
 

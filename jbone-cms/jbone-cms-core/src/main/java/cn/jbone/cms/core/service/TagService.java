@@ -1,13 +1,14 @@
 package cn.jbone.cms.core.service;
 
 import cn.jbone.cms.common.dataobject.*;
-import cn.jbone.cms.common.enums.StatusEnum;
+import cn.jbone.cms.common.dataobject.search.TagSearchDO;
 import cn.jbone.cms.core.converter.TagConverter;
-import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.entity.Tag;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.TagRepository;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.ObjectNotFoundException;
+import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -96,24 +97,18 @@ public class TagService {
      * 通用查询
      * @return
      */
-    public PagedResponseDO<TagDO> commonRequest(TagCommonRequestDO tagCommonRequestDO){
+    public PagedResponseDO<TagDO> commonRequest(TagSearchDO tagSearchDO){
         PagedResponseDO<TagDO> responseDO = new PagedResponseDO<>();
-        responseDO.setPageNum(tagCommonRequestDO.getPageNumber());
-        responseDO.setPageSize(tagCommonRequestDO.getPageSize());
 
-        PageRequest pageRequest = null;
-        if(StringUtils.isNotBlank(tagCommonRequestDO.getSortName())){
-            pageRequest = PageRequest.of(tagCommonRequestDO.getPageNumber()-1,tagCommonRequestDO.getPageSize(), Sort.Direction.fromString(tagCommonRequestDO.getSortOrder()),tagCommonRequestDO.getSortName());
-        }else {
-            pageRequest = PageRequest.of(tagCommonRequestDO.getPageNumber()-1,tagCommonRequestDO.getPageSize());
-        }
+        Sort sort = SpecificationUtils.buildSort(tagSearchDO.getSorts());
+        PageRequest pageRequest = PageRequest.of(tagSearchDO.getPageNumber()-1, tagSearchDO.getPageSize(), sort);
 
-        Page<Tag> tagPage =  tagRepository.findAll(new TagCommonRequestSpecification(tagCommonRequestDO),pageRequest);
+        Page<Tag> tagPage =  tagRepository.findAll(new TagCommonRequestSpecification(tagSearchDO),pageRequest);
 
         responseDO.setTotal(tagPage.getTotalElements());
         responseDO.setPageNum(tagPage.getNumber()+1);
         responseDO.setPageSize(tagPage.getSize());
-        if(tagCommonRequestDO.isIncludeArticleCount()){
+        if(tagSearchDO.isIncludeArticleCount()){
             responseDO.setDatas(fillArticleCount(tagPage.getContent()));
         }else{
             responseDO.setDatas(tagConverter.toTagDOs(tagPage.getContent()));
@@ -129,22 +124,29 @@ public class TagService {
      *
      */
     private class TagCommonRequestSpecification implements Specification<Tag> {
-        private TagCommonRequestDO tagCommonRequestDO;
-        public TagCommonRequestSpecification(TagCommonRequestDO tagCommonRequestDO){
-            this.tagCommonRequestDO = tagCommonRequestDO;
+        private TagSearchDO tagSearchDO;
+        public TagCommonRequestSpecification(TagSearchDO tagSearchDO){
+            this.tagSearchDO = tagSearchDO;
         }
 
         @Override
         public Predicate toPredicate(Root<Tag> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-            if(tagCommonRequestDO == null){
+            if(tagSearchDO == null){
                 return criteriaQuery.getRestriction();
             }
             List<Predicate> predicates = new ArrayList<>();
 
-            if(StringUtils.isNotBlank(tagCommonRequestDO.getName())){
+            if(StringUtils.isNotBlank(tagSearchDO.getName())){
                 Path<String> name = root.get("name");
-                predicates.add(criteriaBuilder.like(name,"%" + tagCommonRequestDO.getName() + "%"));
+                predicates.add(criteriaBuilder.like(name,"%" + tagSearchDO.getName() + "%"));
             }
+
+            //补充条件查询
+            List<Predicate> conditionPredicats = SpecificationUtils.generatePredicates(root,criteriaBuilder, tagSearchDO.getConditions());
+            if(!CollectionUtils.isEmpty(conditionPredicats)){
+                predicates.addAll(conditionPredicats);
+            }
+
             Predicate predicate = criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
             return predicate;
         }

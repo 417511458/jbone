@@ -1,10 +1,14 @@
-package cn.jbone.cms.common.dataobject;
+package cn.jbone.common.dataobject;
 
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 分页数据对象
+ * @param <T>
+ */
 @Data
 public class PagedResponseDO<T> {
     long total;

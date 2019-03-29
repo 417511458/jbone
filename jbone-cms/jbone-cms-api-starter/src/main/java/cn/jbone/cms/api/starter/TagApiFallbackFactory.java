@@ -1,8 +1,8 @@
 package cn.jbone.cms.api.starter;
 
 import cn.jbone.cms.api.TagApi;
-import cn.jbone.cms.common.dataobject.PagedResponseDO;
-import cn.jbone.cms.common.dataobject.TagCommonRequestDO;
+import cn.jbone.common.dataobject.PagedResponseDO;
+import cn.jbone.cms.common.dataobject.search.TagSearchDO;
 import cn.jbone.cms.common.dataobject.TagDO;
 import cn.jbone.common.rpc.Result;
 import feign.hystrix.FallbackFactory;
@@ -59,7 +59,7 @@ public class TagApiFallbackFactory implements FallbackFactory<TagApi> {
             }
 
             @Override
-            public Result<PagedResponseDO<TagDO>> commonRequest(TagCommonRequestDO tagCommonRequestDO) {
+            public Result<PagedResponseDO<TagDO>> commonRequest(TagSearchDO tagSearchDO) {
                 logger.error("rpc commonRequest broke",throwable);
                 return Result.wrapProtectedError();
             }

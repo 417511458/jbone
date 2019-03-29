@@ -1,10 +1,10 @@
 package cn.jbone.cms.api.impl;
 
 import cn.jbone.cms.api.ArticleApi;
-import cn.jbone.cms.common.dataobject.ArticleCommonRequestDO;
+import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.common.dataobject.ArticleRequestDO;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
-import cn.jbone.cms.common.dataobject.PagedResponseDO;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.cms.core.service.ArticleService;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.rpc.Result;
@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -84,10 +83,10 @@ public class ArticleApiImpl implements ArticleApi {
     }
 
     @Override
-    public Result<PagedResponseDO<ArticleResponseDO>> commonRequest(@RequestBody ArticleCommonRequestDO articleCommonRequestDO) {
+    public Result<PagedResponseDO<ArticleResponseDO>> commonRequest(@RequestBody ArticleSearchDO articleSearchDO) {
         PagedResponseDO<ArticleResponseDO> pagedResponseDO = null;
         try {
-            pagedResponseDO = articleService.commonRequest(articleCommonRequestDO);
+            pagedResponseDO = articleService.commonRequest(articleSearchDO);
         } catch (Exception e) {
             logger.warn("article commonRequest error.",e);
             return Result.wrap500Error(e.getMessage());

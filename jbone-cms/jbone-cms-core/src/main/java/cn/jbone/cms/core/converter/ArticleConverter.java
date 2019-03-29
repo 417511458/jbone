@@ -1,9 +1,8 @@
 package cn.jbone.cms.core.converter;
 
-import cn.jbone.cms.common.dataobject.ArticleDO;
-import cn.jbone.cms.common.dataobject.ArticleDataDO;
-import cn.jbone.cms.common.dataobject.ArticleRequestConfigDO;
-import cn.jbone.cms.common.dataobject.ArticleResponseDO;
+import cn.jbone.cms.common.dataobject.*;
+import cn.jbone.cms.common.dataobject.config.ArticleFiledConfigDO;
+import cn.jbone.cms.common.dataobject.config.CategoryFieldConfigDO;
 import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.entity.ArticleData;
 import cn.jbone.cms.core.dao.entity.Tag;
@@ -49,7 +48,7 @@ public class ArticleConverter {
     @Autowired
     private CommentRepository commentRepository;
 
-    public ArticleResponseDO toArticleDO(Article article,ArticleRequestConfigDO config){
+    public ArticleResponseDO toArticleDO(Article article, ArticleFiledConfigDO config){
         if(article == null){
             return null;
         }
@@ -87,7 +86,7 @@ public class ArticleConverter {
 
         //分类
         if(config.isIncludeCategory()){
-            articleResponseDO.setCategory(categoryConverter.toCategoryDO(article.getCategory(),CategoryFieldConfig.buildSimple()));
+            articleResponseDO.setCategory(categoryConverter.toCategoryDO(article.getCategory(), CategoryFieldConfigDO.build()));
         }
 
         //评论数
@@ -105,9 +104,6 @@ public class ArticleConverter {
             articleResponseDO.setTags(tagConverter.toTagDOs(article.getTags()));
         }
 
-
-
-
         List<Long> tagIds = new ArrayList<>();
         if(!CollectionUtils.isEmpty(article.getTags())){
             for (Tag tag : article.getTags()){
@@ -124,10 +120,10 @@ public class ArticleConverter {
             return null;
         }
 
-        return toArticleDO(article,ArticleRequestConfigDO.build());
+        return toArticleDO(article, ArticleFiledConfigDO.build());
     }
 
-    public List<ArticleResponseDO> toArticleDOs(List<Article> articles, ArticleRequestConfigDO config){
+    public List<ArticleResponseDO> toArticleDOs(List<Article> articles, ArticleFiledConfigDO config){
         if(CollectionUtils.isEmpty(articles)){
             return null;
         }

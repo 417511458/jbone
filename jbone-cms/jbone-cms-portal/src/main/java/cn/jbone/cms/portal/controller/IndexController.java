@@ -1,6 +1,6 @@
 package cn.jbone.cms.portal.controller;
 
-import cn.jbone.cms.common.dataobject.ArticleCommonRequestDO;
+import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.portal.service.ArticleService;
 import cn.jbone.cms.portal.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ public class IndexController {
         commonService.setCommonModuleDatas(modelMap);
         int pageNumber = (p == null) ? 1 : p;
 
-        ArticleCommonRequestDO articleCommonRequestDO = ArticleCommonRequestDO.build(pageNumber);
+        ArticleSearchDO articleSearchDO = ArticleSearchDO.build(pageNumber);
 
-        modelMap.addAttribute("pagedArticles",articleService.findArticles(articleCommonRequestDO));
+        modelMap.addAttribute("pagedArticles",articleService.findArticles(articleSearchDO));
 
         return "index";
     }
