@@ -2,40 +2,5 @@ server:
   port: 10001
 
 spring:
-  application:
-    name: Jbone-sm-register
-
-# 服务管理配置
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"        #暴漏的接口，"*"表示所有web监控接口
-        exclude:            #不暴漏的接口
-      base-path: /actuator  #监控根路径
-  endpoint:
-    health:
-      show-details: ALWAYS
-
-#注册中心
-eureka:
-  client:
-    register-with-eureka: true                                    # 作为客户端时开启
-    fetch-registry: false                                         # 作为客户端，并部署注册中心高可用时开启
-    service-url:
-      defaultZone: http://localhost:10001/eureka
-  instance:
-    prefer-ip-address: true
-    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
-
-# info接口返回值
-info:
-  app:
-    name: ${spring.application.name}
-    version: 1.0.0
-  java:
-    version: ${java.version}
-  code:
-    git: https://github.com/417511458/jbone
-    gitee: https://gitee.com/majunwei2017/jbone
-  domain: http://www.majunwei.com
+  profiles:
+    active: @profileActive@
