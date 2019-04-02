@@ -1,0 +1,9 @@
+{
+  "@class" : "org.apereo.cas.services.RegexRegisteredService",
+  "serviceId" : "^http://cmsadmin.jbone.cn.*",
+  "name" : "Jbone内容管理系统",
+  "id" : 500002,
+  "description" : "Jbone内容管理系统",
+  "logoutType" : "BACK_CHANNEL",
+  "logoutUrl" : "http://cmsadmin.jbone.cn/cas?client_name=CasClient"
+}

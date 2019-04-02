@@ -90,7 +90,7 @@
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
-        <AsyncLogger name="org.apereo" level="debug" additivity="false" includeLocation="true">
+        <AsyncLogger name="org.apereo" level="info" additivity="false" includeLocation="true">
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
@@ -189,7 +189,7 @@
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
-        <AsyncLogger name="org.apereo.cas" level="debug" additivity="true" includeLocation="true">
+        <AsyncLogger name="org.apereo.cas" level="info" additivity="true" includeLocation="true">
             <AppenderRef ref="casFile"/>
             <AppenderRef ref="casConsole"/>
         </AsyncLogger>
@@ -228,19 +228,19 @@
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
-        <AsyncLogger name="com.netflix" level="debug" includeLocation="true">
+        <AsyncLogger name="com.netflix" level="info" includeLocation="true">
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
-        <AsyncLogger name="org.springframework.cloud" level="debug" includeLocation="true">
+        <AsyncLogger name="org.springframework.cloud" level="info" includeLocation="true">
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
-        <AsyncLogger name="zipkin2" level="debug" includeLocation="true">
+        <AsyncLogger name="zipkin2" level="info" includeLocation="true">
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
-        <AsyncLogger name="zipkin" level="debug" includeLocation="true">
+        <AsyncLogger name="zipkin" level="info" includeLocation="true">
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>

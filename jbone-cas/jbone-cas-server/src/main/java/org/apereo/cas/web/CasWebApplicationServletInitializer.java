@@ -17,6 +17,7 @@ public class CasWebApplicationServletInitializer extends SpringBootServletInitia
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder builder) {
         val properties = CasEmbeddedContainerUtils.getRuntimeProperties(Boolean.FALSE);
+        builder.application().setAllowBeanDefinitionOverriding(true);
         return builder
                 .sources(CasWebApplication.class)
                 .properties(properties)

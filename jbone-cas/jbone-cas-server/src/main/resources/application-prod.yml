@@ -1,0 +1,261 @@
+##
+# CAS Server Context Configuration
+#
+server:
+  port: 30001
+  servlet:
+    context-path: /cas
+cas:
+  authn:
+    shiro:
+      requiredRoles: sso
+      location: classpath:shiro.ini
+    pm:
+      enabled: true
+      #policyPattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d){8,10}
+      reset:
+        expirationMinutes: 10
+        securityQuestionsEnabled: true
+        mail:
+          text: 请使用以下链接重置您的密码： %s
+          subject: Jbone重置密码邮件
+          from: jbone666@163.com
+      autoLogin: false
+    pac4j:
+      #github三方账号授权登录，可自行修改成自己的id和secret
+      github:
+        id: 151e91b5b0018290a074
+        secret: 3db661368363a8775d7b6bf7603710e6d90f490e
+        client-name: github
+  server:
+    name: http://cas.jbone.cn
+    prefix: http://cas.jbone.cn/cas
+  monitor:
+    endpoints:
+      endpoint:
+        #监控端口权限，下面都开启了，生产要配置IP策略或其他策略
+        info.access[0]: PERMIT
+        status.access[0]: PERMIT
+        health.access[0]: PERMIT
+        configurationMetadata.access[0]: PERMIT
+        auditevents.access[0]: PERMIT
+        beans.access[0]: PERMIT
+        caches.access[0]: PERMIT
+        conditions.access[0]: PERMIT
+        configprops.access[0]: PERMIT
+        env.access[0]: PERMIT
+        flyway.access[0]: PERMIT
+        httptrace.access[0]: PERMIT
+        integrationgraph.access[0]: PERMIT
+        loggers.access[0]: PERMIT
+        liquibase.access[0]: PERMIT
+        metrics.access[0]: PERMIT
+        mappings.access[0]: PERMIT
+        scheduledtasks.access[0]: PERMIT
+        sessions.access[0]: PERMIT
+        shutdown.access[0]: PERMIT
+        threaddump.access[0]: PERMIT
+        jolokia.access[0]: PERMIT
+        logfile.access[0]: PERMIT
+        prometheus.access[0]: PERMIT
+
+  #使用reids存储授权的服务，初始化数据从services下加载json
+  serviceRegistry:
+    initFromJson: true
+    redis:
+      host: 10.251.35.116
+      port: 6379
+      password: jboneonline
+      database: 0
+      timeout: 2000
+      useSsl: false
+
+  #票据持久化(redis)，用于分布式管理用户票据
+  ticket:
+    registry:
+      redis:
+        host: 10.251.35.116
+        port: 6379
+        password: jboneonline
+        timeout: 2000
+        useSsl: false
+      cleaner:
+        schedule:
+          enabled: false
+    tgt:
+      # 启用rememberMe
+      rememberMe:
+        enabled: true
+        timeToKillInSeconds: 28800
+      # tgt有效期（会话超时时间）
+#      timeout:
+#        maxTimeToLiveInSeconds: 28800
+      maxTimeToLiveInSeconds: 28800
+      timeToKillInSeconds: 7200
+    st:
+      maxLength: 20
+      # ST使用次数
+      numberOfUses: 1
+      # ST有效期600S
+      timeToKillInSeconds: 600
+  #关闭https验证
+  tgc:
+    secure: false
+
+    # 关闭TGC安全严重，公网慎用
+#    crypto:
+#      enabled: false
+  warningCookie:
+    secure: false
+  #单点登出
+  slo:
+    disabled: false
+    asynchronous: true
+  #验证码,申请地址：https://www.google.com/recaptcha/admin (默认关闭，登录太麻烦)
+#  googleRecaptcha:
+#    verifyUrl: https://www.google.com/recaptcha/api/siteverify
+#    siteKey: 6666LcsZ2oUAAAAAMCxIHtsEcWnyUp4NVHEaatCrwUK
+#    secret: 6666LcsZ2oUAAAAAFjw1U8OGVo8R-F3az_FM7uc-m88
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force  : true
+  cloud:
+    bus:
+      enabled: false
+  thymeleaf:
+    encoding: UTF-8
+    cache: false
+    mode: HTML
+  aop:
+    auto: true
+    proxy-target-class: true
+  application:
+    name: Jbone-CAS
+  rabbitmq:
+    host: 10.251.35.116
+    port: 5672
+    username: admin
+    password: 123456
+    #自rabbitmq2.1.2之后，必须设置AdviceChain，否则启动会报空指针（参见AbstractRabbitListenerContainerFactory.getAdviceChain）
+    #在2.1.3中已修复
+#    listener:
+#      simple:
+#        retry:
+#          max-attempts: 3
+#          enabled: true
+
+  #
+  # 开发环境网络不稳定，连接不上影响服务监控，可以关闭下
+  #
+  mail:
+    host: smtp.163.com
+    ##port: 25
+    username: jbone666@163.com
+    password: jbonesq2018
+    testConnection: false
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+
+#
+# 以下为 zipkin客户端配置
+#
+  sleuth:
+    sampler:
+      probability: 1
+    messaging:
+      enabled: true
+      rabbit:
+        enabled: true
+    enabled: true
+  zipkin:
+    sender:
+      type: rabbit
+    enabled: true
+  main:
+    allow-bean-definition-overriding: true
+
+zipkin.rabbitmq.queue: zipkin
+
+# 服务管理配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"        #暴漏的接口，"*"表示所有web监控接口
+#        exclude:            #不暴漏的接口
+      base-path: /actuator  #监控根路径
+    enabled-by-default: true
+  endpoint:
+    health:
+      show-details: ALWAYS
+  server:
+    port: 30003
+    add-application-context-header: false
+
+
+logging:
+  config: classpath:log4j2.xml
+#  level.root: debug
+
+eureka:
+  client:
+    enabled: true
+    service-url:
+      defaultZone: http://10.251.35.116:10001/eureka,http://10.163.185.74:10001/eureka
+    metadata-map:
+      user.name: jbone
+      user.password: jbone
+    healthcheck.enabled: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+#boot-admin在监控时，需要从metadata-map中获取context-path和port
+    metadata-map:
+      management.context-path: ${management.endpoints.web.base-path}
+      management.port: ${management.server.port}
+ribbon:
+    ConnectTimeout: 500
+    ReadTimeout: 3000
+feign:
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+  hystrix:
+    enabled: true
+
+jbone.rpc.sysServer.feign:
+  protocol: http
+  name: jbone-sys-server
+
+# info接口返回值
+info:
+  app:
+    name: ${spring.application.name}
+    version: 1.0.0
+  java:
+    version: ${java.version}
+  code:
+    git: https://github.com/417511458/jbone
+    gitee: https://gitee.com/majunwei2017/jbone
+  domain: http://www.majunwei.com
+
+# 不允许静态用户
+staticAuthentication: false
+
+# 启用超时设置
+hystrix.command.default.execution.timeout.enabled: true
+# 熔断时间为10S
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
+# 使用线程隔离熔断
+hystrix.command.default.execution.isolation.strategy: THREAD
+# 核心线程数100
+hystrix.threadpool.default.coreSize: 100
+# 超时时熔断
+hystrix.command.default.execution.isolation.thread.interruptOnTimeout: true
+# 取消时是否熔断
+hystrix.command.default.execution.isolation.thread.interruptOnCancel: false

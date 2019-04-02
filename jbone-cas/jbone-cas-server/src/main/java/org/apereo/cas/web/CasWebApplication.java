@@ -71,12 +71,13 @@ public class CasWebApplication {
     public static void main(final String[] args) {
         val properties = CasEmbeddedContainerUtils.getRuntimeProperties(Boolean.TRUE);
         val banner = CasEmbeddedContainerUtils.getCasBannerInstance();
-        new SpringApplicationBuilder(CasWebApplication.class)
+        SpringApplicationBuilder builder = new SpringApplicationBuilder(CasWebApplication.class)
                 .banner(banner)
                 .web(WebApplicationType.SERVLET)
                 .properties(properties)
                 .logStartupInfo(true)
-                .contextClass(CasWebApplicationContext.class)
-                .run(args);
+                .contextClass(CasWebApplicationContext.class);
+        builder.application().setAllowBeanDefinitionOverriding(true);
+        builder.run(args);
     }
 }

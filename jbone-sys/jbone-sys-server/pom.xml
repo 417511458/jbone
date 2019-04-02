@@ -89,7 +89,7 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <excludes>
-                    <exclude>application-prd.properties</exclude>
+                    <exclude>application-prod.properties</exclude>
                     <exclude>application-dev.properties</exclude>
                     <exclude>application.properties</exclude>
                 </excludes>
