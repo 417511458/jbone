@@ -120,6 +120,17 @@
 
         <finalName>jbone-sys-admin</finalName>
         <resources>
+
+            <!-- html不替换变量，直接拷贝(防止替换${id}等) -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.html</include>
+                </includes>
+            </resource>
+
+            <!-- 拷贝其他，并替换变量 -->
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
@@ -127,6 +138,7 @@
                     <exclude>application-prod.properties</exclude>
                     <exclude>application-dev.properties</exclude>
                     <exclude>application.properties</exclude>
+                    <exclude>**/*.html</exclude>
                 </excludes>
             </resource>
 
@@ -140,6 +152,8 @@
                     <include>application.properties</include>
                 </includes>
             </resource>
+
+
         </resources>
     </build>
 </project>
