@@ -1,7 +1,7 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <!-- 定义日志文件 输入位置 -->
     <property name="appName" value="jbone-cms-server" />
-    <property name="logger.root" value="/Users/majunwei" />
+    <property name="logger.root" value="${loggerRoot}" />
     <property name="log.root" value="${logger.root}/logs/${appName}" />
     <appender name="ROOT-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.root}/${appName}.log</file>
