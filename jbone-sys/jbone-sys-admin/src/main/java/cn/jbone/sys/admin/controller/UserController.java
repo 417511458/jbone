@@ -222,9 +222,9 @@ public class UserController {
 
     @RequiresPermissions("sys:user:modifyPassword")
     @Description("跳转至修改密码页面")
-    @RequestMapping("/toModifyPassword/{id}")
-    public String toModifyPassword(@PathVariable("id")String id, ModelMap modelMap){
-        modelMap.put("id",id);
+    @RequestMapping("/toModifyPassword/{userId}")
+    public String toModifyPassword(@PathVariable("userId")String userId, ModelMap modelMap){
+        modelMap.put("userId",userId);
         return "pages/user/modifyPassword";
     }
 
