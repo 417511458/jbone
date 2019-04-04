@@ -3465,7 +3465,10 @@ ads-widget
 .post-content-area .single-post {
   margin-bottom: 25px;
   border-bottom: 1px solid #eee;
-  padding-bottom: 25px;
+  padding: 35px;
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
 }
 
 .post-content-area .single-post .meta-details {
@@ -3546,8 +3549,7 @@ ads-widget
 }
 
 .post-content-area .single-post .primary-btn {
-  background: #fff !important;
-  color: #222 !important;
+  background: #95b1ff;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
@@ -3626,9 +3628,7 @@ ads-widget
 }
 
 .widget-wrap {
-  background: #fafaff;
-  padding: 20px 0px;
-  border: 1px solid #eee;
+
 }
 
 @media (max-width: 991px) {
@@ -3638,9 +3638,10 @@ ads-widget
 }
 
 .widget-wrap .single-sidebar-widget {
-  margin: 30px 30px;
-  padding-bottom: 30px;
+  padding: 30px;
   border-bottom: 1px solid #eee;
+  background: #fff;
+  margin-bottom: 20px;
 }
 
 .widget-wrap .single-sidebar-widget:last-child {

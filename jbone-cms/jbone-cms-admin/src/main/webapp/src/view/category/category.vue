@@ -90,7 +90,10 @@
         </FormItem>
 
         <FormItem label="跳转目标" prop="target">
-          <i-input v-model="modal.data.target" clearable  placeholder="跳转目标"></i-input>
+          <RadioGroup v-model="modal.data.target" type="button">
+            <Radio label="_self">当前页</Radio>
+            <Radio label="_blank">新标签页</Radio>
+          </RadioGroup>
         </FormItem>
 
       </Form>
@@ -262,7 +265,7 @@
             pid: 0,
             title: '',
             url: '',
-            target: '',
+            target: '_blank',
             orders: 0,
             keywords: '',
             description: '',
@@ -392,7 +395,7 @@
           pid: 0,
           title: '',
           url: '',
-          target: '',
+          target: '_blank',
           orders: 0,
           keywords: '',
           description: '',

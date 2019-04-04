@@ -140,10 +140,6 @@
           title: [
             {required: true, message: '链接名称不能为空', trigger: 'blur'},
             {validator: validateName, trigger: 'blur'}
-          ],
-          url: [
-            {required: true, message: 'URL不能为空', trigger: 'blur'},
-            {validator: validateName, trigger: 'blur'},
           ]
         },
 

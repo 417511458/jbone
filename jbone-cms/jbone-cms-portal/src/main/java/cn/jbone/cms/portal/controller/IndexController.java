@@ -1,5 +1,6 @@
 package cn.jbone.cms.portal.controller;
 
+import cn.jbone.cms.common.dataobject.config.ArticleFiledConfigDO;
 import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.portal.service.ArticleService;
 import cn.jbone.cms.portal.service.CommonService;
@@ -23,6 +24,7 @@ public class IndexController {
         int pageNumber = (p == null) ? 1 : p;
 
         ArticleSearchDO articleSearchDO = ArticleSearchDO.build(pageNumber);
+        articleSearchDO.setConfig(ArticleFiledConfigDO.buildAll().includeContent(false));
 
         modelMap.addAttribute("pagedArticles",articleService.findArticles(articleSearchDO));
 
