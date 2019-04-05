@@ -48,6 +48,7 @@
 
               <li th:each="tag,tagStat : ${article.tags}">
                 <a th:href="@{/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.name}">标签</a>
+                <font th:if="${tagStat.index +1 < tagStat.size}">,</font>
               </li>
             </ul>
             <div class="user-details row">
