@@ -3458,8 +3458,8 @@ ads-widget
 }
 
 .post-content-area {
-  padding-top: 10px;
   background-color: #f9f9ff;
+  padding: 10px 100px;
 }
 
 .post-content-area .single-post {
@@ -4618,7 +4618,7 @@ ads-widget
 }
 .post-content blockquote {
   margin: 0 0 1.64em 0;
-  border-left: 3px solid #f4645f;
+  border-left: 3px solid #8490ff;
   padding-left: 12px;
   color: #666664;
 }
@@ -4665,7 +4665,7 @@ ads-widget
   color: #808080;
   font-size: 0.96em;
   background-color: #f9f9f7;
-  padding: 1px 2px;
+  padding: 10px 5px;
   border: 1px solid #dadada;
   border-radius: 3px;
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
@@ -4710,7 +4710,7 @@ ads-widget
 }
 @media (min-width: 1100px) {
   .post-content blockquote {
-    margin-left: -24px;
+    /*# margin-left: -24px;*/
     padding-left: 20px;
     border-width: 4px;
   }

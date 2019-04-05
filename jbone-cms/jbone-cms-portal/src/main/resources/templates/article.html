@@ -56,9 +56,9 @@
 <!-- End banner Area -->
 
 <section class="post-content-area">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-8 posts-list">
+      <div class="col-lg-9 posts-list">
         <div class="single-post row">
           <div class="col-lg-12">
             <div class="feature-img">
@@ -133,11 +133,11 @@
           <h4>请先<a th:href="@{/login}">登录</a>，再发言!</h4>
         </div>
       </div>
-      <div class="col-lg-8 posts-list" th:if="${article == null}">
-        <div class="alert alert-danger" role="alert"><h1>未找到的文章</h1></div>
+      <div class="col-lg-9 posts-list" th:if="${article == null}">
+        <div class="alert alert-danger" role="alert"><h1>未找到文章</h1></div>
       </div>
       <!-- 右侧公共模块，搜索、热门文章、广告、标签云 -->
-      <div th:include="/layout/right :: right" class="col-lg-4 sidebar-widgets"></div>
+      <div th:include="/layout/right :: right" class="col-lg-3 sidebar-widgets"></div>
 
     </div>
   </div>

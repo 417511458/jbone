@@ -81,11 +81,7 @@
        //treeview 源码 https://github.com/jonmiles/bootstrap-treeview
         console.log( treeData);
         $('#tree').treeview({
-            // data: treeData,         // data is not optional
-            // levels: 3,
-            // backColor:'green',
             enableLinks: true,
-            // showBorder: false,
             backColor: '#f3f3f3',
             selectedBackColor: '#8490ff',
 
@@ -94,10 +90,6 @@
             data: treeData
         });
 
-      $('#tree').on('nodeSelected',function(event, data) {
-        console.log( event);
-        console.log( data);
-      });
     });
     /*]]>*/
 </script>

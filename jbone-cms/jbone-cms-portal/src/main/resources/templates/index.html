@@ -40,9 +40,9 @@
   <!-- End banner Area -->
 
 <section class="post-content-area">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-8 posts-list" th:if="${pagedArticles != null && pagedArticles.total > 0}">
+      <div class="col-lg-9 posts-list" th:if="${pagedArticles != null && pagedArticles.total > 0}">
         <div class="single-post row" th:each="article,articleStat : ${pagedArticles.datas}">
           <div class="col-lg-3  col-md-3 meta-details">
             <ul class="tags" th:if="${not #lists.isEmpty(article.tags)}">
@@ -96,12 +96,12 @@
           </ul>
         </nav>
       </div>
-      <div class="col-lg-8 posts-list" th:unless="${pagedArticles != null && pagedArticles.total > 0}">
+      <div class="col-lg-9 posts-list" th:unless="${pagedArticles != null && pagedArticles.total > 0}">
         <div class="alert alert-danger" role="alert"><h1>未搜索到文章</h1></div>
       </div>
 
       <!-- 右侧公共模块，搜索、热门文章、广告、标签云 -->
-      <div th:include="/layout/right :: right" class="col-lg-4 sidebar-widgets"></div>
+      <div th:include="/layout/right :: right" class="col-lg-3 sidebar-widgets"></div>
 
     </div>
   </div>
