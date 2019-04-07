@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.apereo.cas.pm.JbonePasswordManagementConfiguration,\
-  org.apereo.cas.pswd.config.ChangePasswordConfiguration
+  org.apereo.cas.pswd.config.ChangePasswordConfiguration,org.apereo.cas.web.authentication.JboneAuthenticationConfiguration

@@ -45,6 +45,11 @@ public class CasProperties implements Serializable {
     private long clientSessionTimeout = 1000 * 60 * 3 * 10;
 
     /**
+     * 登录需要的角色
+     */
+    private String requiredRole = "sso";
+
+    /**
      * 权限过滤规则，限制需要CAS过滤的请求路径
      */
     private LinkedHashMap<String,String> filterChainDefinition = new LinkedHashMap<String,String>();
@@ -137,6 +142,14 @@ public class CasProperties implements Serializable {
         this.clientSessionTimeout = clientSessionTimeout;
     }
 
+    public String getRequiredRole() {
+        return requiredRole;
+    }
+
+    public void setRequiredRole(String requiredRole) {
+        this.requiredRole = requiredRole;
+    }
+
     @Override
     public String toString() {
         return "CasProperties{" +
@@ -148,6 +161,7 @@ public class CasProperties implements Serializable {
                 ", successUrl='" + successUrl + '\'' +
                 ", unauthorizedUrl='" + unauthorizedUrl + '\'' +
                 ", clientSessionTimeout=" + clientSessionTimeout +
+                ", requiredRole='" + requiredRole + '\'' +
                 ", filterChainDefinition=" + filterChainDefinition +
                 '}';
     }

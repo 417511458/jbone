@@ -7,9 +7,9 @@ server:
     context-path: /cas
 cas:
   authn:
-    shiro:
-      requiredRoles: sso
-      location: classpath:shiro.ini
+#    shiro:
+#      requiredRoles: sso
+#      location: classpath:shiro.ini
     pm:
       enabled: true
       #policyPattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d){8,10}
