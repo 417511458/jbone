@@ -69,6 +69,11 @@
           <div class="col-lg-12 post-content" th:if="${article.articleData != null}" th:utext="${article.articleData.content}">
             文章内容
           </div>
+          <div class="col-lg-12">
+            原创文章，转载请注明出处：<a th:href="@{/article/{articleId}(articleId=${article.id})}" th:text="'jbone - ' + ${article.title}">文章标题</a>
+          </div>
+
+
         </div>
         <div class="navigation-area">
           <div class="row">

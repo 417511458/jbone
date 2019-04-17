@@ -186,7 +186,7 @@ public class ArticleConverter {
             article = new Article();
         }
 
-        BeanUtils.copyProperties(articleDO,article,"category","tags","template","articleData","addTime","updateTime");
+        BeanUtils.copyProperties(articleDO,article,"category","tags","template","articleData","addTime","updateTime","hits");
 
         article.setCategory(categoryRepository.getOne(articleDO.getCategory().getId()));
         article.setTags(tagConverter.toTagsByIds(articleDO.getTagIds()));

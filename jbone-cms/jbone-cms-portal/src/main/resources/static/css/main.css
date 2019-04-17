@@ -4509,6 +4509,10 @@ ads-widget
   color: #444443;
   margin: 30px 0;
 }
+
+.post-content div{
+  margin: 10px 0px;
+}
 .post-content h1,
 .post-content h2,
 .post-content h3,
@@ -4523,7 +4527,7 @@ ads-widget
   margin: 0.67em 0;
 }
 .post-content > h1 {
-  margin-top: 0;
+  margin-top: 10px;
   font-size: 1.8em;
 }
 .post-content h2 {
