@@ -43,7 +43,16 @@
   <div class="main-content post-content" th:if="${article != null && article.articleData != null}" th:utext="${article.articleData.content}">
     文章内容
   </div>
-  <div class="main-content">
+    <!-- 如果没有链接文章，则展示子栏目 -->
+  <div class="main-content post-content" th:if="${article == null && categoryToc != null }">
+    <ul th:if="${not #lists.isEmpty(categoryToc.children)}">
+      <li th:each="cate,cateStat : ${categoryToc.children}">
+        <a th:href="@{/special/{categoryId}/{categoryTocId}(categoryId=${category.id},categoryTocId=${cate.id})}" th:text="${cate.title}"></a>
+      </li>
+    </ul>
+
+  </div>
+  <div class="main-content" th:if="${categoryToc != null && article != null}">
     原创文章，转载请注明出处：<a th:href="@{/special/{categoryId}/{categoryTocId}(categoryId=${category.id},categoryTocId=${categoryToc.id})}" th:text="'jbone - ' + ${article.title}">文章标题</a>
   </div>
 </div>
@@ -68,15 +77,13 @@
 <script th:src="@{/js/owl.carousel.min.js}"></script>
 <script th:src="@{/js/mail-script.js}"></script>
 <script type="text/javascript" th:src="@{/js/jquery.nav.js}"></script>
-<script type="text/javascript" th:src="@{/js/vendor/syntax-highlighter/scripts/shCore.js}"></script>
-<script type="text/javascript" th:src="@{/js/vendor/syntax-highlighter/scripts/shBrushXml.js}"></script>
-<script type="text/javascript" th:src="@{/js/vendor/syntax-highlighter/scripts/shBrushCss.js}"></script>
-<script type="text/javascript" th:src="@{/js/vendor/syntax-highlighter/scripts/shBrushJScript.js}"></script>
-<script type="text/javascript" th:src="@{/js/vendor/syntax-highlighter/scripts/shBrushPhp.js}"></script>
 <script th:src="@{/js/main.js}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+
+<script th:src="@{/js/common.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-      SyntaxHighlighter.all();
+      // SyntaxHighlighter.all();
 
     $(document).ready(function() {
         console.log( "ready!" );

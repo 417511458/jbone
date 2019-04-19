@@ -152,7 +152,8 @@ public class CategoryController {
                 modelMap.addAttribute("specialTree", specialTreeVos);
                 modelMap.addAttribute("categoryToc",categoryTocDO);
                 if(categoryTocDO.getArticle() != null){
-                    ArticleResponseDO articleResponseDO = articleService.findById(categoryTocDOS.get(0).getArticle().getId());
+                    articleService.hits(categoryTocDO.getArticle().getId());
+                    ArticleResponseDO articleResponseDO = articleService.findById(categoryTocDO.getArticle().getId());
                     modelMap.addAttribute("article",articleResponseDO);
                 }
             }

@@ -64,7 +64,7 @@ public class ArticleService {
     }
 
     public void toArticleDetail(ModelMap modelMap,Long id){
-        articleApi.hits(id); //增加阅读量
+        hits(id);
         ArticleResponseDO article = findById(id);
         if(article == null){
             return;
@@ -76,6 +76,10 @@ public class ArticleService {
         }
 
         toArticleDetail(modelMap,article,categoryDO);
+    }
+
+    public void hits(Long id){
+        articleApi.hits(id); //增加阅读量
     }
 
     public void toArticleDetail(ModelMap modelMap,ArticleResponseDO article,CategoryDO categoryDO){

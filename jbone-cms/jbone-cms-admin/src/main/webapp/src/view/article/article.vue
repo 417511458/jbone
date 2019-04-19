@@ -81,7 +81,7 @@
         </FormItem>
         <FormItem label="封面图" prop="frontCover" >
           <i-input v-model="modal.data.frontCover" clearable placeholder="封面图"></i-input>
-          <img :src="modal.data.frontCover" />
+          <img :src="modal.data.frontCover" style="width: 200px;" />
         </FormItem>
 
         <FormItem label="文章内容" prop="articleData.content" >
@@ -231,12 +231,8 @@
 
         ruleValidate: {
           title: [
-            {required: true, message: '链接名称不能为空', trigger: 'blur'},
+            {required: true, message: '标题不能为空', trigger: 'blur'},
             {validator: validateName, trigger: 'blur'}
-          ],
-          url: [
-            {required: true, message: 'URL不能为空', trigger: 'blur'},
-            {validator: validateName, trigger: 'blur'},
           ]
         },
 
@@ -329,7 +325,7 @@
       },
 
       toEditModel(index) {
-        this.modal.title = '修改链接';
+        this.modal.title = '修改文章';
         this.modal.showModal = true;
         this.modal.data = {
           id: 0,
