@@ -93,6 +93,8 @@
                     <fork>true</fork>
                 </configuration>
             </plugin>
+            <!-- npm打包，打包cms-admin的时候放开 -->
+            <!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -131,6 +133,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
