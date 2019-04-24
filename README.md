@@ -1,6 +1,11 @@
 **项目官网：[http://jbone.cn](http://jbone.cn)（基于jbone cms构建)**
 
+[开发文档](http://jbone.cn/category/37)
+
+[部署文档](http://jbone.cn/category/38)
+
 jbone主要关注两个方面，一个是微服务架构的落地实现，另一个更重要的是进行深入的技术探究。
+
 # jbone定位
 ## 学习交流探技术
 随着微服务的发展，出现了很多微服务架构的解决方案，Spring Cloud就是其中的典型代表。jbone是基于Spring Cloud搭建的微服务项目，包括服务注册与发现、服务监控、服务管理、服务网关、服务熔断等常见微服务组件。 除Spring Cloud以外，会根据业务特点选择合适的解决方案，如单点登录的CAS、安全框架Shiro等。具体参考《技术选型》。
@@ -133,8 +138,3 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 ![Jbone CMS专题](doc/images/cms_special.png)
 **后台管理**
 ![Jbone CMS后台管理](doc/images/cms_admin.png)
-
-# 系统文档
-[开发文档](http://jbone.cn/category/37)
-
-[部署文档](http://jbone.cn/category/38)
