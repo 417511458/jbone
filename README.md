@@ -1,18 +1,35 @@
+小王负责的项目今天就要上线了。
 
-**项目官网：[http://jbone.cn](http://jbone.cn)（基于jbone cms构建)**
+“小王啊，你这个项目上了线之后，还有个新项目哈，跟这个项目功能都差不多，就是登录、权限管理再加上些业务管理。这些功能你都做过，估计拷拷很快就能完事！”
 
-# 概述
-## jbone定位
-### 学习交流
-随着微服务的发展，出现了很多微服务架构的解决方案，Spring Cloud就是其中的典型代表。jbone是基于Spring Cloud搭建的微服务项目，包括服务注册与发现、服务监控、服务管理、服务网关、服务熔断等常见微服务组件。
-除Spring Cloud以外，会根据业务特点选择合适的解决方案，如单点登录的CAS、安全框架Shiro等。具体参考《技术选型》。
+“好的，大王总！”
+
+“尼玛啊，老是这样的苦力活，技术也没啥提升。有没有更好的方案可以只开发一次就好了呢？”（内心戏）
+
+经过一番折腾，小王终于找到了一种微服务解决方案，把新项目搞上了线。
+
+搞完之后小王飘了起来，果断跳个槽，准备去面试。
+
+“小王啊，你这个微服务项目是你负责的啊，刚好我们需要这样的人才，你简单说下微服务注册中心的服务注册和发现的机制，以及他是怎么保证服务可用性和数据一致性的呢？”
+
+懵逼脸～ （平时只关注实现了，哪有时间深入了解内部机制）
+
+是的，我们在平时项目开发的时候，一个是要注重业务的快速迭代，另一个也要注重自身技术深度的修炼。
+
+jbone主要关注两个方面，一个是微服务架构的落地实现，另一个更重要的是进行深入的技术探究。
+# jbone定位
+## 学习交流探技术
+随着微服务的发展，出现了很多微服务架构的解决方案，Spring Cloud就是其中的典型代表。jbone是基于Spring Cloud搭建的微服务项目，包括服务注册与发现、服务监控、服务管理、服务网关、服务熔断等常见微服务组件。 除Spring Cloud以外，会根据业务特点选择合适的解决方案，如单点登录的CAS、安全框架Shiro等。具体参考《技术选型》。
 
 jbone项目主要关注两个方面的技术交流：
-* 功能实现：为技术选型相同的项目，提供实现参考。
-* 技术探究：jbone在实现功能的同时，会针对选择的技术框架进行深入探究，使用的同时获得技术提升；出现问题能尽快的定位问题。知道How to use,更要知道How it works。（**技术探究文章在末尾**）
-### 造轮子
+* 功能实现：了解技术组件并落地实现，为相同技术选型的项目，提供实现参考。
+* 技术探究：实现功能的同时，针对选择的技术框架进行深入探究，使用的同时获得技术提升。知道How to use,更要知道How it works。（技术探究文章会以专题文章的形式发表到jbone官网）
+## 落地实现造轮子
 造轮子的成本非常高，企业快速的业务发展，更想拿来即用。jbone在技术交流的过程中会沉淀出很多轮子，如服务治理、系统管理、内容管理、电商平台等解决方案。使中小企业花最少的成本建立自己的服务治理体系、电商平台、企业管理平台、支付平台等。
-## 交流方式
+# 交流方式
+
+项目官网：http://jbone.cn（基于jbone cms构建)
+
 QQ群：547104190（1群）、992113778（2群）
 
 公众号：writebugs
@@ -21,57 +38,49 @@ QQ群：547104190（1群）、992113778（2群）
 
 作者微信：dreamming_now
 
-# 系统要求
+微信群：先添加作者好友再加入
 
+# 系统简介
+## 系统要求
 **JDK11+**
 
 
-# 系统设计
-## jbone功能架构图
-![Jbone功能架构图](doc/images/功能架构图.png)
+## 系统设计
+### jbone功能架构图
+![Jbone功能架构图](doc/images/features.png)
 
-## 项目模块划分
+### 项目模块划分
 * jbone-cas : 用户单点登录模块
-    * jbone-cas-client：客户端jar包，用于集成到需要CAS授权的系统
-    * jbone-cas-server：CAS服务端，单独部署，用于完成单点登录、票据管理等
+    * jbone-cas-client：客户端jar包，用于系统集成单点登录
+    * jbone-cas-server：CAS服务端，单独部署，用于单点登录、服务授权、找回密码等
 * jbone-sm : 服务管理模块
     * jbone-sm-admin : 服务管理系统，包括服务监控、服务管理等
     * jbone-sm-gateway: 服务网关
     * jbone-sm-monitor: 服务监控
     * jbone-sm-register : 服务注册中心，原则上所有服务都要注册进来
-    * jbone-sm-zipkinserver : 基于zipkin的调用链监控系统
+    * jbone-sm-zipkinserver : 基于zipkin的调用链跟踪系统
 * jbone-sys : 系统管理模块
     * jbone-sys-admin ： 系统管理后台
     * jbone-sys-api : 系统服务对外接口定义
-    * jbone-sys-api-starter : 基于Spring Cloud Feign的调用实现
+    * jbone-sys-api-starter : 系统服务接口启动器，引入jar包即可调用系统服务
     * jbone-sys-core : 系统管理核心
+    * jbone-sys-common : 系统管理公共模块
     * jbone-sys-server : 系统管理服务
 * jbone-cms ：内容管理模块
     * jbone-cms-admin: cms后台管理
     * jbone-cms-api: cms对外接口定义
-    * jbone-cms-api-starter: cms对外接口启动器
+    * jbone-cms-api-starter: cms对外接口启动器，引入jar包接口调用cms服务
     * jbone-cms-common: cms公共模块
     * jbone-cms-core: cms核心模块
     * jbone-cms-portal: cms前端
     * jbone-cms-server: cms后端服务
 * jbone-bpm : 工作流模块(未完成)
-* jbone-common : 共用模块
+* jbone-common : 公共模块
 * jbone-configuration : 公共配置模块
 * jbone-b2b2c : 多店铺电商平台模块 (未完成)
 * jbone-ui : 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。
 
-## 非功能设计
-### 可用性
-HA >=99.99%（无任何单点问题，对单点故障零容忍）
-### 性能设计
-RTT < 1S（客户端的感受会受客户机器和网络的影响）
-
-单机QPS：>100（系统容量根据机器的大小伸缩）
-### 伸缩性设计
-所有系统可以根据访问量，通过添加／减少机器的数量，实现系统伸缩
-### 耦合性
-所有系统均单独部署，除权限等基础数据外，全都相互隔离
-## 技术选型
+### 技术选型
 技术 | 简介 | 网址
 ---- | ------ | ----
 Spring Boot | 基础构建框架，用于快速整合各资源 | [https://projects.spring.io/spring-boot/](https://projects.spring.io/spring-boot/)
@@ -96,22 +105,11 @@ Maven | 项目构建管理  | [http://maven.apache.org/](http://maven.apache.org
 Redis | 分布式缓存数据库 | [https://redis.io/](https://redis.io/)
 Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 
-# 功能预览
-## Jbone CAS(认证中心)
-### 实现方式
-服务采用Apereo CAS作为登录认证中心，底层集成Shiro，通过Spring Cloud Feign声明式调用权限数据，完成用户授权。
-### 定制登录认证页面
-考虑到不同系统可能有显示不同风格的登录页面，后端支持配置系统登录皮肤（登录皮肤需要自己开发），也可使用默认视图。
-
-默认视图加载系统的名字和描述信息，以下为登录服务管理系统的视图（登录不同系统会切换视图的展现）：
+## 功能预览
+### Jbone CAS(认证中心)
 ![CAS登录](doc/images/loginview.png)
-## Jbone SM Admin(服务管理中心)
+### Jbone SM Admin(服务管理中心)
 ### 实现方式
-集成Spring Boot Admin 、Spring Cloud Hystrix，完成服务和JVM的监控
-### 进入方式
-浏览器输入：http://jbone-sm-admin.majunwei.com:100002/admin,跳转至CAS认证中心，输入jbone／jbone，即可进入
-### 功能简介
-
 **系统监控墙**
 
 ![系统监控墙](doc/images/bootadmin-wallboard.png)
@@ -127,135 +125,32 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 **Hystrix流量和熔断监控**
 ![Hystrix流量和熔断监控](doc/images/hystrix监控.png)
 
-## 调用链跟踪
-### trace跟踪
+### 调用链跟踪
 ![trace](doc/images/zipkin_01.png)
 
-## Jbone系统管理
-### 系统管理
+### Jbone系统管理
+**系统管理**
 ![Jbone系统管理](doc/images/systemManager.png)
-### 用户管理
+**用户管理**
 ![用户管理](doc/images/userManager.png)
-### 角色管理
+**角色管理**
 ![角色管理](doc/images/roleManager.png)
-### 菜单管理
+**菜单管理**
 ![菜单管理](doc/images/menuManager.png)
-### 权限管理
+**权限管理**
 ![权限管理](doc/images/permissionManager.png)
-# jbone部署说明(默认HTTP)
-## 下载代码
-将代码clone下来并导入idea或eclipse；
-## 创建数据库
-注意要在application.properties里修改自己到数据库用户名和密码
-### jbone_sys
-创建数据库jbone_sys,并通过doc/jbone_sys.sql创建表和初始化数据；
-### jbone_cas
-创建数据库jbone_cas,并通过doc/jbone_cas.sql创建表和初始化数据；
-### jbone_zipkin（调用链使用）
-创建数据库jbone_zipkin,并通过doc/jbone_zipkin.sql创建表和初始化数据；
-## 启动redis
-安装redis并在本地启动
-## 安装并启动RabbitMq(调用链使用)
-安装RabbitMq并在本地启动
-## 配置域名
-```javascript
-127.0.0.1 jbone-sm-register.majunwei.com
-127.0.0.1 jbone-cas.majunwei.com
-127.0.0.1 jbone-sys-server.majunwei.com
-127.0.0.1 jbone-sm-admin.majunwei.com
-127.0.0.1 jbone-sys-admin.majunwei.com
-127.0.0.1 jbone-sm-zipkinserver.majunwei.com
-127.0.0.1 jbone-eb-portal.majunwei.com
-127.0.0.1 jbone-eb-manager.majunwei.com
-127.0.0.1 jbone-eb-consumer.majunwei.com
-127.0.0.1 jbone-eb-seller.majunwei.com
-127.0.0.1 jbone-bpm-admin.majunwei.com
-127.0.0.1 jbone-bpm-server.majunwei.com
-```
 
-## 启动应用
-依次启动：
+### Jbone CMS（内容管理系统）
+**首页**
+![Jbone CMS首页](doc/images/cms_index.png)
+**文章详情页**
+![Jbone CMS文章](doc/images/cms_article.png)
+**专题页**
+![Jbone CMS专题](doc/images/cms_special.png)
+**后台管理**
+![Jbone CMS后台管理](doc/images/cms_admin.png)
 
-1. jbone-sm-register（必启）
+# 系统文档
+[开发文档](http://jbone.cn/category/37)
 
-2. jbone-sys-server（必启）
-
-3. jbone-cas-server（必启）
-
-4. jbone-sys-admin（系统管理）
-
-5. jbone-sm-admin （服务管理）
-
-6. jbone-sm-zipkinserver （服务调用链）
-
-
-## 进入系统
-
- 系统名称 | 系统地址 
- ---- | ------ 
- 系统管理 | http://jbone-sys-admin.majunwei.com:20002/ |
- 服务管理 | http://jbone-sm-admin.majunwei.com:10002/ |
- 服务调用链 | http://jbone-sm-zipkinserver.majunwei.com:10003/ |
-
-默认用户名密码：jbone/jbone
-
-## [https配置方式](doc/https部署.md)
-
-
-# 技术探究
-
-## Spring Cloud篇
-[Eureka实现原理（推荐）](https://mp.weixin.qq.com/s/AhRYd0Iwrxb_nsN4F9E9DQ)
-
-[深入理解Spring Cloud - Spring Cloud Netflix Eureka](http://majunwei.com/view/201808130810451238.html)
-
-[深入理解Eureka-Eureka架构综述](http://www.majunwei.com/view/201808130819216747.html)
-
-[深入理解Eureka-Eureka数据结构](http://www.majunwei.com/view/201808130944142253.html)
-
-[深入理解Eureka-Eureka Register机制](http://www.majunwei.com/view/201808130936271290.html)
-
-[深入理解Eureka-Eureka Renew机制](http://www.majunwei.com/view/201808130925153632.html)
-
-[深入理解Eureka-Eureka Cancel机制](http://www.majunwei.com/view/201808130912315418.html)
-
-[深入理解Eureka-Eureka Evict机制](http://www.majunwei.com/view/201808130902525688.html)
-
-[深入理解Eureka-Eureka Server缓存机制](http://www.majunwei.com/view/201808131007529750.html)
-
-[深入理解Eureka-Eureka Server节点复制机制](http://www.majunwei.com/view/201808130854525492.html)
-
-[深入理解Eureka-Eureka Client获取注册信息机制](http://www.majunwei.com/view/201808131001085867.html)
-
-[深入理解Eureka-Eureka Server自我保护机制](http://www.majunwei.com/view/201808131015366640.html)
-
-[深入理解Eureka-Eureka Region Zone](http://www.majunwei.com/view/201808130953353185.html)
-
-[深入理解Eureka-Eureka配置列表](http://www.majunwei.com/view/201808130827002632.html)
-
-## CAS 篇
-
-[Spring Web Flow - Web流程实现利器](https://mp.weixin.qq.com/s/dDCIdSRW6otFopvS1DDG9g)
-
-[深入理解CAS - CAS票据](http://majunwei.com/view/201807171040041163.html)
-
-[CAS认证和注销过程](http://majunwei.com/view/201807122100410471.html)
-
-[使用spring-boot-admin监控CAS服务](http://majunwei.com/view/201808080954075692.html)
-
-
-
-# 重大更新记录
-**2019.1.9**
-
-1、Spring cloud由Dalston.SR3升级到Finchley.SR2
-
-2、Spring boot 由1.5.8升级到2.0.6
-
-3、CAS由5.2.0升级到6.0.0
-
-4、JDK由1.8升级到11
-
-遗留问题：
-
-1、jbone-sm-zipkinserver调用链和流量监控未完成；
+[部署文档](http://jbone.cn/category/38)
