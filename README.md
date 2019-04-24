@@ -98,7 +98,6 @@ Mysql | 对象关系数据库 | [https://www.mysql.com/](https://www.mysql.com/)
 ### Jbone CAS(认证中心)
 ![CAS登录](doc/images/loginview.png)
 ### Jbone SM Admin(服务管理中心)
-### 实现方式
 **系统监控墙**
 
 ![系统监控墙](doc/images/bootadmin-wallboard.png)
