@@ -17,6 +17,8 @@ import org.springframework.util.CollectionUtils;
 
 import javax.security.auth.login.FailedLoginException;
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JboneAuthenticationHandler extends AbstractUsernamePasswordAuthenticationHandler {
 
@@ -58,9 +60,11 @@ public class JboneAuthenticationHandler extends AbstractUsernamePasswordAuthenti
             logger.warn("用户[{}]没有登录权限",credential.getUsername());
             throw new FailedLoginException("用户没有登录权限");
         }
+        Map<String,Object> attributes = new HashMap<>();
+        attributes.put("userInfo",userResponseDO);
 
         return createHandlerResult(credential,
-                this.principalFactory.createPrincipal(credential.getUsername()));
+                this.principalFactory.createPrincipal(credential.getUsername(),attributes));
 
 
     }

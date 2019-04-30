@@ -33,7 +33,7 @@ public class TokenFilter extends ZuulFilter {
         return true;
     }
 
-    public final static String TOKEN = "token";
+    public final static String TOKEN_KEY = "J-Token";
     public final static String SESSION = "session";
     public final static String USER = "user";
 
@@ -49,7 +49,7 @@ public class TokenFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
-        String token = request.getParameter(TOKEN);
+        String token = request.getHeader(TOKEN_KEY);
 
 
         JboneCasSession session = null;
@@ -76,7 +76,7 @@ public class TokenFilter extends ZuulFilter {
         logger.info("session: " + session.toString());
 
 
-        requestContext.set(TOKEN,token);
+        requestContext.set(TOKEN_KEY,token);
         //将用户信息保存到上下文
         UserResponseDO userModel = session.getUserInfo();
         requestContext.set(USER,userModel);

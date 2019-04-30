@@ -4,6 +4,7 @@ import routes from './routers'
 import store from '@/store'
 import iView from 'iview'
 import { setToken, getToken, canTurnTo, setTitle } from '@/libs/util'
+import { handleAuth } from '@/libs/auth'
 import config from '@/config'
 const { homeName } = config
 
@@ -20,8 +21,12 @@ const turnTo = (to, access, next) => {
 }
 
 router.beforeEach((to, from, next) => {
+  let code = to.query.code
+  handleAuth(code)
+
   iView.LoadingBar.start();
-  // const token = getToken();
+  // to.param;
+
   if(to.name === LOGIN_PAGE_NAME){
     next({
       name: homeName // 跳转到homeName页

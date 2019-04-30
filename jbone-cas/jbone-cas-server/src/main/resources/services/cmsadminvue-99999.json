@@ -1,0 +1,13 @@
+{
+  "@class" : "org.apereo.cas.support.oauth.services.OAuthRegisteredService",
+  "clientId" : "cmsadminvue",
+  "clientSecret" : "cmsadminvue",
+  "id" : 99999,
+  "serviceId" : "^http://jbone-cms-admin-vue.majunwei.com.*",
+  "name" : "Jbone内容管理系统",
+  "description" : "Jbone内容管理系统",
+  "generateRefreshToken": true,
+  "bypassApprovalPrompt": true,
+  "supportedGrantTypes": [ "java.util.HashSet", [ "authorization_code", "password","refresh_token","client_credentials" ] ],
+  "supportedResponseTypes": [ "java.util.HashSet", [ "code", "token","device_code" ] ]
+}

@@ -8,6 +8,8 @@ export const TOKEN_KEY = 'j_s_id';
 
 export const USER_ID_KEY = 'j_u_id';
 
+export const RT_TOKEN_KEY = 'j_r_id';
+
 export const setUserId = (uid) => {
   Cookies.set(USER_ID_KEY, uid, {expires: cookieExpires || 1});
 }
@@ -29,6 +31,20 @@ export const getToken = () => {
   const token = Cookies.get(TOKEN_KEY);
   if (token) return token;
   else return false
+}
+
+export const setRToken = (rtoken) => {
+  Cookies.set(RT_TOKEN_KEY, rtoken, {expires: cookieExpires || 1});
+}
+
+export const getRToken = () => {
+  const rtoken = Cookies.get(RT_TOKEN_KEY);
+  if (rtoken) return rtoken;
+  else return false
+}
+
+export const clearRToken = () => {
+  Cookies.set(RT_TOKEN_KEY, '', -1);
 }
 
 export const hasChild = (item) => {

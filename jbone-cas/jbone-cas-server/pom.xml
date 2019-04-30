@@ -3529,7 +3529,7 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <version>1.9.2</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -3557,7 +3557,7 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
             <version>1.9.2</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -3585,7 +3585,7 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -3613,7 +3613,7 @@
             <groupId>org.apereo.cas</groupId>
             <artifactId>cas-server-core-cookie</artifactId>
             <version>${cas.version}</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -3696,7 +3696,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-client</artifactId>
             <version>2.1.0.RELEASE</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>spring-web</artifactId>
@@ -3851,7 +3851,7 @@
             <groupId>com.github.kstyrc</groupId>
             <artifactId>embedded-redis</artifactId>
             <version>0.6</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -3883,7 +3883,7 @@
             <groupId>com.unboundid</groupId>
             <artifactId>unboundid-ldapsdk</artifactId>
             <version>4.0.9</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -3919,7 +3919,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.23.4</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -3959,7 +3959,7 @@
             <groupId>org.objenesis</groupId>
             <artifactId>objenesis</artifactId>
             <version>2.6</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>mockito-all</artifactId>
@@ -3991,7 +3991,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4019,7 +4019,7 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.3.2</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4047,7 +4047,7 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.3.2</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4075,7 +4075,7 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
             <version>5.3.2</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4103,7 +4103,7 @@
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>5.3.2</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4131,7 +4131,7 @@
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-engine</artifactId>
             <version>1.3.2</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4159,7 +4159,7 @@
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite-api</artifactId>
             <version>1.3.2</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4187,7 +4187,7 @@
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
             <version>1.3.2</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4215,7 +4215,7 @@
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>2.4.1</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4243,7 +4243,7 @@
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
             <version>1.5.0</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4279,7 +4279,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>5.1.3.RELEASE</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4311,7 +4311,7 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20160810</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4339,7 +4339,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
             <version>2.1.1.RELEASE</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>spring-web</artifactId>
@@ -4407,7 +4407,7 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>2.11.1</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -4439,7 +4439,7 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.11.1</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -4471,7 +4471,7 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jcl</artifactId>
             <version>2.11.1</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -4503,7 +4503,7 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-web</artifactId>
             <version>2.11.1</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -4535,7 +4535,7 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j18-impl</artifactId>
             <version>2.11.1</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -4567,7 +4567,7 @@
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
             <version>3.4.2</version>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4596,7 +4596,7 @@
             <artifactId>cas-server-core-api-test-category</artifactId>
             <version>${cas.version}</version>
             <classifier>tests</classifier>
-            
+
             <exclusions>
                 <exclusion>
                     <artifactId>cglib</artifactId>
@@ -4823,6 +4823,11 @@
 
         <dependency>
             <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-redis-core</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
             <artifactId>cas-server-support-redis-ticket-registry</artifactId>
             <version>${cas.version}</version>
         </dependency>
@@ -4843,6 +4848,27 @@
             <version>${cas.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-oauth-core</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-oauth-api</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-oauth-webflow</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-web</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
 
         <!-- cas -->
 
@@ -5052,7 +5078,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            
+
         </dependency>
 
 
@@ -5081,6 +5107,11 @@
             <artifactId>jbone-ui</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-cas-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator
         <dependency>
             <groupId>org.webjars</groupId>

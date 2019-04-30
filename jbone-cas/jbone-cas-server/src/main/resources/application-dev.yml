@@ -27,6 +27,9 @@ cas:
         id: 151e91b5b0018290a074
         secret: 3db661368363a8775d7b6bf7603710e6d90f490e
         client-name: github
+  httpWebRequest.cors.enabled: true
+  httpWebRequest.cors.allowCredentials: true
+  httpWebRequest.cors.allowOrigins[0]: "*"
   server:
     name: http://jbone-cas.majunwei.com:30001
     prefix: http://jbone-cas.majunwei.com:30001/cas

@@ -29,9 +29,10 @@ class HttpRequest {
       timeout: 5000,
       withCredentials: true,
       headers: {
-        'Access-Control-Allow-Origin': 'http://jbone-cms-admin.majunwei.com:50002',
+        'Access-Control-Allow-Origin': 'http://jbone-cms-admin-vue.majunwei.com:8080',
         'Access-Control-Allow-Credentials': true,
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'J-Token': getToken()
         //'X-Requested-With': 'XMLHttpRequest',
       },
       crossDomain: true,
@@ -106,8 +107,20 @@ class HttpRequest {
     });
   }
   request (options) {
-    const instance = axios.create({params:{token:getToken(),userId:getUserId()}});
+    const instance = axios.create();
     options = Object.assign(this.getInsideConfig(), options);
+    this.interceptors(instance, options.url);
+    return instance(options);
+  }
+
+  requestByBaseUrl (burl,options) {
+    const instance = axios.create();
+    options = Object.assign(this.getInsideConfig(), options);
+    console.log('options:')
+    console.log(options)
+    console.log("instance:")
+    console.log(instance)
+    options.baseURL = burl;
     this.interceptors(instance, options.url);
     return instance(options);
   }
