@@ -62,14 +62,15 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-cas-client</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.shiro</groupId>
-                    <artifactId>shiro-spring-boot-starter</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>jbone-cas-common</artifactId>
+            <version>1.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
     </dependencies>
 
 

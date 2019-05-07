@@ -1,14 +1,15 @@
 package cn.jbone.sm.gateway.filters;
 
-import cn.jbone.cas.client.session.JboneCasSession;
-import cn.jbone.cas.client.session.JboneCasSessionDao;
+import cn.jbone.cas.common.JboneToken;
 import cn.jbone.common.rpc.Result;
+import cn.jbone.sm.gateway.constants.GatewayConstants;
+import cn.jbone.sm.gateway.token.TokenRepository;
 import cn.jbone.sys.common.UserResponseDO;
 import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
-import org.apache.shiro.session.UnknownSessionException;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,58 +34,46 @@ public class TokenFilter extends ZuulFilter {
         return true;
     }
 
-    public final static String TOKEN_KEY = "J-Token";
-    public final static String SESSION = "session";
-    public final static String USER = "user";
-
-
-    private JboneCasSessionDao sessionDao;
+    private TokenRepository tokenRepository;
 
     public TokenFilter(){}
-    public TokenFilter(JboneCasSessionDao sessionDao){
-        this.sessionDao = sessionDao;
+    public TokenFilter(TokenRepository tokenRepository){
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
     public Object run() throws ZuulException {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
-        String token = request.getHeader(TOKEN_KEY);
+        String token = request.getHeader(GatewayConstants.TOKEN_KEY);
 
+        if(StringUtils.isBlank(token)){
+            authErrorSession(requestContext,token);
+            return null;
+        }
 
-        JboneCasSession session = null;
+        JboneToken jboneToken = null;
         try {
-            session = (JboneCasSession) sessionDao.readSession(token);
-        } catch (UnknownSessionException e) {
+            jboneToken = tokenRepository.getAndRefresh(token);
+        } catch (Exception e) {
+            logger.error("获取token失败 {}",token,e);
             authErrorSession(requestContext,token);
             return null;
         }
-        if(session == null){
-            authErrorSession(requestContext,token);
-            return null;
-        }
-
-        if(!session.getHost().equals(request.getRemoteHost())){
-            logger.info("host is not mached.session host:{},remoteHost:{}",session.getHost(),request.getRemoteHost());
+        if(jboneToken == null){
+            logger.info("token is not found: {}",token);
             authErrorSession(requestContext,token);
             return null;
         }
 
-        //更新下超时时间，防止过期
-        sessionDao.update(session);
 
-        logger.info("session: " + session.toString());
-
-
-        requestContext.set(TOKEN_KEY,token);
-        //将用户信息保存到上下文
-        UserResponseDO userModel = session.getUserInfo();
-        requestContext.set(USER,userModel);
+        requestContext.set(GatewayConstants.TOKEN_KEY,token);
+        //将用户ID保存到上下文
+        requestContext.set(GatewayConstants.USER_ID,jboneToken.getUserResponseDO().getBaseInfo().getId());
         return null;
     }
 
     private void authErrorSession(RequestContext requestContext,String token){
-        logger.info("token is not found: {}",token);
         requestContext.getResponse().setContentType("text/html;charset=UTF-8");
         requestContext.setSendZuulResponse(false);
         requestContext.setResponseStatusCode(401);
