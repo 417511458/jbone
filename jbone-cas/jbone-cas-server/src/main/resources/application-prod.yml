@@ -111,6 +111,8 @@ cas:
   slo:
     disabled: false
     asynchronous: true
+  logout:
+    removeDescendantTickets: true
   #验证码,申请地址：https://www.google.com/recaptcha/admin (默认关闭，登录太麻烦)
 #  googleRecaptcha:
 #    verifyUrl: https://www.google.com/recaptcha/api/siteverify

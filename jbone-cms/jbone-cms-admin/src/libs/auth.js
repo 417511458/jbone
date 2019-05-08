@@ -1,13 +1,16 @@
 import { setToken, getToken,clearToken,setRToken, getRToken,clearRToken, canTurnTo, setTitle } from '@/libs/util'
 import axios from '@/libs/api.request'
 
-const OAUTH_RESPONSE_CODE = 'code'
-const OAUTH_CLIENT_ID = 'cmsadmin'
-const OAUTH_CLIENT_SECRET = 'cmsadmin'
-const OAUTH_GRANT_TYPE = 'authorization_code'
-const OAUTH_GRANT_TYPE_REFRESH_TOKEN = 'refresh_token'
+//需要区分环境的配置
 const OAUTH_REDIRECT_URI = 'http://jbone-cms-admin.majunwei.com:50002/'
 const SSO_BASE_URL = 'http://jbone-cas.majunwei.com:30001/cas/'
+const OAUTH_CLIENT_ID = 'cmsadmin'
+const OAUTH_CLIENT_SECRET = 'cmsadmin'
+
+const OAUTH_RESPONSE_CODE = 'code'
+const OAUTH_GRANT_TYPE = 'authorization_code'
+const OAUTH_GRANT_TYPE_REFRESH_TOKEN = 'refresh_token'
+const SSO_LOGOUT = SSO_BASE_URL + 'logout'
 const SSO_OAUTH_AUTHOIZE_URL = SSO_BASE_URL + 'oauth2.0/authorize?response_type=' + OAUTH_RESPONSE_CODE + '&client_id=' + OAUTH_CLIENT_ID + '&redirect_uri=' + OAUTH_REDIRECT_URI
 const SSO_OAUTH_ACCESSTOKEN_URL = 'oauth2.0/accessToken'
 
@@ -104,4 +107,9 @@ export const refreshToken = () => {
 export const clearAllToken = () => {
   clearToken()
   clearRToken()
+}
+
+export const logout = () => {
+  clearAllToken()
+  window.location.href = SSO_LOGOUT;
 }

@@ -18,6 +18,8 @@
 <script>
 import './user.less'
 import { mapActions } from 'vuex'
+import { logout } from '@/libs/auth'
+
 export default {
   name: 'User',
   props: {
@@ -35,7 +37,7 @@ export default {
       'handleLogOut'
     ]),
     logout () {
-      window.location.href = "/logout";
+      logout()
     },
     message () {
       this.$router.push({
