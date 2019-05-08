@@ -1,11 +1,13 @@
 import { setToken, getToken,clearToken,setRToken, getRToken,clearRToken, canTurnTo, setTitle } from '@/libs/util'
 import axios from '@/libs/api.request'
+import config from '@/config'
 
+const SSO_CONFIG = process.env.NODE_ENV === 'development' ? config.sso.dev : config.sso.pro
 //需要区分环境的配置
-const OAUTH_REDIRECT_URI = 'http://jbone-cms-admin.majunwei.com:50002/'
-const SSO_BASE_URL = 'http://jbone-cas.majunwei.com:30001/cas/'
-const OAUTH_CLIENT_ID = 'cmsadmin'
-const OAUTH_CLIENT_SECRET = 'cmsadmin'
+const OAUTH_REDIRECT_URI = SSO_CONFIG.OAUTH_REDIRECT_URI
+const SSO_BASE_URL = SSO_CONFIG.SSO_BASE_URL
+const OAUTH_CLIENT_ID = SSO_CONFIG.OAUTH_CLIENT_ID
+const OAUTH_CLIENT_SECRET = SSO_CONFIG.OAUTH_CLIENT_SECRET
 
 const OAUTH_RESPONSE_CODE = 'code'
 const OAUTH_GRANT_TYPE = 'authorization_code'

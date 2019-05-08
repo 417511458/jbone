@@ -20,6 +20,20 @@ export default {
     dev: 'http://jbone-sm-gateway.majunwei.com:10005',
     pro: 'http://jbone-sm-gateway.majunwei.com:10005'
   },
+  sso: {
+    dev: {
+      OAUTH_REDIRECT_URI : 'http://jbone-cms-admin.majunwei.com:50002/',
+      SSO_BASE_URL : 'http://jbone-cas.majunwei.com:30001/cas/',
+      OAUTH_CLIENT_ID : 'cmsadmin',
+      OAUTH_CLIENT_SECRET : 'cmsadmin'
+    },
+    pro: {
+      OAUTH_REDIRECT_URI : 'http://jbone-cms-admin.majunwei.com:50002/',
+      SSO_BASE_URL : 'http://jbone-cas.majunwei.com:30001/cas/',
+      OAUTH_CLIENT_ID : 'cmsadmin',
+      OAUTH_CLIENT_SECRET : 'cmsadmin'
+    }
+  },
   /**
    * @description 默认打开的首页的路由name值，默认为home
    */
