@@ -99,14 +99,6 @@ class HttpRequest {
     // 响应拦截
     //添加响应拦截器
     instance.interceptors.response.use(function (response) {
-      console.info("axios result: ")
-      console.info(response)
-      if(!response.success){
-        if(response.status && response.status.code == 401){
-          console.info("失败了，得跳转到登录页，重新授权")
-        }
-
-      }
       //对响应数据做些事
       return response;
     }, function (error) {
@@ -116,7 +108,7 @@ class HttpRequest {
       console.log(error);
       if(error.request.status == 401){
         console.info("失败了，得跳转到登录页，重新授权")
-        refreshToken();
+        // refreshToken();
         toLogin();
       }
       return Promise.reject(error);

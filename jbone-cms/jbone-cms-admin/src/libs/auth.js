@@ -57,14 +57,19 @@ export const requestToken = (code) => {
     console.info("requestToken result:")
     console.info(res)
     let accessToken = res.data.access_token
-    let refreshToken = res.data.refresh_token
-    let timeout  = res.data.expires_in
-    if(accessToken && refreshToken){
+    if(accessToken){
       setToken(accessToken)
-      setRToken(refreshToken)
     }else{
       toLogin();
     }
+    // let refreshToken = res.data.refresh_token
+    // let timeout  = res.data.expires_in
+    // if(accessToken && refreshToken){
+    //   setToken(accessToken)
+    //   setRToken(refreshToken)
+    // }else{
+    //   toLogin();
+    // }
 
 
   }).catch(function (error) {
@@ -74,7 +79,7 @@ export const requestToken = (code) => {
   });
 }
 
-//刷新token
+//刷新token(为了简化登录流程，不生成refreshtoken了)
 export const refreshToken = () => {
 
   let refreshToken = getRToken()
@@ -108,7 +113,7 @@ export const refreshToken = () => {
 //token交互失败时，清空所有token，重新获取
 export const clearAllToken = () => {
   clearToken()
-  clearRToken()
+  // clearRToken()
 }
 
 export const logout = () => {

@@ -6,7 +6,7 @@
   "serviceId" : "^http://cmsadmin.jbone.cn.*",
   "name" : "Jbone内容管理系统",
   "description" : "Jbone内容管理系统",
-  "generateRefreshToken": true,
+  "generateRefreshToken": false,
   "bypassApprovalPrompt": true,
   "supportedGrantTypes": [ "java.util.HashSet", [ "authorization_code", "password","refresh_token","client_credentials" ] ],
   "supportedResponseTypes": [ "java.util.HashSet", [ "code", "token","device_code" ] ]
