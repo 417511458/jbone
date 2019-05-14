@@ -1,6 +1,6 @@
 <template>
   <div>
-      <card>
+      <card :dis-hover="true">
         <p slot="title">
           <Icon type="ios-film-outline"></Icon>
           文章列表
@@ -20,93 +20,16 @@
       <card v-show="!table.operation.success">
         {{table.operation.message}}
       </card>
-
-
-    <Modal v-model="modal.showModal" :mask-closable="false" :width="80" :fullscreen="true">
-
-      <p slot="header">
-        <Icon type="ios-information-circle"></Icon>
-        <span> {{ modal.title }}</span>
-      </p>
-      <Form :model="modal.data" :label-width="100" ref="modalForm" :rules="ruleValidate">
-        <FormItem label="文章标题" prop="title" :required="true">
-          <i-input v-model="modal.data.title" clearable placeholder="栏目标题"></i-input>
-        </FormItem>
-
-        <FormItem label="关键字" prop="keywords">
-          <i-input v-model="modal.data.keywords" clearable placeholder="关键字"></i-input>
-        </FormItem>
-
-        <FormItem label="说明" prop="description" >
-          <i-input v-model="modal.data.description" clearable placeholder="说明"></i-input>
-        </FormItem>
-
-
-        <FormItem label="是否允许评论" prop="allowComment"  >
-          <RadioGroup v-model="modal.data.allowComment" type="button">
-            <Radio label="TRUE">是</Radio>
-            <Radio label="FALSE">否</Radio>
-          </RadioGroup>
-        </FormItem>
-
-        <FormItem label="状态" prop="status" >
-          <RadioGroup v-model="modal.data.status" type="button">
-            <Radio label="PUBLISH">发布</Radio>
-            <Radio label="AUDIT">待审核</Radio>
-          </RadioGroup>
-        </FormItem>
-
-        <FormItem label="排序号" prop="orders" >
-          <InputNumber v-model="modal.data.orders" clearable placeholder="排序号"></InputNumber>
-        </FormItem>
-
-        <FormItem label="文章标签" prop="tags" >
-          <Select v-model="modal.data.tagIds" filterable multiple>
-            <Option v-for="tag in modal.tags" :value="tag.id" :key="tag.id">{{ tag.name }}</Option>
-          </Select>
-        </FormItem>
-        <FormItem label="封面图" prop="frontCover" >
-          <i-input v-model="modal.data.frontCover" clearable placeholder="封面图"></i-input>
-          <img :src="modal.data.frontCover" style="width: 200px;" />
-        </FormItem>
-
-        <FormItem label="文章内容" prop="articleData.content" >
-          <div class="edit_container" id="editor">
-<!--            <editor ref="editor" :value="modal.data.articleData.content" @on-change="handleChange" />-->
-            <tinymce ref="editor" v-model="modal.data.articleData.content" @on-change="handleChange"></tinymce>
-          </div>
-        </FormItem>
-      </Form>
-      <div slot="footer">
-        <Button type="primary" size="large" long :loading="loading" @click="addOrUpdate">保存</Button>
-      </div>
-    </Modal>
   </div>
 </template>
 <script>
-  import Tree from "iview/src/components/tree/tree";
-  import categoryApi from '@/api/category'
   import articleApi from '@/api/article'
-  import tagApi from '@/api/tag'
-  import Editor from "../../components/editor/editor";
   import Tinymce from "../../components/tinymce/index";
   import TreeSelect from "../../components/tree-select/tree-select";
 
   export default {
-    components: {TreeSelect, Tinymce, Editor, Tree},
+    components: {TreeSelect, Tinymce},
     data() {
-      const validateName = (rule, value, callback) => {
-        if (value) {
-          var pattern = new RegExp("[~'!@#￥$%^&*()-+=:?><{}]");
-          if (pattern.test(value)) {
-            return callback(new Error('不允许含有特殊字符'));
-          }
-          callback();
-        } else {
-          callback();
-        }
-      };
-
       return {
         query: {
           title: '',
@@ -152,6 +75,9 @@
                       type: 'warning',
                       size: 'small'
                     },
+                    style: {
+                      marginRight: '5px'
+                    },
                     on: {
                       click: () => {
                         this.handleDelete(params.index);
@@ -192,36 +118,6 @@
           }
         },
 
-        modal:{
-          title: '',
-          showModal: false,
-          data: {
-            id: 0,
-            title: '',
-            frontCover: '',
-            keywords: '',
-            orders: 0,
-            description: '',
-            status: 'PUBLISH',
-            allowComment: 'TRUE',
-            category:{
-              id: 0
-            },
-            tagIds: [],
-            articleData:{
-              content: ''
-            }
-          },
-          tags: []
-        },
-
-        ruleValidate: {
-          title: [
-            {required: true, message: '标题不能为空', trigger: 'blur'},
-            {validator: validateName, trigger: 'blur'}
-          ]
-        },
-
         loading: false
       }
     },
@@ -232,31 +128,6 @@
     methods: {
 
       init(){
-        // 加载栏目树
-        this.searchCategoryTree();
-        this.searchTags();
-      },
-      searchCategoryTree(){
-        let self = this;
-        categoryApi.getCategoryTree().then(function (res) {
-          if (!res.data.success) {
-            self.setTreeMessage(res.data.status.message);
-          } else {
-            self.categoryTree.data = res.data.data;
-          }
-        }).catch(function (error) {
-          self.setTreeMessage(error.message);
-        });
-      },
-      searchTags(){
-        let self = this;
-        tagApi.getAll().then(function (res) {
-          if (res.data.success) {
-            self.modal.tags = res.data.data;
-          }
-        }).catch(function (error) {
-          self.setTableMessage(error.message);
-        });
       },
       searchArticle() {
         this.table.loading = true;
@@ -280,16 +151,11 @@
           self.setTableMessage(error.message);
         });
       },
-      handleCategoryChanged(row,event){
-        this.query.categoryId = row[0].id;
-        this.searchArticle();
-      },
       toAddModel() {
         this.$router.push({ path: '/ui/article/article_edit', params: { id:0 }})
       },
 
       toEditModel(index) {
-
         this.$router.push({ path: '/ui/article/article_edit', query: { id:this.table.data[index].id }})
       },
       setTableMessage(message) {
@@ -299,30 +165,6 @@
       setTreeMessage(message) {
         this.categoryTree.operation.success = false;
         this.categoryTree.operation.message = message;
-      },
-      addOrUpdate() {
-        let self = this;
-        this.$refs.modalForm.validate((valid) => {
-          if (valid) {
-            console.info(this.modal.data);
-            articleApi.addOrUpdate(this.modal.data).then(function (res) {
-              let result = res.data;
-              if (result.success) {
-                self.$Message.info("添加成功");
-                self.searchArticle();
-              } else {
-                self.$Message.error(result.status.message);
-              }
-            }).catch(function (error) {
-              self.$Message.error(error.message);
-            });
-            self.loading = false;
-            self.modal.showModal = false;
-
-          } else {
-            self.loading = false;
-          }
-        })
       },
       handleDelete (index) {
         let self = this;
@@ -371,10 +213,6 @@
       pageSizeChange(pageSize){
         this.query.pageSize = pageSize;
         this.searchArticle();
-      },
-      handleChange (html, text) {
-        console.log(html, text)
-        this.modal.data.articleData.content = html;
       }
     }
   }
