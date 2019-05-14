@@ -1,28 +1,14 @@
 <template>
-  <Row>
-
-    <Col span="4">
-      <card v-if="categoryTree.operation.success">
-        <p slot="title">
-          <Icon type="ios-film-outline"></Icon>
-          栏目树
-        </p>
-        <Tree :data="categoryTree.data" @on-select-change="handleCategoryChanged"></Tree>
-      </card>
-      <card v-else>
-        {{categoryTree.operation.message}}
-      </card>
-    </Col>
-
-    <Col span="20" v-if="query.categoryId > 0">
-      <card v-if="table.operation.success">
+  <div>
+      <card>
         <p slot="title">
           <Icon type="ios-film-outline"></Icon>
           文章列表
         </p>
 
         <div style="margin-bottom: 10px;">
-          <Input clearable placeholder="文章标题" v-model="query.title" style="width: 200px;" />
+          <tree-select :data="categoryTree.data" placeholder="文章栏目" style="width:200px;" v-model="categoryTree.selectedData" :expand-all="true" check-strictly></tree-select>
+          <Input clearable placeholder="文章标题" v-model="query.title" style="width: 200px;margin-left: 10px;" />
           <Button type="primary" icon="ios-search" @click="searchArticle" style="margin-left: 10px;">查询</Button>
           <Button type="primary" icon="ios-add" @click="toAddModel" style="margin-left: 10px;">发表文章</Button>
         </div>
@@ -31,7 +17,7 @@
         <Page :total="query.totalRecord" show-total :pageSize="query.pageSize" @on-change="pageChange" show-sizer @on-page-size-change="pageSizeChange"
               v-show="table.operation.success"></Page>
       </card>
-      <card v-else>
+      <card v-show="!table.operation.success">
         {{table.operation.message}}
       </card>
 
@@ -86,7 +72,8 @@
 
         <FormItem label="文章内容" prop="articleData.content" >
           <div class="edit_container" id="editor">
-            <editor ref="editor" :value="modal.data.articleData.content" @on-change="handleChange" />
+<!--            <editor ref="editor" :value="modal.data.articleData.content" @on-change="handleChange" />-->
+            <tinymce ref="editor" v-model="modal.data.articleData.content" @on-change="handleChange"></tinymce>
           </div>
         </FormItem>
       </Form>
@@ -94,21 +81,19 @@
         <Button type="primary" size="large" long :loading="loading" @click="addOrUpdate">保存</Button>
       </div>
     </Modal>
-
-
-    </Col>
-  </Row>
+  </div>
 </template>
 <script>
-  import linkApi from '@/api/link'
   import Tree from "iview/src/components/tree/tree";
   import categoryApi from '@/api/category'
   import articleApi from '@/api/article'
   import tagApi from '@/api/tag'
   import Editor from "../../components/editor/editor";
+  import Tinymce from "../../components/tinymce/index";
+  import TreeSelect from "../../components/tree-select/tree-select";
 
   export default {
-    components: {Editor, Tree},
+    components: {TreeSelect, Tinymce, Editor, Tree},
     data() {
       const validateName = (rule, value, callback) => {
         if (value) {
@@ -125,7 +110,7 @@
       return {
         query: {
           title: '',
-          categoryId: 0,
+          categoryIds: [0],
           totalRecord: 0,
           pageSize: 10,
           pageNumber: 1
@@ -200,6 +185,7 @@
 
         categoryTree: {
           data: [],
+          selectedData: [],
           operation: {
             success: true,
             message: ""
@@ -273,13 +259,9 @@
         });
       },
       searchArticle() {
-        if(this.query.categoryId == 0){
-          this.$Message.error("请先选择栏目");
-          return;
-        }
-
         this.table.loading = true;
         let self = this;
+        this.query.categoryIds = this.categoryTree.selectedData;
         articleApi.commonSearch(this.query).then(function (res) {
           console.info(res);
           self.table.loading = false;
@@ -303,71 +285,12 @@
         this.searchArticle();
       },
       toAddModel() {
-        this.modal.title = '发表文章';
-        this.modal.showModal = true;
-        this.modal.data = {
-          id: 0,
-          title: '',
-          frontCover: '',
-          keywords: '',
-          orders: 0,
-          description: '',
-          status: 'PUBLISH',
-          allowComment: 'TRUE',
-          category:{
-            id: this.query.categoryId
-          },
-          tagIds: [],
-          articleData:{
-            content: ''
-          }
-        };
+        this.$router.push({ path: '/ui/article/article_edit', params: { id:0 }})
       },
 
       toEditModel(index) {
-        this.modal.title = '修改文章';
-        this.modal.showModal = true;
-        this.modal.data = {
-          id: 0,
-          title: '',
-          frontCover: '',
-          keywords: '',
-          orders: 0,
-          description: '',
-          status: 'PUBLISH',
-          allowComment: 'TRUE',
-          category:{
-            id: this.query.categoryId
-          },
-          tagIds: [],
-          articleData:{
-            content: ''
-          }
-        };
-        let self = this;
-        articleApi.getById(this.table.data[index].id).then(function (res) {
-          let result = res.data;
-          if(result.success){
-            self.modal.data.id = result.data.id;
-            self.modal.data.title = result.data.title;
-            self.modal.data.frontCover = result.data.frontCover;
-            self.modal.data.keywords = result.data.keywords;
-            self.modal.data.orders = result.data.orders;
-            self.modal.data.description = result.data.description;
-            self.modal.data.status = result.data.status;
-            self.modal.data.allowComment = result.data.allowComment;
-            self.modal.data.category.id = result.data.category.id;
-            self.modal.data.tagIds = result.data.tagIds;
-            self.modal.data.articleData.content = result.data.articleData.content;
 
-            self.$refs.editor.setHtml(self.modal.data.articleData.content);
-          }else{
-            self.$Message.error(result.status.message);
-          }
-          console.info(self.modal.data);
-        }).catch(function (error) {
-          self.$Message.error(error.message);
-        });
+        this.$router.push({ path: '/ui/article/article_edit', query: { id:this.table.data[index].id }})
       },
       setTableMessage(message) {
         this.table.operation.success = false;

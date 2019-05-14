@@ -121,7 +121,7 @@
               <Button href="#" slot="extra" @click="addRootToc" size="small">
                 <Icon type="ios-add"></Icon>
               </Button>
-              <Tree :data="specialModal.data.tocTree" @on-select-change="handleCategoryChanged" :render="renderContent"></Tree>
+              <Tree :data="specialModal.data.tocTree" @on-select-change="handleCategoryChanged" :render="renderContent" empty-text="暂无数据"></Tree>
             </card>
           </Col>
           <Col span="12">

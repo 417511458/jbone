@@ -42,6 +42,11 @@ public class ArticleSearchDO extends SearchListDO {
     private Long categoryId;
 
     /**
+     * 分类
+     */
+    private List<Long> categoryIds;
+
+    /**
      * 文章模版
      */
     private Long templateId;

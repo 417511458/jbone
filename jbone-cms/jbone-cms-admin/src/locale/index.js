@@ -26,8 +26,7 @@ const messages = {
 }
 
 const i18n = new VueI18n({
-  locale: Vue.config.lang,
-  fallbackLocale: 'zh-CN',
+  locale: lang,
   messages
 })
 

@@ -44,6 +44,7 @@ export default {
 
   article: '内容管理',
   category_page: '栏目管理',
+  article_edit: '发表文章',
   article_page: '文章管理',
   tag_page: '标签管理',
   special_page: '专题管理',

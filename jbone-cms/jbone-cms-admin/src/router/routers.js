@@ -60,6 +60,15 @@ export default [
     },
     children: [
       {
+        path: 'article_edit',
+        name: 'article_edit',
+        meta: {
+          icon: 'ios-add-circle-outline',
+          title: '发表文章'
+        },
+        component: () => import('@/view/article/edit.vue')
+      },
+      {
         path: 'category_page',
         name: 'category_page',
         meta: {
@@ -115,6 +124,15 @@ export default [
           title: '友情链接'
         },
         component: () => import('@/view/link/link.vue')
+      },
+      {
+        path: 'tinymce',
+        name: 'tinymceDemo',
+        meta: {
+          icon: 'ios-book',
+          title: 'tinymceDemo'
+        },
+        component: () => import('@/view/tinymce.vue')
       }
     ]
   },

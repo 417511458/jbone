@@ -8,6 +8,7 @@ import cn.jbone.cms.core.converter.ArticleConverter;
 import cn.jbone.cms.core.dao.entity.*;
 import cn.jbone.cms.core.dao.repository.ArticleDataRepository;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
+import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import cn.jbone.cms.core.dao.repository.TagRepository;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.ObjectNotFoundException;
@@ -43,6 +44,9 @@ public class ArticleService {
     private UserApi userApi;
     @Autowired
     private TagRepository tagRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public ArticleResponseDO addOrUpdateArticle(ArticleRequestDO articleRequestDO){
         checkParam(articleRequestDO);
@@ -188,11 +192,19 @@ public class ArticleService {
                 predicates.add(criteriaBuilder.equal(categoryJoin.get("id"), articleSearchDO.getCategoryId()));
             }
 
+
             if(articleSearchDO.getTemplateId() != null && articleSearchDO.getTemplateId() > 0){
                 Join<Template,Template> templateJoin = root.join("template",JoinType.INNER);
                 predicates.add(criteriaBuilder.equal(templateJoin.get("id"), articleSearchDO.getTemplateId()));
             }
 
+            if(!CollectionUtils.isEmpty(articleSearchDO.getCategoryIds())){
+                List<Category> categories = categoryRepository.findByIdIn(articleSearchDO.getCategoryIds());
+                if(!CollectionUtils.isEmpty(categories)){
+                    Join<Article,Category> categoryJoin = root.join("category",JoinType.INNER);
+                    predicates.add(categoryJoin.in(categories));
+                }
+            }
 
             // tag的In查询
             if(!CollectionUtils.isEmpty(articleSearchDO.getTagIds())){

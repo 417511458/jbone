@@ -15,22 +15,19 @@ import '@/assets/icons/iconfont.css'
 import TreeTable from 'tree-table-vue'
 import VOrgTree from 'v-org-tree'
 import 'v-org-tree/dist/v-org-tree.css'
-import axios from 'axios'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
-axios.defaults.withCredentials = true;
-Vue.prototype.$axios = axios;
+Vue.use(ElementUI, {
+  size: 'small',
+  zIndex: 3000 ,
+  i18n: (key, value) => i18n.t(key, value)
+});
 // 实际打包时应该不引入mock
 /* eslint-disable */
 // if (process.env.NODE_ENV !== 'production') require('@/mock')
-
 Vue.use(iView, {
-  i18n: function(path, options) {
-    let value = i18n.t(path, options)
-    if (value !== null && value !== undefined) {
-      return value
-    }
-    return ''
-  }
+  i18n: (key, value) => i18n.t(key, value)
 })
 Vue.use(TreeTable)
 Vue.use(VOrgTree)
@@ -51,14 +48,6 @@ Vue.prototype.$config = config
  */
 importDirective(Vue)
 Vue.directive('clickOutside', clickOutside)
-
-Vue.prototype.prompt = function (success, text) {
-  if (success) {
-    this.$Message.info({content: text, duration: 3})
-  } else {
-    this.$Message.error({content: text, duration: 20, closable: true})
-  }
-};
 
 /* eslint-disable no-new */
 new Vue({

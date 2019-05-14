@@ -19,6 +19,8 @@ public interface CategoryRepository extends JpaRepository<Category,Long>, JpaSpe
 
     List<Category> findAllByPidAndStatusAndInMenuOrderByOrders(long pid, StatusEnum status, BooleanEnum inMenu);
 
+    List<Category> findByIdIn(List<Long> ids);
+
     long countByPid(long pid);
 
     long countById(long id);
