@@ -50,7 +50,6 @@
             {title: '关键字', key: 'keywords'},
             {title: '状态', key: 'status'},
             {title: '阅读量', key: 'hits'},
-            {title: '排序号', key: 'orders'},
             {
               title: '操作',
               key: 'handle',
