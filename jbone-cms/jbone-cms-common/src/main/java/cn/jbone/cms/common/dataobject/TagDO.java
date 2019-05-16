@@ -28,6 +28,8 @@ public class TagDO implements Comparable<TagDO>{
     public int compareTo(TagDO o) {
         if(this.getArticleCount() > o.getArticleCount()){
             return -1;
+        }else if(this.getArticleCount() == o.getArticleCount()){
+            return 0;
         }
         return 1;
     }
