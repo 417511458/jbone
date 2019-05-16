@@ -29,7 +29,7 @@ CREATE TABLE `article` (
   `version` int(11) DEFAULT NULL,
   `allow_comment` int(11) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `front_cover` varchar(255) DEFAULT NULL,
+  `front_cover` text DEFAULT NULL,
   `hits` int(11) DEFAULT NULL,
   `keywords` varchar(255) DEFAULT NULL,
   `orders` int(11) DEFAULT NULL,

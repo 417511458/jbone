@@ -42,18 +42,39 @@
 
           </Row>
         </FormItem>
-
-        <FormItem label="封面图" prop="frontCover" >
-          <i-input v-model="article.frontCover" clearable placeholder="封面图"></i-input>
-          <img :src="article.frontCover" style="width: 200px;" />
-        </FormItem>
-
         <FormItem label="文章内容" prop="articleData.content" >
           <div class="edit_container" >
             <tinymce ref="editor" v-model="article.articleData.content"></tinymce>
           </div>
         </FormItem>
+        <FormItem label="封面图" prop="frontCover" >
+          <Row>
+            <Col span="2" v-show="article.frontCover" style="width: 58px;height:58px;line-height: 58px;margin-right: 10px">
+              <img :src="article.frontCover" style="width: 58px;height:58px;" />
+            </Col>
+            <Col span="2" style="width: 58px;height:58px;line-height: 58px;margin-right: 10px">
+              <Upload
+                multiple
+                type="drag"
+                action="//jsonplaceholder.typicode.com/posts/"
+                :on-success="handleUploadSuccess"
+                :before-upload="handleBeforeUpload"
+              >
+                <div style="width: 58px;height:58px;line-height: 58px;">
+                  <Icon type="ios-camera" size="20"></Icon>
+                </div>
+              </Upload>
+            </Col>
 
+            <Col span="10">
+              <Button @click="handleShowFrontCover" type="text">输入图片地址</Button>
+              <i-input v-show="showFrontCover" v-model="article.frontCover" clearable placeholder="封面图"></i-input>
+            </Col>
+
+          </Row>
+
+
+        </FormItem>
 
       </Form>
     </Card>
@@ -122,7 +143,8 @@
               message: ""
             }
           },
-          loading:false
+          loading:false,
+          showFrontCover:false
         }
       },
       computed:{
@@ -243,7 +265,30 @@
               self.loading = false;
             }
           })
+        },
+
+        handleUploadSuccess(response, file, fileList){
+          console.info(response)
+          console.info(file)
+          console.info(fileList)
+        },
+
+        handleBeforeUpload(file){
+          let reader = new FileReader()
+          let self = this;
+          reader.readAsDataURL(file)
+          reader.onload = e => {
+            let _file = e.target.result
+            self.article.frontCover = _file
+            console.info(_file)
+          }
+          return false
+        },
+
+        handleShowFrontCover(){
+          this.showFrontCover = this.showFrontCover ? false : true
         }
+
 
       }
     }

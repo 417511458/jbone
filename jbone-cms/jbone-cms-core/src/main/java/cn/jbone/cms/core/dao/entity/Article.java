@@ -33,7 +33,7 @@ public class Article extends BaseEntity {
     /**
      * 封面图
      */
-    @Column(name = "front_cover")
+    @Column(name = "front_cover",columnDefinition="text")
     private String frontCover;
 
     /**
