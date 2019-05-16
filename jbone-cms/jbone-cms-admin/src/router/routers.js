@@ -21,7 +21,7 @@ export default [
   {
     path: '/',
     name: '_home',
-    redirect: '/ui/home',
+    redirect: '/home',
     component: Main,
     meta: {
       hideInMenu: true,
@@ -29,7 +29,7 @@ export default [
     },
     children: [
       {
-        path: '/ui/home',
+        path: '/home',
         name: 'home',
         meta: {
           hideInMenu: true,
@@ -51,8 +51,8 @@ export default [
     }
   },
   {
-    path: '/ui/article',
-    name: 'article',
+    path: '/content',
+    name: 'content_management',
     component: Main,
     meta: {
       title: '内容管理',
@@ -60,7 +60,7 @@ export default [
     },
     children: [
       {
-        path: 'article_edit',
+        path: 'article/edit',
         name: 'article_edit',
         meta: {
           icon: 'ios-add-circle-outline',
@@ -78,7 +78,7 @@ export default [
         component: () => import('@/view/category/category.vue')
       },
       {
-        path: 'article_page',
+        path: 'article/list',
         name: 'article_page',
         meta: {
           icon: 'ios-book',
@@ -99,7 +99,7 @@ export default [
   },
 
   {
-    path: '/ui/base',
+    path: '/base',
     name: 'base',
     component: Main,
     meta: {
@@ -138,7 +138,7 @@ export default [
   },
 
   {
-    path: '/ui/401',
+    path: '/401',
     name: 'error_401',
     meta: {
       hideInMenu: true
@@ -146,7 +146,7 @@ export default [
     component: () => import('@/view/error-page/401.vue')
   },
   {
-    path: '/ui/500',
+    path: '/500',
     name: 'error_500',
     meta: {
       hideInMenu: true

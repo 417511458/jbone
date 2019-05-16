@@ -7,8 +7,8 @@
         </p>
 
         <div style="margin-bottom: 10px;">
-          <tree-select :data="categoryTree.data" placeholder="文章栏目" style="width:200px;" v-model="categoryTree.selectedData" :expand-all="true" check-strictly></tree-select>
-          <Input clearable placeholder="文章标题" v-model="query.title" style="width: 200px;margin-left: 10px;" />
+          <tree-select :data="categoryTree.data" placeholder="文章栏目" style="width:250px;" v-model="categoryTree.selectedData" :expand-all="true" check-strictly></tree-select>
+          <Input clearable placeholder="文章标题" v-model="query.title" style="width: 250px;margin-left: 10px;" />
           <Button type="primary" icon="ios-search" @click="searchArticle" style="margin-left: 10px;">查询</Button>
           <Button type="primary" icon="ios-add" @click="toAddModel" style="margin-left: 10px;">发表文章</Button>
         </div>
@@ -23,6 +23,7 @@
   </div>
 </template>
 <script>
+  import categoryApi from '@/api/category'
   import articleApi from '@/api/article'
   import Tinymce from "../../components/tinymce/index";
   import TreeSelect from "../../components/tree-select/tree-select";
@@ -48,7 +49,28 @@
             },
             {title: '标题', key: 'title'},
             {title: '关键字', key: 'keywords'},
-            {title: '状态', key: 'status'},
+            {title: '发表时间', key: 'addTimeText'},
+            {title: '状态', key: 'status',render: (h, params) => {
+              let article = this.table.data[params.index]
+                let type = 'success'
+                let lable = '已发表'
+                if(article.status == "AUDIT") {
+                  type = 'warning'
+                  lable = '审核中'
+                }else if(article.status == "DELETE"){
+                  type = 'dashed'
+                  lable = '已删除'
+                }
+                return h('div', [
+                  h('Button', {
+                  props: {
+                    type: type,
+                    size: 'small'
+                  }
+                }, lable)
+                ])
+              }
+            },
             {title: '阅读量', key: 'hits'},
             {
               title: '操作',
@@ -127,6 +149,20 @@
     methods: {
 
       init(){
+        // 加载栏目树
+        this.searchCategoryTree();
+      },
+      searchCategoryTree(){
+        let self = this;
+        categoryApi.getCategoryTree().then(function (res) {
+          if (!res.data.success) {
+            self.setTreeMessage(res.data.status.message);
+          } else {
+            self.categoryTree.data = res.data.data;
+          }
+        }).catch(function (error) {
+          self.setTreeMessage(error.message);
+        });
       },
       searchArticle() {
         this.table.loading = true;
@@ -151,11 +187,11 @@
         });
       },
       toAddModel() {
-        this.$router.push({ path: '/ui/article/article_edit', params: { id:0 }})
+        this.$router.push({ path: '/content/article/edit', params: { id:0 }})
       },
 
       toEditModel(index) {
-        this.$router.push({ path: '/ui/article/article_edit', query: { id:this.table.data[index].id }})
+        this.$router.push({ path: '/content/article/edit', query: { id:this.table.data[index].id }})
       },
       setTableMessage(message) {
         this.table.operation.success = false;

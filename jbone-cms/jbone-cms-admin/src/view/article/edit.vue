@@ -40,10 +40,6 @@
               </RadioGroup>
             </Col>
 
-<!--            <Col span="2" style="text-align: center">排序号:</Col>-->
-<!--            <Col span="6">-->
-<!--              <InputNumber v-model="article.orders" clearable placeholder="排序号"></InputNumber>-->
-<!--            </Col>-->
           </Row>
         </FormItem>
 
@@ -70,6 +66,7 @@
     import articleApi from '@/api/article'
     import tagApi from '@/api/tag'
     import TreeSelect from "../../components/tree-select/tree-select";
+    import { mapMutations } from 'vuex'
 
     export default {
       name: "edit",
@@ -146,6 +143,11 @@
           this.searchTags();
           this.loadArticle()
         },
+
+        ...mapMutations([
+          'closeTag'
+        ]),
+
         searchCategoryTree(){
           let self = this;
           categoryApi.getCategoryTree().then(function (res) {
@@ -221,6 +223,14 @@
                 let result = res.data;
                 if (result.success) {
                   self.$Message.info("发表成功");
+                  //添加文章成功后，跳到列表页
+                  if(self.article.id <= 0){
+                    self.$router.push({ path: '/content/article/list'})
+                    self.closeTag({
+                      name: 'article_edit'
+                    })
+
+                  }
                 } else {
                   self.$Message.error(result.status.message);
                 }
