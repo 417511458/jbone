@@ -11,47 +11,27 @@
         <Icon type="ios-film-outline"></Icon>
         所有标签
       </p>
-      <Tabs>
-        <TabPane label="列表形式">
-          <Table :loading="table.loading" :columns="table.columns" :data="tagcloud.data" stripe border ref="selection"></Table>
-        </TabPane>
-        <TabPane label="标签形式">
-          <Tag v-for="item in tagcloud.data" :key="item.id" :color="item.color" :name="item.name" closable @on-close="handleDeleteOnTag">{{ item.name }}({{item.articleCount}})</Tag>
-        </TabPane>
-      </Tabs>
+      <Table :loading="table.loading" :columns="table.columns" :data="table.data" stripe border ref="selection"></Table>
       <Page :total="query.totalRecord" show-total :pageSize="query.pageSize" @on-change="pageChange" show-sizer @on-page-size-change="pageSizeChange"
-            v-show="tagcloud.operation.success"></Page>
+            v-show="table.operation.success"></Page>
     </card>
 
 
-    <card v-if="!tagcloud.operation.success">
-      {{tagcloud.operation.message}}
+    <card v-if="!table.operation.success">
+      {{table.operation.message}}
     </card>
 
-    <Modal v-model="modal.showModal" :mask-closable="false">
-
-      <p slot="header">
-        <Icon type="ios-information-circle"></Icon>
-        <span> {{ modal.title }}</span>
-      </p>
-      <Form :model="modal.data" :label-width="100" ref="modalForm" :rules="ruleValidate">
-        <FormItem label="标签名" prop="name" :required="true">
-          <i-input v-model="modal.data.name" clearable placeholder="标签名"></i-input>
-        </FormItem>
-      </Form>
-      <div slot="footer">
-        <Button type="primary" size="large" long :loading="loading" @click="addOrUpdate">保存</Button>
-      </div>
-    </Modal>
+    <tag-edit :id="modal.id" :title="modal.title" :show-modal="modal.showModal" @updateShowModal="(val) => {modal.showModal = val}" @success="search"></tag-edit>
 
   </div>
 </template>
 <script>
   import tagApi from '@/api/tag'
   import Input from "iview/src/components/input/input";
+  import TagEdit from "./edit";
 
   export default {
-    components: {Input},
+    components: {TagEdit, Input},
     data() {
 
       const validateName = (rule, value, callback) => {
@@ -74,15 +54,6 @@
           pageSize: 10,
           pageNumber: 1,
           includeArticleCount: true
-        },
-        tagcloud: {
-          operation: {
-            operation: {
-              success: true,
-              message: ""
-            }
-          },
-          data:[]
         },
         table: {
           columns: [
@@ -128,22 +99,18 @@
               }
             }
           ],
-          loading: false
+          loading: false,
+          data:[],
+          operation:{
+            success: false,
+            message: ''
+          }
         },
         loading: false,
         modal:{
           title: '',
           showModal: false,
-          data: {
-            id: 0,
-            name: ''
-          }
-        },
-        ruleValidate: {
-          name: [
-            {required: true, message: '标签名不能为空', trigger: 'blur'},
-            {validator: validateName, trigger: 'blur'}
-          ]
+          id: 0,
         },
 
       }
@@ -163,45 +130,22 @@
         tagApi.commonRequest(this.query).then(function (res) {
           self.table.loading = false;
           if (!res.data.success) {
-            self.tagcloud.operation.success = false;
-            self.tagcloud.operation.message = res.data.status.message;
+            self.table.operation.success = false;
+            self.table.operation.message = res.data.status.message;
           } else {
-            self.tagcloud.data = res.data.data.datas;
-            self.tagcloud.data.forEach(tag => {
-              tag.color = 'default';
-
-              if(tag.articleCount > 30){
-                tag.color = 'red';
-              }else if(tag.articleCount > 20){
-                tag.color = 'orange';
-              }else if(tag.articleCount > 0){
-                tag.color = 'gold';
-              }
-
-            });
-
+            self.table.operation.success = true
+            self.table.data = res.data.data.datas;
             self.query.totalRecord = res.data.data.total;
             self.query.pageSize = res.data.data.pageSize;
             self.query.pageNumber = res.data.data.pageNum;
-            self.tagcloud.operation.success = true;
-
-            self.tagcloud.operation.message = '';
-            console.info(self.tagcloud.data);
           }
         }).catch(function (error) {
-          self.tagcloud.operation.success = false;
-          self.tagcloud.operation.message = res.data.status.message;
           self.table.loading = false;
         });
       },
 
-
-      handleDeleteOnTag (event, tag) {
-        this.handleDelete(tag.id);
-      },
-
       handleDeleteOnTable (index) {
-        this.handleDelete(this.tagcloud.data[index].id);
+        this.handleDelete(this.table.data[index].id);
       },
 
       handleDelete (id) {
@@ -223,57 +167,15 @@
       },
 
       toAddModel() {
-        this.modal.title = '添加标签';
-        this.modal.showModal = true;
-        this.modal.data = {
-          id: 0,
-          name: ''
-        };
+        this.modal.title = '添加标签'
+        this.modal.showModal = true
+        this.modal.id = 0
       },
 
       toEditModel(index) {
-        this.modal.title = '修改标签';
-        this.modal.showModal = true;
-        this.modal.data = {
-          id: 0,
-          name: ''
-        };
-        let self = this;
-        tagApi.getById(this.tagcloud.data[index].id).then(function (res) {
-          let result = res.data;
-          if(result.success){
-            self.modal.data.id = result.data.id;
-            self.modal.data.name = result.data.name;
-          }else{
-            self.$Message.error(result.status.message);
-          }
-        }).catch(function (error) {
-          self.$Message.error(error.message);
-        });
-      },
-      addOrUpdate() {
-        let self = this;
-        this.$refs.modalForm.validate((valid) => {
-          if (valid) {
-            tagApi.addOrUpdate(this.modal.data).then(function (res) {
-              let result = res.data;
-              if (result.success) {
-                self.$Message.info("添加成功");
-                self.search();
-              } else {
-                self.$Message.error(result.status.message);
-              }
-            }).catch(function (error) {
-              self.$Message.error(error.message);
-            });
-            self.loading = false;
-            self.modal.showModal = false;
-
-          } else {
-            self.loading = false;
-          }
-        });
-
+        this.modal.title = this.table.data[index].name
+        this.modal.showModal = true
+        this.modal.id = this.table.data[index].id
       },
       pageChange(pageNum){
         this.query.pageNumber = pageNum;

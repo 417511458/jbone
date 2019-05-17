@@ -46,7 +46,7 @@ export default {
   category_list: '栏目管理',
   article_edit: '发表文章',
   article_list: '文章管理',
-  tag_page: '标签管理',
+  tag_list: '标签管理',
   special_page: '专题管理',
 
   base: '基本设置',

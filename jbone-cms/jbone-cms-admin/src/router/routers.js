@@ -87,13 +87,13 @@ export default [
         component: () => import('@/view/article/list.vue')
       },
       {
-        path: 'tag_page',
-        name: 'tag_page',
+        path: 'tag/list',
+        name: 'tag_list',
         meta: {
             icon: 'ios-book',
             title: '标签管理'
         },
-        component: () => import('@/view/tag/tag.vue')
+        component: () => import('@/view/tag/list.vue')
       }
     ]
   },
