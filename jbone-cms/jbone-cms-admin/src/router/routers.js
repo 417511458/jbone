@@ -69,17 +69,17 @@ export default [
         component: () => import('@/view/article/edit.vue')
       },
       {
-        path: 'category_page',
-        name: 'category_page',
+        path: 'category/list',
+        name: 'category_list',
         meta: {
           icon: 'ios-book',
           title: '栏目管理'
         },
-        component: () => import('@/view/category/category.vue')
+        component: () => import('@/view/category/list.vue')
       },
       {
         path: 'article/list',
-        name: 'article_page',
+        name: 'article_list',
         meta: {
           icon: 'ios-book',
           title: '文章管理'

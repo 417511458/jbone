@@ -43,9 +43,9 @@ export default {
   drag_drawer_page: '可拖动抽屉',
 
   content_management: '内容管理',
-  category_page: '栏目管理',
+  category_list: '栏目管理',
   article_edit: '发表文章',
-  article_page: '文章管理',
+  article_list: '文章管理',
   tag_page: '标签管理',
   special_page: '专题管理',
 

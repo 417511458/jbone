@@ -15,7 +15,7 @@ public class CategoryTocDO {
     /**
      * 父级栏目
      */
-    private int pid;
+    private long pid;
 
     /**
      * 栏目标题

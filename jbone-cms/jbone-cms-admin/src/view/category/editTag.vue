@@ -1,5 +1,5 @@
 <template>
-  <Modal v-model="showEditModal" :mask-closable="false" width="650" :title="'编辑专题标签' + title">
+  <Modal v-model="showEditModal" :mask-closable="false" width="650" :title="fullTitle">
 
     <div class="drag-box-card">
       <!-- 切记设置list1和list2属性时，一定要添加.sync修饰符 -->
@@ -59,6 +59,12 @@
             this.init();
           }
         },
+      },
+
+      computed:{
+        fullTitle(){
+          return '编辑专题标签 [' + this.title + ']'
+        }
       },
       mounted(){
 
@@ -153,6 +159,33 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="less">
+  .ivu-page {
+    margin-top: 10px;
+  }
+  .drag-list-wrapper .drag-list-con {
+    overflow-y: scroll;
+  }
+  .drag-box-card{
+    display: inline-block;
+    width: 600px;
+    height: 560px;
+    .drag-item{
+      margin: 10px;
+    }
+    h3{
+      padding: 10px 15px;
+    }
+    .drop-box{
+      border: 1px solid #eeeeee;
+      height: 455px;
+      border-radius: 5px;
+    }
+    .left-drop-box{
+      margin-right: 10px;
+    }
+    .right-drop-box{
+      //
+    }
+  }
 </style>
