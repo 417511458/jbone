@@ -117,13 +117,13 @@ export default [
         component: () => import('@/view/settings/Settings.vue')
       },
       {
-        path: 'link_page',
-        name: 'link_page',
+        path: 'link/list',
+        name: 'link_list',
         meta: {
           icon: 'ios-book',
           title: '友情链接'
         },
-        component: () => import('@/view/link/link.vue')
+        component: () => import('@/view/link/list.vue')
       },
       {
         path: 'tinymce',
