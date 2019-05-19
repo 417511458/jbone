@@ -4,7 +4,7 @@ let settingsApi = {};
 
 settingsApi.getAll = function(){
   return axios.request({
-    url: 'cms/settings/getList',
+    url: 'cms/settings/getMap',
     method: 'get'
   });
 }
@@ -19,11 +19,21 @@ settingsApi.getById = function(id){
   });
 }
 
-settingsApi.addOrUpdate = function(link){
+settingsApi.addOrUpdate = function(settings){
   return axios.request({
     url: 'cms/settings/addOrUpdate',
     method: 'post',
-    data: link
+    data: settings
+  });
+}
+
+
+settingsApi.batchAddOrUpdate = function(settingsArray){
+  let settingsData = {settingsList: settingsArray}
+  return axios.request({
+    url: 'cms/settings/batchAddOrUpdate',
+    method: 'post',
+    data: settingsData
   });
 }
 

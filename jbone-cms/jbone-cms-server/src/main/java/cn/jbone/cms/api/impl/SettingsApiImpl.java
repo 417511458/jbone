@@ -1,6 +1,7 @@
 package cn.jbone.cms.api.impl;
 
 import cn.jbone.cms.api.SettingsApi;
+import cn.jbone.cms.common.dataobject.BatchSaveSettingDO;
 import cn.jbone.cms.common.dataobject.SettingsDO;
 import cn.jbone.cms.core.service.SettingsService;
 import cn.jbone.common.rpc.Result;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -79,8 +81,8 @@ public class SettingsApiImpl implements SettingsApi {
     }
 
     @Override
-    public Result<Map<String, SettingsDO>> getMap() {
-        Map<String, SettingsDO> settingsDOMap = null;
+    public Result<Map<String, String>> getMap() {
+        Map<String, String> settingsDOMap = null;
         try {
             settingsDOMap = settingsService.getSettingsMap();
         } catch (Exception e) {
@@ -88,5 +90,16 @@ public class SettingsApiImpl implements SettingsApi {
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess(settingsDOMap);
+    }
+
+    @Override
+    public Result<Void> batchAddOrUpdate(@RequestBody BatchSaveSettingDO batchSaveSettingDO) {
+        try {
+            settingsService.addOrUpdate(batchSaveSettingDO.getSettingsList());
+        } catch (Exception e) {
+            logger.warn("Settings addOrUpdate error.",e);
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess();
     }
 }

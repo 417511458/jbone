@@ -56,14 +56,10 @@ public class CommonService {
     }
 
     private void setSettings(ModelMap modelMap){
-        Result<Map<String, SettingsDO>> settingMap =  settingsApi.getMap();
+        Result<Map<String, String>> settingMap =  settingsApi.getMap();
         if(settingMap.isSuccess()){
             if(!CollectionUtils.isEmpty(settingMap.getData())){
-                Map<String,String> settings = new HashMap<>();
-                for (Map.Entry<String,SettingsDO> entry : settingMap.getData().entrySet()) {
-                    settings.put(entry.getKey(),entry.getValue().getSettingValue());
-                }
-                modelMap.addAttribute("settings",settings);
+                modelMap.addAttribute("settings",settingMap);
             }
         }
     }

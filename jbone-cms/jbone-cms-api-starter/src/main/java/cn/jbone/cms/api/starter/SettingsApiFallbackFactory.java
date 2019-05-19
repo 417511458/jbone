@@ -1,12 +1,14 @@
 package cn.jbone.cms.api.starter;
 
 import cn.jbone.cms.api.SettingsApi;
+import cn.jbone.cms.common.dataobject.BatchSaveSettingDO;
 import cn.jbone.cms.common.dataobject.SettingsDO;
 import cn.jbone.common.rpc.Result;
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +22,12 @@ public class SettingsApiFallbackFactory implements FallbackFactory<SettingsApi> 
     @Override
     public SettingsApi create(Throwable throwable) {
         return new SettingsApi() {
+            @Override
+            public Result<Void> batchAddOrUpdate(BatchSaveSettingDO batchSaveSettingDO) {
+                logger.error("rpc batchAddOrUpdate broke",throwable);
+                return Result.wrapProtectedError();
+            }
+
             @Override
             public Result<Void> addOrUpdate(SettingsDO settingsDO) {
                 logger.error("rpc addOrUpdate broke",throwable);
@@ -51,7 +59,7 @@ public class SettingsApiFallbackFactory implements FallbackFactory<SettingsApi> 
             }
 
             @Override
-            public Result<Map<String, SettingsDO>> getMap() {
+            public Result<Map<String, String>> getMap() {
                 logger.error("rpc getMap broke",throwable);
                 return Result.wrapProtectedError();
             }

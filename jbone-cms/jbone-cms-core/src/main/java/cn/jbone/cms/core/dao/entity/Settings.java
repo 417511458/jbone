@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "settings")
+@Table(name = "settings",uniqueConstraints = {@UniqueConstraint(columnNames="setting_key")})
 public class Settings extends BaseEntity {
 
     @Id
