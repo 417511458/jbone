@@ -69,7 +69,7 @@ public class ArticleService {
     public ArticleResponseDO getArticle(Long id){
         Article article = articleRepository.getOne(id);
         if(article == null){
-            throw new ObjectNotFoundException("article is not found");
+            throw new ObjectNotFoundException("文章不存在");
         }
 
         ArticleResponseDO articleResponseDO = articleConverter.toArticleDO(article, ArticleFiledConfigDO.buildAll());

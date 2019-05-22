@@ -24,9 +24,11 @@
             <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
           </div>
           <Content class="content-wrapper">
-            <keep-alive :include="cacheList">
-              <router-view/>
-            </keep-alive>
+            <transition name="fade-transform" mode="out-in">
+              <keep-alive :include="cacheList">
+                <router-view/>
+              </keep-alive>
+            </transition>
             <ABackTop :height="100" :bottom="80" :right="50" container=".content-wrapper"></ABackTop>
           </Content>
         </Layout>

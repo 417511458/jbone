@@ -125,15 +125,15 @@ export default [
         },
         component: () => import('@/view/link/list.vue')
       },
-      {
-        path: 'tinymce',
-        name: 'tinymceDemo',
-        meta: {
-          icon: 'ios-book',
-          title: 'tinymceDemo'
-        },
-        component: () => import('@/view/tinymce.vue')
-      }
+      // {
+      //   path: 'tinymce',
+      //   name: 'tinymceDemo',
+      //   meta: {
+      //     icon: 'ios-book',
+      //     title: 'tinymceDemo'
+      //   },
+      //   component: () => import('@/view/tinymce.vue')
+      // }
     ]
   },
 
