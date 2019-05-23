@@ -109,6 +109,15 @@ public class JboneCmsApiStarterConfiguration {
     }
 
     @Bean
+    public DictionaryApi getDictionaryApi(Decoder decoder, Encoder encoder, Client client){
+        DictionaryApi api = HystrixFeign.builder().client(client).setterFactory(getCommandSetter(DictionaryApi.class))
+                .encoder(encoder)
+                .decoder(decoder).contract(new SpringMvcContract())
+                .target(DictionaryApi.class, jboneConfiguration.getRpc().getCmsServer().getProtocol() + "://" + jboneConfiguration.getRpc().getCmsServer().getName().toUpperCase(),getDictionaryApiFallbackFactory());
+        return api;
+    }
+
+    @Bean
     public ArticleApiFallbackFactory getArticleApiFallbackFactory(){
         return new ArticleApiFallbackFactory();
     }
@@ -151,6 +160,11 @@ public class JboneCmsApiStarterConfiguration {
     @Bean
     public CommentApiFallbackFactory getCommentApiFallbackFactory(){
         return new CommentApiFallbackFactory();
+    }
+
+    @Bean
+    public DictionaryApiFallbackFactory getDictionaryApiFallbackFactory(){
+        return new DictionaryApiFallbackFactory();
     }
 
     /**

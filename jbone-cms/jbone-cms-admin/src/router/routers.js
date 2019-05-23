@@ -125,6 +125,15 @@ export default [
         },
         component: () => import('@/view/link/list.vue')
       },
+      {
+        path: 'dictionary/list',
+        name: 'dictionary_list',
+        meta: {
+          icon: 'ios-book',
+          title: '字典管理'
+        },
+        component: () => import('@/view/dictionary/list.vue')
+      },
       // {
       //   path: 'tinymce',
       //   name: 'tinymceDemo',

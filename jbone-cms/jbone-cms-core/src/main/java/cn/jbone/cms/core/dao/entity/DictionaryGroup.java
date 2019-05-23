@@ -32,6 +32,6 @@ public class DictionaryGroup extends BaseEntity {
      * 子目录
      */
     @OneToMany(fetch=FetchType.LAZY,mappedBy = "group")
-    private List<DictionaryDetail> details;
+    private List<DictionaryItem> items;
 
 }

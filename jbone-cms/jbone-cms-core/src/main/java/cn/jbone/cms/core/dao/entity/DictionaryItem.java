@@ -8,8 +8,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "dictionary_detail")
-public class DictionaryDetail extends BaseEntity {
+@Table(name = "dictionary_item")
+public class DictionaryItem extends BaseEntity {
 
     @Id
     @Column(name = "id")

@@ -1,12 +1,12 @@
 package cn.jbone.cms.core.service;
 
-import cn.jbone.cms.common.dataobject.ArticleResponseDO;
+import cn.jbone.cms.common.dataobject.DictionaryItemDO;
 import cn.jbone.cms.common.dataobject.DictionaryGroupDO;
 import cn.jbone.cms.common.dataobject.search.DictionaryGroupSearchDO;
 import cn.jbone.cms.core.converter.DictionaryConverter;
-import cn.jbone.cms.core.dao.entity.Article;
+import cn.jbone.cms.core.dao.entity.DictionaryItem;
 import cn.jbone.cms.core.dao.entity.DictionaryGroup;
-import cn.jbone.cms.core.dao.repository.DictionaryDetailRepository;
+import cn.jbone.cms.core.dao.repository.DictionaryItemRepository;
 import cn.jbone.cms.core.dao.repository.DictionaryGroupRepository;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.ObjectNotFoundException;
@@ -30,7 +30,7 @@ public class DictionaryService {
     private DictionaryGroupRepository dictionaryGroupRepository;
 
     @Autowired
-    private DictionaryDetailRepository dictionaryDetailRepository;
+    private DictionaryItemRepository dictionaryItemRepository;
 
     @Autowired
     private DictionaryConverter dictionaryConverter;
@@ -45,7 +45,7 @@ public class DictionaryService {
         if(group == null){
             throw new ObjectNotFoundException("字典组不存在");
         }
-        if(dictionaryDetailRepository.existsByGroup(group)){
+        if(dictionaryItemRepository.existsByGroup(group)){
             throw new ObjectNotFoundException("包含字典项，不能删除.");
         }
         dictionaryGroupRepository.delete(group);
@@ -58,6 +58,36 @@ public class DictionaryService {
         }
         return dictionaryConverter.toDictionaryGroupDO(group);
     }
+
+    public DictionaryItemDO getItem(Integer id){
+        DictionaryItem item = dictionaryItemRepository.getOne(id);
+        if(item == null){
+            throw new ObjectNotFoundException("字典组不存在");
+        }
+        return dictionaryConverter.toDictionaryItemDO(item);
+    }
+
+    public List<DictionaryItemDO> getItems(Integer groupId){
+        DictionaryGroup group = dictionaryGroupRepository.getOne(groupId);
+        if(group == null){
+            return null;
+        }
+        return dictionaryConverter.toDictionaryItemDOs(group.getItems());
+    }
+    public void addOrUpdateItem(DictionaryItemDO itemDO){
+        DictionaryItem item = dictionaryConverter.toDictionaryItem(itemDO);
+        dictionaryItemRepository.save(item);
+    }
+
+    public void deleteItem(Integer id){
+        DictionaryItem item = dictionaryItemRepository.getOne(id);
+        if(item == null){
+            throw new ObjectNotFoundException("字典不存在");
+        }
+        dictionaryItemRepository.delete(item);
+    }
+
+
 
     public PagedResponseDO<DictionaryGroupDO> requestGroup(DictionaryGroupSearchDO requestDO){
         Sort sort = SpecificationUtils.buildSort(requestDO.getSorts());

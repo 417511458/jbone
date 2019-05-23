@@ -48,6 +48,7 @@ export default {
   article_list: '文章管理',
   tag_list: '标签管理',
   special_page: '专题管理',
+  dictionary_list: '字典管理',
 
   base: '基本设置',
   site_base_page: '网站基本信息',

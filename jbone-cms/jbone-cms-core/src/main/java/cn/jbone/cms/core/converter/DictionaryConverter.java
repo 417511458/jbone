@@ -1,8 +1,8 @@
 package cn.jbone.cms.core.converter;
 
-import cn.jbone.cms.common.dataobject.DictionaryDetailDO;
+import cn.jbone.cms.common.dataobject.DictionaryItemDO;
 import cn.jbone.cms.common.dataobject.DictionaryGroupDO;
-import cn.jbone.cms.core.dao.entity.DictionaryDetail;
+import cn.jbone.cms.core.dao.entity.DictionaryItem;
 import cn.jbone.cms.core.dao.entity.DictionaryGroup;
 import cn.jbone.cms.core.dao.repository.DictionaryGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class DictionaryConverter {
         dictionaryGroupDO.setId(group.getId());
         dictionaryGroupDO.setCode(group.getCode());
         dictionaryGroupDO.setName(group.getName());
-        dictionaryGroupDO.setDetails(toDictionaryDetailDOs(group.getDetails()));
+        dictionaryGroupDO.setItems(toDictionaryItemDOs(group.getItems()));
 
         return dictionaryGroupDO;
     }
@@ -67,29 +67,29 @@ public class DictionaryConverter {
         return dictionaryGroup;
     }
 
-    public DictionaryDetailDO toDictionaryDetailDO(DictionaryDetail detail){
-        if(detail == null){
+    public DictionaryItemDO toDictionaryItemDO(DictionaryItem item){
+        if(item == null){
             return null;
         }
 
-        DictionaryDetailDO dictionaryDetailDO = new DictionaryDetailDO();
-        dictionaryDetailDO.setDictName(detail.getDictName());
-        dictionaryDetailDO.setDictPrompt(detail.getDictPrompt());
-        dictionaryDetailDO.setDictValue(detail.getDictValue());
-        dictionaryDetailDO.setGroupId(detail.getGroup().getId());
-        dictionaryDetailDO.setId(detail.getId());
-        dictionaryDetailDO.setOrders(detail.getOrders());
+        DictionaryItemDO dictionaryItemDO = new DictionaryItemDO();
+        dictionaryItemDO.setDictName(item.getDictName());
+        dictionaryItemDO.setDictPrompt(item.getDictPrompt());
+        dictionaryItemDO.setDictValue(item.getDictValue());
+        dictionaryItemDO.setGroupId(item.getGroup().getId());
+        dictionaryItemDO.setId(item.getId());
+        dictionaryItemDO.setOrders(item.getOrders());
 
-        return dictionaryDetailDO;
+        return dictionaryItemDO;
     }
 
-    public List<DictionaryDetailDO> toDictionaryDetailDOs(List<DictionaryDetail> details){
-        if(CollectionUtils.isEmpty(details)){
+    public List<DictionaryItemDO> toDictionaryItemDOs(List<DictionaryItem> items){
+        if(CollectionUtils.isEmpty(items)){
             return null;
         }
-        List<DictionaryDetailDO> list = new ArrayList<>();
-        for (DictionaryDetail detail : details){
-            DictionaryDetailDO DO = toDictionaryDetailDO(detail);
+        List<DictionaryItemDO> list = new ArrayList<>();
+        for (DictionaryItem item : items){
+            DictionaryItemDO DO = toDictionaryItemDO(item);
             if(DO != null){
                 list.add(DO);
             }
@@ -97,18 +97,18 @@ public class DictionaryConverter {
         return list;
     }
 
-    public DictionaryDetail toDictionaryDetail(DictionaryDetailDO DO){
+    public DictionaryItem toDictionaryItem(DictionaryItemDO DO){
         if(DO == null){
             return null;
         }
 
-        DictionaryDetail detail = new DictionaryDetail();
-        detail.setDictName(DO.getDictName());
-        detail.setDictPrompt(DO.getDictPrompt());
-        detail.setDictValue(DO.getDictValue());
-        detail.setId(DO.getId());
-        detail.setOrders(DO.getOrders());
-        detail.setGroup(dictionaryGroupRepository.getOne(DO.getGroupId()));
-        return detail;
+        DictionaryItem item = new DictionaryItem();
+        item.setDictName(DO.getDictName());
+        item.setDictPrompt(DO.getDictPrompt());
+        item.setDictValue(DO.getDictValue());
+        item.setId(DO.getId());
+        item.setOrders(DO.getOrders());
+        item.setGroup(dictionaryGroupRepository.getOne(DO.getGroupId()));
+        return item;
     }
 }

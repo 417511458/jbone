@@ -9,5 +9,5 @@ public class DictionaryGroupDO {
     private int id;
     private String code;
     private String name;
-    private List<DictionaryDetailDO> details;
+    private List<DictionaryItemDO> items;
 }
