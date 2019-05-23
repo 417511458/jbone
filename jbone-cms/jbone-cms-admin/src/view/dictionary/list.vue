@@ -18,8 +18,8 @@
             <div slot="content" >
               <div style="margin-bottom: 10px;">
                 <Button type="primary" icon="ios-add" @click="toAddItem(group.id)">添加字典项</Button>
-                <Button type="warning" icon="ios-backspace-outline" @click="deleteItems(group.id)" style="margin-left: 10px;">删除字典项</Button>
-                <Button type="error" icon="ios-backspace-outline" @click="deleteGroup(group.id)" style="margin-left: 10px;">删除本字典</Button>
+                <Button type="error" icon="ios-backspace-outline" @click="deleteGroup(group.id)" style="margin-left: 10px;">删除字典</Button>
+                <Button type="success" icon="ios-backspace-outline" @click="toEditGroup(group.id,group.name)" style="margin-left: 10px;">修改字典</Button>
               </div>
               <Table v-if="group.items && group.items.length > 0"  :loading="table.loading" :columns="table.columns" :data="group.items" stripe border ref="selection"></Table>
               <Alert v-else>暂无字典项，请添加！</Alert>
@@ -29,12 +29,18 @@
         <Page :total="query.totalRecord" show-total :pageSize="query.pageSize" @on-change="pageChange" show-sizer @on-page-size-change="pageSizeChange"
               v-show="table.operation.success"></Page>
       </card>
+
+    <edit-dictionary-group :id="editGroupModal.id" :name="editGroupModal.name" :show-modal="editGroupModal.showModal" @success="search" @updateShowModal="(val) => {editGroupModal.showModal = val}"></edit-dictionary-group>
+    <edit-dictionary-item  :id="editItemModal.id" :group-id="editItemModal.groupId" :dict-name="editItemModal.dictName" :show-modal="editItemModal.showModal" @success="search" @updateShowModal="(val) => {editItemModal.showModal = val}"></edit-dictionary-item>
   </div>
 </template>
 <script>
   import dictionaryApi from '@/api/dictionary'
+  import EditDictionaryGroup from "./editGroup";
+  import EditDictionaryItem from "./editItem";
 
   export default {
+    components: {EditDictionaryItem, EditDictionaryGroup},
     data() {
       return {
         query: {
@@ -48,11 +54,6 @@
         table: {
           loading: false,
           columns: [
-            {
-              type: 'selection',
-              width: 60,
-              align: 'center'
-            },
             {title: '字典名', key: 'dictName'},
             {title: '字典值', key: 'dictValue'},
             {title: '提示文本', key: 'dictPrompt'},
@@ -72,7 +73,7 @@
                     },
                     on: {
                       click: () => {
-                        this.toEditModel(params.index);
+                        this.toEditItem(params.row.id,params.row.dictName);
                       }
                     }
                   }, '修改'),
@@ -98,9 +99,20 @@
           operation: {
             success: true,
             message: ""
-          }
+          },
         },
-        loading: false
+        loading: false,
+        editGroupModal: {
+          id: 0,
+          name: '',
+          showModal: false,
+        },
+        editItemModal: {
+          id: 0,
+          groupId:0,
+          dictName: '',
+          showModal: false,
+        },
       }
     },
     created() {
@@ -114,16 +126,46 @@
         this.search();
       },
       toAddGroup(){
-
+        this.editGroupModal.id = 0
+        this.editGroupModal.name = ''
+        this.editGroupModal.showModal = true
+      },
+      toEditGroup(groupId,name){
+        this.editGroupModal.id = groupId
+        this.editGroupModal.name = name
+        this.editGroupModal.showModal = true
       },
       deleteGroup(groupId){
-        console.info(groupId)
+        let self = this;
+        this.$Modal.confirm({
+          title: '确定要删除本字典吗？',
+          onOk: () => {
+            dictionaryApi.deleteGroup(groupId).then(function (res) {
+              let result = res.data;
+              if(result.success){
+                self.$Message.info('删除成功');
+                self.search();
+              }else {
+                self.$Message.error('删除失败');
+              }
+            });
+          }
+        });
       },
       deleteItems(groupId){
         console.info(groupId)
       },
       toAddItem(groupId){
-        console.info(groupId)
+        this.editItemModal.id = 0
+        this.editItemModal.groupId = groupId
+        this.editItemModal.dictName = ''
+        this.editItemModal.showModal = true
+      },
+      toEditItem(id,name){
+        this.editItemModal.id = id
+        this.editItemModal.groupId = 0
+        this.editItemModal.dictName = name
+        this.editItemModal.showModal = true
       },
       search() {
         this.table.loading = true;

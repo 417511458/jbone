@@ -5,6 +5,7 @@ import cn.jbone.cms.common.dataobject.DictionaryGroupDO;
 import cn.jbone.cms.core.dao.entity.DictionaryItem;
 import cn.jbone.cms.core.dao.entity.DictionaryGroup;
 import cn.jbone.cms.core.dao.repository.DictionaryGroupRepository;
+import cn.jbone.cms.core.dao.repository.DictionaryItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -17,6 +18,8 @@ public class DictionaryConverter {
 
     @Autowired
     private DictionaryGroupRepository dictionaryGroupRepository;
+    @Autowired
+    private DictionaryItemRepository dictionaryItemRepository;
 
     public DictionaryGroupDO toDictionaryGroupDO(DictionaryGroup group){
         if(group == null){
@@ -101,8 +104,13 @@ public class DictionaryConverter {
         if(DO == null){
             return null;
         }
-
-        DictionaryItem item = new DictionaryItem();
+        DictionaryItem item = null;
+        if(DO.getId() > 0){
+            item = dictionaryItemRepository.getOne(DO.getId());
+        }
+        if(item == null){
+            item = new DictionaryItem();
+        }
         item.setDictName(DO.getDictName());
         item.setDictPrompt(DO.getDictPrompt());
         item.setDictValue(DO.getDictValue());
