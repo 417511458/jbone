@@ -18,7 +18,7 @@
             <div slot="content" >
               <div style="margin-bottom: 10px;">
                 <Button type="primary" icon="ios-add" @click="toAddItem(group.id)">添加字典项</Button>
-                <Button type="error" icon="ios-backspace-outline" @click="deleteGroup(group.id)" style="margin-left: 10px;">删除字典</Button>
+                <Button type="error" icon="ios-backspace-outline" @click="deleteGroup(group.id,group.name)" style="margin-left: 10px;">删除字典</Button>
                 <Button type="success" icon="ios-backspace-outline" @click="toEditGroup(group.id,group.name)" style="margin-left: 10px;">修改字典</Button>
               </div>
               <Table v-if="group.items && group.items.length > 0"  :loading="table.loading" :columns="table.columns" :data="group.items" stripe border ref="selection"></Table>
@@ -47,7 +47,7 @@
           code: '',
           name: '',
           totalRecord: 0,
-          pageSize: 5,
+          pageSize: 10,
           pageNumber: 1
         },
         groups:[],
@@ -87,7 +87,7 @@
                     },
                     on: {
                       click: () => {
-                        this.handleDelete(params.index);
+                        this.toDeleteItem(params.row.id,params.row.dictName);
                       }
                     }
                   }, '删除')
@@ -135,10 +135,10 @@
         this.editGroupModal.name = name
         this.editGroupModal.showModal = true
       },
-      deleteGroup(groupId){
+      deleteGroup(groupId,name){
         let self = this;
         this.$Modal.confirm({
-          title: '确定要删除本字典吗？',
+          title: '确定要删除本字典[' + name + ']吗？',
           onOk: () => {
             dictionaryApi.deleteGroup(groupId).then(function (res) {
               let result = res.data;
@@ -146,14 +146,28 @@
                 self.$Message.info('删除成功');
                 self.search();
               }else {
-                self.$Message.error('删除失败');
+                self.$Message.error('删除失败! ' + result.status.message);
               }
             });
           }
         });
       },
-      deleteItems(groupId){
-        console.info(groupId)
+      toDeleteItem(id,dictName){
+        let self = this;
+        this.$Modal.confirm({
+          title: '确定要删除字典项[' + dictName +']吗?',
+          onOk: () => {
+            dictionaryApi.deleteItem(id).then(function (res) {
+              let result = res.data;
+              if(result.success){
+                self.$Message.info('删除成功');
+                self.search();
+              }else {
+                self.$Message.error('删除失败! ' + result.status.message);
+              }
+            });
+          }
+        });
       },
       toAddItem(groupId){
         this.editItemModal.id = 0

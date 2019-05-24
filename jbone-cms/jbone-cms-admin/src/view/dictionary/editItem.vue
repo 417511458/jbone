@@ -101,6 +101,14 @@
         },
 
         loadData(){
+          this.data = {
+            id: 0,
+            dictName: '',
+            dictValue: '',
+            dictPrompt: '',
+            groupId: this.groupId
+          }
+
           if(this.id <= 0){
             return
           }

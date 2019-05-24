@@ -90,6 +90,13 @@
         },
 
         loadData(){
+
+          this.data = {
+            id: 0,
+            name: '',
+            code: ''
+          }
+
           if(this.id <= 0){
             return
           }
