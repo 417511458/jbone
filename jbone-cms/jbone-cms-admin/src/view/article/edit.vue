@@ -22,7 +22,7 @@
         <FormItem label="所属栏目">
           <Row>
             <Col span="6">
-              <tree-select :data="categoryTree.data" v-model="categoryTree.selectedData" :expand-all="true" check-strictly></tree-select>
+              <tree-select :data="categoryTree.data" v-model="categoryTree.selectedData" :expand-all="true" check-strictly @on-check-change="handleTreeSelectCheckChange"></tree-select>
             </Col>
 
             <Col span="2" style="text-align: center">文章标签:</Col>
@@ -67,7 +67,7 @@
             </Col>
 
             <Col span="10">
-              <Button @click="handleShowFrontCover" type="text">输入图片地址</Button>
+              <Button @click="handleShowFrontCover">输入图片地址</Button>
               <i-input v-show="showFrontCover" v-model="article.frontCover" clearable placeholder="封面图"></i-input>
             </Col>
 
@@ -169,7 +169,9 @@
         ...mapMutations([
           'closeTag'
         ]),
-
+        handleTreeSelectCheckChange (selectedArray, item) {
+          this.categoryTree.selectedData = [item.id]
+        },
         searchCategoryTree(){
           let self = this;
           categoryApi.getCategoryTree().then(function (res) {
