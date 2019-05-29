@@ -94,6 +94,15 @@ export default [
             title: '标签管理'
         },
         component: () => import('@/view/tag/list.vue')
+      },
+      {
+        path: 'plugin/list',
+        name: 'plugin_list',
+        meta: {
+          icon: 'ios-book',
+          title: '插件管理'
+        },
+        component: () => import('@/view/plugin/list.vue')
       }
     ]
   },

@@ -52,5 +52,6 @@ export default {
 
   base: '基本设置',
   site_base_page: '网站基本信息',
-  link_list: '友情链接'
+  link_list: '友情链接',
+  plugin_list: '插件管理',
 }
