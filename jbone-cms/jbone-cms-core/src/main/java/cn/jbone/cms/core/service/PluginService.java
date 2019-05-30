@@ -1,13 +1,17 @@
 package cn.jbone.cms.core.service;
 
+import cn.jbone.cms.common.constant.DictionaryConstant;
+import cn.jbone.cms.common.dataobject.DictionaryItemDO;
 import cn.jbone.cms.common.dataobject.PluginDO;
 import cn.jbone.cms.core.converter.PluginConverter;
 import cn.jbone.cms.core.dao.entity.Plugin;
 import cn.jbone.cms.core.dao.repository.PluginRepository;
 import cn.jbone.common.exception.ObjectNotFoundException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +23,9 @@ public class PluginService {
 
     @Autowired
     private PluginConverter pluginConverter;
+
+    @Autowired
+    private DictionaryService dictionaryService;
 
     public PluginDO get(int id){
         Plugin plugin = pluginRepository.getOne(id);
@@ -55,6 +62,24 @@ public class PluginService {
 
     public List<PluginDO> findAll(){
         List<Plugin> plugins = pluginRepository.findAll(Sort.by(Sort.Order.by("orders")));
-        return pluginConverter.toPluginDOs(plugins);
+        List<PluginDO> pluginDOS = pluginConverter.toPluginDOs(plugins);
+        if(!CollectionUtils.isEmpty(pluginDOS)){
+            //拼接类型描述
+            Map<String, DictionaryItemDO> dictionaryItemDOMap = dictionaryService.getItemsMapByGroupCode(DictionaryConstant.GROUP_PLUGIN_TYPE);
+            if(!CollectionUtils.isEmpty(dictionaryItemDOMap)){
+                for (PluginDO pluginDO : pluginDOS){
+                    if(StringUtils.isNotBlank(pluginDO.getType())){
+                        DictionaryItemDO dictionaryItemDO = dictionaryItemDOMap.get(pluginDO.getType());
+                        if(dictionaryItemDO == null)continue;
+                        PluginDO.PluginTypeDO pluginTypeDO = new PluginDO.PluginTypeDO();
+                        pluginTypeDO.setName(dictionaryItemDO.getDictName());
+                        pluginTypeDO.setPrompt(dictionaryItemDO.getDictPrompt());
+                        pluginTypeDO.setValue(dictionaryItemDO.getDictValue());
+                        pluginDO.setPluginType(pluginTypeDO);
+                    }
+                }
+            }
+        }
+        return pluginDOS;
     }
 }

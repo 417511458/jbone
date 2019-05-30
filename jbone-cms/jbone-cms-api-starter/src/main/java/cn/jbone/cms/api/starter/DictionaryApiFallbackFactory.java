@@ -71,8 +71,11 @@ public class DictionaryApiFallbackFactory implements FallbackFactory<DictionaryA
                 return Result.wrapProtectedError();
             }
 
-
-
+            @Override
+            public Result<List<DictionaryItemDO>> getItemsByCode(String code) {
+                logger.error("rpc getItemsByCode broke",throwable);
+                return Result.wrapProtectedError();
+            }
         };
     }
 }

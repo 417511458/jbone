@@ -40,4 +40,7 @@ public interface DictionaryApi {
     @RequestMapping(value = "/getItems",method = {RequestMethod.GET})
     Result<List<DictionaryItemDO>> getItems(@RequestParam("groupId") Integer groupId);
 
+    @RequestMapping(value = "/getItemsByCode",method = {RequestMethod.GET})
+    Result<List<DictionaryItemDO>> getItemsByCode(@RequestParam("code") String code);
+
 }

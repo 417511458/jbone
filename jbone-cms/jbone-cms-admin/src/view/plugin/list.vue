@@ -15,6 +15,19 @@
           <Button v-if="row.enable == 1" type="success">可用</Button>
           <Button v-if="row.enable == 0" type="dashed">不可用</Button>
         </template>
+        <template slot="pluginType" slot-scope="{ row, index }">
+          <div v-if="row.pluginType">
+            <Tooltip placement="top">
+              <p v-text="row.pluginType.name"></p>
+              <div slot="content">
+                <p v-text="row.pluginType.prompt"></p>
+              </div>
+            </Tooltip>
+          </div>
+          <div v-else>
+            <p v-text="row.type"></p>
+          </div>
+        </template>
       </Table>
     </card>
     <card v-else>
@@ -55,7 +68,11 @@
               align: 'center'
             },
             {title: '插件名', key: 'name'},
-            {title: '插件类型', key: 'type'},
+            {
+              title: '插件类型',
+              type: 'template',
+              slot: 'pluginType'
+            },
             {
               title: '状态',
               type: 'template',

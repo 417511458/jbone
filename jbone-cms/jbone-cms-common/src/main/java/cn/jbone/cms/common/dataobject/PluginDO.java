@@ -31,4 +31,13 @@ public class PluginDO {
      * 排序号
      */
     private int orders;
+
+    private PluginTypeDO pluginType;
+
+    @Data
+    public static class PluginTypeDO{
+        private String name;
+        private String value;
+        private String prompt;
+    }
 }

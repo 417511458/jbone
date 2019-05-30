@@ -62,6 +62,16 @@ dictionaryApi.getItems = function(groupId){
   });
 }
 
+dictionaryApi.getItemsByCode = function(code){
+  return axios.request({
+    url: 'cms/dictionary/getItemsByCode',
+    method: 'get',
+    params: {
+      code: code
+    }
+  });
+}
+
 dictionaryApi.addOrUpdateItem = function(item){
   item.creator = getUserId();
   return axios.request({

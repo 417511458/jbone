@@ -114,4 +114,16 @@ public class DictionaryApiImpl implements DictionaryApi {
         }
         return Result.wrapSuccess(itemDOS);
     }
+
+    @Override
+    public Result<List<DictionaryItemDO>> getItemsByCode(String code) {
+        List<DictionaryItemDO> itemDOS = null;
+        try {
+            itemDOS = dictionaryService.getItemsByGroupCode(code);
+        } catch (Exception e) {
+            logger.warn("DictionaryApiImpl getItemsByCode error.",e);
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess(itemDOS);
+    }
 }

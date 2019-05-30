@@ -22,7 +22,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DictionaryService {
@@ -73,6 +75,28 @@ public class DictionaryService {
             return null;
         }
         return dictionaryConverter.toDictionaryItemDOs(group.getItems());
+    }
+    public List<DictionaryItemDO> getItemsByGroupCode(String code){
+        DictionaryGroup group = dictionaryGroupRepository.findByCode(code);
+        if(group == null){
+            return null;
+        }
+        return dictionaryConverter.toDictionaryItemDOs(group.getItems());
+    }
+
+    public Map<String,DictionaryItemDO> getItemsMapByGroupCode(String code){
+        DictionaryGroup group = dictionaryGroupRepository.findByCode(code);
+        if(group == null){
+            return null;
+        }
+        List<DictionaryItemDO> list = dictionaryConverter.toDictionaryItemDOs(group.getItems());
+        Map<String,DictionaryItemDO> map = new HashMap<>();
+        if(!CollectionUtils.isEmpty(list)){
+            for (DictionaryItemDO itemDO : list){
+                map.put(itemDO.getDictValue(),itemDO);
+            }
+        }
+        return map;
     }
     public void addOrUpdateItem(DictionaryItemDO itemDO){
         DictionaryItem item = dictionaryConverter.toDictionaryItem(itemDO);
