@@ -27,6 +27,9 @@ public class ArticleService {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private CommonService commonService;
+
     public PagedResponseDO<ArticleResponseDO> findArticles(ArticleSearchDO articleRequestDO){
         Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleRequestDO);
         if(result != null && result.isSuccess()){
@@ -92,6 +95,8 @@ public class ArticleService {
         modelMap.addAttribute("lastArticle",getLastOrNextArticle(article,SearchConditionDO.Operator.GREATER_THAN));
         modelMap.addAttribute("nextArticle",getLastOrNextArticle(article,SearchConditionDO.Operator.LESS_THAN));
         modelMap.addAttribute("comments",commentService.getByArticleId(article.getId()));
+
+        commonService.setAriclePlugins(modelMap);
     }
 
     //上一篇文章

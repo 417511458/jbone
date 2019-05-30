@@ -8,4 +8,5 @@ public class DictionaryConstant {
 
 
     public static final String ITEM_PLUGIN_TYPE_GLOBAL = "global";      //全局插件
+    public static final String ITEM_PLUGIN_TYPE_ARTICLE = "article";      //文章页插件
 }

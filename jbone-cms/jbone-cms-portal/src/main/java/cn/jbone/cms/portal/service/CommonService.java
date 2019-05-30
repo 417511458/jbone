@@ -1,8 +1,11 @@
 package cn.jbone.cms.portal.service;
 
 import cn.jbone.cms.api.CategoryApi;
+import cn.jbone.cms.api.PluginApi;
 import cn.jbone.cms.api.SettingsApi;
+import cn.jbone.cms.common.constant.DictionaryConstant;
 import cn.jbone.cms.common.dataobject.CategoryDO;
+import cn.jbone.cms.common.dataobject.PluginDO;
 import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
 import cn.jbone.cms.common.dataobject.SettingsDO;
 import cn.jbone.cms.common.enums.BooleanEnum;
@@ -27,6 +30,9 @@ public class CommonService {
     private CategoryApi categoryApi;
 
     @Autowired
+    private PluginApi pluginApi;
+
+    @Autowired
     private ArticleService articleService;
     @Autowired
     private TagService tagService;
@@ -36,6 +42,7 @@ public class CommonService {
     public void setCommonProperties(ModelMap modelMap){
         setSettings(modelMap);
         setMenus(modelMap);
+        setGlobalPlugins(modelMap);
     }
 
     public void setCommonModuleDatas(ModelMap modelMap){
@@ -59,8 +66,22 @@ public class CommonService {
         Result<Map<String, String>> settingMap =  settingsApi.getMap();
         if(settingMap.isSuccess()){
             if(!CollectionUtils.isEmpty(settingMap.getData())){
-                modelMap.addAttribute("settings",settingMap);
+                modelMap.addAttribute("settings",settingMap.getData());
             }
+        }
+    }
+
+    private void setGlobalPlugins(ModelMap modelMap){
+        Result<List<PluginDO>> pluginDOSResult = pluginApi.findByType(DictionaryConstant.ITEM_PLUGIN_TYPE_GLOBAL);
+        if(pluginDOSResult.isSuccess()){
+            modelMap.addAttribute("globalPlugins",pluginDOSResult.getData());
+        }
+    }
+
+    public void setAriclePlugins(ModelMap modelMap){
+        Result<List<PluginDO>> pluginDOSResult = pluginApi.findByType(DictionaryConstant.ITEM_PLUGIN_TYPE_ARTICLE);
+        if(pluginDOSResult.isSuccess()){
+            modelMap.addAttribute("articlePlugins",pluginDOSResult.getData());
         }
     }
 
