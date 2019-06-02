@@ -106,7 +106,35 @@ export default [
       }
     ]
   },
-
+  {
+    path: '/market',
+    name: 'market',
+    component: Main,
+    meta: {
+      title: '营销推广',
+      icon: 'ios-book'
+    },
+    children: [
+      {
+        path: 'advertisement/list',
+        name: 'advertisement_list',
+        meta: {
+          icon: 'ios-book',
+          title: '广告管理'
+        },
+        component: () => import('@/view/advertisement/list.vue')
+      },
+      {
+        path: 'link/list',
+        name: 'link_list',
+        meta: {
+          icon: 'ios-book',
+          title: '友情链接'
+        },
+        component: () => import('@/view/link/list.vue')
+      }
+    ]
+  },
   {
     path: '/base',
     name: 'base',
@@ -124,15 +152,6 @@ export default [
          title: '网站基本信息'
         },
         component: () => import('@/view/settings/Settings.vue')
-      },
-      {
-        path: 'link/list',
-        name: 'link_list',
-        meta: {
-          icon: 'ios-book',
-          title: '友情链接'
-        },
-        component: () => import('@/view/link/list.vue')
       },
       {
         path: 'dictionary/list',
