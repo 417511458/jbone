@@ -11,7 +11,29 @@
         <Icon type="ios-film-outline"></Icon>
         广告管理
       </p>
-      <Table :loading="table.loading" :columns="table.columns" :data="table.data" stripe border ref="selection"></Table>
+      <Table :loading="table.loading" :columns="table.columns" :data="table.data" stripe border ref="selection">
+        <template slot="type" slot-scope="{ row, index }">
+          <span v-if="row.typeDetail" v-text="row.typeDetail.name"></span>
+          <span v-else v-text="row.type"></span>
+        </template>
+        <template slot="location" slot-scope="{ row, index }">
+          <span v-if="row.locationDetail" v-text="row.locationDetail.name"></span>
+          <span v-else v-text="row.location"></span>
+        </template>
+        <template slot="content" slot-scope="{ row, index }">
+          <div v-if="row.type == 'img'">
+            <img src="row.img" />
+          </div>
+          <div v-if="row.type == 'text'">
+            <span v-text="row.text"></span>
+          </div>
+          <div v-if="row.type == 'imgAndText'">
+            <img src="row.img" />
+            <span v-text="row.text"></span>
+          </div>
+          <span v-if="row.type == 'code'" v-html="row.content"></span>
+        </template>
+      </Table>
       <Page :total="query.totalRecord" show-total :pageSize="query.pageSize" @on-change="pageChange" show-sizer @on-page-size-change="pageSizeChange"
             v-show="table.operation.success"></Page>
     </card>
@@ -55,15 +77,22 @@
         },
         table: {
           columns: [
-            {
-              type: 'selection',
-              width: 60,
-              align: 'center'
-            },
-            {title: 'id', key: 'id'},
             {title: '名称', key: 'name'},
-            {title: '类型', key: 'type'},
-            {title: '位置', key: 'location'},
+            {
+              title: '广告类型',
+              type: 'template',
+              slot: 'type'
+            },
+            {
+              title: '位置',
+              type: 'template',
+              slot: 'location'
+            },
+            {
+              title: '内容',
+              type: 'template',
+              slot: 'content'
+            },
             {
               title: '操作',
               key: 'handle',

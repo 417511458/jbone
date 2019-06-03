@@ -2,6 +2,7 @@ package cn.jbone.cms.core.converter;
 
 import cn.jbone.cms.common.dataobject.DictionaryItemDO;
 import cn.jbone.cms.common.dataobject.DictionaryGroupDO;
+import cn.jbone.cms.common.dataobject.InnerDictionaryItemDO;
 import cn.jbone.cms.core.dao.entity.DictionaryItem;
 import cn.jbone.cms.core.dao.entity.DictionaryGroup;
 import cn.jbone.cms.core.dao.repository.DictionaryGroupRepository;
@@ -118,5 +119,16 @@ public class DictionaryConverter {
         item.setOrders(DO.getOrders());
         item.setGroup(dictionaryGroupRepository.getOne(DO.getGroupId()));
         return item;
+    }
+
+    public InnerDictionaryItemDO toInnerDictionaryItemDO(DictionaryItemDO DO){
+        if(DO == null){
+            return  null;
+        }
+        InnerDictionaryItemDO innerDictionaryItemDO = new InnerDictionaryItemDO();
+        innerDictionaryItemDO.setName(DO.getDictName());
+        innerDictionaryItemDO.setPrompt(DO.getDictPrompt());
+        innerDictionaryItemDO.setValue(DO.getDictValue());
+        return innerDictionaryItemDO;
     }
 }

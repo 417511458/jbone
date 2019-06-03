@@ -33,10 +33,22 @@ public class Advertisement extends BaseEntity {
     private String name;
 
     /**
-     * 广告内容
+     * 广告代码内容
      */
     @Column(name = "content",length = 1024)
     private String content;
+
+    /**
+     * 广告图片内容
+     */
+    @Column(name = "img",length = 1024)
+    private String img;
+
+    /**
+     * 广告文本
+     */
+    @Column(name = "text",length = 1024)
+    private String text;
 
     /**
      * 超链接

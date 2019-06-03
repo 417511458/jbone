@@ -40,4 +40,18 @@ public class AdvertisementDO {
      * 点击数
      */
     private int hits;
+
+    /**
+     * 广告图片内容
+     */
+    private String img;
+
+    /**
+     * 广告文本
+     */
+    private String text;
+
+    private InnerDictionaryItemDO typeDetail;
+    private InnerDictionaryItemDO locationDetail;
+
 }

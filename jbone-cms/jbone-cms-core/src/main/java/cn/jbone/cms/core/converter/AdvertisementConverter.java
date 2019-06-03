@@ -30,6 +30,8 @@ public class AdvertisementConverter {
         advertisementDO.setType(advertisement.getType());
         advertisementDO.setUrl(advertisement.getUrl());
         advertisementDO.setHits(advertisement.getHits());
+        advertisementDO.setImg(advertisement.getImg());
+        advertisementDO.setText(advertisement.getText());
         return advertisementDO;
     }
 
@@ -88,7 +90,9 @@ public class AdvertisementConverter {
         advertisement.setName(advertisementDO.getName());
         advertisement.setType(advertisementDO.getType());
         advertisement.setUrl(advertisementDO.getUrl());
-        advertisement.setHits(advertisementDO.getHits());
+//        advertisement.setHits(advertisementDO.getHits());
+        advertisement.setImg(advertisementDO.getImg());
+        advertisement.setText(advertisementDO.getText());
         return advertisement;
     }
 

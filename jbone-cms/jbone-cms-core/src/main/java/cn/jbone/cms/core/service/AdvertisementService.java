@@ -1,8 +1,12 @@
 package cn.jbone.cms.core.service;
 
+import cn.jbone.cms.common.constant.DictionaryConstant;
 import cn.jbone.cms.common.dataobject.AdvertisementDO;
+import cn.jbone.cms.common.dataobject.DictionaryItemDO;
+import cn.jbone.cms.common.dataobject.PluginDO;
 import cn.jbone.cms.common.dataobject.search.AdvertisementSearchDO;
 import cn.jbone.cms.core.converter.AdvertisementConverter;
+import cn.jbone.cms.core.converter.DictionaryConverter;
 import cn.jbone.cms.core.dao.entity.Advertisement;
 import cn.jbone.cms.core.dao.repository.AdvertisementRepository;
 import cn.jbone.common.dataobject.PagedResponseDO;
@@ -29,6 +33,12 @@ public class AdvertisementService {
 
     @Autowired
     private AdvertisementConverter advertisementConverter;
+
+    @Autowired
+    private DictionaryService dictionaryService;
+
+    @Autowired
+    private DictionaryConverter dictionaryConverter;
 
     public AdvertisementDO get(Long id){
         Advertisement advertisement = advertisementRepository.getOne(id);
@@ -62,9 +72,41 @@ public class AdvertisementService {
         responseDO.setTotal(advertisementPage.getTotalElements());
         responseDO.setPageNum(advertisementPage.getNumber() + 1);
         responseDO.setPageSize(advertisementPage.getSize());
-        responseDO.setDatas(advertisementConverter.toDOS(advertisementPage.getContent()));
+
+
+        List<AdvertisementDO> datas = advertisementConverter.toDOS(advertisementPage.getContent());
+        responseDO.setDatas(datas);
+
+        fillLocationAndType(datas);
 
         return responseDO;
+    }
+
+    private void fillLocationAndType(List<AdvertisementDO> datas){
+        if(!CollectionUtils.isEmpty(datas)){
+            //拼接类型描述
+            Map<String, DictionaryItemDO> locationMap = dictionaryService.getItemsMapByGroupCode(DictionaryConstant.GROUP_ADS_LOCATION);
+            Map<String, DictionaryItemDO> typeMap = dictionaryService.getItemsMapByGroupCode(DictionaryConstant.GROUP_ADS_TYPE);
+
+            if(!CollectionUtils.isEmpty(locationMap)){
+                for (AdvertisementDO advertisementDO : datas){
+                    if(StringUtils.isNotBlank(advertisementDO.getLocation())){
+                        DictionaryItemDO dictionaryItemDO = locationMap.get(advertisementDO.getLocation());
+                        if(dictionaryItemDO == null)continue;
+                        advertisementDO.setLocationDetail(dictionaryConverter.toInnerDictionaryItemDO(dictionaryItemDO));
+                    }
+                }
+            }
+            if(!CollectionUtils.isEmpty(typeMap)){
+                for (AdvertisementDO advertisementDO : datas){
+                    if(StringUtils.isNotBlank(advertisementDO.getType())){
+                        DictionaryItemDO dictionaryItemDO = typeMap.get(advertisementDO.getType());
+                        if(dictionaryItemDO == null)continue;
+                        advertisementDO.setTypeDetail(dictionaryConverter.toInnerDictionaryItemDO(dictionaryItemDO));
+                    }
+                }
+            }
+        }
     }
 
     public Map<String,List<AdvertisementDO>> findAllMap(){

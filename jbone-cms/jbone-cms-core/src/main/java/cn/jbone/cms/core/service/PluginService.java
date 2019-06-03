@@ -3,6 +3,7 @@ package cn.jbone.cms.core.service;
 import cn.jbone.cms.common.constant.DictionaryConstant;
 import cn.jbone.cms.common.dataobject.DictionaryItemDO;
 import cn.jbone.cms.common.dataobject.PluginDO;
+import cn.jbone.cms.core.converter.DictionaryConverter;
 import cn.jbone.cms.core.converter.PluginConverter;
 import cn.jbone.cms.core.dao.entity.Plugin;
 import cn.jbone.cms.core.dao.repository.PluginRepository;
@@ -26,6 +27,9 @@ public class PluginService {
 
     @Autowired
     private DictionaryService dictionaryService;
+
+    @Autowired
+    private DictionaryConverter dictionaryConverter;
 
     public PluginDO get(int id){
         Plugin plugin = pluginRepository.getOne(id);
@@ -71,11 +75,7 @@ public class PluginService {
                     if(StringUtils.isNotBlank(pluginDO.getType())){
                         DictionaryItemDO dictionaryItemDO = dictionaryItemDOMap.get(pluginDO.getType());
                         if(dictionaryItemDO == null)continue;
-                        PluginDO.PluginTypeDO pluginTypeDO = new PluginDO.PluginTypeDO();
-                        pluginTypeDO.setName(dictionaryItemDO.getDictName());
-                        pluginTypeDO.setPrompt(dictionaryItemDO.getDictPrompt());
-                        pluginTypeDO.setValue(dictionaryItemDO.getDictValue());
-                        pluginDO.setPluginType(pluginTypeDO);
+                        pluginDO.setPluginType(dictionaryConverter.toInnerDictionaryItemDO(dictionaryItemDO));
                     }
                 }
             }
