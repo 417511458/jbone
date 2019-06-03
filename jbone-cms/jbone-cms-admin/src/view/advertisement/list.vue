@@ -20,18 +20,10 @@
           <span v-if="row.locationDetail" v-text="row.locationDetail.name"></span>
           <span v-else v-text="row.location"></span>
         </template>
-        <template slot="content" slot-scope="{ row, index }">
-          <div v-if="row.type == 'img'">
-            <img src="row.img" />
-          </div>
-          <div v-if="row.type == 'text'">
-            <span v-text="row.text"></span>
-          </div>
-          <div v-if="row.type == 'imgAndText'">
-            <img src="row.img" />
-            <span v-text="row.text"></span>
-          </div>
-          <span v-if="row.type == 'code'" v-html="row.content"></span>
+
+        <template slot="enable" slot-scope="{ row, index }">
+          <Button v-if="row.enable == 1" type="success">可用</Button>
+          <Button v-if="row.enable == 0" type="dashed">不可用</Button>
         </template>
       </Table>
       <Page :total="query.totalRecord" show-total :pageSize="query.pageSize" @on-change="pageChange" show-sizer @on-page-size-change="pageSizeChange"
@@ -44,6 +36,19 @@
     </card>
 
     <advertisement-edit :id="modal.id" :title="modal.title" :show-modal="modal.showModal" @updateShowModal="(val) => {modal.showModal = val}" @success="search"></advertisement-edit>
+    <Modal v-model="showPreview"  :mask-closable="false" title="广告预览">
+        <div v-if="previewData.type == 'img'">
+          <img :src="previewData.img" style="max-width: 200px" />
+        </div>
+        <div v-if="previewData.type == 'text'">
+          <span v-text="previewData.text"></span>
+        </div>
+        <div v-if="previewData.type == 'imgAndText'">
+          <img :src="previewData.img" style="max-width: 200px;" />
+          <span v-text="previewData.text"></span>
+        </div>
+        <span v-if="previewData.type == 'code'" v-html="previewData.content"></span>
+    </Modal>
   </div>
 </template>
 <script>
@@ -89,9 +94,9 @@
               slot: 'location'
             },
             {
-              title: '内容',
+              title: '状态',
               type: 'template',
-              slot: 'content'
+              slot: 'enable'
             },
             {
               title: '操作',
@@ -101,6 +106,20 @@
                   h('Button', {
                     props: {
                       type: 'primary',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.toPreview(params.index);
+                      }
+                    }
+                  }, '预览'),
+                  h('Button', {
+                    props: {
+                      type: 'success',
                       size: 'small'
                     },
                     style: {
@@ -134,6 +153,8 @@
             message: ''
           }
         },
+        previewData:{},
+        showPreview: false,
         loading: false,
         modal:{
           title: '',
@@ -171,7 +192,10 @@
           self.table.loading = false;
         });
       },
-
+      toPreview(index){
+        this.showPreview = true
+        this.previewData = this.table.data[index]
+      },
       handleDeleteOnTable (index) {
         this.handleDelete(this.table.data[index].id);
       },

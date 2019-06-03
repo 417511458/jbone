@@ -193,7 +193,7 @@
               advertisementApi.addOrUpdate(this.data).then(function (res) {
                 let result = res.data;
                 if (result.success) {
-                  self.$Message.info("添加成功");
+                  self.$Message.info("操作成功");
                   self.$emit('success');
                 } else {
                   self.$Message.error(result.status.message);
