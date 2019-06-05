@@ -14,8 +14,8 @@ import java.util.Map;
 @Data
 public class SearchListDO implements Serializable {
 
-    private int pageSize;
-    private int pageNumber;
+    private int pageSize = 10;
+    private int pageNumber = 1;
     private List<SearchConditionDO> conditions = new ArrayList<>();
     private List<SearchSortDO> sorts = new ArrayList<>();
 

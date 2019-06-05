@@ -1,10 +1,10 @@
 /******************************************************************
-Theme Name: Personal 
-Description: 
+Theme Name: Personal
+Description:
 Author: Colorlib
-Author URI: 
+Author URI:
 Version: 1.0
-Created: 
+Created:
 ******************************************************************/
 /*------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ Created:
 	1.3	Flexbox
 	1.4	Reset
 2.  Elements
-3.  Menu Style 
+3.  Menu Style
 4.  Home Page Style
 5.  About Page Style
 6.  Department Page Style
@@ -46,7 +46,7 @@ $black			: #222;
 
 */
 /* =================================== */
-/*  Basic Style 
+/*  Basic Style
 /* =================================== */
 ::-moz-selection {
   /* Code for Firefox */
@@ -2046,7 +2046,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   right: 0;
@@ -2055,14 +2055,14 @@ h1, h2, h3, h4, h5, h6 {
   background: #fff;
 }
 
-#header.header-scrolled {
-  transition: all 0.5s;
-  box-shadow: -21.213px 21.213px 30px 0px rgba(158, 158, 158, 0.3);
-}
+/*#header.header-scrolled {*/
+/*  transition: all 0.5s;*/
+/*  box-shadow: -21.213px 21.213px 30px 0px rgba(158, 158, 158, 0.3);*/
+/*}*/
 
-#header.header-scrolled .main-menu {
-  border-color: transparent;
-}
+/*#header.header-scrolled .main-menu {*/
+/*  border-color: transparent;*/
+/*}*/
 
 @media (max-width: 673px) {
   #logo {
@@ -3163,7 +3163,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 /* -------------------------
-   ----- Media Queries ----- 
+   ----- Media Queries -----
    ------------------------- */
 @media screen and (max-width: 1020px) {
   .timeline ul li .content {
@@ -3450,6 +3450,11 @@ ads-widget
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
 }
+
+.ads-widget{
+  text-align: center;
+}
+
 
 @media (max-width: 991px) {
   .top-category-widget-area .single-cat-widget {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:jbone="http://www.jbone.cn">
 <head>
 
   <meta charset="utf-8" />
@@ -41,7 +41,9 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-9 posts-list" th:if="${pagedArticles != null && pagedArticles.total > 0}">
-        <div class="single-post row" th:each="article,articleStat : ${pagedArticles.datas}">
+        <jbone:advertisement location="article_list_top"></jbone:advertisement>
+        <div th:each="article,articleStat : ${pagedArticles.datas}">
+          <div class="single-post row" >
           <div class="col-lg-3  col-md-3 meta-details">
             <ul class="tags" th:if="${not #lists.isEmpty(article.tags)}">
 
@@ -66,9 +68,10 @@
             </p>
             <a th:href="@{/article/{articleId}(articleId=${article.id})}" class="primary-btn">阅读全文</a>
           </div>
-            <hr>
+          </div>
+          <jbone:advertisement location="article_list_middle" th:if="${articleStat.index +1 < articleStat.size}"></jbone:advertisement>
         </div>
-
+        <jbone:advertisement location="article_list_bottom"></jbone:advertisement>
         <!-- 分页组件 -->
         <nav class="blog-pagination justify-content-center d-flex" th:if="${pagedArticles.pagination != null}">
           <ul class="pagination">

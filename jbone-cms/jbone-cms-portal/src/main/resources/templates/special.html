@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:jbone="http://www.jbone.cn">
 <head>
 
   <meta charset="utf-8" />
@@ -23,6 +23,7 @@
 
 
 <aside class="left-sidebar">
+  <jbone:advertisement location="special_menu_top"></jbone:advertisement>
   <div class="logo">
     <a href="#">
       <h1 th:text="${category.title}"></h1>
@@ -31,11 +32,13 @@
   <nav class="left-nav">
       <div id="tree"></div>
   </nav>
+  <jbone:advertisement location="special_menu_bottom"></jbone:advertisement>
 </aside>
 
 <div id="main-wrapper">
   <header id="header" class="parent-active" th:replace="/layout/header :: header"></header>
-    <div class="content-header" th:if="${categoryToc != null}">
+  <jbone:advertisement location="special_article_top"></jbone:advertisement>
+  <div class="content-header" th:if="${categoryToc != null}">
         <h1 th:text="${categoryToc.title}"></h1>
     </div>
   <div class="main-content post-content" th:if="${article != null && article.articleData != null}" th:utext="${article.articleData.content}">
@@ -50,6 +53,7 @@
     </ul>
 
   </div>
+  <jbone:advertisement location="special_article_bottom"></jbone:advertisement>
   <div class="main-content" th:if="${categoryToc != null && article != null}">
     原创文章，转载请注明出处：<a th:href="@{/special/{categoryId}/{categoryTocId}(categoryId=${category.id},categoryTocId=${categoryToc.id})}" th:text="'jbone - ' + ${article.title}">文章标题</a>
   </div>

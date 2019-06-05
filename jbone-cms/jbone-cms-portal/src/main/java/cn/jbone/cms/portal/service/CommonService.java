@@ -1,9 +1,11 @@
 package cn.jbone.cms.portal.service;
 
+import cn.jbone.cms.api.AdvertisementApi;
 import cn.jbone.cms.api.CategoryApi;
 import cn.jbone.cms.api.PluginApi;
 import cn.jbone.cms.api.SettingsApi;
 import cn.jbone.cms.common.constant.DictionaryConstant;
+import cn.jbone.cms.common.dataobject.AdvertisementDO;
 import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.PluginDO;
 import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
@@ -39,10 +41,14 @@ public class CommonService {
     @Autowired
     private LinkService linkService;
 
+    @Autowired
+    private AdvertisementApi advertisementApi;
+
     public void setCommonProperties(ModelMap modelMap){
         setSettings(modelMap);
         setMenus(modelMap);
         setGlobalPlugins(modelMap);
+        setAdvertisement(modelMap);
     }
 
     public void setCommonModuleDatas(ModelMap modelMap){
@@ -85,4 +91,12 @@ public class CommonService {
         }
     }
 
+    public void setAdvertisement(ModelMap modelMap){
+       Result<Map<String,List<AdvertisementDO>>> result = advertisementApi.findAllMap();
+       if(result.isSuccess() && !CollectionUtils.isEmpty(result.getData())){
+           for (Map.Entry<String,List<AdvertisementDO>> entry : result.getData().entrySet()) {
+               modelMap.put(entry.getKey(),entry.getValue());
+           }
+       }
+    }
 }
