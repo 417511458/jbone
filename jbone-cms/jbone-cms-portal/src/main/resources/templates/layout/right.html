@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org"  xmlns:jbone="http://www.jbone.cn">
 <head>
     <meta charset="UTF-8" />
     <title>Title</title>
@@ -8,7 +8,7 @@
 <div th:fragment="right">
         <!-- 右侧模版，包含搜索、热门文章、广告位、标签云，这里一般用于列表页，如首页、栏目列表、搜索列表等 -->
         <div class="widget-wrap">
-
+            <jbone:advertisement location="sidebar_top"></jbone:advertisement>
             <!-- 栏目子分类 -->
             <div class="single-sidebar-widget post-category-widget" th:if="${category != null && not #lists.isEmpty(category.children)}">
                 <h4 class="category-title">子栏目</h4>
@@ -61,6 +61,8 @@
                     </li>
                 </ul>
             </div>
+
+            <jbone:advertisement location="sidebar_bottom"></jbone:advertisement>
         </div>
 </div>
 </body>

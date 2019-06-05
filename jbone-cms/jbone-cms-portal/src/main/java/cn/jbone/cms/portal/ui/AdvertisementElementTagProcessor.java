@@ -59,7 +59,7 @@ public class AdvertisementElementTagProcessor extends AbstractElementTagProcesso
 
 
             for (AdvertisementDO advertisementDO : list){
-                model.add(modelFactory.createOpenElementTag("div", "class", "ads-widget"));
+                model.add(modelFactory.createOpenElementTag("div", "class", "single-sidebar-widget ads-widget"));
                 if(DictionaryConstant.ITEM_ADS_TYPE_TEXT.equalsIgnoreCase(advertisementDO.getType())){
                     IModel a = getAModel(modelFactory,advertisementDO);
                     a.add(modelFactory.createText(HtmlEscape.escapeHtml5(advertisementDO.getText())));
@@ -93,8 +93,11 @@ public class AdvertisementElementTagProcessor extends AbstractElementTagProcesso
 
     private IModel getAModel(IModelFactory modelFactory,AdvertisementDO advertisementDO){
         IModel a = modelFactory.createModel();
-        IOpenElementTag openElementTag = modelFactory.createOpenElementTag("a","href",advertisementDO.getUrl());
-        modelFactory.setAttribute(openElementTag,"target","_blank");
+        IOpenElementTag openElementTag = modelFactory.createOpenElementTag("a");
+        if(StringUtils.isNotBlank(advertisementDO.getUrl())){
+            openElementTag = modelFactory.setAttribute(openElementTag,"href",advertisementDO.getUrl());
+            openElementTag = modelFactory.setAttribute(openElementTag,"target","_blank");
+        }
         a.add(openElementTag);
         return a;
     }
