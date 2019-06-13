@@ -1,0 +1,86 @@
+server:
+  port: 40001
+
+spring:
+  application:
+    name: Jbone-fs-server
+  #rabbitmq配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  #
+  # 以下为 zipkin客户端配置
+  #
+  sleuth:
+    sampler:
+      probability: 1
+    messaging:
+      enabled: true
+      rabbit:
+        enabled: true
+  zipkin:
+    sender:
+      type: rabbit
+zipkin.rabbitmq.queue: zipkin
+
+# ###
+
+#注册中心
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:10001/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+
+# 服务管理配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"        #暴漏的接口，"*"表示所有web监控接口
+        exclude:            #不暴漏的接口
+      base-path: /actuator  #监控根路径
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 200000
+        semaphore:
+          maxConcurrentRequests: 200
+  threadpool:
+    default:
+      coreSize: 100
+
+#Jbone配置
+jbone:
+  #当前系统名，在系统管理里面对应的名字
+  sys:
+    serverName: ${spring.application.name}
+
+
+# info接口返回值
+info:
+  app:
+    name: ${spring.application.name}
+    version: 1.0.0
+  java:
+    version: ${java.version}
+  code:
+    git: https://github.com/417511458/jbone
+    gitee: https://gitee.com/majunwei2017/jbone
+  domain: http://www.jbone.cn
+
+

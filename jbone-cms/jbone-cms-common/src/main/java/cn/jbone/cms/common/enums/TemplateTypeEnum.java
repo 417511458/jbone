@@ -11,7 +11,9 @@ public enum TemplateTypeEnum {
 
     SPECIAL_CATEGORY("专题栏目模版"),
 
-    ARTICLE("文章模版");
+    ARTICLE("文章模版"),
+
+    SITE("站点模版");
 
     private String name;
 

@@ -1,0 +1,7 @@
+server:
+  port: 40001
+
+spring:
+  profiles:
+    active: @profileActive@
+

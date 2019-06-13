@@ -12,8 +12,7 @@
     <artifactId>jbone-b2b2c</artifactId>
 
     <name>jbone-b2b2c</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <url>http://www.jbone.cn</url>
     <modules>
         <module>jbone-b2b2c-shop-core</module>
         <module>jbone-b2b2c-shop-api</module>

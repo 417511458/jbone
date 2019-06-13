@@ -12,8 +12,7 @@
     <artifactId>jbone-cms-common</artifactId>
 
     <name>jbone-cms-common</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <url>http://www.jbone.cn</url>
     <packaging>jar</packaging>
 
     <properties>

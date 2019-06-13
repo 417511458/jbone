@@ -12,8 +12,7 @@
     <artifactId>jbone-cms-server</artifactId>
 
     <name>jbone-cms-server</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <url>http://www.jbone.cn</url>
     <packaging>war</packaging>
 
     <properties>

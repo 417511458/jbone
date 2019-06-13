@@ -13,8 +13,7 @@
     <artifactId>jbone-cms-core</artifactId>
 
     <name>jbone-cms-core</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <url>http://www.jbone.cn</url>
     <packaging>jar</packaging>
 
     <properties>

@@ -16,6 +16,7 @@
         <module>jbone-ui</module>
         <module>jbone-errors</module>
         <module>jbone-b2b2c</module>
+        <module>jbone-fs</module>
     </modules>
     <packaging>pom</packaging>
 
