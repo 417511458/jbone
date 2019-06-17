@@ -19,6 +19,7 @@
         <module>jbone-fs-repo-qiniu</module>
         <module>jbone-fs-repo-fastdfs</module>
         <module>jbone-fs-server</module>
+        <module>jbone-fs-api</module>
     </modules>
 
     <description>jbone文件系统</description>
@@ -31,6 +32,10 @@
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-configuration</artifactId>
         </dependency>
     </dependencies>
 

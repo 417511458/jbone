@@ -69,6 +69,12 @@ jbone:
   #当前系统名，在系统管理里面对应的名字
   sys:
     serverName: ${spring.application.name}
+  fs:
+    qiniu:
+      accessKey: AK
+      secretKey: SK
+      bucket: jbone
+      domain: http://static.jbone.cn/
 
 
 # info接口返回值

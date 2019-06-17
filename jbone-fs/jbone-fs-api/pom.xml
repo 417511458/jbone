@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jbone-fs-repo-qiniu</artifactId>
+    <artifactId>jbone-fs-api</artifactId>
 
-    <name>jbone-fs-repo-qiniu</name>
+    <name>jbone-fs-api</name>
     <packaging>jar</packaging>
     <url>http://www.jbone.cn</url>
 
@@ -21,16 +21,21 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-fs-repo</artifactId>
+            <artifactId>jbone-fs-common</artifactId>
             <version>1.0.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
-            <version>[7.2.0, 7.2.99]</version>
-        </dependency>
     </dependencies>
-
 </project>

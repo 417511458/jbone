@@ -57,14 +57,21 @@
             <artifactId>jbone-fs-repo</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-fs-repo-fastdfs</artifactId>
             <version>1.0.0</version>
         </dependency>
+        -->
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-fs-repo-qiniu</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-fs-api</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

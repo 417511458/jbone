@@ -1,11 +1,13 @@
 package cn.jbone.configuration;
 
 import cn.jbone.configuration.props.CasProperties;
+import cn.jbone.configuration.props.FSProperties;
 import cn.jbone.configuration.props.RpcProperties;
 import cn.jbone.configuration.props.SysProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +34,12 @@ public class JboneConfiguration {
      */
     private RpcProperties rpc = new RpcProperties();
 
+    /**
+     * 文件系统配置
+     */
+    @NestedConfigurationProperty
+    private FSProperties fs = new FSProperties();
+
 
     public SysProperties getSys() {
         return sys;
@@ -55,6 +63,14 @@ public class JboneConfiguration {
 
     public void setRpc(RpcProperties rpc) {
         this.rpc = rpc;
+    }
+
+    public FSProperties getFs() {
+        return fs;
+    }
+
+    public void setFs(FSProperties fs) {
+        this.fs = fs;
     }
 
     @Override
