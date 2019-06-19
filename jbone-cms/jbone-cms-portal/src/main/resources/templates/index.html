@@ -22,7 +22,7 @@
 <header id="header" class="parent-active" th:replace="/layout/header :: header"></header>
 
   <!-- start banner Area -->
-  <section class="banner-area relative blog-home-banner" id="home">
+  <section class="banner-area relative blog-home-banner" id="home" th:style=" ${#strings.isEmpty(settings.home_banner)} ? 'background-image:url(' + @{/img/home-bg.jpg} + ')' : 'background-image:url(' + ${settings.home_banner} + ')'">
     <div class="overlay overlay-bg"></div>
     <div class="container">
       <div class="row d-flex align-items-center justify-content-center">

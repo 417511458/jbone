@@ -55,6 +55,7 @@
             <Col span="2" style="width: 58px;height:58px;line-height: 58px;margin-right: 10px">
               <Upload
                 multiple
+                :format="['jpg','jpeg','png','gif']"
                 type="drag"
                 action="//jsonplaceholder.typicode.com/posts/"
                 :on-success="handleUploadSuccess"
@@ -84,6 +85,7 @@
 <script>
     import Tinymce from "../../components/tinymce/index";
     import categoryApi from '@/api/category'
+    import fileApi from '@/api/file'
     import articleApi from '@/api/article'
     import tagApi from '@/api/tag'
     import TreeSelect from "../../components/tree-select/tree-select";
@@ -276,14 +278,30 @@
         },
 
         handleBeforeUpload(file){
-          let reader = new FileReader()
+          debugger
+
           let self = this;
-          reader.readAsDataURL(file)
-          reader.onload = e => {
-            let _file = e.target.result
-            self.article.frontCover = _file
-            console.info(_file)
-          }
+          //上传到文件服务
+          fileApi.upload(file).then(function (res) {
+            let result = res.data;
+            if (result.success) {
+              self.article.frontCover = result.data.url
+            } else {
+              self.$Message.error(result.status.message);
+            }
+          }).catch(function (error) {
+            self.$Message.error(error.message);
+          });
+
+
+          // base64入库
+          // let reader = new FileReader()
+          // reader.readAsDataURL(file)
+          // reader.onload = e => {
+          //   let _file = e.target.result
+          //   self.article.frontCover = _file
+          //   console.info(_file)
+          // }
           return false
         },
 

@@ -46,6 +46,19 @@
           <FormItem label="首页副标题" prop="description" :required="true">
             <i-input v-model="home.description" clearable  placeholder="首页副标题"></i-input>
           </FormItem>
+          <FormItem label="首页Banner" prop="banner" :required="true">
+            <img :src="home.banner" style="width: 300px;" />
+            <Upload
+              :disabled="bannerUploding"
+              multiple
+              :format="['jpg','jpeg','png','gif']"
+              action="//jsonplaceholder.typicode.com/posts/"
+              :before-upload="handleBeforeUpload">
+              <Button icon="ios-camera" size="20" :loading="bannerUploding">上传图片</Button>
+            </Upload>
+            <Button @click="handleShowBannerInput">输入图片地址</Button>
+            <i-input v-show="showBannerInput" v-model="home.banner" clearable placeholder="首页Banner"></i-input>
+          </FormItem>
         </Form>
       </TabPane>
 
@@ -77,6 +90,7 @@
 </template>
 <script>
   import settingsApi from '@/api/settings'
+  import fileApi from '@/api/file'
 
   export default {
     data() {
@@ -91,6 +105,7 @@
         home: {
           title: '',  //首页大标题
           description: '',//首页副标题
+          banner: '', //首页banner
         },
         contact: {      //联系方式
           github: '',
@@ -105,7 +120,9 @@
           aboutme: '',  //广告开关
         },
         loading: false,
-        settings:[]
+        settings:[],
+        showBannerInput:false,
+        bannerUploding: false
       }
     },
     created() {
@@ -122,6 +139,7 @@
         this.settings.push(this.newSetting('copyright',this.baseInfo.copyright))
         this.settings.push(this.newSetting('home_title',this.home.title))
         this.settings.push(this.newSetting('home_description',this.home.description))
+        this.settings.push(this.newSetting('home_banner',this.home.banner))
         this.settings.push(this.newSetting('contact_github',this.contact.github))
         this.settings.push(this.newSetting('contact_gitee',this.contact.gitee))
         this.settings.push(this.newSetting('contact_qq',this.contact.qq))
@@ -140,6 +158,7 @@
         this.baseInfo.copyright = this.getSettingValue(settingMap,"copyright")
         this.home.title = this.getSettingValue(settingMap,"home_title")
         this.home.description = this.getSettingValue(settingMap,"home_description")
+        this.home.banner = this.getSettingValue(settingMap,"home_banner")
         this.contact.github = this.getSettingValue(settingMap,"contact_github")
         this.contact.gitee = this.getSettingValue(settingMap,"contact_gitee")
         this.contact.qq = this.getSettingValue(settingMap,"contact_qq")
@@ -203,6 +222,29 @@
           }
         });
       },
+
+      handleBeforeUpload(file){
+        let self = this;
+        this.bannerUploding = true
+        //上传到文件服务
+        fileApi.upload(file).then(function (res) {
+          self.bannerUploding = false
+          let result = res.data;
+          if (result.success) {
+            self.home.banner = result.data.url
+          } else {
+            self.$Message.error(result.status.message);
+          }
+        }).catch(function (error) {
+          self.$Message.error(error.message);
+          self.bannerUploding = false
+        });
+        return false
+      },
+
+      handleShowBannerInput(){
+        this.showBannerInput = this.showBannerInput ? false : true
+      }
 
     }
   }

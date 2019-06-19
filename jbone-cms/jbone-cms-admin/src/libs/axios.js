@@ -34,17 +34,12 @@ class HttpRequest {
         'Access-Control-Allow-Origin': 'http://jbone-cms-admin-vue.majunwei.com:8080',
         'Access-Control-Allow-Credentials': true,
         'Content-Type': 'application/x-www-form-urlencoded',
+        common:{'Accept' :'multipart/form-data,application/json,text/plain,*/*'},
         'J-Token': getToken()
         //'X-Requested-With': 'XMLHttpRequest',
       },
       crossDomain: true,
       transformRequest: [function transformRequest(data, headers) {
-        // if(data){
-          // data.creator = getUserId();
-          // data.userId = getUserId();
-        // }
-
-        // console.info(data);
         /* 把类似content-type这种改成Content-Type */
         let keys = Object.keys(headers);
         let normalizedName = 'Content-Type';
@@ -55,21 +50,8 @@ class HttpRequest {
           }
         });
 
-        /* 这里就是用来解决POST提交json数据的时候是直接把整个json放在request payload中提交过去的情况
-         * 这里简单处理下，把 {name: 'admin', pwd: 123}这种转换成name=admin&pwd=123就可以通过
-         * x-www-form-urlencoded这种方式提交
-         * */
-        // if (data) {
-        //   headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-        //
-        //   let keys2 = Object.keys(data);
-        //   console.info(keys2);
-        //   /* 这里就是把json变成url形式，并进行encode */
-        //   return encodeURI(keys2.map(name => `${name}=${data[name]}`).join('&'));
-        // }
-
         //对象采用json传参
-        if (data) {
+        if (data && headers['Content-Type'] !== 'multipart/form-data') {
           headers['Content-Type'] = 'application/json;charset=utf-8';
 
           return JSON.stringify(data);
@@ -119,6 +101,25 @@ class HttpRequest {
     options = Object.assign(this.getInsideConfig(), options);
     this.interceptors(instance, options.url);
     return instance(options);
+  }
+
+  requestFile (options,file) {
+    let tconfig = {
+      //添加请求头
+      headers: {
+        "Content-Type": "multipart/form-data",
+        'J-Token': getToken()
+      },
+      //添加上传进度监听事件
+      onUploadProgress: e => {
+        var completeProgress = ((e.loaded / e.total * 100) | 0) + "%";
+        console.info(completeProgress)
+      }
+    };
+    let param = new FormData();
+    param.append("file", file);
+    console.log(param.get("file"));
+    return axios.post(this.baseUrl + "/" + options.url, param, tconfig)
   }
 
   requestByBaseUrl (burl,options) {

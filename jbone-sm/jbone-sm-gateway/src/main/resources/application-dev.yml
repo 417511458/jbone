@@ -25,6 +25,11 @@ spring:
     sender:
       type: rabbit
 
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 50MB
+
 zipkin.rabbitmq.queue: zipkin
 
 # ###
@@ -60,6 +65,7 @@ zuul:
   routes:
     jbone-sys-server: /system/**  #暴漏jbone-sys-server的服务
     jbone-cms-server: /cms/**     #暴漏jbone-cms-server的服务
+    jbone-fs-server: /fs/**       #文件上传
   sensitive-headers:
 
 #CAS服务地址
