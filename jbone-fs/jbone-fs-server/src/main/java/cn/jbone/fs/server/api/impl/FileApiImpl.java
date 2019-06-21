@@ -43,17 +43,38 @@ public class FileApiImpl implements FileApi, HandlerExceptionResolver {
 
     @Override
     public Result<DownloadResponse> download(@RequestBody DownloadRequest request) {
-        return null;
+        DownloadResponse response = null;
+        try{
+            response = fileRepository.download(request);
+        }catch (Exception e){
+            logger.error("文件下载失败");
+            return Result.wrap500Error("文件下载失败");
+        }
+        return Result.wrapSuccess(response);
     }
 
     @Override
     public Result<DeleteResponse> delete(@RequestBody DeleteRequest request) {
-        return null;
+        DeleteResponse response;
+        try {
+            response = fileRepository.delete(request);
+        } catch (Exception e) {
+            logger.error("文件删除失败");
+            return Result.wrap500Error("文件删除失败");
+        }
+        return Result.wrapSuccess(response);
     }
 
     @Override
     public Result<ViewResponse> view(@RequestBody ViewRequest request) {
-        return null;
+        ViewResponse response = null;
+        try {
+            response = fileRepository.view(request);
+        } catch (Exception e) {
+            logger.error("文件查看失败");
+            return Result.wrap500Error("文件查看失败");
+        }
+        return Result.wrapSuccess(response);
     }
 
     @RequestMapping("fileUpload")
