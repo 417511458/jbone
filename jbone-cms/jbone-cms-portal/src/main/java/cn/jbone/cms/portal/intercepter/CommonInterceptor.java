@@ -60,7 +60,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 
         for (String suffix : excludeUris){
             if(uri.endsWith(suffix)){
-                logger.info("静态资源，不加载公共信息. uri : {}" , request.getRequestURI());
+                logger.debug("静态资源，不加载公共信息. uri : {}" , request.getRequestURI());
                 return;
             }
         }

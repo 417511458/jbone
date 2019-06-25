@@ -33,7 +33,8 @@
           <p class="text-white" th:text="${settings.home_description}">
             首页说明 - 未配置
           </p>
-          <a th:href="${settings.contact_github}" target="_blank" class="primary-btn">Github</a>
+          <a th:if="${!#strings.isEmpty(settings.contact_github)}" th:href="${settings.contact_github}" target="_blank" class="primary-btn">GitHub</a>
+          <a th:if="${!#strings.isEmpty(settings.contact_gitee)}" th:href="${settings.contact_gitee}" target="_blank" class="primary-btn">Gitee</a>
         </div>
       </div>
     </div>
