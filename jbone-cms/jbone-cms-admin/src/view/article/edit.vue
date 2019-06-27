@@ -278,8 +278,6 @@
         },
 
         handleBeforeUpload(file){
-          debugger
-
           let self = this;
           //上传到文件服务
           fileApi.upload(file).then(function (res) {

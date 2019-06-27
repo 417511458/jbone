@@ -7,7 +7,6 @@ import lombok.Data;
  */
 @Data
 public class UploadRequest {
-    private String key;
     private String localFilePath;
     private byte[] bytes;
     private String fileName;

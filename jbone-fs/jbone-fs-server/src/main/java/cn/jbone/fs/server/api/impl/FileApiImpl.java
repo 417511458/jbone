@@ -1,5 +1,6 @@
 package cn.jbone.fs.server.api.impl;
 
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.fs.api.FileApi;
 import cn.jbone.fs.common.dataobject.*;
@@ -34,8 +35,11 @@ public class FileApiImpl implements FileApi, HandlerExceptionResolver {
         UploadResponse uploadResponse = null;
         try {
             uploadResponse = fileRepository.upload(request);
+        } catch (JboneException je) {
+            logger.error("文件上传失败",je);
+            return Result.wrap500Error(je.getMessage());
         } catch (Exception e) {
-            logger.error("文件上传失败");
+            logger.error("文件上传失败",e);
             return Result.wrap500Error("文件上传失败");
         }
         return Result.wrapSuccess(uploadResponse);
@@ -46,23 +50,28 @@ public class FileApiImpl implements FileApi, HandlerExceptionResolver {
         DownloadResponse response = null;
         try{
             response = fileRepository.download(request);
-        }catch (Exception e){
-            logger.error("文件下载失败");
+        } catch (JboneException je) {
+            logger.error("文件下载失败",je);
+            return Result.wrap500Error(je.getMessage());
+        } catch (Exception e){
+            logger.error("文件下载失败",e);
             return Result.wrap500Error("文件下载失败");
         }
         return Result.wrapSuccess(response);
     }
 
     @Override
-    public Result<DeleteResponse> delete(@RequestBody DeleteRequest request) {
-        DeleteResponse response;
+    public Result<Void> delete(@RequestBody DeleteRequest request) {
         try {
-            response = fileRepository.delete(request);
-        } catch (Exception e) {
-            logger.error("文件删除失败");
+            fileRepository.delete(request);
+        } catch (JboneException je) {
+            logger.error("文件删除失败",je);
+            return Result.wrap500Error(je.getMessage());
+        }  catch (Exception e) {
+            logger.error("文件删除失败",e);
             return Result.wrap500Error("文件删除失败");
         }
-        return Result.wrapSuccess(response);
+        return Result.wrapSuccess();
     }
 
     @Override
@@ -70,8 +79,11 @@ public class FileApiImpl implements FileApi, HandlerExceptionResolver {
         ViewResponse response = null;
         try {
             response = fileRepository.view(request);
+        } catch (JboneException je) {
+            logger.error("文件查看失败",je);
+            return Result.wrap500Error(je.getMessage());
         } catch (Exception e) {
-            logger.error("文件查看失败");
+            logger.error("文件查看失败",e);
             return Result.wrap500Error("文件查看失败");
         }
         return Result.wrapSuccess(response);
@@ -82,7 +94,6 @@ public class FileApiImpl implements FileApi, HandlerExceptionResolver {
         UploadRequest uploadRequest = new UploadRequest();
         uploadRequest.setBytes(file.getBytes());
         uploadRequest.setFileName(file.getFileItem().getName());
-
         return this.upload(uploadRequest);
     }
 

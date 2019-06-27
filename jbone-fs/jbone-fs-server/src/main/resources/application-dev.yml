@@ -75,6 +75,15 @@ jbone:
       secretKey: SK
       bucket: jbone
       domain: http://static.jbone.cn/
+    fastDfs:
+      connectTimeoutInSeconds: 30
+      networkTimeoutInSeconds: 30
+      charset: UTF-8
+      httpAntiStealToken: false # 开启防盗链时设置为true，配合httpSecretKey使用
+      httpSecretKey: 123456     # httpAntiStealToken为true开启防盗链，对应fastdfs服务端的token
+      httpTrackerHttpPort: 80
+      trackerServers: 127.0.0.0:22122,127.0.0.1:22122 # tracker服务列表
+      domain: http://fstatic.jbone.cn/  #图片下载服务器域名
 
 
 # info接口返回值

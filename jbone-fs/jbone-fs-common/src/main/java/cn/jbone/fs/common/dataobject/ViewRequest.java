@@ -7,4 +7,5 @@ import lombok.Data;
  */
 @Data
 public class ViewRequest {
+    private String fileUrl;
 }

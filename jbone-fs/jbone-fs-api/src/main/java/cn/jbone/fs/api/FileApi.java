@@ -17,7 +17,7 @@ public interface FileApi {
     Result<UploadResponse> upload(@RequestBody UploadRequest request);
 
     /**
-     * 下载文件
+     * 下载文件,建议使用nginx等搭建专用服务，这里只是获取文件bytes和元数据，用于内部系统交互
      * @param request
      * @return
      */
@@ -30,8 +30,7 @@ public interface FileApi {
      * @return
      */
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
-    Result<DeleteResponse> delete(@RequestBody DeleteRequest request);
-
+    Result<Void> delete(@RequestBody DeleteRequest request);
 
     /**
      * 查看文件信息

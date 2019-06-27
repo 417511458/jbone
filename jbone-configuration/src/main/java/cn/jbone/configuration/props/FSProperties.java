@@ -28,6 +28,14 @@ public class FSProperties {
 
     @Data
     public static class FastDfsProperties{
+        private String connectTimeoutInSeconds;     //连接tracker服务器超时时长
+        private String networkTimeoutInSeconds;     //socket连接超时时长
+        private String charset;                     //编码
+        private String httpAntiStealToken;          //是否开启http安全TOken
+        private String httpSecretKey;               //开启安全token的密钥
+        private String httpTrackerHttpPort;         //tracker服务器端口
+        private String trackerServers;              //tracker服务器列表，IP:port,IP:port
 
+        private String domain;      //返回的域名
     }
 }

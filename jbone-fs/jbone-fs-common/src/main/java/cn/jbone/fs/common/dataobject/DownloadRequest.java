@@ -7,4 +7,5 @@ import lombok.Data;
  */
 @Data
 public class DownloadRequest {
+    private String fileUrl; //文件路径，可带域名
 }

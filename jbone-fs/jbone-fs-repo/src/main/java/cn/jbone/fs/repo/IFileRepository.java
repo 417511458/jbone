@@ -25,7 +25,7 @@ public interface IFileRepository {
      * @param request
      * @return
      */
-    DeleteResponse delete(DeleteRequest request);
+    void delete(DeleteRequest request);
 
 
     /**
