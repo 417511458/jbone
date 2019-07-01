@@ -57,4 +57,6 @@ export default {
 
   market: '营销推广',
   advertisement_list: '广告管理',
+  site_list: '站点管理',
+  site_edit: '编辑站点',
 }

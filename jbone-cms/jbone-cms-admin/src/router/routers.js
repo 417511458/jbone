@@ -162,6 +162,28 @@ export default [
         },
         component: () => import('@/view/dictionary/list.vue')
       },
+      {
+        path: 'site/list',
+        name: 'site_list',
+        meta: {
+          icon: 'ios-book',
+          title: '站点管理'
+        },
+        component: () => import('@/view/site/list.vue')
+      },
+      {
+        path: 'site/edit',
+        name: 'site_edit',
+        meta: {
+          hideInMenu: true,
+          showAlways: true,
+          notCache: true,
+          title: '编辑站点',
+          icon: 'ios-book'
+
+        },
+        component: () => import('@/view/site/edit.vue')
+      }
       // {
       //   path: 'tinymce',
       //   name: 'tinymceDemo',
