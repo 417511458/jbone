@@ -28,6 +28,8 @@
       {{table.operation.message}}
     </card>
 
+    <set-content-limit :siteId="modal.siteId" :title="modal.title" :show-modal="modal.showModal" @updateShowModal="(val) => {modal.showModal = val}" @success="search"></set-content-limit>
+
   </div>
 </template>
 <script>
@@ -35,9 +37,10 @@
   import Input from "iview/src/components/input/input";
   import SiteEdit from "./edit";
   import { mapMutations } from 'vuex'
+  import SetContentLimit from "./setContentLimit";
 
   export default {
-    components: {SiteEdit, Input},
+    components: {SetContentLimit, SiteEdit, Input},
     data() {
 
       const validateName = (rule, value, callback) => {
@@ -97,6 +100,20 @@
                   }, '修改'),
                   h('Button', {
                     props: {
+                      type: 'success',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.toSetContentModel(params.index);
+                      }
+                    }
+                  }, '配置'),
+                  h('Button', {
+                    props: {
                       type: 'error',
                       size: 'small'
                     },
@@ -121,7 +138,7 @@
         modal:{
           title: '',
           showModal: false,
-          id: 0,
+          siteId: 0,
         },
 
       }
@@ -191,6 +208,13 @@
       toEditModel(index) {
         this.$router.push({ path: '/base/site/edit', query: { id:this.table.data[index].id }})
       },
+
+      toSetContentModel(index) {
+        this.modal.title = this.table.data[index].name + '(' + this.table.data[index].domain + ')'
+        this.modal.showModal = true
+        this.modal.siteId = this.table.data[index].id
+      },
+
       pageChange(pageNum){
         this.query.pageNumber = pageNum;
         this.search();
