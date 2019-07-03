@@ -1,5 +1,6 @@
 package cn.jbone.sys.api.feign;
 
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
 import cn.jbone.sys.common.UserRequestDO;
@@ -27,24 +28,6 @@ public class UserApiFallbackFactory implements FallbackFactory<UserApi> {
 
         return new UserApi() {
             @Override
-            public Result<UserBaseInfoResponseDTO> getUserByName(String username) {
-                logger.error("rpc getUserBaseInfo broke",throwable);
-                return Result.wrapProtectedError();
-            }
-
-            @Override
-            public Result<UserInfoResponseDTO> getUserDetailByName(String username) {
-                logger.error("rpc getUserDetailByName broke",throwable);
-                return Result.wrapProtectedError();
-            }
-
-            @Override
-            public Result<UserInfoResponseDTO> getUserDetailByNameAndServerName(String username, String serverName) {
-                logger.error("rpc getUserDetailByNameAndServerName broke",throwable);
-                return Result.wrapProtectedError();
-            }
-
-            @Override
             public Result<List<UserSecurityQuestionsResponseDTO>> getUserSecurityQuestions(String username) {
                 logger.error("rpc getUserSecurityQuestions broke",throwable);
                 return Result.wrapProtectedError();
@@ -65,6 +48,12 @@ public class UserApiFallbackFactory implements FallbackFactory<UserApi> {
             @Override
             public Result<UserResponseDO> commonRequest(UserRequestDO userRequestDO) {
                 logger.error("rpc commonRequest broke",throwable);
+                return Result.wrapProtectedError();
+            }
+
+            @Override
+            public Result<PagedResponseDO<UserResponseDO>> commonSearch(UserRequestDO userRequestDO) {
+                logger.error("rpc commonSearch broke",throwable);
                 return Result.wrapProtectedError();
             }
         };

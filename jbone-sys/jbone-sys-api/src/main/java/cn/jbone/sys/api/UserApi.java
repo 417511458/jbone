@@ -1,5 +1,6 @@
 package cn.jbone.sys.api;
 
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.common.UserRequestDO;
 import cn.jbone.sys.common.UserResponseDO;
@@ -21,15 +22,6 @@ import java.util.List;
 @RequestMapping("/user")
 public interface UserApi {
 
-    @RequestMapping(value = "/getUserByName",method = {RequestMethod.GET})
-    Result<UserBaseInfoResponseDTO> getUserByName(@RequestParam("username") String username);
-
-    @RequestMapping(value = "/getUserDetail",method = {RequestMethod.GET})
-    Result<UserInfoResponseDTO> getUserDetailByName(@RequestParam("username") String username);
-
-    @RequestMapping(value = "/getUserDetailByNameAndServerName",method = {RequestMethod.GET})
-    Result<UserInfoResponseDTO> getUserDetailByNameAndServerName(@RequestParam("username") String username, @RequestParam("serverName") String serverName);
-
     @RequestMapping(value = "/getUserSecurityQuestions",method = {RequestMethod.GET})
     Result<List<UserSecurityQuestionsResponseDTO>> getUserSecurityQuestions(@RequestParam("username") String username);
 
@@ -42,4 +34,9 @@ public interface UserApi {
     @RequestMapping(value = "/commonRequest",method = {RequestMethod.POST},consumes = MediaType.APPLICATION_JSON_VALUE)
     @Headers("Content-Type: application/json")
     Result<UserResponseDO> commonRequest(@RequestBody UserRequestDO userRequestDO);
+
+    @RequestMapping(value = "/commonSearch", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Headers("Content-Type: application/json")
+    Result<PagedResponseDO<UserResponseDO>> commonSearch(@RequestBody UserRequestDO userRequestDO);
+
 }

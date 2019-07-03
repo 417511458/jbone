@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-@Table(name = "site_settings",
+@Table(name = "site_admin",
         indexes = {@Index(name = "site_admin_index_siteid",columnList = "site_id"),
                 @Index(name = "site_admin_index_userid",columnList = "user_id")
 })

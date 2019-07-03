@@ -1,5 +1,6 @@
 package cn.jbone.sys.common;
 
+import cn.jbone.common.dataobject.SearchListDO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -7,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Data
-public class UserRequestDO implements Serializable {
+public class UserRequestDO extends SearchListDO {
 
     Integer userId;
 
@@ -16,6 +17,12 @@ public class UserRequestDO implements Serializable {
     List<UserRequestModule> modules = Arrays.asList(UserRequestModule.BASE);
 
     String serverName;
+
+    String roleName;
+
+    String realName;
+
+    List<Integer> userIds;
 
     public UserRequestDO(){}
 
@@ -37,6 +44,12 @@ public class UserRequestDO implements Serializable {
     public static UserRequestDO buildSimple(Integer userId){
         UserRequestDO userRequestDO = new UserRequestDO();
         userRequestDO.setUserId(userId);
+        return userRequestDO;
+    }
+
+    public static UserRequestDO buildSimple(List<Integer> userIds){
+        UserRequestDO userRequestDO = new UserRequestDO();
+        userRequestDO.setUserIds(userIds);
         return userRequestDO;
     }
 

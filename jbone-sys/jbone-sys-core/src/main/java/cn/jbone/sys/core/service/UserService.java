@@ -1,7 +1,9 @@
 package cn.jbone.sys.core.service;
 
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.utils.PasswordUtils;
+import cn.jbone.common.utils.SpecificationUtils;
 import cn.jbone.sys.common.*;
 import cn.jbone.sys.common.dto.ThirdPartyName;
 import cn.jbone.sys.common.dto.request.ChangePasswordRequestDTO;
@@ -19,9 +21,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.*;
 import java.util.*;
@@ -56,116 +60,6 @@ public class UserService {
     @Autowired
     GithubUserRepository githubUserRepository;
 
-
-    /**
-     * 查询用户详情
-     * 1、用户基本信息
-     * 2、用户权限
-     * 3、用户角色
-     * 4、用户菜单
-     * 注：如果没有传服务名，则不加载用户菜单
-     * @param username 用户名
-     * @param serverName 服务名
-     * @return 用户详细信息
-     */
-    public UserInfoResponseDTO getUserDetailByNameAndServerName(String username, String serverName) {
-        UserInfoResponseDTO userModel = new UserInfoResponseDTO();
-        Set<String> permissions = new HashSet<String>();
-        Set<String> roles = new HashSet<String>();
-
-        RbacUserEntity userEntity = userRepository.findByUsername(username);
-
-
-        //用户角色
-        List<RbacRoleEntity> roleEntities = userEntity.getRoles();
-        if(roleEntities != null && !roleEntities.isEmpty()){
-            for(RbacRoleEntity roleEntity : roleEntities){
-                roles.add(roleEntity.getName());
-
-                //角色对应的权限
-                List<RbacPermissionEntity> permissionEntities = roleEntity.getPermissions();
-                if(permissionEntities != null && !permissionEntities.isEmpty()){
-                    for (RbacPermissionEntity permissionEntity : permissionEntities){
-                        permissions.add(permissionEntity.getPermissionValue());
-                    }
-                }
-            }
-        }
-
-        //用户权限
-        List<RbacPermissionEntity> permissionEntities =  userEntity.getPermissions();
-        if(permissionEntities != null && !permissionEntities.isEmpty()){
-            for(RbacPermissionEntity permissionEntity : permissionEntities){
-                permissions.add(permissionEntity.getPermissionValue());
-            }
-        }
-
-
-
-        BeanUtils.copyProperties(userEntity,userModel,"menus");
-        userModel.setPermissions(permissions);
-        userModel.setRoles(roles);
-
-
-        //如果不包含服务名，则不加载菜单信息
-        if(!StringUtils.isBlank(serverName)){
-            //解析前用户拥有的菜单
-            List<MenuInfoResponseDTO> menuList = new ArrayList<>();
-            List<RbacMenuEntity> correctMenuList = new ArrayList<>();
-
-            RbacSystemEntity systemEntity = systemRepository.findByName(serverName);
-            if(systemEntity == null){
-                return userModel;
-            }
-            List<RbacUserEntity> userCondition = new ArrayList<>();
-            userCondition.add(userEntity);
-
-            //获取用户和对应角色拥有的系统菜单
-            List<RbacMenuEntity> roleMenus = menuRepository.findDistinctByRolesInAndPidAndSystemIdOrderByOrdersDesc(userEntity.getRoles(),0,systemEntity.getId());
-            List<RbacMenuEntity> userMenus = menuRepository.findDistinctByUsersInAndPidAndSystemIdOrderByOrdersDesc(userCondition,0,systemEntity.getId());
-            correctMenuList.addAll(roleMenus);
-            correctMenuList.addAll(userMenus);
-
-            for (RbacMenuEntity menuEntity : correctMenuList){
-                MenuInfoResponseDTO menu = new MenuInfoResponseDTO();
-                BeanUtils.copyProperties(menuEntity,menu);
-                if(isContains(menuList,menu)){
-                    continue;
-                }
-                List<RbacMenuEntity> childRoleMenus = menuRepository.findDistinctByRolesInAndPidAndSystemIdOrderByOrdersDesc(userEntity.getRoles(),menuEntity.getId(),systemEntity.getId());
-                List<RbacMenuEntity> childUserMenus = menuRepository.findDistinctByUsersInAndPidAndSystemIdOrderByOrdersDesc(userCondition,menuEntity.getId(),systemEntity.getId());
-                List<RbacMenuEntity> childMenus = new ArrayList<>();
-                childMenus.addAll(childRoleMenus);
-                childMenus.addAll(childUserMenus);
-
-                if(!childMenus.isEmpty()){
-                    List<MenuInfoResponseDTO> childMenuList = new ArrayList<>();
-                    for (RbacMenuEntity childMenuEntity : childMenus){
-                        MenuInfoResponseDTO childMenu = new MenuInfoResponseDTO();
-                        BeanUtils.copyProperties(childMenuEntity,childMenu);
-                        if(isContains(childMenuList,childMenu)){
-                            continue;
-                        }
-                        childMenuList.add(childMenu);
-
-                    }
-                    Collections.sort(childMenuList);
-                    menu.setChildMenus(childMenuList);
-                }
-
-                menuList.add(menu);
-
-            }
-            Collections.sort(menuList);
-            userModel.setMenus(menuList);
-        }
-
-        return userModel;
-    }
-
-
-
-
     /**
      * 查询用户详情
      * 1、用户基本信息
@@ -177,7 +71,6 @@ public class UserService {
      */
     public UserResponseDO commonRequest(UserRequestDO userRequestDO) {
 
-        UserResponseDO userResponseDO = new UserResponseDO();
         RbacUserEntity userEntity = null;
         if(userRequestDO.getUserId() != null && userRequestDO.getUserId() > 0){
             userEntity = userRepository.findById(userRequestDO.getUserId()).get();
@@ -188,6 +81,43 @@ public class UserService {
             throw new JboneException("user is not found");
         }
 
+        return getResponseDO(userRequestDO,userEntity);
+    }
+
+    /**
+     * 公共分页查询
+     * @param userRequestDO
+     * @return
+     */
+    public PagedResponseDO<UserResponseDO> commonSearch(UserRequestDO userRequestDO){
+        Sort sort = SpecificationUtils.buildSort(userRequestDO.getSorts());
+        PageRequest pageRequest = PageRequest.of(userRequestDO.getPageNumber()-1, userRequestDO.getPageSize(),sort);
+        Page<RbacUserEntity> page =  userRepository.findAll(new UserCommonSearchSpecification(userRequestDO),pageRequest);
+
+        PagedResponseDO<UserResponseDO> responseDO = new PagedResponseDO<>();
+        responseDO.setTotal(page.getTotalElements());
+        responseDO.setPageNum(page.getNumber() + 1);
+        responseDO.setPageSize(page.getSize());
+
+        if(!CollectionUtils.isEmpty(page.getContent())){
+            List<UserResponseDO> userResponseDOS = new ArrayList<>();
+            for (RbacUserEntity userEntity : page.getContent()){
+                UserResponseDO userResponseDO = getResponseDO(userRequestDO,userEntity);
+                if(userRequestDO != null){
+                    userResponseDOS.add(userResponseDO);
+                }
+            }
+            responseDO.setDatas(userResponseDOS);
+        }
+
+        return responseDO;
+    }
+
+    private UserResponseDO getResponseDO(UserRequestDO userRequestDO,RbacUserEntity userEntity){
+        if(userEntity == null){
+            return null;
+        }
+        UserResponseDO userResponseDO = new UserResponseDO();
         //基本信息
         UserBaseInfoDO userBaseInfoDO = new UserBaseInfoDO();
         userBaseInfoDO.setAvatar(userEntity.getAvatar());
@@ -246,9 +176,6 @@ public class UserService {
 
             userAuthInfoDO.setPermissions(permissions);
 
-
-
-
             //如果不包含服务名，则不加载菜单信息
             if(!StringUtils.isBlank(userRequestDO.getServerName())){
                 //解析前用户拥有的菜单
@@ -306,7 +233,6 @@ public class UserService {
 
         return userResponseDO;
     }
-
 
     /**
      * 获取用户实体
@@ -503,6 +429,62 @@ public class UserService {
             Path<String> phone = root.get("phone");
             Path<String> email = root.get("email");
             Predicate predicate = criteriaBuilder.or(criteriaBuilder.like(username,"%" + condition + "%"),criteriaBuilder.like(realname,"%" + condition + "%"),criteriaBuilder.like(phone,"%" + condition + "%"),criteriaBuilder.like(email,"%" + condition + "%"));
+            return predicate;
+        }
+    }
+
+    /**
+     * 用户查询声明，用于模糊查询分页
+     */
+    private class UserCommonSearchSpecification implements Specification<RbacUserEntity> {
+        private UserRequestDO userRequestDO;
+        public UserCommonSearchSpecification(UserRequestDO userRequestDO){
+            this.userRequestDO = userRequestDO;
+        }
+        @Override
+        public Predicate toPredicate(Root<RbacUserEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+            if(userRequestDO == null){
+                return criteriaQuery.getRestriction();
+            }
+            List<Predicate> predicates = new ArrayList<>();
+
+            if(userRequestDO.getUserId() != null && userRequestDO.getUserId() > 0){
+                Path<Integer> id = root.get("id");
+                predicates.add(criteriaBuilder.equal(id, userRequestDO.getUserId()));
+            }
+
+            if(!CollectionUtils.isEmpty(userRequestDO.getUserIds())){
+                Path<Integer> ids = root.get("id");
+                predicates.add(ids.in(userRequestDO.getUserIds()));
+            }
+
+            if(StringUtils.isNotBlank(userRequestDO.getUsername())){
+                Path<String> username = root.get("username");
+                predicates.add(criteriaBuilder.equal(username,userRequestDO.getUsername()));
+            }
+
+            if(StringUtils.isNotBlank(userRequestDO.getRealName())){
+                Path<String> realName = root.get("realname");
+                predicates.add(criteriaBuilder.equal(realName,userRequestDO.getRealName()));
+            }
+
+
+            if(StringUtils.isNotBlank(userRequestDO.getRoleName())){
+                List<RbacRoleEntity> roleEntitys = roleRepository.findByName(userRequestDO.getRoleName());
+                if(!CollectionUtils.isEmpty(roleEntitys)){
+                    Join<RbacUserEntity,RbacRoleEntity> roleJoin = root.join("roles",JoinType.INNER);
+                    predicates.add(roleJoin.in(roleEntitys));
+                }
+            }
+
+
+            //补充条件查询
+            List<Predicate> conditionPredicats = SpecificationUtils.generatePredicates(root,criteriaBuilder, userRequestDO.getConditions());
+            if(!CollectionUtils.isEmpty(conditionPredicats)){
+                predicates.addAll(conditionPredicats);
+            }
+
+            Predicate predicate = criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
             return predicate;
         }
     }

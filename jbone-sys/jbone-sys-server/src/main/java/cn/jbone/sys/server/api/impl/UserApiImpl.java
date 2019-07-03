@@ -1,19 +1,16 @@
 package cn.jbone.sys.server.api.impl;
 
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
 import cn.jbone.sys.common.UserRequestDO;
 import cn.jbone.sys.common.UserResponseDO;
 import cn.jbone.sys.common.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.common.dto.request.GithubUserLoginRequestDTO;
-import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
-import cn.jbone.sys.common.dto.response.UserInfoResponseDTO;
 import cn.jbone.sys.common.dto.response.UserSecurityQuestionsResponseDTO;
 import cn.jbone.sys.core.service.UserService;
-import cn.jbone.sys.core.service.model.user.UserBaseInfoModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,56 +29,6 @@ public class UserApiImpl implements UserApi {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/getUserByName")
-    public Result<UserBaseInfoResponseDTO> getUserByName(String username) {
-        UserBaseInfoResponseDTO userInfoModel = null;
-        try {
-            UserBaseInfoModel userEntity = userService.findByUserName(username);
-
-            if(userEntity == null){
-                return Result.wrap404Error("user is not found");
-            }
-
-            userInfoModel = new UserBaseInfoResponseDTO();
-
-            BeanUtils.copyProperties(userEntity,userInfoModel);
-
-        } catch (Exception e) {
-            return Result.wrap500Error(e.getMessage());
-        }
-        return new Result(userInfoModel);
-    }
-
-    @RequestMapping("/getUserDetail")
-    public Result<UserInfoResponseDTO> getUserDetailByName(String username){
-        UserInfoResponseDTO userModel = null;
-        try {
-            userModel = userService.getUserDetailByNameAndServerName(username,null);
-            if(userModel == null){
-                return Result.wrap404Error("user is not found");
-            }
-        } catch (Exception e) {
-            return Result.wrap500Error(e.getMessage());
-        }
-
-        return new Result(userModel);
-    }
-
-
-    @RequestMapping("/getUserDetailByNameAndServerName")
-    public Result<UserInfoResponseDTO> getUserDetailByNameAndServerName(String username, String serverName) {
-        UserInfoResponseDTO userModel = null;
-        try {
-            userModel = userService.getUserDetailByNameAndServerName(username,serverName);
-            if(userModel == null){
-                return Result.wrap404Error("user is not found");
-            }
-        } catch (Exception e) {
-            return Result.wrap500Error(e.getMessage());
-        }
-        return new Result(userModel);
-    }
-
     @RequestMapping("/getUserSecurityQuestions")
     public Result<List<UserSecurityQuestionsResponseDTO>> getUserSecurityQuestions(String username) {
         List<UserSecurityQuestionsResponseDTO> responseDTOList = null;
@@ -94,7 +41,7 @@ public class UserApiImpl implements UserApi {
             logger.warn("getUserSecurityQuestions error.",e);
             return Result.wrap500Error(e.getMessage());
         }
-        return new Result(responseDTOList);
+        return Result.wrapSuccess(responseDTOList);
     }
 
     @Override
@@ -106,7 +53,7 @@ public class UserApiImpl implements UserApi {
             logger.warn("modify password error.",e);
             return Result.wrap500Error(e.getMessage());
         }
-        return new Result();
+        return Result.wrapSuccess();
     }
 
     @Override
@@ -118,7 +65,7 @@ public class UserApiImpl implements UserApi {
             logger.warn("third party login error.",e);
             return Result.wrap500Error(e.getMessage());
         }
-        return new Result();
+        return Result.wrapSuccess();
     }
 
     @Override
@@ -128,13 +75,27 @@ public class UserApiImpl implements UserApi {
         try {
             userResponseDO = userService.commonRequest(userRequestDO);
             if(userResponseDO == null){
-                return Result.wrap404Error("user is not found");
+                return Result.wrap404Error("用户未找到");
             }
         } catch (NoSuchElementException e) {
-            return Result.wrap404Error("user is not found");
+            return Result.wrap404Error("用户未找到");
         } catch(Exception e){
             return Result.wrap500Error(e.getMessage());
         }
-        return new Result(userResponseDO);
+        return Result.wrapSuccess(userResponseDO);
+    }
+
+    @Override
+    @RequestMapping(value = "/commonSearch", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Result<PagedResponseDO<UserResponseDO>> commonSearch(@RequestBody UserRequestDO userRequestDO) {
+        PagedResponseDO<UserResponseDO> pagedResponseDO = null;
+        try {
+            pagedResponseDO = userService.commonSearch(userRequestDO);
+        } catch (NoSuchElementException e) {
+            return Result.wrap404Error("用户未找到");
+        } catch(Exception e){
+            return Result.wrap500Error(e.getMessage());
+        }
+        return Result.wrapSuccess(pagedResponseDO);
     }
 }

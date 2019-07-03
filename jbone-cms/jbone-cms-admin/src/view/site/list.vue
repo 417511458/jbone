@@ -18,6 +18,12 @@
           <Button v-if="row.enable == 0" type="dashed">不可用</Button>
           <Button v-if="row.enable == -1" type="dashed" disabled>已删除</Button>
         </template>
+        <template slot="handle" slot-scope="{ row, index }">
+          <Button @click="toEditModel(index)" type="primary" size="small">编辑</Button>
+          <Button @click="toSetContentModel(index)" type="success" size="small" style="margin-left: 5px">配置</Button>
+          <Button @click="toSetAdmin(index)" type="success" size="small" style="margin-left: 5px">管理员</Button>
+          <Button @click="handleDeleteOnTable(index)" type="error" size="small" style="margin-left: 5px">删除</Button>
+        </template>
       </Table>
       <Page :total="query.totalRecord" show-total :pageSize="query.pageSize" @on-change="pageChange" show-sizer @on-page-size-change="pageSizeChange"
             v-show="table.operation.success"></Page>
@@ -30,6 +36,7 @@
 
     <set-content-limit :siteId="modal.siteId" :title="modal.title" :show-modal="modal.showModal" @updateShowModal="(val) => {modal.showModal = val}" @success="search"></set-content-limit>
 
+    <set-admin :siteId="adminModal.siteId" :title="adminModal.title" :show-modal="adminModal.showModal" @updateShowModal="(val) => {adminModal.showModal = val}" @success="search"></set-admin>
   </div>
 </template>
 <script>
@@ -38,9 +45,10 @@
   import SiteEdit from "./edit";
   import { mapMutations } from 'vuex'
   import SetContentLimit from "./setContentLimit";
+  import SetAdmin from "./setAdmin";
 
   export default {
-    components: {SetContentLimit, SiteEdit, Input},
+    components: {SetAdmin, SetContentLimit, SiteEdit, Input},
     data() {
 
       const validateName = (rule, value, callback) => {
@@ -81,50 +89,8 @@
             },
             {
               title: '操作',
-              key: 'handle',
-              render: (h, params) => {
-                return h('div', [
-                  h('Button', {
-                    props: {
-                      type: 'primary',
-                      size: 'small'
-                    },
-                    style: {
-                      marginRight: '5px'
-                    },
-                    on: {
-                      click: () => {
-                        this.toEditModel(params.index);
-                      }
-                    }
-                  }, '修改'),
-                  h('Button', {
-                    props: {
-                      type: 'success',
-                      size: 'small'
-                    },
-                    style: {
-                      marginRight: '5px'
-                    },
-                    on: {
-                      click: () => {
-                        this.toSetContentModel(params.index);
-                      }
-                    }
-                  }, '配置'),
-                  h('Button', {
-                    props: {
-                      type: 'error',
-                      size: 'small'
-                    },
-                    on: {
-                      click: () => {
-                        this.handleDeleteOnTable(params.index);
-                      }
-                    }
-                  }, '删除')
-                ]);
-              }
+              type: 'template',
+              slot: 'handle'
             }
           ],
           loading: false,
@@ -136,6 +102,12 @@
         },
         loading: false,
         modal:{
+          title: '',
+          showModal: false,
+          siteId: 0,
+        },
+
+        adminModal:{
           title: '',
           showModal: false,
           siteId: 0,
@@ -207,6 +179,12 @@
 
       toEditModel(index) {
         this.$router.push({ path: '/base/site/edit', query: { id:this.table.data[index].id }})
+      },
+
+      toSetAdmin(index) {
+        this.adminModal.title = this.table.data[index].name + '(' + this.table.data[index].domain + ')'
+        this.adminModal.showModal = true
+        this.adminModal.siteId = this.table.data[index].id
       },
 
       toSetContentModel(index) {

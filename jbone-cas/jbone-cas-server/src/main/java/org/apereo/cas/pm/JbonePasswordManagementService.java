@@ -2,6 +2,8 @@ package org.apereo.cas.pm;
 
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sys.api.UserApi;
+import cn.jbone.sys.common.UserRequestDO;
+import cn.jbone.sys.common.UserResponseDO;
 import cn.jbone.sys.common.dto.request.ChangePasswordRequestDTO;
 import cn.jbone.sys.common.dto.response.UserBaseInfoResponseDTO;
 import cn.jbone.sys.common.dto.response.UserSecurityQuestionsResponseDTO;
@@ -37,9 +39,9 @@ public class JbonePasswordManagementService extends BasePasswordManagementServic
      */
     @Override
     public String findEmail(String username) {
-        Result<UserBaseInfoResponseDTO> userModelResult = userApi.getUserByName(username);
-        if(userModelResult.isSuccess() && userModelResult.getData() != null){
-            return userModelResult.getData().getEmail();
+        Result<UserResponseDO> userResponseDOResult = userApi.commonRequest(UserRequestDO.buildSimple(username));
+        if(userResponseDOResult.isSuccess() && userResponseDOResult.getData() != null){
+            return userResponseDOResult.getData().getBaseInfo().getEmail();
         }
         return null;
     }

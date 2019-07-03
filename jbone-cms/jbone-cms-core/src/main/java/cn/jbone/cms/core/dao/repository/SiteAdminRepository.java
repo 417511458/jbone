@@ -11,4 +11,5 @@ import java.util.List;
 public interface SiteAdminRepository extends JpaRepository<SiteAdmin,Long>, JpaSpecificationExecutor<SiteAdmin> {
     List<SiteAdmin> findBySiteId(Integer siteId);
     List<SiteAdmin> findByUserId(Integer userId);
+
 }

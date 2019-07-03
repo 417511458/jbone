@@ -7,6 +7,14 @@ export const getUserInfo = () => {
   })
 }
 
+export const searchUsers = (condition) => {
+  return axios.request({
+    url: 'system/user/commonSearch',
+    method: 'post',
+    data: condition
+  })
+}
+
 export const logout = () => {
   return axios.request({
     url: 'logout',
