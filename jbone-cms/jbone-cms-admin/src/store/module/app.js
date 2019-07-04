@@ -32,6 +32,7 @@ export default {
     tagNavList: [],
     homeRoute: {},
     local: localRead('local'),
+    siteId: localRead('siteId'),
     errorList: [],
     hasReadErrorPage: false
   },
@@ -88,6 +89,11 @@ export default {
     setLocal (state, lang) {
       localSave('local', lang)
       state.local = lang
+    },
+
+    setSite (state, siteId){
+      localSave('siteId', siteId)
+      state.siteId = siteId
     },
     addError (state, error) {
       state.errorList.push(error)

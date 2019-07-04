@@ -13,6 +13,16 @@ siteApi.getByDomain = function(name){
   });
 }
 
+siteApi.getByUserId = function(userId){
+  return axios.request({
+    url: 'cms/site/getByUserId',
+    method: 'get',
+    params: {
+      userId: userId
+    }
+  });
+}
+
 siteApi.commonRequest = function(condition){
   return axios.request({
     url: 'cms/site/commonRequest',

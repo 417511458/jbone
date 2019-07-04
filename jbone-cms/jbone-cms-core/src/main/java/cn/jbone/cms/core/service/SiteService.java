@@ -5,9 +5,12 @@ import cn.jbone.cms.common.dataobject.search.SiteSearchDO;
 import cn.jbone.cms.common.enums.BooleanEnum;
 import cn.jbone.cms.core.converter.SiteConverter;
 import cn.jbone.cms.core.dao.entity.Site;
+import cn.jbone.cms.core.dao.entity.SiteAdmin;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
+import cn.jbone.cms.core.dao.repository.SiteAdminRepository;
 import cn.jbone.cms.core.dao.repository.SiteRepository;
 import cn.jbone.common.dataobject.PagedResponseDO;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +33,8 @@ public class SiteService {
     private SiteRepository siteRepository;
     @Autowired
     private SiteConverter siteConverter;
+    @Autowired
+    private SiteAdminRepository siteAdminRepository;
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -61,6 +66,24 @@ public class SiteService {
             throw new ObjectNotFoundException("站点不存在");
         }
         return siteConverter.toSiteDO(siteRepository.getOne(id));
+    }
+
+    public List<SiteDO> getByUserId(Integer userId){
+        if(userId == null || userId <= 0){
+            throw new JboneException("参数错误");
+        }
+
+        List<SiteAdmin> siteAdmins = siteAdminRepository.findByUserId(userId);
+        if(!CollectionUtils.isEmpty(siteAdmins)){
+            List<Integer> siteIds = new ArrayList<>();
+            for (SiteAdmin siteAdmin:siteAdmins) {
+                siteIds.add(siteAdmin.getSiteId());
+            }
+            List<Site> sites = siteRepository.findByIdInAndPid(siteIds,0);
+            return siteConverter.toSiteDOs(sites);
+        }
+        return null;
+
     }
 
     /**

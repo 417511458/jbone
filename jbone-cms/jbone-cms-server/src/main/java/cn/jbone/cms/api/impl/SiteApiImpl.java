@@ -5,6 +5,7 @@ import cn.jbone.cms.common.dataobject.SiteDO;
 import cn.jbone.cms.common.dataobject.search.SiteSearchDO;
 import cn.jbone.cms.core.service.SiteService;
 import cn.jbone.common.dataobject.PagedResponseDO;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
@@ -12,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class SiteApiImpl implements SiteApi {
@@ -81,5 +84,20 @@ public class SiteApiImpl implements SiteApi {
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess(pagedResponseDO);
+    }
+
+    @Override
+    public Result<List<SiteDO>> getByUserId(Integer userId) {
+        List<SiteDO> siteDOS = null;
+        try {
+            siteDOS = siteService.getByUserId(userId);
+        } catch (JboneException e) {
+            logger.warn("site getByUserId error.",e);
+            return Result.wrap500Error(e.getMessage());
+        }catch (Exception e) {
+            logger.error("site getByUserId error.",e);
+            return Result.wrap500Error("系统错误");
+        }
+        return Result.wrapSuccess(siteDOS);
     }
 }

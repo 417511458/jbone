@@ -16,6 +16,7 @@
           <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
           <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
+          <change-site :site-id="siteId" @on-site-change="setSite" />
         </header-bar>
       </Header>
       <Content class="main-content-con">
@@ -51,9 +52,11 @@ import routers from '@/router/routers'
 import minLogo from '@/assets/images/logo-min.jpg'
 import maxLogo from '@/assets/images/logo.jpg'
 import './main.less'
+import ChangeSite from "./components/change-site/change-site";
 export default {
   name: 'Main',
   components: {
+    ChangeSite,
     SideMenu,
     HeaderBar,
     Language,
@@ -93,6 +96,9 @@ export default {
     local () {
       return this.$store.state.app.local
     },
+    siteId () {
+      return this.$store.state.app.siteId
+    },
     hasReadErrorPage () {
       return this.$store.state.app.hasReadErrorPage
     },
@@ -106,7 +112,8 @@ export default {
       'setTagNavList',
       'addTag',
       'setLocal',
-      'setHomeRoute'
+      'setHomeRoute',
+      'setSite'
     ]),
     ...mapActions([
       'getUnreadMessageCount',
