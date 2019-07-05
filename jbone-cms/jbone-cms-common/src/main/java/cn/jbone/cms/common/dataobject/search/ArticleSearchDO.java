@@ -61,6 +61,8 @@ public class ArticleSearchDO extends SearchListDO {
      */
     private Integer creator;
 
+    private Integer siteId;
+
     public static int DEFAULT_SIZE = 10;
 
     public static ArticleSearchDO build(){

@@ -90,6 +90,7 @@
     import tagApi from '@/api/tag'
     import TreeSelect from "../../components/tree-select/tree-select";
     import { mapMutations } from 'vuex'
+    import siteApi from '@/api/site'
 
     export default {
       name: "edit",
@@ -211,7 +212,10 @@
         },
 
         loadArticle(id) {
-
+          if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+            this.$Message.error('请选择站点');
+            return
+          }
           this.article ={
             id: 0,
             title: '',
@@ -261,6 +265,11 @@
           this.categoryTree.operation.message = message;
         },
         addOrUpdate(status) {
+          if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+            this.$Message.error('请选择站点');
+            return
+          }
+
           if(this.categoryTree.selectedData.length <= 0){
             this.$Message.error("请选择文章栏目");
             return;

@@ -10,7 +10,9 @@ import cn.jbone.cms.core.dao.repository.ArticleDataRepository;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import cn.jbone.cms.core.dao.repository.TagRepository;
+import cn.jbone.cms.core.validator.ContentValidator;
 import cn.jbone.common.dataobject.PagedResponseDO;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import cn.jbone.sys.api.UserApi;
@@ -48,8 +50,14 @@ public class ArticleService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ContentValidator contentValidator;
+
     public ArticleResponseDO addOrUpdateArticle(ArticleRequestDO articleRequestDO){
         checkParam(articleRequestDO);
+
+        contentValidator.checkPermition(articleRequestDO.getCreator(),articleRequestDO.getSiteId());
+
         Article article = articleConverter.toArticle(articleRequestDO);
         article = articleRepository.save(article);
 
@@ -69,7 +77,7 @@ public class ArticleService {
     public ArticleResponseDO getArticle(Long id){
         Article article = articleRepository.getOne(id);
         if(article == null){
-            throw new ObjectNotFoundException("文章不存在");
+            throw new JboneException("文章不存在");
         }
 
         ArticleResponseDO articleResponseDO = articleConverter.toArticleDO(article, ArticleFiledConfigDO.buildAll());
@@ -92,21 +100,26 @@ public class ArticleService {
         }
     }
 
-    public void deleteArticle(Long id){
+    public void deleteArticle(Long id,Integer userId){
         if(!articleRepository.existsById(id)){
-            throw new ObjectNotFoundException("文章不存在.");
+            throw new JboneException("文章不存在");
         }
         Article article = articleRepository.getOne(id);
+
+        contentValidator.checkPermition(userId,article.getSiteId());
+
         //逻辑删除
         article.setStatus(StatusEnum.DELETE);
         articleRepository.save(article);
     }
 
-    public void flushDeleteArticle(Long id){
+    public void flushDeleteArticle(Long id,Integer userId){
         if(!articleRepository.existsById(id)){
             throw new ObjectNotFoundException("文章不存在.");
         }
-        articleRepository.deleteById(id);
+        Article article = articleRepository.getOne(id);
+        contentValidator.checkPermition(userId,article.getSiteId());
+        articleRepository.delete(article);
     }
 
 
@@ -160,6 +173,11 @@ public class ArticleService {
             if(articleSearchDO.getId() != null && articleSearchDO.getId() > 0){
                 Path<Long> id = root.get("id");
                 predicates.add(criteriaBuilder.equal(id, articleSearchDO.getId()));
+            }
+
+            if(articleSearchDO.getSiteId() != null && articleSearchDO.getSiteId() > 0){
+                Path<Integer> siteId = root.get("siteId");
+                predicates.add(criteriaBuilder.equal(siteId, articleSearchDO.getSiteId()));
             }
 
             if(StringUtils.isNotBlank(articleSearchDO.getTitle())){

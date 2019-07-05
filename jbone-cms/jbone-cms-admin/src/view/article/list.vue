@@ -27,6 +27,7 @@
   import articleApi from '@/api/article'
   import Tinymce from "../../components/tinymce/index";
   import TreeSelect from "../../components/tree-select/tree-select";
+  import siteApi from '@/api/site'
 
   export default {
     components: {TreeSelect, Tinymce},
@@ -165,6 +166,10 @@
         });
       },
       searchArticle() {
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
         this.table.loading = true;
         let self = this;
         this.query.categoryIds = this.categoryTree.selectedData;
@@ -187,6 +192,10 @@
         });
       },
       toAddModel() {
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
         this.$router.push({ path: '/content/article/edit', params: { id:0 }})
       },
 

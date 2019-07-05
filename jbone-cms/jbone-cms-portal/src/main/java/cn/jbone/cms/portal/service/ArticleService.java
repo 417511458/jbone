@@ -4,6 +4,7 @@ import cn.jbone.cms.api.ArticleApi;
 import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.common.dataobject.CategoryDO;
+import cn.jbone.cms.portal.manager.SiteManager;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.dataobject.SearchConditionDO;
 import cn.jbone.common.dataobject.SearchSortDO;
@@ -29,8 +30,11 @@ public class ArticleService {
 
     @Autowired
     private CommonService commonService;
+    @Autowired
+    private SiteManager siteManager;
 
     public PagedResponseDO<ArticleResponseDO> findArticles(ArticleSearchDO articleRequestDO){
+        articleRequestDO.setSiteId(siteManager.getCurrentSiteId());
         Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleRequestDO);
         if(result != null && result.isSuccess()){
             PagedResponseDO<ArticleResponseDO> data = result.getData();
@@ -47,6 +51,7 @@ public class ArticleService {
         articleSearchDO.clearSort();
         articleSearchDO.addSort(new SearchSortDO("hits",SearchSortDO.Direction.DESC));
         articleSearchDO.addSort(new SearchSortDO("addTime",SearchSortDO.Direction.DESC));
+        articleSearchDO.setSiteId(siteManager.getCurrentSiteId());
 
         Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleSearchDO);
         if(result != null && result.isSuccess()){

@@ -22,19 +22,19 @@ public class ArticleApiFallbackFactory implements FallbackFactory<ArticleApi> {
 
         return new ArticleApi() {
             @Override
-            public Result<ArticleResponseDO> addOrUpdate(ArticleRequestDO articleRequestDO) {
+            public Result<ArticleResponseDO> addOrUpdate(ArticleRequestDO articleRequestDO,Integer userId) {
                 logger.error("rpc addOrUpdate broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<Void> delete(Long id, String token, Integer uid) {
+            public Result<Void> delete(Long id, Integer uid) {
                 logger.error("rpc delete broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<Void> flushDelete(Long id) {
+            public Result<Void> flushDelete(Long id,Integer userId) {
                 logger.error("rpc flushDelete broke",throwable);
                 return Result.wrapProtectedError();
             }

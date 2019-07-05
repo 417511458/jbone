@@ -1,9 +1,10 @@
 import axios from '@/libs/api.request'
 import { getUserId } from '@/libs/util'
-
+import siteApi from '@/api/site'
 let articleApi = {};
 
 articleApi.commonSearch = function(condition){
+  condition.siteId = siteApi.getCurrentSiteID()
   return axios.request({
     url: 'cms/article/commonRequest',
     method: 'post',
@@ -23,6 +24,7 @@ articleApi.getById = function(id){
 
 articleApi.addOrUpdate = function(article){
   article.creator = getUserId();
+  article.siteId = siteApi.getCurrentSiteID()
   return axios.request({
     url: 'cms/article/addOrUpdate',
     method: 'post',
@@ -46,16 +48,6 @@ articleApi.flushDelete = function(id){
     method: 'delete',
     params: {
       id: id
-    }
-  });
-}
-
-articleApi.batchDelete = function (ids) {
-  return axios.request({
-    url: 'cms/article/batchDelete',
-    method: 'delete',
-    params: {
-      ids: ids
     }
   });
 }
