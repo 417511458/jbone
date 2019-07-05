@@ -10,9 +10,11 @@ import java.util.List;
 @Repository
 public interface PluginRepository extends JpaRepository<Plugin,Integer>, JpaSpecificationExecutor<Plugin> {
 
-    List<Plugin> findAllByTypeOrderByOrders(String type);
+    List<Plugin> findAllByTypeAndSiteIdOrderByOrders(String type,Integer siteId);
 
-    List<Plugin> findAllByTypeAndEnableOrderByOrders(String type,int enable);
+    List<Plugin> findAllByTypeAndEnableAndSiteIdOrderByOrders(String type,int enable,Integer siteId);
 
-    List<Plugin> findAllByEnableOrderByOrders(int enable);
+    List<Plugin> findAllByEnableAndSiteIdOrderByOrders(int enable,Integer siteId);
+
+    List<Plugin> findAllBySiteIdOrderByOrders(Integer siteId);
 }

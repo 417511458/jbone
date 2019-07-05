@@ -70,7 +70,7 @@ public class ArticleConverter {
         articleResponseDO.setUpdateTime(article.getUpdateTime().getTime());
         articleResponseDO.setAddTimeText(DateUtil.formateDate(article.getAddTime(),DateUtil.DATE_FORMAT));
         articleResponseDO.setUpdateTimeText(DateUtil.formateDate(article.getUpdateTime(),DateUtil.DATE_FORMAT));
-
+        articleResponseDO.setSiteId(article.getSiteId());
         if(config.isIncludeContent()){
             articleResponseDO.setArticleData(toArticleDataDO(article.getArticleData()));
         }

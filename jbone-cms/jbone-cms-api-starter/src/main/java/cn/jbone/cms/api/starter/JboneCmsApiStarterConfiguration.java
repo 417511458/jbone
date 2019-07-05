@@ -136,6 +136,16 @@ public class JboneCmsApiStarterConfiguration {
     }
 
     @Bean
+    public SiteApi getSiteApi(Decoder decoder, Encoder encoder, Client client){
+        SiteApi api = HystrixFeign.builder().client(client).setterFactory(getCommandSetter(SiteApi.class))
+                .encoder(encoder)
+                .decoder(decoder).contract(new SpringMvcContract())
+                .target(SiteApi.class, jboneConfiguration.getRpc().getCmsServer().getProtocol() + "://" + jboneConfiguration.getRpc().getCmsServer().getName().toUpperCase(),getSiteApiFallbackFactory());
+        return api;
+    }
+
+
+    @Bean
     public ArticleApiFallbackFactory getArticleApiFallbackFactory(){
         return new ArticleApiFallbackFactory();
     }
@@ -193,6 +203,11 @@ public class JboneCmsApiStarterConfiguration {
     @Bean
     public AdvertisementApiFallbackFactory getAdvertisementApiFallbackFactory(){
         return new AdvertisementApiFallbackFactory();
+    }
+
+    @Bean
+    public SiteApiFallbackFactory getSiteApiFallbackFactory(){
+        return new SiteApiFallbackFactory();
     }
 
     /**

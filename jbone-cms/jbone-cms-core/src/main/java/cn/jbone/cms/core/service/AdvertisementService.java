@@ -9,7 +9,9 @@ import cn.jbone.cms.core.converter.AdvertisementConverter;
 import cn.jbone.cms.core.converter.DictionaryConverter;
 import cn.jbone.cms.core.dao.entity.Advertisement;
 import cn.jbone.cms.core.dao.repository.AdvertisementRepository;
+import cn.jbone.cms.core.validator.ContentValidator;
 import cn.jbone.common.dataobject.PagedResponseDO;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +42,9 @@ public class AdvertisementService {
     @Autowired
     private DictionaryConverter dictionaryConverter;
 
+    @Autowired
+    private ContentValidator contentValidator;
+
     public AdvertisementDO get(Long id){
         Advertisement advertisement = advertisementRepository.getOne(id);
         if(advertisement == null){
@@ -49,17 +54,24 @@ public class AdvertisementService {
     }
 
     public void addOrUpdate(AdvertisementDO advertisementDO){
+
+        contentValidator.checkPermition(advertisementDO.getCreator(),advertisementDO.getSiteId());
+
         Advertisement advertisement = advertisementConverter.toEntity(advertisementDO);
         if(advertisement == null){
-            throw new ObjectNotFoundException("广告不存在");
+            throw new JboneException("广告不存在");
         }
         advertisementRepository.save(advertisement);
     }
 
-    public void delete(Long id){
+    public void delete(Long id,Integer userId){
         if(!advertisementRepository.existsById(id)){
-            throw new ObjectNotFoundException("广告不存在");
+            throw new JboneException("广告不存在");
         }
+
+        Advertisement advertisement = advertisementRepository.getOne(id);
+        contentValidator.checkPermition(userId,advertisement.getSiteId());
+
         advertisementRepository.deleteById(id);
     }
 
@@ -136,6 +148,10 @@ public class AdvertisementService {
                 predicates.add(criteriaBuilder.like(name,"%" + advertisementSearchDO.getName() + "%"));
             }
 
+            if(advertisementSearchDO.getSiteId() != null && advertisementSearchDO.getSiteId() > 0){
+                Path<Integer> siteId = root.get("siteId");
+                predicates.add(criteriaBuilder.equal(siteId,advertisementSearchDO.getSiteId()));
+            }
 
             if(StringUtils.isNotBlank(advertisementSearchDO.getLocation())){
                 Path<String> location = root.get("location");

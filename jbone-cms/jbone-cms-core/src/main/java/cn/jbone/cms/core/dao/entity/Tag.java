@@ -21,4 +21,9 @@ public class Tag extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    /**
+     * 站点ID
+     */
+    @Column(name = "site_id")
+    private Integer siteId;
 }

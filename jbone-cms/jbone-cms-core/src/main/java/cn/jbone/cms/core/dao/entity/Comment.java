@@ -51,5 +51,9 @@ public class Comment extends BaseEntity {
     @Column(name = "article_id")
     private Long articleId;
 
-
+    /**
+     * 站点ID
+     */
+    @Column(name = "site_id")
+    private Integer siteId;
 }

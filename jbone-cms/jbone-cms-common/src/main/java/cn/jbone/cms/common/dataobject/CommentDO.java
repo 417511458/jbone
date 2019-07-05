@@ -53,4 +53,6 @@ public class CommentDO {
     private String addTimeText;
 
     private String updateTimeText;
+
+    private Integer siteId;
 }

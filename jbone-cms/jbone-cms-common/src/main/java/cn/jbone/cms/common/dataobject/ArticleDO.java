@@ -91,4 +91,5 @@ public class ArticleDO {
 
     private String updateTimeText;
 
+    private Integer siteId;
 }

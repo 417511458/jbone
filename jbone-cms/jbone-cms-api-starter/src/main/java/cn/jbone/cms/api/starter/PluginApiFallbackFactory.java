@@ -21,13 +21,13 @@ public class PluginApiFallbackFactory implements FallbackFactory<PluginApi> {
     public PluginApi create(Throwable throwable) {
         return new PluginApi() {
             @Override
-            public Result<Void> addOrUpdate(PluginDO pluginDO) {
+            public Result<Void> addOrUpdate(PluginDO pluginDO,Integer userId) {
                 logger.error("rpc addOrUpdate broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<Void> delete(Integer id) {
+            public Result<Void> delete(Integer id,Integer userId) {
                 logger.error("rpc delete broke",throwable);
                 return Result.wrapProtectedError();
             }
@@ -39,19 +39,19 @@ public class PluginApiFallbackFactory implements FallbackFactory<PluginApi> {
             }
 
             @Override
-            public Result<List<PluginDO>> findByType(String type) {
+            public Result<List<PluginDO>> findByType(String type,Integer siteId) {
                 logger.error("rpc findByType broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<Map<String, List<PluginDO>>> findAllValidPlugin() {
+            public Result<Map<String, List<PluginDO>>> findAllValidPlugin(Integer siteId) {
                 logger.error("rpc findAllValidPlugin broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<List<PluginDO>> getAll() {
+            public Result<List<PluginDO>> getAll(Integer siteId) {
                 logger.error("rpc getAll broke",throwable);
                 return Result.wrapProtectedError();
             }

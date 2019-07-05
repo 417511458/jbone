@@ -23,13 +23,13 @@ public class AdvertisementApiFallbackFactory implements FallbackFactory<Advertis
     public AdvertisementApi create(Throwable throwable) {
         return new AdvertisementApi() {
             @Override
-            public Result<Void> addOrUpdate(AdvertisementDO advertisementDO) {
+            public Result<Void> addOrUpdate(AdvertisementDO advertisementDO,Integer userId) {
                 logger.error("rpc addOrUpdate broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<Void> delete(Long id) {
+            public Result<Void> delete(Long id,Integer userId) {
                 logger.error("rpc delete broke",throwable);
                 return Result.wrapProtectedError();
             }

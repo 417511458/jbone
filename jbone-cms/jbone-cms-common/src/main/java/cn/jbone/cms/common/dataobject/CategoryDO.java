@@ -85,4 +85,6 @@ public class CategoryDO {
      */
     private List<TagDO> tags;
 
+    private Integer siteId;
+
 }

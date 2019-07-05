@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,8 +24,9 @@ public class AdvertisementApiImpl implements AdvertisementApi {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
-    public Result<Void> addOrUpdate(@RequestBody AdvertisementDO advertisementDO) {
+    public Result<Void> addOrUpdate(@RequestBody AdvertisementDO advertisementDO, @RequestHeader("userId") Integer userId) {
         try {
+            advertisementDO.setCreator(userId);
             advertisementService.addOrUpdate(advertisementDO);
         } catch (Exception e) {
             logger.warn("Advertisement addOrUpdate error.",e);
@@ -34,9 +36,9 @@ public class AdvertisementApiImpl implements AdvertisementApi {
     }
 
     @Override
-    public Result<Void> delete(Long id) {
+    public Result<Void> delete(Long id, @RequestHeader("userId") Integer userId) {
         try {
-            advertisementService.delete(id);
+            advertisementService.delete(id,userId);
         } catch (Exception e) {
             logger.warn("Advertisement delete error.",e);
             return Result.wrap500Error(e.getMessage());

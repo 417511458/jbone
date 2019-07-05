@@ -1,9 +1,10 @@
 import axios from '@/libs/api.request'
+import siteApi from '@/api/site'
 
 let advertisementApi = {};
 
 advertisementApi.commonRequest = function(condition){
-
+  condition.siteId = siteApi.getCurrentSiteID()
   return axios.request({
     url: 'cms/advertisement/commonRequest',
     method: 'post',
@@ -32,6 +33,7 @@ advertisementApi.delete = function(id){
 }
 
 advertisementApi.addOrUpdate = function(advertisement){
+  advertisement.siteId = siteApi.getCurrentSiteID()
   return axios.request({
     url: 'cms/advertisement/addOrUpdate',
     method: 'post',

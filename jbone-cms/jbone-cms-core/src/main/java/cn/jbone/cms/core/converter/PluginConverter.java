@@ -28,6 +28,7 @@ public class PluginConverter {
         pluginDO.setName(plugin.getName());
         pluginDO.setOrders(plugin.getOrders());
         pluginDO.setType(plugin.getType());
+        pluginDO.setSiteId(plugin.getSiteId());
         return pluginDO;
     }
 
@@ -92,6 +93,7 @@ public class PluginConverter {
         plugin.setName(pluginDO.getName());
         plugin.setOrders(pluginDO.getOrders());
         plugin.setType(pluginDO.getType());
+        plugin.setSiteId(pluginDO.getSiteId());
         return plugin;
     }
 

@@ -53,6 +53,7 @@
 </template>
 <script>
   import advertisementApi from '@/api/advertisement'
+  import siteApi from '@/api/site'
   import AdvertisementEdit from "./edit";
 
   export default {
@@ -174,6 +175,10 @@
       },
       search() {
 
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
         let self = this;
         self.table.loading = true;
         advertisementApi.commonRequest(this.query).then(function (res) {
@@ -219,6 +224,11 @@
       },
 
       toAddModel() {
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
+
         this.modal.title = '添加广告'
         this.modal.showModal = true
         this.modal.id = 0

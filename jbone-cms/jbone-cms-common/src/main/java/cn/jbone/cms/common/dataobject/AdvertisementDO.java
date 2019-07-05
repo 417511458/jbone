@@ -54,4 +54,7 @@ public class AdvertisementDO {
     private InnerDictionaryItemDO typeDetail;
     private InnerDictionaryItemDO locationDetail;
 
+    private Integer siteId;
+
+    private int creator;
 }

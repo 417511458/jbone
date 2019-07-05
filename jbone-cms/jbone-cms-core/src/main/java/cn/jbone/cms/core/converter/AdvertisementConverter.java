@@ -32,6 +32,7 @@ public class AdvertisementConverter {
         advertisementDO.setHits(advertisement.getHits());
         advertisementDO.setImg(advertisement.getImg());
         advertisementDO.setText(advertisement.getText());
+        advertisementDO.setSiteId(advertisement.getSiteId());
         return advertisementDO;
     }
 
@@ -93,6 +94,7 @@ public class AdvertisementConverter {
 //        advertisement.setHits(advertisementDO.getHits());
         advertisement.setImg(advertisementDO.getImg());
         advertisement.setText(advertisementDO.getText());
+        advertisement.setSiteId(advertisementDO.getSiteId());
         return advertisement;
     }
 

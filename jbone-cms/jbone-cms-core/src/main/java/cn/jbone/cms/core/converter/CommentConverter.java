@@ -35,6 +35,7 @@ public class CommentConverter {
         commentDO.setIp(comment.getIp());
         commentDO.setPid(comment.getPid());
         commentDO.setStatus(comment.getStatus());
+        commentDO.setSiteId(comment.getSiteId());
 
         UserRequestDO userRequestDO = UserRequestDO.buildSimple(comment.getCreator());
         Result<UserResponseDO> responseResult =  userApi.commonRequest(userRequestDO);
@@ -72,6 +73,7 @@ public class CommentConverter {
         comment.setIp(commentDO.getIp());
         comment.setPid(commentDO.getPid());
         comment.setStatus(commentDO.getStatus());
+        comment.setSiteId(commentDO.getSiteId());
         return comment;
     }
 }

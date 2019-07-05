@@ -4,6 +4,7 @@ import cn.jbone.cms.api.AdvertisementApi;
 import cn.jbone.cms.common.constant.DictionaryConstant;
 import cn.jbone.cms.common.dataobject.AdvertisementDO;
 import cn.jbone.cms.common.dataobject.search.AdvertisementSearchDO;
+import cn.jbone.cms.portal.manager.SiteManager;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
 import org.apache.commons.lang3.StringUtils;
@@ -51,8 +52,14 @@ public class AdvertisementElementTagProcessor extends AbstractElementTagProcesso
         if(StringUtils.isBlank(location)){
             return;
         }
+
+        SiteManager siteManager = appCtx.getBean(SiteManager.class);
+
         AdvertisementApi advertisementApi = appCtx.getBean(AdvertisementApi.class);
-        Result<PagedResponseDO<AdvertisementDO>> pagedResponseDO = advertisementApi.commonRequest(AdvertisementSearchDO.build(location).enable());
+
+        AdvertisementSearchDO advertisementSearchDO = AdvertisementSearchDO.build(location).enable();
+        advertisementSearchDO.setSiteId(siteManager.getCurrentSiteId());
+        Result<PagedResponseDO<AdvertisementDO>> pagedResponseDO = advertisementApi.commonRequest(advertisementSearchDO);
 
         if(pagedResponseDO != null && pagedResponseDO.isSuccess() && pagedResponseDO.getData() != null && !CollectionUtils.isEmpty(pagedResponseDO.getData().getDatas())){
             List<AdvertisementDO> list = pagedResponseDO.getData().getDatas();

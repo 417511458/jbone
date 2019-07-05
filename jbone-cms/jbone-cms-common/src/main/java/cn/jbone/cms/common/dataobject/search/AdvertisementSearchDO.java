@@ -10,6 +10,7 @@ public class AdvertisementSearchDO extends SearchListDO {
     private String name;
     private int enable;
     private Long id;
+    private Integer siteId;
 
     public static AdvertisementSearchDO build(String location){
         AdvertisementSearchDO advertisementSearchDO = new AdvertisementSearchDO();

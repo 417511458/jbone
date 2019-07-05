@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 public class BatchSaveSettingDO implements Serializable {
     private List<SettingsDO> settingsList;
-
+    private Integer siteId;
 }

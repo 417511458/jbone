@@ -12,6 +12,7 @@ import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
 import cn.jbone.cms.common.dataobject.SettingsDO;
 import cn.jbone.cms.common.enums.BooleanEnum;
 import cn.jbone.cms.common.enums.StatusEnum;
+import cn.jbone.cms.portal.manager.SiteManager;
 import cn.jbone.common.rpc.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,8 @@ public class CommonService {
 
     @Autowired
     private AdvertisementApi advertisementApi;
+    @Autowired
+    private SiteManager siteManager;
 
     public void setCommonProperties(ModelMap modelMap){
         setSettings(modelMap);
@@ -78,14 +81,14 @@ public class CommonService {
     }
 
     private void setGlobalPlugins(ModelMap modelMap){
-        Result<List<PluginDO>> pluginDOSResult = pluginApi.findByType(DictionaryConstant.ITEM_PLUGIN_TYPE_GLOBAL);
+        Result<List<PluginDO>> pluginDOSResult = pluginApi.findByType(DictionaryConstant.ITEM_PLUGIN_TYPE_GLOBAL,siteManager.getCurrentSiteId());
         if(pluginDOSResult.isSuccess()){
             modelMap.addAttribute("globalPlugins",pluginDOSResult.getData());
         }
     }
 
     public void setAriclePlugins(ModelMap modelMap){
-        Result<List<PluginDO>> pluginDOSResult = pluginApi.findByType(DictionaryConstant.ITEM_PLUGIN_TYPE_ARTICLE);
+        Result<List<PluginDO>> pluginDOSResult = pluginApi.findByType(DictionaryConstant.ITEM_PLUGIN_TYPE_ARTICLE,siteManager.getCurrentSiteId());
         if(pluginDOSResult.isSuccess()){
             modelMap.addAttribute("articlePlugins",pluginDOSResult.getData());
         }

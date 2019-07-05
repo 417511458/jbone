@@ -1,6 +1,7 @@
 package cn.jbone.cms.portal.intercepter;
 
 import cn.jbone.cas.client.utils.SessionUtil;
+import cn.jbone.cms.portal.manager.SiteManager;
 import cn.jbone.cms.portal.service.CommonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,9 @@ import java.util.List;
 public class CommonInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    private SiteManager siteManager;
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -51,7 +55,19 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 
     }
 
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String uri = request.getRequestURI();
 
+        for (String suffix : excludeUris){
+            if(uri.endsWith(suffix)){
+                logger.debug("静态资源，不加载公共信息. uri : {}" , request.getRequestURI());
+                return true;
+            }
+        }
+        siteManager.checkAndUpdateCurrentSite(request);
+        return super.preHandle(request, response, handler);
+    }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
@@ -67,6 +83,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 
         logger.info("uri : {}" , request.getRequestURI());
         if(modelAndView != null){
+            siteManager.checkAndUpdateCurrentSite(request);
             //配置属性
             commonService.setCommonProperties(modelAndView.getModelMap());
             //用户信息

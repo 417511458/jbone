@@ -40,6 +40,7 @@
 <script>
   import pluginApi from '@/api/plugin'
   import EditPlugin from "./edit";
+  import siteApi from '@/api/site'
 
   export default {
     components: {EditPlugin},
@@ -142,9 +143,13 @@
         this.search();
       },
       search() {
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
         this.table.loading = true;
         let self = this;
-        pluginApi.getAll().then(function (res) {
+        pluginApi.getAll(siteApi.getCurrentSiteID()).then(function (res) {
           console.info(res);
           self.table.loading = false;
           if (!res.data.success) {
@@ -158,6 +163,10 @@
       },
 
       toAddModel() {
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
         this.editModal.id = 0
         this.editModal.name = '添加插件'
         this.editModal.showModal = true

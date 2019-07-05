@@ -24,6 +24,7 @@ public class TagConverter {
         TagDO tagDO = new TagDO();
         tagDO.setId(tag.getId());
         tagDO.setName(tag.getName());
+        tagDO.setSiteId(tag.getSiteId());
         return tagDO;
     }
 
@@ -59,6 +60,7 @@ public class TagConverter {
         }
         tag.setId(tagDO.getId());
         tag.setName(tagDO.getName());
+        tag.setSiteId(tagDO.getSiteId());
         return tag;
     }
 

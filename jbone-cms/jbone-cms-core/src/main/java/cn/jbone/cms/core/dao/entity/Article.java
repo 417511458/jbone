@@ -61,6 +61,12 @@ public class Article extends BaseEntity {
     private int orders;
 
     /**
+     * 站点ID
+     */
+    @Column(name = "site_id")
+    private Integer siteId;
+
+    /**
      * 文章状态，枚举,默认发布状态
      */
     @Column(name = "status")

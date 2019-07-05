@@ -60,6 +60,7 @@ public class LinkConverter {
         link.setOrders(linkDO.getOrders());
         link.setTitle(linkDO.getTitle());
         link.setUrl(linkDO.getUrl());
+        link.setSiteId(linkDO.getSiteId());
         return link;
     }
 }

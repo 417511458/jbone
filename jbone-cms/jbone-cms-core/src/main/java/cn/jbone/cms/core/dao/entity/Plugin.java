@@ -45,6 +45,10 @@ public class Plugin extends BaseEntity {
     @Column(name = "orders")
     private int orders;
 
-
+    /**
+     * 站点ID
+     */
+    @Column(name = "site_id")
+    private Integer siteId;
 
 }

@@ -116,4 +116,10 @@ public class Category extends BaseEntity {
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name = "category_tag",joinColumns = @JoinColumn(name = "category_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "tag_id",referencedColumnName = "id"))
     private List<Tag> tags;
+
+    /**
+     * 站点ID
+     */
+    @Column(name = "site_id")
+    private Integer siteId;
 }

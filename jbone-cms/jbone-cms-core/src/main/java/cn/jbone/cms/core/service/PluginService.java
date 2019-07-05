@@ -7,6 +7,8 @@ import cn.jbone.cms.core.converter.DictionaryConverter;
 import cn.jbone.cms.core.converter.PluginConverter;
 import cn.jbone.cms.core.dao.entity.Plugin;
 import cn.jbone.cms.core.dao.repository.PluginRepository;
+import cn.jbone.cms.core.validator.ContentValidator;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,41 +33,53 @@ public class PluginService {
     @Autowired
     private DictionaryConverter dictionaryConverter;
 
+    @Autowired
+    private ContentValidator contentValidator;
+
+
     public PluginDO get(int id){
         Plugin plugin = pluginRepository.getOne(id);
         if(plugin == null){
-            throw new ObjectNotFoundException("插件不存在");
+            throw new JboneException("插件不存在");
         }
         return pluginConverter.toPluginDO(plugin);
     }
 
     public void addOrUpdate(PluginDO pluginDO){
+
+        contentValidator.checkPermition(pluginDO.getCreator(),pluginDO.getSiteId());
+
         Plugin plugin = pluginConverter.toPlugin(pluginDO);
         if(plugin == null){
-            throw new ObjectNotFoundException("参数错误");
+            throw new JboneException("插件不存在");
         }
         pluginRepository.save(plugin);
     }
 
-    public void delete(int id){
+    public void delete(int id,Integer userId){
         if(!pluginRepository.existsById(id)){
-            throw new ObjectNotFoundException("插件不存在");
+            throw new JboneException("插件不存在");
         }
+
+        Plugin plugin = pluginRepository.getOne(id);
+
+        contentValidator.checkPermition(userId,plugin.getSiteId());
+
         pluginRepository.deleteById(id);
     }
 
-    public List<PluginDO> findByType(String type){
-        List<Plugin> plugins = pluginRepository.findAllByTypeAndEnableOrderByOrders(type,1);
+    public List<PluginDO> findByType(String type,Integer siteId){
+        List<Plugin> plugins = pluginRepository.findAllByTypeAndEnableAndSiteIdOrderByOrders(type,1,siteId);
         return pluginConverter.toPluginDOs(plugins);
     }
 
-    public Map<String,List<PluginDO>> findAllValidPlugin(){
-        List<Plugin> plugins = pluginRepository.findAllByEnableOrderByOrders(1);
+    public Map<String,List<PluginDO>> findAllValidPlugin(Integer siteId){
+        List<Plugin> plugins = pluginRepository.findAllByEnableAndSiteIdOrderByOrders(1,siteId);
         return pluginConverter.toPluginMap(plugins);
     }
 
-    public List<PluginDO> findAll(){
-        List<Plugin> plugins = pluginRepository.findAll(Sort.by(Sort.Order.by("orders")));
+    public List<PluginDO> findAll(Integer siteId){
+        List<Plugin> plugins = pluginRepository.findAllBySiteIdOrderByOrders(siteId);
         List<PluginDO> pluginDOS = pluginConverter.toPluginDOs(plugins);
         if(!CollectionUtils.isEmpty(pluginDOS)){
             //拼接类型描述

@@ -4,10 +4,7 @@ import cn.jbone.cms.common.dataobject.AdvertisementDO;
 import cn.jbone.cms.common.dataobject.search.AdvertisementSearchDO;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -15,10 +12,10 @@ import java.util.Map;
 @RequestMapping("/advertisement")
 public interface AdvertisementApi {
     @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST})
-    Result<Void> addOrUpdate(@RequestBody AdvertisementDO advertisementDO);
+    Result<Void> addOrUpdate(@RequestBody AdvertisementDO advertisementDO,@RequestHeader("user_id") Integer userId);
 
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
-    Result<Void> delete(@RequestParam("id") Long id);
+    Result<Void> delete(@RequestParam("id") Long id, @RequestHeader("userId") Integer userId);
 
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
     Result<AdvertisementDO> get(@RequestParam("id") Long id);

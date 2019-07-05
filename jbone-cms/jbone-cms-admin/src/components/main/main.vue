@@ -16,7 +16,7 @@
           <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
           <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
-          <change-site :site-id="siteId" @on-site-change="setSite" />
+          <change-site :site-id="siteId" @on-site-change="handleSetSite" />
         </header-bar>
       </Header>
       <Content class="main-content-con">
@@ -153,7 +153,12 @@ export default {
     },
     handleClick (item) {
       this.turnToPage(item)
-    }
+    },
+
+    handleSetSite (state, siteId){
+      this.setSite(state,siteId)
+      this.turnToPage(this.$config.homeName)
+    },
   },
   watch: {
     '$route' (newRoute) {

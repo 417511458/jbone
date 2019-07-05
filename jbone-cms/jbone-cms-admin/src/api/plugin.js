@@ -1,11 +1,15 @@
 import axios from '@/libs/api.request'
+import siteApi from '@/api/site'
 
 let pluginApi = {};
 
-pluginApi.getAll = function(){
+pluginApi.getAll = function(siteId){
   return axios.request({
     url: 'cms/plugin/getAll',
-    method: 'get'
+    method: 'get',
+    params: {
+      siteId: siteId
+    }
   });
 }
 
@@ -20,6 +24,7 @@ pluginApi.getById = function(id){
 }
 
 pluginApi.addOrUpdate = function(plugin){
+  plugin.siteId = siteApi.getCurrentSiteID()
   return axios.request({
     url: 'cms/plugin/addOrUpdate',
     method: 'post',

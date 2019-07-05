@@ -49,4 +49,6 @@ public class LinkDO {
      * 创建者
      */
     private Integer creator;
+
+    private Integer siteId;
 }

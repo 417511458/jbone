@@ -1,7 +1,11 @@
 import axios from '@/libs/api.request'
+import {localRead} from '@/libs/util'
 
 let siteApi = {};
 
+siteApi.getCurrentSiteID = function(){
+  return localRead('siteId')
+}
 
 siteApi.getByDomain = function(name){
   return axios.request({

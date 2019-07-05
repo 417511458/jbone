@@ -32,5 +32,9 @@ public class PluginDO {
      */
     private int orders;
 
+    private Integer siteId;
+
     private InnerDictionaryItemDO pluginType;
+
+    private Integer creator;
 }

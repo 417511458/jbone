@@ -70,6 +70,8 @@ public class TokenFilter extends ZuulFilter {
         requestContext.set(GatewayConstants.TOKEN_KEY,token);
         //将用户ID保存到上下文
         requestContext.set(GatewayConstants.USER_ID,jboneToken.getUserResponseDO().getBaseInfo().getId());
+
+        requestContext.addZuulRequestHeader(GatewayConstants.USER_ID,jboneToken.getUserResponseDO().getBaseInfo().getId() + "");
         return null;
     }
 

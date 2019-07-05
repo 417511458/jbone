@@ -67,4 +67,10 @@ public class Advertisement extends BaseEntity {
      */
     @Column(name = "hits")
     private int hits;
+
+    /**
+     * 站点ID
+     */
+    @Column(name = "site_id")
+    private Integer siteId;
 }

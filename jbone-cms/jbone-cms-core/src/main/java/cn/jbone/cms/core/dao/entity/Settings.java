@@ -34,7 +34,4 @@ public class Settings extends BaseEntity {
     private String description;
 
 
-
-
-
 }
