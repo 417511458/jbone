@@ -1,15 +1,13 @@
 package cn.jbone.cms.core.service;
 
+import cn.jbone.cms.common.constant.SiteSettingConstant;
 import cn.jbone.cms.common.dataobject.*;
 import cn.jbone.cms.common.dataobject.config.ArticleFiledConfigDO;
 import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.cms.core.converter.ArticleConverter;
 import cn.jbone.cms.core.dao.entity.*;
-import cn.jbone.cms.core.dao.repository.ArticleDataRepository;
-import cn.jbone.cms.core.dao.repository.ArticleRepository;
-import cn.jbone.cms.core.dao.repository.CategoryRepository;
-import cn.jbone.cms.core.dao.repository.TagRepository;
+import cn.jbone.cms.core.dao.repository.*;
 import cn.jbone.cms.core.validator.ContentValidator;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.JboneException;
@@ -29,6 +27,7 @@ import org.springframework.util.CollectionUtils;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ArticleService {
@@ -53,10 +52,15 @@ public class ArticleService {
     @Autowired
     private ContentValidator contentValidator;
 
+    @Autowired
+    private SiteSettingsService siteSettingsService;
+
     public ArticleResponseDO addOrUpdateArticle(ArticleRequestDO articleRequestDO){
         checkParam(articleRequestDO);
 
         contentValidator.checkPermition(articleRequestDO.getCreator(),articleRequestDO.getSiteId());
+
+        checkLimit(articleRequestDO);
 
         Article article = articleConverter.toArticle(articleRequestDO);
         article = articleRepository.save(article);
@@ -71,6 +75,23 @@ public class ArticleService {
         Assert.notNull(articleRequestDO.getTitle(),"文章标题不能为空.");
         Assert.notNull(articleRequestDO.getArticleData(),"文章内容不能为空.");
         Assert.notNull(articleRequestDO.getArticleData().getContent(),"文章内容不能为空.");
+    }
+
+    private void checkLimit(ArticleRequestDO articleRequestDO){
+        if(articleRequestDO.getId() == null || articleRequestDO.getId() <= 0){
+            Map<String, String> settingMap = siteSettingsService.getSettingsMap(articleRequestDO.getSiteId());
+            if(!settingMap.containsKey(SiteSettingConstant.LIMIT_ARTICLE_COUNT)){
+                throw new JboneException("本站禁止添加文章，如有疑问请联系管理员.");
+            }
+            Long limitCount = Long.parseLong(settingMap.get(SiteSettingConstant.LIMIT_ARTICLE_COUNT));
+            if(limitCount <= 0){
+                throw new JboneException("本站最多添加"+ limitCount + "篇文章");
+            }
+            long currentCount = articleRepository.countBySiteId(articleRequestDO.getSiteId());
+            if(currentCount >= limitCount){
+                throw new JboneException("本站最多添加"+ limitCount + "篇文章");
+            }
+        }
     }
 
 

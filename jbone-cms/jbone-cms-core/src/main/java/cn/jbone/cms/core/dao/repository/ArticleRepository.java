@@ -15,4 +15,6 @@ public interface ArticleRepository extends JpaRepository<Article,Long>, JpaSpeci
 
     @Query("select sum(o.hits) from Article as o")
     long findHitsCount();
+
+    long countBySiteId(Integer siteId);
 }

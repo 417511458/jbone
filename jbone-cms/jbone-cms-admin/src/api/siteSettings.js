@@ -13,6 +13,16 @@ siteSettingsApi.getAll = function(){
   });
 }
 
+siteSettingsApi.getAllWithSiteId = function(siteId){
+  return axios.request({
+    url: 'cms/siteSettings/getMap',
+    method: 'get',
+    params: {
+      siteId: siteId
+    }
+  });
+}
+
 siteSettingsApi.getById = function(id){
   return axios.request({
     url: 'cms/siteSettings/get',
@@ -35,6 +45,15 @@ siteSettingsApi.addOrUpdate = function(settings){
 
 siteSettingsApi.batchAddOrUpdate = function(settingsArray){
   let settingsData = {siteId:siteApi.getCurrentSiteID(), settingsList: settingsArray}
+  return axios.request({
+    url: 'cms/siteSettings/batchAddOrUpdate',
+    method: 'post',
+    data: settingsData
+  });
+}
+
+siteSettingsApi.batchAddOrUpdateWithSiteId = function(siteId,settingsArray){
+  let settingsData = {siteId:siteId, settingsList: settingsArray}
   return axios.request({
     url: 'cms/siteSettings/batchAddOrUpdate',
     method: 'post',

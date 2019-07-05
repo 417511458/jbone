@@ -20,6 +20,9 @@
       <FormItem label="插件数" prop="maximumPlugins" :required="true">
         <InputNumber v-model="data.maximumPlugins"  style="width: 200px"  clearable  placeholder="最大支持插件数"></InputNumber>
       </FormItem>
+      <FormItem label="友链数" prop="maximumLinks" :required="true">
+        <InputNumber v-model="data.maximumLinks"  style="width: 200px"  clearable  placeholder="最大支持友链数"></InputNumber>
+      </FormItem>
     </Form>
     <div slot="footer">
       <Button type="text" size="large" @click="showEditModal = false">关闭</Button>
@@ -55,7 +58,8 @@
             maximumTags: 0,
             maximumAdvertisements: 0,
             maximumPlugins: 0,
-            maximumComments: 0
+            maximumComments: 0,
+            maximumLinks: 0
           },
           loading: false,
           ruleValidate: {
@@ -76,6 +80,9 @@
             ],
             maximumPlugins: [
               {required: true,type:'number', message: '插件限制数不能为空', trigger: 'blur'}
+            ],
+            maximumLinks: [
+              {required: true,type:'number', message: '友链限制数不能为空', trigger: 'blur'}
             ]
           },
         };
@@ -107,14 +114,15 @@
             maximumTags: 0,
             maximumAdvertisements: 0,
             maximumPlugins: 0,
-            maximumComments: 0
+            maximumComments: 0,
+            maximumLinks: 0
           }
           if(this.siteId <= 0){
             return
           }
 
           let self = this;
-          siteSettingsApi.getAll(this.siteId).then(function (res) {
+          siteSettingsApi.getAllWithSiteId(this.siteId).then(function (res) {
             let result = res.data;
             if(result.success){
               let maximumArticles = result.data.maximumArticles
@@ -123,12 +131,14 @@
               let maximumAdvertisements = result.data.maximumAdvertisements
               let maximumPlugins = result.data.maximumPlugins
               let maximumComments = result.data.maximumComments
+              let maximumLinks = result.data.maximumLinks
               self.data.maximumArticles = maximumArticles == null ? 0 : parseInt(maximumArticles);
               self.data.maximumCategorys = maximumCategorys == null ? 0 : parseInt(maximumCategorys);
               self.data.maximumTags = maximumTags == null ? 0 : parseInt(maximumTags);
               self.data.maximumAdvertisements = maximumAdvertisements == null ? 0 : parseInt(maximumAdvertisements);
               self.data.maximumPlugins = maximumPlugins == null ? 0 : parseInt(maximumPlugins);
               self.data.maximumComments = maximumComments == null ? 0 : parseInt(maximumComments);
+              self.data.maximumLinks = maximumLinks == null ? 0 : parseInt(maximumLinks);
             }else{
               self.$Message.error(result.status.message);
             }
@@ -149,7 +159,7 @@
               });
 
 
-              siteSettingsApi.batchAddOrUpdate(self.siteId,settings).then(function (res) {
+              siteSettingsApi.batchAddOrUpdateWithSiteId(settings).then(function (res) {
                 let result = res.data;
                 if (result.success) {
                   self.$Message.info("操作成功");
