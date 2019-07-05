@@ -23,19 +23,19 @@ public class TagApiFallbackFactory implements FallbackFactory<TagApi> {
     public TagApi create(Throwable throwable) {
         return new TagApi() {
             @Override
-            public Result<List<TagDO>> getAll() {
+            public Result<List<TagDO>> getAll(Integer siteId) {
                 logger.error("rpc getAll broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<List<TagDO>> findTagCloud() {
+            public Result<List<TagDO>> findTagCloud(Integer siteId) {
                 logger.error("rpc findTagCloud broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<List<TagDO>> getByName(String name) {
+            public Result<List<TagDO>> getByName(String name,Integer siteId) {
                 logger.error("rpc getByName broke",throwable);
                 return Result.wrapProtectedError();
             }
@@ -47,13 +47,13 @@ public class TagApiFallbackFactory implements FallbackFactory<TagApi> {
             }
 
             @Override
-            public Result<Void> delete(Long id) {
+            public Result<Void> delete(Long id,Integer userId) {
                 logger.error("rpc delete broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<Void> addOrUpdate(TagDO tagDO) {
+            public Result<Void> addOrUpdate(TagDO tagDO,Integer userId) {
                 logger.error("rpc addOrUpdate broke",throwable);
                 return Result.wrapProtectedError();
             }

@@ -29,6 +29,7 @@
   import tagApi from '@/api/tag'
   import Input from "iview/src/components/input/input";
   import TagEdit from "./edit";
+  import siteApi from '@/api/site'
 
   export default {
     components: {TagEdit, Input},
@@ -124,7 +125,10 @@
         this.search();
       },
       search() {
-
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
         let self = this;
         self.table.loading = true;
         tagApi.commonRequest(this.query).then(function (res) {
@@ -167,6 +171,11 @@
       },
 
       toAddModel() {
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
+
         this.modal.title = '添加标签'
         this.modal.showModal = true
         this.modal.id = 0

@@ -1,11 +1,14 @@
 import axios from '@/libs/api.request'
-
+import siteApi from '@/api/site'
 let tagApi = {};
 
 tagApi.getAll = function(){
   return axios.request({
     url: 'cms/tag/getAll',
-    method: 'get'
+    method: 'get',
+    params: {
+      siteId: siteApi.getCurrentSiteID()
+    }
   });
 }
 
@@ -14,15 +17,14 @@ tagApi.getByName = function(name){
     url: 'cms/tag/getByName',
     method: 'get',
     params: {
-      name: name
+      name: name,
+      siteId: siteApi.getCurrentSiteID()
     }
   });
 }
 
 tagApi.commonRequest = function(condition){
-
-  console.info(condition);
-
+  condition.siteId = siteApi.getCurrentSiteID()
   return axios.request({
     url: 'cms/tag/commonRequest',
     method: 'post',
@@ -51,8 +53,7 @@ tagApi.delete = function(id){
 }
 
 tagApi.addOrUpdate = function(tag){
-  console.info("tag:" + tag);
-  console.info(tag);
+  tag.siteId = siteApi.getCurrentSiteID()
   return axios.request({
     url: 'cms/tag/addOrUpdate',
     method: 'post',

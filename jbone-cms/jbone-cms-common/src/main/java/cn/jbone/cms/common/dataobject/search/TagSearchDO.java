@@ -7,4 +7,5 @@ import lombok.Data;
 public class TagSearchDO extends SearchListDO {
     private String name;
     private boolean includeArticleCount = false;
+    private Integer siteId;
 }

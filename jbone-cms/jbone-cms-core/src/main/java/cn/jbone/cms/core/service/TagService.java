@@ -6,7 +6,9 @@ import cn.jbone.cms.core.converter.TagConverter;
 import cn.jbone.cms.core.dao.entity.Tag;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.TagRepository;
+import cn.jbone.cms.core.validator.ContentValidator;
 import cn.jbone.common.dataobject.PagedResponseDO;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,12 +37,14 @@ public class TagService {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private ContentValidator contentValidator;
     /**
      * tag管理只有一个，就是查询所有的标签，并统计标签对应的文章数量
      * @return
      */
-    public List<TagDO> findAll(){
-        List<Tag> tags = tagRepository.findAll();
+    public List<TagDO> findAll(Integer siteId){
+        List<Tag> tags = tagRepository.findBySiteId(siteId);
         return fillArticleCount(tags);
     }
 
@@ -60,22 +64,28 @@ public class TagService {
         return tagDOS;
     }
 
-    public List<TagDO> getByName(String name){
+    public List<TagDO> getByName(String name,Integer siteId){
         if(StringUtils.isBlank(name)){
-            return findAll();
+            return findAll(siteId);
         }
-        List<Tag> tags = tagRepository.findByNameContaining(name);
+        List<Tag> tags = tagRepository.findByNameContainingAndSiteId(name,siteId);
         return fillArticleCount(tags);
     }
 
-    public void delete(Long id){
+    public void delete(Long id,Integer userId){
         if(!tagRepository.existsById(id)){
-            throw new ObjectNotFoundException("标签不存在");
+            throw new JboneException("标签不存在");
         }
-        tagRepository.deleteById(id);
+
+        Tag tag = tagRepository.getOne(id);
+
+        contentValidator.checkPermition(userId,tag.getSiteId());
+
+        tagRepository.delete(tag);
     }
 
     public void addOrUpdate(TagDO tagDO){
+        contentValidator.checkPermition(tagDO.getCreator(),tagDO.getSiteId());
         Tag tag = tagConverter.toTag(tagDO);
         tagRepository.save(tag);
     }
@@ -85,14 +95,6 @@ public class TagService {
         return tagConverter.toTagDO(tag);
     }
 
-    public List<TagDO> findTagCloud(){
-        long count = tagRepository.articleTagCount();
-        if(count <= 0){
-            return null;
-        }
-        List<Tag> tagList = tagRepository.findTagCloud();
-        return fillArticleCount(tagList);
-    }
     /**
      * 通用查询
      * @return
@@ -139,6 +141,11 @@ public class TagService {
             if(StringUtils.isNotBlank(tagSearchDO.getName())){
                 Path<String> name = root.get("name");
                 predicates.add(criteriaBuilder.like(name,"%" + tagSearchDO.getName() + "%"));
+            }
+
+            if(tagSearchDO.getSiteId() != null && tagSearchDO.getSiteId() > 0){
+                Path<Integer> siteId = root.get("siteId");
+                predicates.add(criteriaBuilder.equal(siteId,tagSearchDO.getSiteId()));
             }
 
             //补充条件查询

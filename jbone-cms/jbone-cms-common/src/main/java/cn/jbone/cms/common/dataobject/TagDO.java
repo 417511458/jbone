@@ -21,6 +21,8 @@ public class TagDO implements Comparable<TagDO>{
 
     private Integer siteId;
 
+    private Integer creator;
+
     /**
      * 按文章数量倒叙
      * @param o
