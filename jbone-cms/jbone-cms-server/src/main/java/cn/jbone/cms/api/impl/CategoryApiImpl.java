@@ -6,6 +6,7 @@ import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.cms.core.service.CategoryService;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
@@ -24,24 +25,29 @@ public class CategoryApiImpl implements CategoryApi {
     @Autowired
     private CategoryService categoryService;
 
-    public Result<Void> addOrUpdate(@RequestBody CategoryDO categoryDO){
+    public Result<Void> addOrUpdate(@RequestBody CategoryDO categoryDO, @RequestHeader("userId") Integer userId){
         try {
+            categoryDO.setCreator(userId);
             categoryService.addOrUpdate(categoryDO);
-        } catch (Exception e) {
-            logger.warn("category addOrUpdate error.",e);
+        } catch (JboneException e){
+            logger.warn("delete error",e);
             return Result.wrap500Error(e.getMessage());
+        }  catch (Exception e) {
+            logger.error("category addOrUpdate error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
 
-    public Result<Void> delete(Long id){
+    public Result<Void> delete(Long id, @RequestHeader("userId") Integer userId){
         try {
-            categoryService.delete(id);
-        } catch (ObjectNotFoundException e){
-            return Result.wrap404Error(e.getMessage());
-        } catch (Exception e) {
-            logger.warn("category delete error.",e);
+            categoryService.delete(id,userId);
+        } catch (JboneException e){
+            logger.warn("delete error",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.error("category delete error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -51,20 +57,26 @@ public class CategoryApiImpl implements CategoryApi {
         CategoryDO categoryDO = null;
         try {
             categoryDO = categoryService.get(id);
-        } catch (Exception e) {
-            logger.warn("category get error.",e);
+        } catch (JboneException e){
+            logger.warn("get error",e);
             return Result.wrap500Error(e.getMessage());
+        }  catch (Exception e) {
+            logger.error("category get error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(categoryDO);
     }
 
-    public Result<List<CategoryDO>> getCategoryTree(){
+    public Result<List<CategoryDO>> getCategoryTree(Integer siteId){
         List<CategoryDO> categoryDOS = null;
         try {
-            categoryDOS = categoryService.getCategoryTree();
-        }catch (Exception e) {
-            logger.warn("category getCategoryTree error.",e);
+            categoryDOS = categoryService.getCategoryTree(siteId);
+        } catch (JboneException e){
+            logger.warn("getCategoryTree error ",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.error("category getCategoryTree error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(categoryDOS);
     }
@@ -74,9 +86,12 @@ public class CategoryApiImpl implements CategoryApi {
         List<CategoryDO> categoryDOS = null;
         try {
             categoryDOS = categoryService.requestCategorysTree(categorySearchDO);
-        }catch (Exception e) {
-            logger.warn("category requestCategorysTree error.",e);
+        } catch (JboneException e){
+            logger.warn("requestCategorysTree error ",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.error("category requestCategorysTree error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(categoryDOS);
     }
@@ -86,8 +101,11 @@ public class CategoryApiImpl implements CategoryApi {
         PagedResponseDO<CategoryDO> pagedResponseDO = null;
         try {
             pagedResponseDO = categoryService.requestCategorys(categorySearchDO);
+        } catch (JboneException e){
+            logger.warn("requestCategorys error ",e);
+            return Result.wrap500Error(e.getMessage());
         } catch (Exception e) {
-            logger.warn("category requestCategorys error.",e);
+            logger.error("category requestCategorys error.",e);
             return Result.wrap500Error(e.getMessage());
         }
         return Result.wrapSuccess(pagedResponseDO);

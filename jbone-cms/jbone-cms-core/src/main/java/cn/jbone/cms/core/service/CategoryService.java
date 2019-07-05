@@ -3,6 +3,7 @@ package cn.jbone.cms.core.service;
 import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.config.CategoryFieldConfigDO;
 import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
+import cn.jbone.cms.core.validator.ContentValidator;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.cms.common.enums.CategoryTypeEnum;
 import cn.jbone.cms.core.converter.CategoryConverter;
@@ -38,20 +39,23 @@ public class CategoryService {
     @Autowired
     private CategoryConverter categoryConverter;
 
+    @Autowired
+    private ContentValidator contentValidator;
+
     /**
      * 获取栏目树
      * @return
      */
-    public List<CategoryDO> getCategoryTree(){
-        return getCategoryByPid(0l);
+    public List<CategoryDO> getCategoryTree(Integer siteId){
+        return getCategoryByPid(0l,siteId);
     }
 
-    private List<CategoryDO> getCategoryByPid(Long pid){
-        List<Category> categories = categoryRepository.findAllByPidOrderByOrders(pid);
+    private List<CategoryDO> getCategoryByPid(Long pid,Integer siteId){
+        List<Category> categories = categoryRepository.findAllByPidAndSiteIdOrderByOrders(pid,siteId);
         List<CategoryDO> categoryDOS = categoryConverter.toCategoryDOs(categories, CategoryFieldConfigDO.build());
         if(!CollectionUtils.isEmpty(categoryDOS)){
             for (CategoryDO categoryDO : categoryDOS){
-                categoryDO.setChildren(getCategoryByPid(categoryDO.getId()));
+                categoryDO.setChildren(getCategoryByPid(categoryDO.getId(),siteId));
             }
         }
         return categoryDOS;
@@ -67,7 +71,7 @@ public class CategoryService {
     }
 
     private List<CategoryDO> requestCategorysTree(Long pid, CategorySearchDO categorySearchDO){
-        List<Category> categories = categoryRepository.findAllByPidAndStatusAndInMenuOrderByOrders(pid, categorySearchDO.getStatus(), categorySearchDO.getInMenu());
+        List<Category> categories = categoryRepository.findAllByPidAndStatusAndInMenuAndSiteIdOrderByOrders(pid, categorySearchDO.getStatus(), categorySearchDO.getInMenu(),categorySearchDO.getSiteId());
         List<CategoryDO> categoryDOS = categoryConverter.toCategoryDOs(categories, CategoryFieldConfigDO.build());
         if(!CollectionUtils.isEmpty(categoryDOS)){
             for (CategoryDO categoryDO : categoryDOS){
@@ -82,17 +86,20 @@ public class CategoryService {
         return categoryConverter.toCategoryDO(category,CategoryFieldConfigDO.buildAll());
     }
 
-    public void delete(Long id){
+    public void delete(Long id,Integer userId){
 
-        long categoryCount = categoryRepository.countById(id);
-        if(categoryCount <= 0){
-            throw new ObjectNotFoundException("栏目不存在.");
+        if(!categoryRepository.existsById(id)){
+            throw new JboneException("栏目不存在.");
         }
 
         long childCount = categoryRepository.countByPid(id);
         if(childCount > 0){
             throw new JboneException("含有子栏目，不能删除.");
         }
+
+        Category category = categoryRepository.getOne(id);
+
+        contentValidator.checkPermition(userId,category.getSiteId());
 
         categoryRepository.deleteById(id);
 
@@ -106,6 +113,7 @@ public class CategoryService {
 
         checkParam(categoryDO);
 
+        contentValidator.checkPermition(categoryDO.getCreator(),categoryDO.getSiteId());
         //如果是更新，先补下默认属性
 
         Category category = categoryConverter.toCategory(categoryDO);
@@ -158,6 +166,11 @@ public class CategoryService {
             if(StringUtils.isNotBlank(categorySearchDO.getTitle())){
                 Path<String> title = root.get("title");
                 predicates.add(criteriaBuilder.like(title,"%" + categorySearchDO.getTitle() + "%"));
+            }
+
+            if(categorySearchDO.getSiteId() != null && categorySearchDO.getSiteId() > 0){
+                Path<Integer> siteId = root.get("siteId");
+                predicates.add(criteriaBuilder.equal(siteId,categorySearchDO.getSiteId()));
             }
 
             if(categorySearchDO.getType() != null){

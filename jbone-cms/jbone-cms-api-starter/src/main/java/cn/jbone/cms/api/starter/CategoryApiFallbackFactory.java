@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * 文章API熔断器
+ * 栏目API熔断器
  */
 public class CategoryApiFallbackFactory implements FallbackFactory<CategoryApi> {
 
@@ -23,13 +23,13 @@ public class CategoryApiFallbackFactory implements FallbackFactory<CategoryApi> 
 
         return new CategoryApi() {
             @Override
-            public Result<Void> addOrUpdate(CategoryDO categoryDO) {
+            public Result<Void> addOrUpdate(CategoryDO categoryDO,Integer userId) {
                 logger.error("rpc addOrUpdate broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<Void> delete(Long id) {
+            public Result<Void> delete(Long id,Integer userId) {
                 logger.error("rpc delete broke",throwable);
                 return Result.wrapProtectedError();
             }
@@ -41,7 +41,7 @@ public class CategoryApiFallbackFactory implements FallbackFactory<CategoryApi> 
             }
 
             @Override
-            public Result<List<CategoryDO>> getCategoryTree() {
+            public Result<List<CategoryDO>> getCategoryTree(Integer siteId) {
                 logger.error("rpc getCategoryTree broke",throwable);
                 return Result.wrapProtectedError();
             }
@@ -57,6 +57,8 @@ public class CategoryApiFallbackFactory implements FallbackFactory<CategoryApi> 
                 logger.error("rpc requestCategorys broke",throwable);
                 return Result.wrapProtectedError();
             }
+
+
         };
 
     }

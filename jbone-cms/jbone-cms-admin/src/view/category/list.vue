@@ -40,13 +40,12 @@
 <script>
   import Tree from "iview/src/components/tree/tree"
   import categoryApi from '@/api/category'
-  import categoryTocApi from '@/api/categoryToc'
-  import articleApi from '@/api/article'
   import InputNumber from "iview/src/components/input-number/input-number";
   import DragList from '_c/drag-list'
   import EditTag from "./editTag";
   import Categoryedit from "./edit";
   import EditSpecial from "./editSpecial";
+  import siteApi from '@/api/site'
 
   export default {
     components: {EditSpecial, Categoryedit, EditTag, InputNumber,Tree,DragList},
@@ -121,6 +120,10 @@
         this.search();
       },
       search() {
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
         this.table.loading = true;
         let self = this;
         categoryApi.getCategoryTree().then(function (res) {
@@ -137,6 +140,11 @@
       },
 
       toAddModel(pid) {
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
+
         this.editModal.id = 0
         this.editModal.pid = pid
         this.editModal.title = '添加栏目'

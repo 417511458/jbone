@@ -17,6 +17,7 @@ public class CategorySearchDO extends SearchListDO {
     private StatusEnum status;
     private BooleanEnum inMenu;
     private long pid = 0l;
+    private Integer siteId;
 
 
     private CategoryFieldConfigDO config = new CategoryFieldConfigDO();

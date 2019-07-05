@@ -65,6 +65,7 @@ public class CommonService {
         CategorySearchDO categorySearchDO = new CategorySearchDO();
         categorySearchDO.setInMenu(BooleanEnum.TRUE);
         categorySearchDO.setStatus(StatusEnum.PUBLISH);
+        categorySearchDO.setSiteId(siteManager.getCurrentSiteId());
         Result<List<CategoryDO>> result = categoryApi.requestCategorysTree(categorySearchDO);
         if(result.isSuccess()){
             modelMap.addAttribute("menus",result.getData());

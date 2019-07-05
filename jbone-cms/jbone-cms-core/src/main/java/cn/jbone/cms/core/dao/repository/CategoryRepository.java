@@ -13,11 +13,11 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category,Long>, JpaSpecificationExecutor<Category> {
 
-    List<Category> findAllByPidOrderByOrders(long pid);
+    List<Category> findAllByPidAndSiteIdOrderByOrders(long pid,Integer siteId);
 
     List<Category> findAllByPidAndStatus(long pid, StatusEnum status);
 
-    List<Category> findAllByPidAndStatusAndInMenuOrderByOrders(long pid, StatusEnum status, BooleanEnum inMenu);
+    List<Category> findAllByPidAndStatusAndInMenuAndSiteIdOrderByOrders(long pid, StatusEnum status, BooleanEnum inMenu,Integer siteId);
 
     List<Category> findByIdIn(List<Long> ids);
 

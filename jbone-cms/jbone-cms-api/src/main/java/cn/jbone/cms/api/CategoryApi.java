@@ -6,10 +6,7 @@ import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
 import feign.Headers;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +19,7 @@ public interface CategoryApi {
      * @return
      */
     @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST})
-    Result<Void> addOrUpdate(@RequestBody CategoryDO categoryDO);
+    Result<Void> addOrUpdate(@RequestBody CategoryDO categoryDO, @RequestHeader("userId") Integer userId);
 
 
     /**
@@ -31,7 +28,7 @@ public interface CategoryApi {
      * @return
      */
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
-    Result<Void> delete(@RequestParam("id") Long id);
+    Result<Void> delete(@RequestParam("id") Long id, @RequestHeader("userId") Integer userId);
 
 
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
@@ -42,7 +39,7 @@ public interface CategoryApi {
      * @return
      */
     @RequestMapping(value = "/getCategoryTree",method = {RequestMethod.GET})
-    Result<List<CategoryDO>> getCategoryTree();
+    Result<List<CategoryDO>> getCategoryTree(@RequestParam("siteId") Integer siteId);
 
     /**
      * 获取栏目树

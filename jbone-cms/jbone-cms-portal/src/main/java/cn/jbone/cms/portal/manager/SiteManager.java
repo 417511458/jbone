@@ -59,8 +59,7 @@ public class SiteManager implements InitializingBean {
                 .newBuilder()
                 .maximumSize(cacheMumSize)
                 .refreshAfterWrite(this.cacheTimeSecond, TimeUnit.SECONDS)
-                .build(
-                        new CacheLoader<String, SiteDO>() {
+                .build(new CacheLoader<String, SiteDO>() {
                             public SiteDO load(String key) throws Exception {
                                 return siteManager.reloadSite(key);
                             }

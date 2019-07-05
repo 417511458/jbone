@@ -87,4 +87,6 @@ public class CategoryDO {
 
     private Integer siteId;
 
+    private Integer creator;
+
 }

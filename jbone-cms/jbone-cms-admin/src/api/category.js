@@ -1,11 +1,14 @@
 import axios from '@/libs/api.request'
-
+import siteApi from '@/api/site'
 let categoryApi = {};
 
 categoryApi.getCategoryTree = function(){
   return axios.request({
     url: 'cms/category/getCategoryTree',
-    method: 'get'
+    method: 'get',
+    params:{
+      siteId: siteApi.getCurrentSiteID()
+    }
   });
 }
 
@@ -20,8 +23,7 @@ categoryApi.getById = function(id){
 }
 
 categoryApi.addOrUpdate = function(cate){
-  console.info("cate:" + cate);
-  console.info(cate);
+  cate.siteId = siteApi.getCurrentSiteID()
   return axios.request({
     url: 'cms/category/addOrUpdate',
     method: 'post',
@@ -30,22 +32,11 @@ categoryApi.addOrUpdate = function(cate){
 }
 
 categoryApi.delete = function(id){
-  console.info("delete category :" + id);
   return axios.request({
     url: 'cms/category/delete',
     method: 'delete',
     params: {
       id: id
-    }
-  });
-}
-
-categoryApi.batchDelete = function (ids) {
-  return axios.request({
-    url: 'cms/category/batchDelete',
-    method: 'delete',
-    params: {
-      ids: ids
     }
   });
 }
