@@ -1,11 +1,14 @@
 import axios from '@/libs/api.request'
-
+import siteApi from '@/api/site'
 let linkApi = {};
 
 linkApi.getAll = function(){
   return axios.request({
     url: 'cms/link/getAll',
-    method: 'get'
+    method: 'get',
+    params:{
+      siteId: siteApi.getCurrentSiteID()
+    }
   });
 }
 
@@ -20,6 +23,7 @@ linkApi.getById = function(id){
 }
 
 linkApi.addOrUpdate = function(link){
+  link.siteId = siteApi.getCurrentSiteID()
   return axios.request({
     url: 'cms/link/addOrUpdate',
     method: 'post',

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,8 +25,9 @@ public class SiteSettingsApiImpl implements SiteSettingsApi {
     private SiteSettingsService siteSettingsService;
 
     @Override
-    public Result<Void> addOrUpdate(@RequestBody SiteSettingsDO settingsDO) {
+    public Result<Void> addOrUpdate(@RequestBody SiteSettingsDO settingsDO,@RequestHeader("userId") Integer userId) {
         try {
+            settingsDO.setCreator(userId);
             siteSettingsService.addOrUpdate(settingsDO);
         } catch (JboneException e) {
             logger.warn("SiteSettings addOrUpdate error.",e);
@@ -38,8 +40,9 @@ public class SiteSettingsApiImpl implements SiteSettingsApi {
     }
 
     @Override
-    public Result<Void> batchAddOrUpdate(@RequestBody BatchSaveSiteSettingDO batchSaveSettingDO) {
+    public Result<Void> batchAddOrUpdate(@RequestBody BatchSaveSiteSettingDO batchSaveSettingDO,@RequestHeader("userId") Integer userId) {
         try {
+            batchSaveSettingDO.setUserId(userId);
             siteSettingsService.addOrUpdate(batchSaveSettingDO);
         } catch (JboneException e) {
             logger.warn("SiteSettings batchAddOrUpdate error.",e);
@@ -52,9 +55,9 @@ public class SiteSettingsApiImpl implements SiteSettingsApi {
     }
 
     @Override
-    public Result<Void> delete(Long id) {
+    public Result<Void> delete(Long id,@RequestHeader("userId") Integer userId) {
         try {
-            siteSettingsService.delete(id);
+            siteSettingsService.delete(id,userId);
         } catch (JboneException e) {
             logger.warn("SiteSettings delete error.",e);
             return Result.wrap500Error(e.getMessage());

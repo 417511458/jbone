@@ -94,6 +94,15 @@
         },
 
         loadLink(){
+
+          this.data = {
+            id: 0,
+            title: '',
+            url: '',
+            description: '',
+            orders: 0
+          }
+
           if(this.id <= 0){
             return
           }

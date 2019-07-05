@@ -20,19 +20,19 @@ public class LinkApiFallbackFactory implements FallbackFactory<LinkApi> {
     public LinkApi create(Throwable throwable) {
         return new LinkApi() {
             @Override
-            public Result<Void> addOrUpdate(LinkDO linkDO) {
+            public Result<Void> addOrUpdate(LinkDO linkDO,Integer userId) {
                 logger.error("rpc addOrUpdate broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<Void> delete(Long id) {
+            public Result<Void> delete(Long id,Integer userId) {
                 logger.error("rpc delete broke",throwable);
                 return Result.wrapProtectedError();
             }
 
             @Override
-            public Result<Void> batchDelete(String ids) {
+            public Result<Void> batchDelete(String ids,Integer userId) {
                 logger.error("rpc batchDelete broke",throwable);
                 return Result.wrapProtectedError();
             }
@@ -44,7 +44,7 @@ public class LinkApiFallbackFactory implements FallbackFactory<LinkApi> {
             }
 
             @Override
-            public Result<List<LinkDO>> getAll() {
+            public Result<List<LinkDO>> getAll(Integer siteId) {
                 logger.error("rpc getAll broke",throwable);
                 return Result.wrapProtectedError();
             }

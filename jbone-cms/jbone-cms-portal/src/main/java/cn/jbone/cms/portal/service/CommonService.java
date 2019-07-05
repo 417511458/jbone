@@ -9,7 +9,6 @@ import cn.jbone.cms.common.dataobject.AdvertisementDO;
 import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.PluginDO;
 import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
-import cn.jbone.cms.common.dataobject.SettingsDO;
 import cn.jbone.cms.common.enums.BooleanEnum;
 import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.cms.portal.manager.SiteManager;
@@ -19,15 +18,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.CollectionUtils;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class CommonService {
-
-    @Autowired
-    private SettingsApi settingsApi;
 
     @Autowired
     private CategoryApi categoryApi;
@@ -73,12 +68,7 @@ public class CommonService {
     }
 
     private void setSettings(ModelMap modelMap){
-        Result<Map<String, String>> settingMap =  settingsApi.getMap();
-        if(settingMap.isSuccess()){
-            if(!CollectionUtils.isEmpty(settingMap.getData())){
-                modelMap.addAttribute("settings",settingMap.getData());
-            }
-        }
+        modelMap.addAttribute("settings",siteManager.getCurrentSiteSettings());
     }
 
     private void setGlobalPlugins(ModelMap modelMap){

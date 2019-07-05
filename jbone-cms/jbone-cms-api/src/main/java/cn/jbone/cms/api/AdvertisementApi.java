@@ -12,7 +12,7 @@ import java.util.Map;
 @RequestMapping("/advertisement")
 public interface AdvertisementApi {
     @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST})
-    Result<Void> addOrUpdate(@RequestBody AdvertisementDO advertisementDO,@RequestHeader("user_id") Integer userId);
+    Result<Void> addOrUpdate(@RequestBody AdvertisementDO advertisementDO,@RequestHeader("userId") Integer userId);
 
     @RequestMapping(value = "/delete",method = {RequestMethod.DELETE})
     Result<Void> delete(@RequestParam("id") Long id, @RequestHeader("userId") Integer userId);

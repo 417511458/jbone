@@ -9,5 +9,6 @@ import java.util.List;
 public class BatchSaveSiteSettingDO implements Serializable {
     private List<SiteSettingsDO> settingsList;
     private Integer siteId;
+    private Integer userId;
 
 }

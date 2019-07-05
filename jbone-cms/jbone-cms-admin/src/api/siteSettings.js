@@ -1,13 +1,14 @@
 import axios from '@/libs/api.request'
+import siteApi from '@/api/site'
 
 let siteSettingsApi = {};
 
-siteSettingsApi.getAll = function(siteId){
+siteSettingsApi.getAll = function(){
   return axios.request({
     url: 'cms/siteSettings/getMap',
     method: 'get',
     params: {
-      siteId: siteId
+      siteId: siteApi.getCurrentSiteID()
     }
   });
 }
@@ -23,6 +24,7 @@ siteSettingsApi.getById = function(id){
 }
 
 siteSettingsApi.addOrUpdate = function(settings){
+  settings.siteId = siteApi.getCurrentSiteID()
   return axios.request({
     url: 'cms/siteSettings/addOrUpdate',
     method: 'post',
@@ -31,8 +33,8 @@ siteSettingsApi.addOrUpdate = function(settings){
 }
 
 
-siteSettingsApi.batchAddOrUpdate = function(siteId,settingsArray){
-  let settingsData = {siteId:siteId, settingsList: settingsArray}
+siteSettingsApi.batchAddOrUpdate = function(settingsArray){
+  let settingsData = {siteId:siteApi.getCurrentSiteID(), settingsList: settingsArray}
   return axios.request({
     url: 'cms/siteSettings/batchAddOrUpdate',
     method: 'post',

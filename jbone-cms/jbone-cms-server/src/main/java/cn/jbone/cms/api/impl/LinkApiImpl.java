@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,8 +22,9 @@ public class LinkApiImpl implements LinkApi {
     private LinkService linkService;
 
     @Override
-    public Result<Void> addOrUpdate(@RequestBody LinkDO linkDO) {
+    public Result<Void> addOrUpdate(@RequestBody LinkDO linkDO, @RequestHeader("userId") Integer userId) {
         try {
+            linkDO.setCreator(userId);
             linkService.addOrUpdate(linkDO);
         } catch (Exception e) {
             logger.warn("Link addOrUpdate error.",e);
@@ -32,9 +34,9 @@ public class LinkApiImpl implements LinkApi {
     }
 
     @Override
-    public Result<Void> delete(Long id) {
+    public Result<Void> delete(Long id, @RequestHeader("userId") Integer userId) {
         try {
-            linkService.delete(id);
+            linkService.delete(id,userId);
         } catch (Exception e) {
             logger.warn("Link delete error.",e);
             return Result.wrap500Error(e.getMessage());
@@ -43,9 +45,9 @@ public class LinkApiImpl implements LinkApi {
     }
 
     @Override
-    public Result<Void> batchDelete(String ids) {
+    public Result<Void> batchDelete(String ids, @RequestHeader("userId") Integer userId) {
         try {
-            linkService.batchDelete(ids);
+            linkService.batchDelete(ids,userId);
         } catch (Exception e) {
             logger.warn("Link batchDelete error.",e);
             return Result.wrap500Error(e.getMessage());
@@ -66,10 +68,10 @@ public class LinkApiImpl implements LinkApi {
     }
 
     @Override
-    public Result<List<LinkDO>> getAll() {
+    public Result<List<LinkDO>> getAll(Integer siteId) {
         List<LinkDO> linkDOS = null;
         try {
-            linkDOS = linkService.getAll();
+            linkDOS = linkService.getAll(siteId);
         } catch (Exception e) {
             logger.warn("Link getAll error.",e);
             return Result.wrap500Error(e.getMessage());

@@ -23,6 +23,7 @@
 <script>
   import linkApi from '@/api/link'
   import EditLink from "./edit";
+  import siteApi from '@/api/site'
 
   export default {
     components: {EditLink},
@@ -118,6 +119,12 @@
         this.search();
       },
       search() {
+
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
+
         this.table.loading = true;
         let self = this;
         linkApi.getAll().then(function (res) {
@@ -134,6 +141,12 @@
       },
 
       toAddModel() {
+
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
+
         this.editModal.id = 0
         this.editModal.title = '添加友情链接'
         this.editModal.showModal = true

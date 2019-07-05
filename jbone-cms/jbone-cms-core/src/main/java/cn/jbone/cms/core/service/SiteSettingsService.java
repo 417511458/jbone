@@ -3,9 +3,11 @@ package cn.jbone.cms.core.service;
 import cn.jbone.cms.common.dataobject.BatchSaveSiteSettingDO;
 import cn.jbone.cms.common.dataobject.SiteSettingsDO;
 import cn.jbone.cms.core.converter.SiteSettingsConverter;
+import cn.jbone.cms.core.dao.entity.Site;
 import cn.jbone.cms.core.dao.entity.SiteSettings;
 import cn.jbone.cms.core.dao.repository.SiteRepository;
 import cn.jbone.cms.core.dao.repository.SiteSettingsRepository;
+import cn.jbone.cms.core.validator.ContentValidator;
 import cn.jbone.common.exception.JboneException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class SiteSettingsService {
     private SiteSettingsConverter siteSettingsConverter;
     @Autowired
     private SiteRepository siteRepository;
+    @Autowired
+    private ContentValidator contentValidator;
 
     public Map<String, String> getSettingsMap(Integer siteId){
         if(siteId == null || siteId <= 0){
@@ -52,6 +56,8 @@ public class SiteSettingsService {
             throw new JboneException("参数错误");
         }
 
+        contentValidator.checkPermition(settingsDO.getCreator(),settingsDO.getSiteId());
+
         SiteSettings siteSettings = siteSettingsRepository.findBySiteIdAndName(settingsDO.getSiteId(),settingsDO.getName());
         if(siteSettings == null){
             siteSettingsRepository.save(siteSettingsConverter.toEntity(settingsDO));
@@ -65,6 +71,7 @@ public class SiteSettingsService {
         if(!siteRepository.existsById(batchSaveSettingDO.getSiteId())){
             throw new JboneException("站点不存在");
         }
+        contentValidator.checkPermition(batchSaveSettingDO.getUserId(),batchSaveSettingDO.getSiteId());
         List<SiteSettings> settingsList = siteSettingsConverter.toEntitys(batchSaveSettingDO.getSettingsList());
         List<SiteSettings> addOrUpdateList = new ArrayList<>();
         for (SiteSettings siteSettings : settingsList){
@@ -86,11 +93,13 @@ public class SiteSettingsService {
         siteSettingsRepository.saveAll(addOrUpdateList);
     }
 
-    public void delete(Long id){
+    public void delete(Long id,Integer userId){
         if(!siteSettingsRepository.existsById(id)){
             throw new JboneException("记录不存在");
         }
-        siteSettingsRepository.deleteById(id);
+        SiteSettings siteSettings = siteSettingsRepository.getOne(id);
+        contentValidator.checkPermition(userId,siteSettings.getCreator());
+        siteSettingsRepository.delete(siteSettings);
     }
 
     public SiteSettingsDO getById(Long id){

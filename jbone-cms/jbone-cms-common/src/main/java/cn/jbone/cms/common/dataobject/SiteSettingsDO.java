@@ -20,4 +20,6 @@ public class SiteSettingsDO {
      * 值
      */
     private String value;
+
+    private Integer creator;
 }

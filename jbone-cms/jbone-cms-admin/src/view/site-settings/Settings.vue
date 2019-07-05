@@ -89,9 +89,9 @@
   </div>
 </template>
 <script>
-  import settingsApi from '@/api/settings'
+  import siteSettingsApi from '@/api/siteSettings'
   import fileApi from '@/api/file'
-
+  import siteApi from '@/api/site'
   export default {
     data() {
       return {
@@ -174,8 +174,8 @@
 
       newSetting(key,val){
         return {
-          settingKey: key,
-          settingValue: val
+          name: key,
+          value: val
         }
       },
 
@@ -184,8 +184,12 @@
         this.search();
       },
       search() {
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
         let self = this;
-        settingsApi.getAll().then(function (res) {
+        siteSettingsApi.getAll().then(function (res) {
           if (!res.data.success) {
             self.$Message.error(res.data.status.message);
           } else {
@@ -201,11 +205,15 @@
         console.info(status)
       },
       addOrUpdate() {
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
         this.fillSettings()
         let self = this;
         this.$refs.baseInfoForm.validate((valid) => {
           if (valid) {
-            settingsApi.batchAddOrUpdate(this.settings).then(function (res) {
+            siteSettingsApi.batchAddOrUpdate(this.settings).then(function (res) {
               let result = res.data;
               if (result.success) {
                 self.$Message.info("添加成功");
