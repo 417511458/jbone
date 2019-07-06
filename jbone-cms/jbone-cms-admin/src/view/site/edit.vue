@@ -13,6 +13,12 @@
         <FormItem label="域名" prop="domain" :required="true">
           <i-input v-model="site.domain" clearable placeholder="域名"></i-input>
         </FormItem>
+        <FormItem label="域别名1" prop="domain">
+          <i-input v-model="site.alias1" clearable placeholder="域别名1"></i-input>
+        </FormItem>
+        <FormItem label="域别名2" prop="domain">
+          <i-input v-model="site.alias2" clearable placeholder="域别名2"></i-input>
+        </FormItem>
         <FormItem label="排序号" prop="orders" :required="true">
           <InputNumber v-model="site.orders" clearable  placeholder="排序号"></InputNumber>
         </FormItem>
@@ -74,6 +80,8 @@
             name: '',
             description: '',
             domain: '',
+            alias1: '',
+            alias2:'',
             pid: 0,
             orders: 0,
             templateId: 0,
@@ -87,6 +95,9 @@
             ],
             domain: [
               {required: true, message: '域名不能为空', trigger: 'blur'}
+            ],
+            orders: [
+              {required: true, type:'number', message: '排序号不能为空', trigger: 'blur'}
             ]
           },
         };

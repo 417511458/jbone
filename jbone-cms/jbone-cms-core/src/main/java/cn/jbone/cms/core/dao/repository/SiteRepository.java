@@ -11,4 +11,5 @@ import java.util.List;
 public interface SiteRepository extends JpaRepository<Site,Integer>, JpaSpecificationExecutor<Site> {
     Site findByDomainAndEnable(String domain,int enable);
     List<Site> findByIdInAndPid(List<Integer> ids,int pid);
+    List<Site> findByDomainOrAlias1OrAlias2(String domain,String alias1,String alias2);
 }

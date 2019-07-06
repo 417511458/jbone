@@ -28,6 +28,9 @@ public class SiteApiImpl implements SiteApi {
         SiteDO siteDO = null;
         try {
             siteDO = siteService.getRootSiteByDomain(domain);
+        } catch (JboneException e) {
+            logger.warn("site getByDomain error.",e);
+            return Result.wrap500Error(e.getMessage());
         } catch (Exception e) {
             logger.warn("site getByDomain error.",e);
             return Result.wrap500Error("获取站点失败");
@@ -40,7 +43,8 @@ public class SiteApiImpl implements SiteApi {
         SiteDO siteDO = null;
         try {
             siteDO = siteService.getById(id);
-        } catch (ObjectNotFoundException e){
+        } catch (JboneException e){
+            logger.warn("site getById error.",e);
             return Result.wrap500Error(e.getMessage());
         } catch (Exception e) {
             logger.warn("site getByDomain error.",e);
@@ -53,10 +57,11 @@ public class SiteApiImpl implements SiteApi {
     public Result<Void> delete(Integer id) {
         try {
             siteService.delete(id);
-        } catch (ObjectNotFoundException e){
+        } catch (JboneException e){
+            logger.warn("site delete error.",e);
             return Result.wrap500Error(e.getMessage());
         } catch (Exception e) {
-            logger.warn("site getByDomain error.",e);
+            logger.warn("site delete error.",e);
             return Result.wrap500Error("删除失败");
         }
         return Result.wrapSuccess();
@@ -66,6 +71,9 @@ public class SiteApiImpl implements SiteApi {
     public Result<Void> addOrUpdate(@RequestBody SiteDO siteDO) {
         try {
             siteService.addOrUpdate(siteDO);
+        }catch (JboneException e) {
+            logger.warn("site addOrUpdate error.",e);
+            return Result.wrap500Error(e.getMessage());
         }catch (Exception e) {
             logger.warn("site addOrUpdate error.",e);
             return Result.wrap500Error("更新站点失败");
@@ -79,9 +87,12 @@ public class SiteApiImpl implements SiteApi {
         PagedResponseDO<SiteDO> pagedResponseDO = null;
         try {
             pagedResponseDO = siteService.commonRequest(siteSearchDO);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("site commonRequest error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("site commonRequest error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(pagedResponseDO);
     }

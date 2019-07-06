@@ -14,7 +14,10 @@ import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -39,9 +42,22 @@ public class SiteService {
     @Autowired
     private ArticleRepository articleRepository;
 
+    Logger logger = LoggerFactory.getLogger(getClass());
+
     public SiteDO getRootSiteByDomain(String domain){
-        Site site = siteRepository.findByDomainAndEnable(domain, BooleanEnum.TRUE.getCode());
-        if(site.getPid() > 0){
+        List<Site> list = siteRepository.findByDomainOrAlias1OrAlias2(domain,domain,domain);
+        if(CollectionUtils.isEmpty(list)){
+            return null;
+        }
+
+        Site site = null;
+        for (Site tempSite : list) {
+            if(tempSite.getEnable() == BooleanEnum.TRUE.getCode()){
+                site = tempSite;
+                break;
+            }
+        }
+        if(site != null && site.getPid() > 0){
             site = siteRepository.getOne(site.getPid());
         }
         return siteConverter.toSiteDO(site);
@@ -49,7 +65,7 @@ public class SiteService {
 
     public void delete(Integer id){
         if(!siteRepository.existsById(id)){
-            throw new ObjectNotFoundException("站点不存在");
+            throw new JboneException("站点不存在");
         }
         Site site = siteRepository.getOne(id);
         site.setEnable(-1);
@@ -57,13 +73,18 @@ public class SiteService {
     }
 
     public void addOrUpdate(SiteDO siteDO){
-        Site site = siteConverter.toSite(siteDO);
-        siteRepository.save(site);
+        try {
+            Site site = siteConverter.toSite(siteDO);
+            siteRepository.save(site);
+        } catch (DataIntegrityViolationException e) {
+            logger.warn("域名或别名已存在",e);
+            throw new JboneException("域名或别名已存在");
+        }
     }
 
     public SiteDO getById(Integer id){
         if(!siteRepository.existsById(id)){
-            throw new ObjectNotFoundException("站点不存在");
+            throw new JboneException("站点不存在");
         }
         return siteConverter.toSiteDO(siteRepository.getOne(id));
     }

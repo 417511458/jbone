@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "site")
+@Table(name = "site",uniqueConstraints = {@UniqueConstraint(columnNames="domain"),@UniqueConstraint(columnNames="alias1"),@UniqueConstraint(columnNames="alias2")})
 public class Site extends BaseEntity {
 
     @Id
@@ -34,7 +34,19 @@ public class Site extends BaseEntity {
     private String domain;
 
     /**
-     * 父级网站ID,用于解决多网站域名映射一个站点，如www.jbone.cn和jbone.cn是同一个
+     * 域别名,用于解决多网站域名映射一个站点，如www.jbone.cn和jbone.cn是同一个
+     */
+    @Column(name = "alias1")
+    private String alias1;
+
+    /**
+     * 域别名,用于解决多网站域名映射一个站点，如www.jbone.cn和jbone.cn是同一个
+     */
+    @Column(name = "alias2")
+    private String alias2;
+
+    /**
+     * 父级网站ID,
      */
     @Column(name = "pid")
     private int pid;
