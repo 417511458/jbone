@@ -13,10 +13,10 @@
         <FormItem label="域名" prop="domain" :required="true">
           <i-input v-model="site.domain" clearable placeholder="域名"></i-input>
         </FormItem>
-        <FormItem label="域别名1" prop="domain">
+        <FormItem label="域别名1" prop="alias1">
           <i-input v-model="site.alias1" clearable placeholder="域别名1"></i-input>
         </FormItem>
-        <FormItem label="域别名2" prop="domain">
+        <FormItem label="域别名2" prop="alias2">
           <i-input v-model="site.alias2" clearable placeholder="域别名2"></i-input>
         </FormItem>
         <FormItem label="排序号" prop="orders" :required="true">
@@ -152,6 +152,8 @@
                 self.site.orders = result.data.orders;
                 self.site.templateId = result.data.templateId;
                 self.site.enable = result.data.enable + '';
+                self.site.alias1 = result.data.alias1;
+                self.site.alias2 = result.data.alias2;
               } else {
                 self.$Message.error(result.status.message);
               }
