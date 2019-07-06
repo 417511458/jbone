@@ -69,6 +69,9 @@
             ],
             dictValue: [
               {required: true, message: '值不能为空', trigger: 'blur'}
+            ],
+            dictPrompt: [
+              {required: true, message: '提示文本不能为空', trigger: 'blur'}
             ]
           },
         }

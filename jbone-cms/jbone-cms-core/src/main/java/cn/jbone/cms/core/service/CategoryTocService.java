@@ -7,12 +7,10 @@ import cn.jbone.cms.core.dao.entity.CategoryToc;
 import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import cn.jbone.cms.core.dao.repository.CategoryTocRepository;
 import cn.jbone.common.exception.JboneException;
-import cn.jbone.common.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class CategoryTocService {
 
     public void delete(Long id){
         if(!categoryTocRepository.existsById(id)){
-            throw new ObjectNotFoundException("目录不存在");
+            throw new JboneException("目录不存在");
         }
         if(categoryTocRepository.countByPid(id) > 0){
             throw new JboneException("存在子目录，不能删除");

@@ -10,12 +10,10 @@ import cn.jbone.cms.core.dao.entity.Plugin;
 import cn.jbone.cms.core.dao.repository.PluginRepository;
 import cn.jbone.cms.core.validator.ContentValidator;
 import cn.jbone.common.exception.JboneException;
-import cn.jbone.common.exception.ObjectNotFoundException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 

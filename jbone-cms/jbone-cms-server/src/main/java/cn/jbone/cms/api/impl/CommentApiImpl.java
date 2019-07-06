@@ -3,6 +3,7 @@ package cn.jbone.cms.api.impl;
 import cn.jbone.cms.api.CommentApi;
 import cn.jbone.cms.common.dataobject.CommentDO;
 import cn.jbone.cms.core.service.CommentService;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +26,12 @@ public class CommentApiImpl implements CommentApi {
         List<CommentDO> commentDOS = null;
         try {
             commentDOS = commentService.getByArticleId(articleId);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("comment getByArticleId error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("comment getByArticleId error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(commentDOS);
     }
@@ -36,9 +40,12 @@ public class CommentApiImpl implements CommentApi {
     public Result<Void> addOrUpdate(@RequestBody CommentDO commentDO) {
         try {
             commentService.addOrUpdate(commentDO);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("comment addOrUpdate error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("comment addOrUpdate error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }

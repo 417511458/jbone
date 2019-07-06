@@ -3,6 +3,7 @@ package cn.jbone.cms.api.impl;
 import cn.jbone.cms.api.TemplateApi;
 import cn.jbone.cms.common.dataobject.TemplateDO;
 import cn.jbone.cms.core.service.TemplateService;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,12 @@ public class TemplateApiImpl implements TemplateApi {
     public Result<Void> addOrUpdate(@RequestBody TemplateDO templateDO) {
         try {
             templateService.addOrUpdate(templateDO);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Template addOrUpdate error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Template addOrUpdate error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -35,9 +39,12 @@ public class TemplateApiImpl implements TemplateApi {
     public Result<Void> delete(Long id) {
         try {
             templateService.delete(id);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Template delete error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Template delete error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -47,9 +54,12 @@ public class TemplateApiImpl implements TemplateApi {
         TemplateDO templateDO = null;
         try {
             templateDO = templateService.get(id);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Template get error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Template get error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(templateDO);
     }
@@ -59,9 +69,12 @@ public class TemplateApiImpl implements TemplateApi {
         List<TemplateDO> list;
         try {
             list = templateService.getAll();
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Template getAll error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Template getAll error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(list);
     }

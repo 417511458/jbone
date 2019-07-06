@@ -106,7 +106,7 @@ public class CategoryApiImpl implements CategoryApi {
             return Result.wrap500Error(e.getMessage());
         } catch (Exception e) {
             logger.error("category requestCategorys error.",e);
-            return Result.wrap500Error(e.getMessage());
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(pagedResponseDO);
     }

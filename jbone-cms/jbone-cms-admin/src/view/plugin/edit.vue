@@ -83,6 +83,9 @@
             ],
             type: [
               {required: true, message: '插件类型不能为空', trigger: 'blur'}
+            ],
+            orders: [
+              {required: true,type:'number', message: '插件序号不能为空', trigger: 'blur'}
             ]
           },
         }

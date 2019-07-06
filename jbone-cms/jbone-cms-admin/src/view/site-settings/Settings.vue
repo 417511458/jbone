@@ -10,13 +10,13 @@
           <FormItem label="网站搜索关键字" prop="keywords" :required="true">
             <i-input v-model="baseInfo.keywords" clearable  placeholder="网站搜索关键字"></i-input>
           </FormItem>
-          <FormItem label="网站说明" prop="description" >
+          <FormItem label="网站说明" prop="description"  :required="true">
             <i-input v-model="baseInfo.description" clearable placeholder="网站说明"></i-input>
           </FormItem>
-          <FormItem label="网站版权信息" prop="copyright" >
+          <FormItem label="网站版权信息" prop="copyright"  :required="true">
             <i-input v-model="baseInfo.copyright" clearable placeholder="网站版权信息"></i-input>
           </FormItem>
-          <FormItem label="网站品牌文字" prop="brand" >
+          <FormItem label="网站品牌文字" prop="brand"  :required="true">
             <i-input v-model="baseInfo.brand" clearable placeholder="网站品牌文字"></i-input>
           </FormItem>
         </Form>
@@ -46,7 +46,7 @@
           <FormItem label="首页副标题" prop="description" :required="true">
             <i-input v-model="home.description" clearable  placeholder="首页副标题"></i-input>
           </FormItem>
-          <FormItem label="首页Banner" prop="banner" :required="true">
+          <FormItem label="首页Banner" prop="banner">
             <img :src="home.banner" style="width: 300px;" />
             <Upload
               :disabled="bannerUploding"
@@ -211,24 +211,44 @@
         }
         this.fillSettings()
         let self = this;
+        let validResult = true
         this.$refs.baseInfoForm.validate((valid) => {
-          if (valid) {
-            siteSettingsApi.batchAddOrUpdate(this.settings).then(function (res) {
-              let result = res.data;
-              if (result.success) {
-                self.$Message.info("添加成功");
-              } else {
-                self.$Message.error(result.status.message);
-              }
-            }).catch(function (error) {
-              self.$Message.error(error.message);
-            });
-            self.loading = false;
-
-          } else {
-            self.loading = false;
+          if (!valid) {
+            validResult = false
           }
-        });
+        })
+        this.$refs.contactForm.validate((valid) => {
+          if (!valid) {
+            validResult = false
+          }
+        })
+
+        this.$refs.adsForm.validate((valid) => {
+          if (!valid) {
+            validResult = false
+          }
+        })
+
+        this.$refs.orthersForm.validate((valid) => {
+          if (!valid) {
+            validResult = false
+          }
+        })
+        if(validResult){
+          siteSettingsApi.batchAddOrUpdate(this.settings).then(function (res) {
+            let result = res.data;
+            if (result.success) {
+              self.$Message.info("添加成功");
+            } else {
+              self.$Message.error(result.status.message);
+            }
+          }).catch(function (error) {
+            self.$Message.error(error.message);
+          });
+          self.loading = false;
+        }
+
+
       },
 
       handleBeforeUpload(file){

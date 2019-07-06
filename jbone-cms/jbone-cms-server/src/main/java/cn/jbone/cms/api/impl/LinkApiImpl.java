@@ -3,6 +3,7 @@ package cn.jbone.cms.api.impl;
 import cn.jbone.cms.api.LinkApi;
 import cn.jbone.cms.common.dataobject.LinkDO;
 import cn.jbone.cms.core.service.LinkService;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +27,12 @@ public class LinkApiImpl implements LinkApi {
         try {
             linkDO.setCreator(userId);
             linkService.addOrUpdate(linkDO);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Link addOrUpdate error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Link addOrUpdate error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -37,9 +41,12 @@ public class LinkApiImpl implements LinkApi {
     public Result<Void> delete(Long id, @RequestHeader("userId") Integer userId) {
         try {
             linkService.delete(id,userId);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Link delete error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Link delete error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -48,9 +55,12 @@ public class LinkApiImpl implements LinkApi {
     public Result<Void> batchDelete(String ids, @RequestHeader("userId") Integer userId) {
         try {
             linkService.batchDelete(ids,userId);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Link batchDelete error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Link batchDelete error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -60,9 +70,12 @@ public class LinkApiImpl implements LinkApi {
         LinkDO linkDO = null;
         try {
             linkDO = linkService.get(id);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Link get error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Link get error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(linkDO);
     }
@@ -72,9 +85,12 @@ public class LinkApiImpl implements LinkApi {
         List<LinkDO> linkDOS = null;
         try {
             linkDOS = linkService.getAll(siteId);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Link getAll error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Link getAll error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(linkDOS);
     }

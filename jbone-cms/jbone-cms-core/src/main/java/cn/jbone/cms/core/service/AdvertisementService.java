@@ -13,7 +13,6 @@ import cn.jbone.cms.core.dao.repository.AdvertisementRepository;
 import cn.jbone.cms.core.validator.ContentValidator;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.JboneException;
-import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -56,7 +55,7 @@ public class AdvertisementService {
     public AdvertisementDO get(Long id){
         Advertisement advertisement = advertisementRepository.getOne(id);
         if(advertisement == null){
-            throw new ObjectNotFoundException("广告不存在");
+            throw new JboneException("广告不存在");
         }
         return advertisementConverter.toDO(advertisement);
     }

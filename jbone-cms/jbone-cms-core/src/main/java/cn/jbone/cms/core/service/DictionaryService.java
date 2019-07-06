@@ -9,7 +9,7 @@ import cn.jbone.cms.core.dao.entity.DictionaryGroup;
 import cn.jbone.cms.core.dao.repository.DictionaryItemRepository;
 import cn.jbone.cms.core.dao.repository.DictionaryGroupRepository;
 import cn.jbone.common.dataobject.PagedResponseDO;
-import cn.jbone.common.exception.ObjectNotFoundException;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +45,10 @@ public class DictionaryService {
     public void deleteGroup(Integer groupId){
         DictionaryGroup group = dictionaryGroupRepository.getOne(groupId);
         if(group == null){
-            throw new ObjectNotFoundException("字典组不存在");
+            throw new JboneException("字典组不存在");
         }
         if(dictionaryItemRepository.existsByGroup(group)){
-            throw new ObjectNotFoundException("包含字典项，不能删除.");
+            throw new JboneException("包含字典项，不能删除.");
         }
         dictionaryGroupRepository.delete(group);
     }
@@ -56,7 +56,7 @@ public class DictionaryService {
     public DictionaryGroupDO getGroup(Integer groupId){
         DictionaryGroup group = dictionaryGroupRepository.getOne(groupId);
         if(group == null){
-            throw new ObjectNotFoundException("字典组不存在");
+            throw new JboneException("字典组不存在");
         }
         return dictionaryConverter.toDictionaryGroupDO(group);
     }
@@ -64,7 +64,7 @@ public class DictionaryService {
     public DictionaryItemDO getItem(Integer id){
         DictionaryItem item = dictionaryItemRepository.getOne(id);
         if(item == null){
-            throw new ObjectNotFoundException("字典组不存在");
+            throw new JboneException("字典组不存在");
         }
         return dictionaryConverter.toDictionaryItemDO(item);
     }
@@ -106,7 +106,7 @@ public class DictionaryService {
     public void deleteItem(Integer id){
         DictionaryItem item = dictionaryItemRepository.getOne(id);
         if(item == null){
-            throw new ObjectNotFoundException("字典不存在");
+            throw new JboneException("字典不存在");
         }
         dictionaryItemRepository.delete(item);
     }

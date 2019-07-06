@@ -5,6 +5,7 @@ import cn.jbone.cms.common.dataobject.AdvertisementDO;
 import cn.jbone.cms.common.dataobject.search.AdvertisementSearchDO;
 import cn.jbone.cms.core.service.AdvertisementService;
 import cn.jbone.common.dataobject.PagedResponseDO;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +29,12 @@ public class AdvertisementApiImpl implements AdvertisementApi {
         try {
             advertisementDO.setCreator(userId);
             advertisementService.addOrUpdate(advertisementDO);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Advertisement addOrUpdate error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Advertisement addOrUpdate error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -39,9 +43,12 @@ public class AdvertisementApiImpl implements AdvertisementApi {
     public Result<Void> delete(Long id, @RequestHeader("userId") Integer userId) {
         try {
             advertisementService.delete(id,userId);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Advertisement delete error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Advertisement delete error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -51,9 +58,12 @@ public class AdvertisementApiImpl implements AdvertisementApi {
         AdvertisementDO advertisementDO = null;
         try {
             advertisementDO = advertisementService.get(id);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Advertisement get error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Advertisement get error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(advertisementDO);
     }
@@ -63,9 +73,12 @@ public class AdvertisementApiImpl implements AdvertisementApi {
         PagedResponseDO<AdvertisementDO> advertisementDO = null;
         try {
             advertisementDO = advertisementService.commonRequest(advertisementSearchDO);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Advertisement commonRequest error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Advertisement commonRequest error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(advertisementDO);
     }
@@ -75,9 +88,12 @@ public class AdvertisementApiImpl implements AdvertisementApi {
         Map<String, List<AdvertisementDO>> advertisementDO = null;
         try {
             advertisementDO = advertisementService.findAllMap();
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Advertisement findAllMap error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Advertisement findAllMap error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(advertisementDO);
     }

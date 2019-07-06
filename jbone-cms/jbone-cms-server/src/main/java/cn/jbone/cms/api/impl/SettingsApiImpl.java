@@ -4,6 +4,7 @@ import cn.jbone.cms.api.SettingsApi;
 import cn.jbone.cms.common.dataobject.BatchSaveSettingDO;
 import cn.jbone.cms.common.dataobject.SettingsDO;
 import cn.jbone.cms.core.service.SettingsService;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +27,12 @@ public class SettingsApiImpl implements SettingsApi {
     public Result<Void> addOrUpdate(@RequestBody SettingsDO settingsDO) {
         try {
             settingsService.addOrUpdate(settingsDO);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Settings addOrUpdate error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Settings addOrUpdate error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -38,9 +41,12 @@ public class SettingsApiImpl implements SettingsApi {
     public Result<Void> delete(Long id) {
         try {
             settingsService.delete(id);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Settings delete error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Settings delete error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -49,9 +55,12 @@ public class SettingsApiImpl implements SettingsApi {
     public Result<Void> batchDelete(String ids) {
         try {
             settingsService.batchDelete(ids);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Settings batchDelete error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Settings batchDelete error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -61,9 +70,12 @@ public class SettingsApiImpl implements SettingsApi {
         SettingsDO settingsDO = null;
         try {
             settingsDO = settingsService.get(id);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Settings get error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Settings get error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(settingsDO);
     }
@@ -73,9 +85,12 @@ public class SettingsApiImpl implements SettingsApi {
         List<SettingsDO> settingsDOList = null;
         try {
             settingsDOList = settingsService.getSettingsList();
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Settings getList error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Settings getList error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(settingsDOList);
     }
@@ -85,9 +100,12 @@ public class SettingsApiImpl implements SettingsApi {
         Map<String, String> settingsDOMap = null;
         try {
             settingsDOMap = settingsService.getSettingsMap();
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Settings getMap error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Settings getMap error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(settingsDOMap);
     }
@@ -96,9 +114,12 @@ public class SettingsApiImpl implements SettingsApi {
     public Result<Void> batchAddOrUpdate(@RequestBody BatchSaveSettingDO batchSaveSettingDO) {
         try {
             settingsService.addOrUpdate(batchSaveSettingDO.getSettingsList());
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("Settings addOrUpdate error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("Settings addOrUpdate error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }

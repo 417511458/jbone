@@ -11,7 +11,6 @@ import cn.jbone.cms.core.converter.CategoryConverter;
 import cn.jbone.cms.core.dao.entity.Category;
 import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import cn.jbone.common.exception.JboneException;
-import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

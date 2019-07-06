@@ -4,7 +4,7 @@ import cn.jbone.cms.common.dataobject.SettingsDO;
 import cn.jbone.cms.core.converter.SettingsConverter;
 import cn.jbone.cms.core.dao.entity.Settings;
 import cn.jbone.cms.core.dao.repository.SettingsRepository;
-import cn.jbone.common.exception.ObjectNotFoundException;
+import cn.jbone.common.exception.JboneException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +61,7 @@ public class SettingsService {
 
     public void delete(Long id){
         if(!settingsRepository.existsById(id)){
-            throw  new ObjectNotFoundException("配置不存在.");
+            throw  new JboneException("配置不存在.");
         }
 
         settingsRepository.deleteById(id);

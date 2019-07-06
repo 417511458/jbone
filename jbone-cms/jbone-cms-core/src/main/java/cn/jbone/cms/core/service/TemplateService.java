@@ -4,8 +4,7 @@ import cn.jbone.cms.common.dataobject.TemplateDO;
 import cn.jbone.cms.core.converter.TemplateConverter;
 import cn.jbone.cms.core.dao.entity.Template;
 import cn.jbone.cms.core.dao.repository.TemplateRepository;
-import cn.jbone.common.exception.ObjectNotFoundException;
-import org.apache.commons.lang3.StringUtils;
+import cn.jbone.common.exception.JboneException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -22,7 +21,7 @@ public class TemplateService {
 
     public void delete(Long id){
         if(!templateRepository.existsById(id)){
-            throw new ObjectNotFoundException("模版不存在");
+            throw new JboneException("模版不存在");
         }
         templateRepository.deleteById(id);
     }

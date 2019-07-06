@@ -11,7 +11,6 @@ import cn.jbone.cms.core.dao.repository.*;
 import cn.jbone.cms.core.validator.ContentValidator;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.JboneException;
-import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -142,7 +141,7 @@ public class ArticleService {
 
     public void flushDeleteArticle(Long id,Integer userId){
         if(!articleRepository.existsById(id)){
-            throw new ObjectNotFoundException("文章不存在.");
+            throw new JboneException("文章不存在.");
         }
         Article article = articleRepository.getOne(id);
         contentValidator.checkPermition(userId,article.getSiteId());

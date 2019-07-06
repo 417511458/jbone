@@ -6,6 +6,7 @@ import cn.jbone.cms.common.dataobject.DictionaryGroupDO;
 import cn.jbone.cms.common.dataobject.search.DictionaryGroupSearchDO;
 import cn.jbone.cms.core.service.DictionaryService;
 import cn.jbone.common.dataobject.PagedResponseDO;
+import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +28,12 @@ public class DictionaryApiImpl implements DictionaryApi {
     public Result<Void> addOrUpdateGroup(@RequestBody DictionaryGroupDO dictionaryGroupDO) {
         try {
             dictionaryService.addOrUpdateGroup(dictionaryGroupDO);
-        }catch (Exception e) {
+        }catch (JboneException e) {
             logger.warn("DictionaryApiImpl addOrUpdateGroup error.",e);
             return Result.wrap500Error(e.getMessage());
+        }catch (Exception e) {
+            logger.warn("DictionaryApiImpl addOrUpdateGroup error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -38,9 +42,12 @@ public class DictionaryApiImpl implements DictionaryApi {
     public Result<Void> deleteGroup(Integer id) {
         try {
             dictionaryService.deleteGroup(id);
-        }catch (Exception e) {
+        }catch (JboneException e) {
             logger.warn("DictionaryApiImpl deleteGroup error.",e);
             return Result.wrap500Error(e.getMessage());
+        }catch (Exception e) {
+            logger.warn("DictionaryApiImpl deleteGroup error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -50,9 +57,12 @@ public class DictionaryApiImpl implements DictionaryApi {
         DictionaryGroupDO dictionaryGroupDO = null;
         try {
             dictionaryGroupDO = dictionaryService.getGroup(id);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("DictionaryApiImpl getGroup error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("DictionaryApiImpl getGroup error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(dictionaryGroupDO);
     }
@@ -62,9 +72,12 @@ public class DictionaryApiImpl implements DictionaryApi {
         PagedResponseDO<DictionaryGroupDO> pagedResponseDO = null;
         try {
             pagedResponseDO = dictionaryService.requestGroup(dictionaryGroupSearchDO);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("DictionaryApiImpl requestGroup error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("DictionaryApiImpl requestGroup error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(pagedResponseDO);
     }
@@ -73,9 +86,12 @@ public class DictionaryApiImpl implements DictionaryApi {
     public Result<Void> addOrUpdateItem(@RequestBody DictionaryItemDO dictionaryItemDO) {
         try {
             dictionaryService.addOrUpdateItem(dictionaryItemDO);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("DictionaryApiImpl addOrUpdateItem error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("DictionaryApiImpl addOrUpdateItem error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -84,9 +100,12 @@ public class DictionaryApiImpl implements DictionaryApi {
     public Result<Void> deleteItem(Integer id) {
         try {
             dictionaryService.deleteItem(id);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("DictionaryApiImpl deleteItem error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("DictionaryApiImpl deleteItem error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess();
     }
@@ -96,9 +115,12 @@ public class DictionaryApiImpl implements DictionaryApi {
         DictionaryItemDO itemDO = null;
         try {
             itemDO = dictionaryService.getItem(id);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("DictionaryApiImpl getItem error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("DictionaryApiImpl getItem error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(itemDO);
     }
@@ -108,9 +130,12 @@ public class DictionaryApiImpl implements DictionaryApi {
         List<DictionaryItemDO> itemDOS = null;
         try {
             itemDOS = dictionaryService.getItems(groupId);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("DictionaryApiImpl getItems error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("DictionaryApiImpl getItems error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(itemDOS);
     }
@@ -120,9 +145,12 @@ public class DictionaryApiImpl implements DictionaryApi {
         List<DictionaryItemDO> itemDOS = null;
         try {
             itemDOS = dictionaryService.getItemsByGroupCode(code);
-        } catch (Exception e) {
+        } catch (JboneException e) {
             logger.warn("DictionaryApiImpl getItemsByCode error.",e);
             return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.warn("DictionaryApiImpl getItemsByCode error.",e);
+            return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(itemDOS);
     }
