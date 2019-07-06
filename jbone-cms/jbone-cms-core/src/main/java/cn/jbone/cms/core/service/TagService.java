@@ -1,5 +1,6 @@
 package cn.jbone.cms.core.service;
 
+import cn.jbone.cms.common.constant.SiteSettingConstant;
 import cn.jbone.cms.common.dataobject.*;
 import cn.jbone.cms.common.dataobject.search.TagSearchDO;
 import cn.jbone.cms.core.converter.TagConverter;
@@ -12,6 +13,8 @@ import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,10 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TagService {
@@ -39,6 +39,13 @@ public class TagService {
 
     @Autowired
     private ContentValidator contentValidator;
+
+    @Autowired
+    private SiteSettingsService siteSettingsService;
+
+    Logger logger = LoggerFactory.getLogger(getClass());
+
+
     /**
      * tag管理只有一个，就是查询所有的标签，并统计标签对应的文章数量
      * @return
@@ -86,8 +93,32 @@ public class TagService {
 
     public void addOrUpdate(TagDO tagDO){
         contentValidator.checkPermition(tagDO.getCreator(),tagDO.getSiteId());
+        checkLimit(tagDO);
+
         Tag tag = tagConverter.toTag(tagDO);
         tagRepository.save(tag);
+    }
+
+    /**
+     * 校验限额
+     */
+    private void checkLimit(TagDO tagDO){
+        if(tagDO.getId() == null || tagDO.getId() <= 0){
+            Map<String, String> settingMap = siteSettingsService.getSettingsMap(tagDO.getSiteId());
+            if(!settingMap.containsKey(SiteSettingConstant.LIMIT_TAG_COUNT)){
+                throw new JboneException("本站禁止添加标签，如有疑问请联系管理员.");
+            }
+            Long limitCount = Long.parseLong(settingMap.get(SiteSettingConstant.LIMIT_TAG_COUNT));
+            if(limitCount <= 0){
+                logger.warn("超出标签限额{}",limitCount);
+                throw new JboneException("本站最多添加"+ limitCount + "个标签");
+            }
+            long currentCount = tagRepository.countBySiteId(tagDO.getSiteId());
+            if(currentCount >= limitCount){
+                logger.warn("超出标签限额{}",limitCount);
+                throw new JboneException("本站最多添加"+ limitCount + "个栏目");
+            }
+        }
     }
 
     public TagDO getById(long id){

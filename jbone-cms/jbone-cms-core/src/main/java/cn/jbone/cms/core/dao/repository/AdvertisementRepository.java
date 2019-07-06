@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdvertisementRepository extends JpaRepository<Advertisement,Long>, JpaSpecificationExecutor<Advertisement> {
-
+    long countBySiteId(Integer siteId);
 }

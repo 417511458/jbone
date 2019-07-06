@@ -17,4 +17,6 @@ public interface PluginRepository extends JpaRepository<Plugin,Integer>, JpaSpec
     List<Plugin> findAllByEnableAndSiteIdOrderByOrders(int enable,Integer siteId);
 
     List<Plugin> findAllBySiteIdOrderByOrders(Integer siteId);
+
+    long countBySiteId(Integer siteId);
 }

@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface LinkRepository extends JpaRepository<Link,Long>, JpaSpecificationExecutor<Link> {
     List<Link> findAllBySiteIdOrderByOrders(Integer siteId);
+    long countBySiteId(Integer siteId);
 }

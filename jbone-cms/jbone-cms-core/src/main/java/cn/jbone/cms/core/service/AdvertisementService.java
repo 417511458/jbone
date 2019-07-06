@@ -1,6 +1,7 @@
 package cn.jbone.cms.core.service;
 
 import cn.jbone.cms.common.constant.DictionaryConstant;
+import cn.jbone.cms.common.constant.SiteSettingConstant;
 import cn.jbone.cms.common.dataobject.AdvertisementDO;
 import cn.jbone.cms.common.dataobject.DictionaryItemDO;
 import cn.jbone.cms.common.dataobject.PluginDO;
@@ -15,6 +16,8 @@ import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,6 +48,11 @@ public class AdvertisementService {
     @Autowired
     private ContentValidator contentValidator;
 
+    @Autowired
+    private SiteSettingsService siteSettingsService;
+
+    Logger logger = LoggerFactory.getLogger(getClass());
+
     public AdvertisementDO get(Long id){
         Advertisement advertisement = advertisementRepository.getOne(id);
         if(advertisement == null){
@@ -57,11 +65,34 @@ public class AdvertisementService {
 
         contentValidator.checkPermition(advertisementDO.getCreator(),advertisementDO.getSiteId());
 
+        checkLimit(advertisementDO);
+
         Advertisement advertisement = advertisementConverter.toEntity(advertisementDO);
         if(advertisement == null){
             throw new JboneException("广告不存在");
         }
         advertisementRepository.save(advertisement);
+    }
+    /**
+     * 校验限额
+     */
+    private void checkLimit(AdvertisementDO advertisementDO){
+        if(advertisementDO.getId() == null || advertisementDO.getId() <= 0){
+            Map<String, String> settingMap = siteSettingsService.getSettingsMap(advertisementDO.getSiteId());
+            if(!settingMap.containsKey(SiteSettingConstant.LIMIT_ADS_COUNT)){
+                throw new JboneException("本站禁止添加广告，如有疑问请联系管理员.");
+            }
+            Long limitCount = Long.parseLong(settingMap.get(SiteSettingConstant.LIMIT_ADS_COUNT));
+            if(limitCount <= 0){
+                logger.warn("超出广告限额{}",limitCount);
+                throw new JboneException("本站最多添加"+ limitCount + "个广告");
+            }
+            long currentCount = advertisementRepository.countBySiteId(advertisementDO.getSiteId());
+            if(currentCount >= limitCount){
+                logger.warn("超出广告限额{}",limitCount);
+                throw new JboneException("本站最多添加"+ limitCount + "个广告");
+            }
+        }
     }
 
     public void delete(Long id,Integer userId){

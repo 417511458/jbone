@@ -88,8 +88,14 @@
           loading: false,
           ruleValidate: {
             name: [
-              {required: true, message: '标签名不能为空', trigger: 'blur'},
+              {required: true, message: '广告名不能为空', trigger: 'blur'},
               {validator: validateName, trigger: 'blur'}
+            ],
+            type: [
+              {required: true, message: '广告类型不能为空', trigger: 'blur'}
+            ],
+            location: [
+              {required: true, message: '广告位置不能为空', trigger: 'blur'}
             ]
           },
         };

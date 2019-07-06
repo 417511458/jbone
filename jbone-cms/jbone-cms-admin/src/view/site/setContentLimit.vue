@@ -159,7 +159,7 @@
               });
 
 
-              siteSettingsApi.batchAddOrUpdateWithSiteId(settings).then(function (res) {
+              siteSettingsApi.batchAddOrUpdateWithSiteId(self.siteId,settings).then(function (res) {
                 let result = res.data;
                 if (result.success) {
                   self.$Message.info("操作成功");

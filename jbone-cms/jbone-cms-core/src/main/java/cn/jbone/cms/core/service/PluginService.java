@@ -1,6 +1,7 @@
 package cn.jbone.cms.core.service;
 
 import cn.jbone.cms.common.constant.DictionaryConstant;
+import cn.jbone.cms.common.constant.SiteSettingConstant;
 import cn.jbone.cms.common.dataobject.DictionaryItemDO;
 import cn.jbone.cms.common.dataobject.PluginDO;
 import cn.jbone.cms.core.converter.DictionaryConverter;
@@ -11,6 +12,8 @@ import cn.jbone.cms.core.validator.ContentValidator;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -36,6 +39,10 @@ public class PluginService {
     @Autowired
     private ContentValidator contentValidator;
 
+    @Autowired
+    private SiteSettingsService siteSettingsService;
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     public PluginDO get(int id){
         Plugin plugin = pluginRepository.getOne(id);
@@ -49,11 +56,35 @@ public class PluginService {
 
         contentValidator.checkPermition(pluginDO.getCreator(),pluginDO.getSiteId());
 
+        checkLimit(pluginDO);
+
         Plugin plugin = pluginConverter.toPlugin(pluginDO);
         if(plugin == null){
             throw new JboneException("插件不存在");
         }
         pluginRepository.save(plugin);
+    }
+
+    /**
+     * 校验限额
+     */
+    private void checkLimit(PluginDO pluginDO){
+        if(pluginDO.getId() <= 0){
+            Map<String, String> settingMap = siteSettingsService.getSettingsMap(pluginDO.getSiteId());
+            if(!settingMap.containsKey(SiteSettingConstant.LIMIT_PLUGIN_COUNT)){
+                throw new JboneException("本站禁止添加插件，如有疑问请联系管理员.");
+            }
+            Long limitCount = Long.parseLong(settingMap.get(SiteSettingConstant.LIMIT_PLUGIN_COUNT));
+            if(limitCount <= 0){
+                logger.warn("超出插件限额{}",limitCount);
+                throw new JboneException("本站最多添加"+ limitCount + "个插件");
+            }
+            long currentCount = pluginRepository.countBySiteId(pluginDO.getSiteId());
+            if(currentCount >= limitCount){
+                logger.warn("超出插件限额{}",limitCount);
+                throw new JboneException("本站最多添加"+ limitCount + "个插件");
+            }
+        }
     }
 
     public void delete(int id,Integer userId){

@@ -20,7 +20,7 @@
         </template>
         <template slot="handle" slot-scope="{ row, index }">
           <Button @click="toEditModel(index)" type="primary" size="small">编辑</Button>
-          <Button @click="toSetContentModel(index)" type="success" size="small" style="margin-left: 5px">配置</Button>
+          <Button @click="toSetContentModel(index)" type="success" size="small" style="margin-left: 5px">配额</Button>
           <Button @click="toSetAdmin(index)" type="success" size="small" style="margin-left: 5px">管理员</Button>
           <Button @click="handleDeleteOnTable(index)" type="error" size="small" style="margin-left: 5px">删除</Button>
         </template>

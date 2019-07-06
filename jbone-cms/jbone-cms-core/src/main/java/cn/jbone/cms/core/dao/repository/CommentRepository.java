@@ -12,4 +12,6 @@ public interface CommentRepository extends JpaRepository<Comment,Long>, JpaSpeci
     long countByArticleId(Long articleId);
 
     List<Comment> findByArticleIdOrderByAddTimeDesc(Long articleId);
+
+    long countBySiteId(Integer siteId);
 }

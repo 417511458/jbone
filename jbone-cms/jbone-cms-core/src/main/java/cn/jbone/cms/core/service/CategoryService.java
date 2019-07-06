@@ -1,5 +1,6 @@
 package cn.jbone.cms.core.service;
 
+import cn.jbone.cms.common.constant.SiteSettingConstant;
 import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.config.CategoryFieldConfigDO;
 import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
@@ -27,6 +28,7 @@ import org.springframework.util.CollectionUtils;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CategoryService {
@@ -41,6 +43,9 @@ public class CategoryService {
 
     @Autowired
     private ContentValidator contentValidator;
+
+    @Autowired
+    private SiteSettingsService siteSettingsService;
 
     /**
      * 获取栏目树
@@ -114,7 +119,8 @@ public class CategoryService {
         checkParam(categoryDO);
 
         contentValidator.checkPermition(categoryDO.getCreator(),categoryDO.getSiteId());
-        //如果是更新，先补下默认属性
+
+        checkLimit(categoryDO);
 
         Category category = categoryConverter.toCategory(categoryDO);
         categoryRepository.save(category);
@@ -124,6 +130,27 @@ public class CategoryService {
         Assert.notNull(categoryDO.getTitle());
     }
 
+    /**
+     * 校验限额
+     */
+    private void checkLimit(CategoryDO categoryDO){
+        if(categoryDO.getId() == null || categoryDO.getId() <= 0){
+            Map<String, String> settingMap = siteSettingsService.getSettingsMap(categoryDO.getSiteId());
+            if(!settingMap.containsKey(SiteSettingConstant.LIMIT_CATEGORY_COUNT)){
+                throw new JboneException("本站禁止添加栏目，如有疑问请联系管理员.");
+            }
+            Long limitCount = Long.parseLong(settingMap.get(SiteSettingConstant.LIMIT_CATEGORY_COUNT));
+            if(limitCount <= 0){
+                logger.warn("超出栏目限额{}",limitCount);
+                throw new JboneException("本站最多添加"+ limitCount + "个栏目");
+            }
+            long currentCount = categoryRepository.countBySiteId(categoryDO.getSiteId());
+            if(currentCount >= limitCount){
+                logger.warn("超出栏目限额{}",limitCount);
+                throw new JboneException("本站最多添加"+ limitCount + "个栏目");
+            }
+        }
+    }
 
     /**
      * 请求分类列表

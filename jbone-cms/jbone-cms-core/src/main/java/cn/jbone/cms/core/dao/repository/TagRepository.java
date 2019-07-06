@@ -23,4 +23,6 @@ public interface TagRepository extends JpaRepository<Tag,Long>, JpaSpecification
     @Query(value = "SELECT * from TAG where id in (select distinct tag_id from ARTICLE_TAG)",nativeQuery = true)
     List<Tag> findTagCloud();
 
+    long countBySiteId(Integer siteId);
+
 }

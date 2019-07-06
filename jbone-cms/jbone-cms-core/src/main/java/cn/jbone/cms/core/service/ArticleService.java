@@ -13,8 +13,9 @@ import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.utils.SpecificationUtils;
-import cn.jbone.sys.api.UserApi;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,8 +43,6 @@ public class ArticleService {
     private ArticleConverter articleConverter;
 
     @Autowired
-    private UserApi userApi;
-    @Autowired
     private TagRepository tagRepository;
 
     @Autowired
@@ -54,6 +53,8 @@ public class ArticleService {
 
     @Autowired
     private SiteSettingsService siteSettingsService;
+
+    Logger logger = LoggerFactory.getLogger(getClass());
 
     public ArticleResponseDO addOrUpdateArticle(ArticleRequestDO articleRequestDO){
         checkParam(articleRequestDO);
@@ -77,6 +78,9 @@ public class ArticleService {
         Assert.notNull(articleRequestDO.getArticleData().getContent(),"文章内容不能为空.");
     }
 
+    /**
+     * 校验限额
+     */
     private void checkLimit(ArticleRequestDO articleRequestDO){
         if(articleRequestDO.getId() == null || articleRequestDO.getId() <= 0){
             Map<String, String> settingMap = siteSettingsService.getSettingsMap(articleRequestDO.getSiteId());
@@ -85,10 +89,12 @@ public class ArticleService {
             }
             Long limitCount = Long.parseLong(settingMap.get(SiteSettingConstant.LIMIT_ARTICLE_COUNT));
             if(limitCount <= 0){
+                logger.warn("超出文章限额{}",limitCount);
                 throw new JboneException("本站最多添加"+ limitCount + "篇文章");
             }
             long currentCount = articleRepository.countBySiteId(articleRequestDO.getSiteId());
             if(currentCount >= limitCount){
+                logger.warn("超出文章限额{}",limitCount);
                 throw new JboneException("本站最多添加"+ limitCount + "篇文章");
             }
         }

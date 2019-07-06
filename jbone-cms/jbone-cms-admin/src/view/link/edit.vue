@@ -65,6 +65,15 @@
             title: [
               {required: true, message: '链接名称不能为空', trigger: 'blur'},
               {validator: validateName, trigger: 'blur'}
+            ],
+            url: [
+              {required: true, message: '链接地址不能为空', trigger: 'blur'}
+            ],
+            description: [
+              {required: true, message: '链接描述不能为空', trigger: 'blur'}
+            ],
+            orders: [
+              {required: true,type:'number', message: '排序号不能为空', trigger: 'blur'}
             ]
           },
         }
