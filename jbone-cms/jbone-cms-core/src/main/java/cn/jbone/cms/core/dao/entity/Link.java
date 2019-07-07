@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "link")
+@Table(name = "link",indexes = {@Index(name = "link_index_site_id",columnList = "site_id")})
 public class Link extends BaseEntity {
 
     @Id

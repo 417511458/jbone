@@ -55,17 +55,13 @@ public class AdvertisementElementTagProcessor extends AbstractElementTagProcesso
 
         SiteManager siteManager = appCtx.getBean(SiteManager.class);
 
-        AdvertisementApi advertisementApi = appCtx.getBean(AdvertisementApi.class);
+        List<AdvertisementDO> advertisementDOS = siteManager.getCurrentAds();
+        if(!CollectionUtils.isEmpty(advertisementDOS)){
 
-        AdvertisementSearchDO advertisementSearchDO = AdvertisementSearchDO.build(location).enable();
-        advertisementSearchDO.setSiteId(siteManager.getCurrentSiteId());
-        Result<PagedResponseDO<AdvertisementDO>> pagedResponseDO = advertisementApi.commonRequest(advertisementSearchDO);
-
-        if(pagedResponseDO != null && pagedResponseDO.isSuccess() && pagedResponseDO.getData() != null && !CollectionUtils.isEmpty(pagedResponseDO.getData().getDatas())){
-            List<AdvertisementDO> list = pagedResponseDO.getData().getDatas();
-
-
-            for (AdvertisementDO advertisementDO : list){
+            for (AdvertisementDO advertisementDO : advertisementDOS){
+                if(!location.equalsIgnoreCase(advertisementDO.getLocation())){
+                    continue;
+                }
                 model.add(modelFactory.createOpenElementTag("div", "class", "single-sidebar-widget ads-widget"));
                 if(DictionaryConstant.ITEM_ADS_TYPE_TEXT.equalsIgnoreCase(advertisementDO.getType())){
                     IModel a = getAModel(modelFactory,advertisementDO);

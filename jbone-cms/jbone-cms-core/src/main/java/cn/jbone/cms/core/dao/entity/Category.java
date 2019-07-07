@@ -12,7 +12,9 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "category",
-        indexes = {@Index(name = "category_index_orders",columnList = "orders")})
+        indexes = {@Index(name = "category_index_orders",columnList = "orders"),
+                @Index(name = "category_index_site_id",columnList = "site_id")
+})
 public class Category extends BaseEntity {
     @Id
     @Column(name = "id")

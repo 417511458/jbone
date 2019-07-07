@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "advertisement")
+@Table(name = "advertisement",indexes = {@Index(name = "advertisement_index_site_id",columnList = "site_id")})
 public class Advertisement extends BaseEntity {
     @Id
     @Column(name = "id")

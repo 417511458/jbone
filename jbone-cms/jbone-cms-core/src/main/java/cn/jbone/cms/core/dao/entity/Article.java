@@ -14,7 +14,8 @@ import java.util.List;
 @Table(name = "article",
         indexes = {@Index(name = "article_index_orders",columnList = "orders"),
                 @Index(name = "article_index_hits",columnList = "hits"),
-                @Index(name = "article_index_add_time",columnList = "add_time")
+                @Index(name = "article_index_add_time",columnList = "add_time"),
+                @Index(name = "article_index_site_id",columnList = "site_id")
         })
 public class Article extends BaseEntity {
 
