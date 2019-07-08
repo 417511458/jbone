@@ -2,13 +2,16 @@ package cn.jbone.cms.api.impl;
 
 import cn.jbone.cms.api.TemplateApi;
 import cn.jbone.cms.common.dataobject.TemplateDO;
+import cn.jbone.cms.common.dataobject.search.TemplateSearchDO;
 import cn.jbone.cms.core.service.TemplateService;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,8 +25,9 @@ public class TemplateApiImpl implements TemplateApi {
     private TemplateService templateService;
 
     @Override
-    public Result<Void> addOrUpdate(@RequestBody TemplateDO templateDO) {
+    public Result<Void> addOrUpdate(@RequestBody TemplateDO templateDO,@RequestHeader("userId") Integer userId) {
         try {
+            templateDO.setCreator(userId);
             templateService.addOrUpdate(templateDO);
         } catch (JboneException e) {
             logger.warn("Template addOrUpdate error.",e);
@@ -36,7 +40,7 @@ public class TemplateApiImpl implements TemplateApi {
     }
 
     @Override
-    public Result<Void> delete(Long id) {
+    public Result<Void> delete(Long id,@RequestHeader("userId") Integer userId) {
         try {
             templateService.delete(id);
         } catch (JboneException e) {
@@ -65,10 +69,10 @@ public class TemplateApiImpl implements TemplateApi {
     }
 
     @Override
-    public Result<List<TemplateDO>> getAll() {
-        List<TemplateDO> list;
+    public Result<PagedResponseDO<TemplateDO>> commonRequest(@RequestBody TemplateSearchDO templateSearchDO) {
+        PagedResponseDO<TemplateDO> pagedResponseDO = null;
         try {
-            list = templateService.getAll();
+            pagedResponseDO = templateService.commonRequest(templateSearchDO);
         } catch (JboneException e) {
             logger.warn("Template getAll error.",e);
             return Result.wrap500Error(e.getMessage());
@@ -76,6 +80,6 @@ public class TemplateApiImpl implements TemplateApi {
             logger.warn("Template getAll error.",e);
             return Result.wrap500Error("系统错误");
         }
-        return Result.wrapSuccess(list);
+        return Result.wrapSuccess(pagedResponseDO);
     }
 }

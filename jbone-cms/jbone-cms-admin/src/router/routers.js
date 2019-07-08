@@ -172,6 +172,15 @@ export default [
         component: () => import('@/view/site/list.vue')
       },
       {
+        path: 'template/list',
+        name: 'template_list',
+        meta: {
+          icon: 'ios-book',
+          title: '模版管理'
+        },
+        component: () => import('@/view/template/list.vue')
+      },
+      {
         path: 'site/edit',
         name: 'site_edit',
         meta: {

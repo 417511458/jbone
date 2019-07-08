@@ -1,6 +1,5 @@
 package cn.jbone.cms.core.dao.entity;
 
-import cn.jbone.cms.common.enums.TemplateTypeEnum;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -47,9 +46,28 @@ public class Template extends BaseEntity {
     private String description;
 
     /**
-     * 模版类型
+     * 模版类型:企业宣传、个人博客、开源项目、政府官网、电子商务、bbs
      */
     @Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    private TemplateTypeEnum type;
+    private String type;
+
+    /**
+     * 风格：简约 / 唯美
+     */
+    @Column(name = "style")
+    private String style;
+
+    /**
+     * 色系：蓝色 / 红色 / 绿色 / 黄色
+     */
+    @Column(name = "color")
+    private String color;
+
+    /**
+     * 状态：1启用，0禁用
+     */
+    @Column(name = "enable")
+    private int enable;
+
+
 }

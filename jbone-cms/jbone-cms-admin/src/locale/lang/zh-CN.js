@@ -59,4 +59,5 @@ export default {
   advertisement_list: '广告管理',
   site_list: '站点管理',
   site_edit: '编辑站点',
+  template_list: '模版管理',
 }
