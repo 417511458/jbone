@@ -23,7 +23,7 @@
               <img :src="template.frontCover">
               <h3>{{template.description}}</h3>
               <div>
-                <Button type="primary" icon="ios-search" @click="toEditModel(template.id)" style="margin-left: 10px">修改</Button>
+                <Button type="primary" icon="ios-search" @click="toEditModel(template)" style="margin-left: 10px">修改</Button>
                 <Button type="primary" icon="ios-add" @click="handleDelete(template.id)" style="margin-left: 10px">删除</Button>
               </div>
             </div>

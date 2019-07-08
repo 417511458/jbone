@@ -13,7 +13,7 @@ templateApi.commonRequest = function(condition){
 
 templateApi.getById = function(id){
   return axios.request({
-    url: 'cms/template/getById',
+    url: 'cms/template/get',
     method: 'get',
     params: {
       id: id

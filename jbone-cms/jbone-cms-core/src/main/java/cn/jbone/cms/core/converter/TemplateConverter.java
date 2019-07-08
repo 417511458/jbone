@@ -51,7 +51,7 @@ public class TemplateConverter {
         }
         Template template = null;
         if(templateDO.getId() != null && templateDO.getId() > 0){
-            template = templateRepository.getOne(template.getId());
+            template = templateRepository.getOne(templateDO.getId());
         }
         if(template == null){
             template = new Template();
