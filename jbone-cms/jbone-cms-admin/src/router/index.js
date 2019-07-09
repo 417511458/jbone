@@ -21,19 +21,23 @@ const turnTo = (to, access, next) => {
 }
 
 router.beforeEach((to, from, next) => {
-  let code = to.query.code
-  handleAuth(code)
 
   iView.LoadingBar.start();
   // to.param;
 
-  if(to.name === LOGIN_PAGE_NAME){
-    next({
-      name: homeName // 跳转到homeName页
-    })
-  }else{
-    next();
-  }
+  let code = to.query.code
+  handleAuth(code, () => {
+    if(to.name === LOGIN_PAGE_NAME){
+      next({
+        name: homeName // 跳转到homeName页
+      })
+    }else{
+      next();
+    }
+  })
+
+  
+  
   // if (!token && to.name !== LOGIN_PAGE_NAME) {
   //   // 未登录且要跳转的页面不是登录页
   //   next({
