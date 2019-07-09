@@ -48,33 +48,7 @@
           </div>
         </FormItem>
         <FormItem label="封面图" prop="frontCover" >
-          <Row>
-            <Col span="2" v-show="article.frontCover" style="width: 58px;height:58px;line-height: 58px;margin-right: 10px">
-              <img :src="article.frontCover" style="width: 58px;height:58px;" />
-            </Col>
-            <Col span="2" style="width: 58px;height:58px;line-height: 58px;margin-right: 10px">
-              <Upload
-                multiple
-                :format="['jpg','jpeg','png','gif']"
-                type="drag"
-                action="//jsonplaceholder.typicode.com/posts/"
-                :on-success="handleUploadSuccess"
-                :before-upload="handleBeforeUpload"
-              >
-                <div style="width: 58px;height:58px;line-height: 58px;">
-                  <Icon type="ios-camera" size="20"></Icon>
-                </div>
-              </Upload>
-            </Col>
-
-            <Col span="10">
-              <Button @click="handleShowFrontCover">输入图片地址</Button>
-              <i-input v-show="showFrontCover" v-model="article.frontCover" clearable placeholder="封面图"></i-input>
-            </Col>
-
-          </Row>
-
-
+          <upload-file v-model="article.frontCover"></upload-file>
         </FormItem>
 
       </Form>
@@ -85,16 +59,16 @@
 <script>
     import Tinymce from "../../components/tinymce/index";
     import categoryApi from '@/api/category'
-    import fileApi from '@/api/file'
     import articleApi from '@/api/article'
     import tagApi from '@/api/tag'
     import TreeSelect from "../../components/tree-select/tree-select";
     import { mapMutations } from 'vuex'
     import siteApi from '@/api/site'
+    import UploadFile from "../components/upload-file/upload-file";
 
     export default {
       name: "edit",
-      components: {TreeSelect, Tinymce},
+      components: {UploadFile, TreeSelect, Tinymce},
       props:{
         id: {
           type: Number,
@@ -311,41 +285,7 @@
           })
         },
 
-        handleUploadSuccess(response, file, fileList){
-          console.info(response)
-          console.info(file)
-          console.info(fileList)
-        },
 
-        handleBeforeUpload(file){
-          let self = this;
-          //上传到文件服务
-          fileApi.upload(file).then(function (res) {
-            let result = res.data;
-            if (result.success) {
-              self.article.frontCover = result.data.url
-            } else {
-              self.$Message.error(result.status.message);
-            }
-          }).catch(function (error) {
-            self.$Message.error(error.message);
-          });
-
-
-          // base64入库
-          // let reader = new FileReader()
-          // reader.readAsDataURL(file)
-          // reader.onload = e => {
-          //   let _file = e.target.result
-          //   self.article.frontCover = _file
-          //   console.info(_file)
-          // }
-          return false
-        },
-
-        handleShowFrontCover(){
-          this.showFrontCover = this.showFrontCover ? false : true
-        }
 
 
       }

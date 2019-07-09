@@ -13,18 +13,19 @@
         所有模版
       </p>
       <Row v-if="table.data != null" :gutter="16">
-        <Col span="6" v-for="template in table.data" style="margin-bottom: 10px">
+        <Col span="8" v-for="template in table.data" style="margin-bottom: 10px">
           <Card>
             <p slot="title">
               <Icon type="ios-film-outline"></Icon>
               {{template.name}}
             </p>
             <div style="text-align:center">
-              <img :src="template.frontCover">
+              <img :src="template.frontCover" style="width: 200px;height:200px;">
               <h3>{{template.description}}</h3>
               <div>
+                <Button type="success" icon="ios-search" @click="toViewModel(template)" style="margin-left: 10px">预览</Button>
                 <Button type="primary" icon="ios-search" @click="toEditModel(template)" style="margin-left: 10px">修改</Button>
-                <Button type="primary" icon="ios-add" @click="handleDelete(template.id)" style="margin-left: 10px">删除</Button>
+                <Button type="error" icon="ios-add" @click="handleDelete(template.id)" style="margin-left: 10px">删除</Button>
               </div>
             </div>
           </Card>
@@ -38,6 +39,13 @@
     <card v-if="!table.operation.success">
       {{table.operation.message}}
     </card>
+
+    <Modal v-model="viewModal.showViewModal" :mask-closable="false" :title="viewModal.title" width="100">
+      <h1>主图</h1>
+      <img :src="viewModal.frontCover" style="max-width: 100%" />
+      <h2>其他效果图</h2>
+      <img v-if="showImages" v-for="img in viewModal.images" :src="img" />
+    </Modal>
 
     <template-edit :id="modal.id" :title="modal.title" :show-modal="modal.showModal" @updateShowModal="(val) => {modal.showModal = val}" @success="search"></template-edit>
 
@@ -106,7 +114,21 @@
           showModal: false,
           id: 0,
         },
+        viewModal:{
+          showViewModal: false,
+          title:'',
+          frontCover: '',
+          images: []
+        }
 
+      }
+    },
+    computed:{
+      showImages(){
+        if(this.viewModal.images == null || this.viewModal.images.length <= 0){
+          return false;
+        }
+        return true;
       }
     },
     created() {
@@ -163,7 +185,12 @@
         this.modal.showModal = true
         this.modal.id = 0
       },
-
+      toViewModel(template){
+        this.viewModal.showViewModal = true
+        this.viewModal.title = template.name
+        this.viewModal.frontCover = template.frontCover
+        this.viewModal.images = (template.images == null || template.images == '') ? [] : template.images.split(',')
+      },
       toEditModel(template) {
         this.modal.title = template.name
         this.modal.showModal = true

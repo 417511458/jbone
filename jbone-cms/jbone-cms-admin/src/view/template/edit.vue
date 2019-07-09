@@ -36,10 +36,10 @@
         </FormItem>
 
         <FormItem label="封面图" prop="frontCover" :required="true">
-          <Input v-model="template.frontCover" placeholder="封面图" />
+          <upload-file v-model="template.frontCover"></upload-file>
         </FormItem>
-        <FormItem label="图片列表" prop="images">
-          <Input v-model="template.images" placeholder="图片列表" />
+        <FormItem label="其他图片" prop="images">
+          <upload-file v-model="template.images"></upload-file>
         </FormItem>
 
       </Form>
@@ -57,9 +57,11 @@
 <script>
   import templateApi from "@/api/template";
   import dictionaryApi from '@/api/dictionary'
+  import UploadFile from "../components/upload-file/upload-file";
 
     export default {
       name: "templateEdit",
+      components: {UploadFile},
       props:{
         id: {
           type:Number,
@@ -212,7 +214,7 @@
 
         loadTemplateStyle(){
           let self = this;
-          dictionaryApi.getItemsByCode('template_color').then(function (res) {
+          dictionaryApi.getItemsByCode('template_style').then(function (res) {
             let result = res.data;
             if(result.success){
               self.templateStyles = result.data == null ? [] : result.data

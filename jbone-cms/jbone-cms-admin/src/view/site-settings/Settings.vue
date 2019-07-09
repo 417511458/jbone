@@ -47,17 +47,7 @@
             <i-input v-model="home.description" clearable  placeholder="首页副标题"></i-input>
           </FormItem>
           <FormItem label="首页Banner" prop="banner">
-            <img :src="home.banner" style="width: 300px;" />
-            <Upload
-              :disabled="bannerUploding"
-              multiple
-              :format="['jpg','jpeg','png','gif']"
-              action="//jsonplaceholder.typicode.com/posts/"
-              :before-upload="handleBeforeUpload">
-              <Button icon="ios-camera" size="20" :loading="bannerUploding">上传图片</Button>
-            </Upload>
-            <Button @click="handleShowBannerInput">输入图片地址</Button>
-            <i-input v-show="showBannerInput" v-model="home.banner" clearable placeholder="首页Banner"></i-input>
+            <upload-file v-model="home.banner"></upload-file>
           </FormItem>
         </Form>
       </TabPane>
@@ -92,7 +82,9 @@
   import siteSettingsApi from '@/api/siteSettings'
   import fileApi from '@/api/file'
   import siteApi from '@/api/site'
+  import UploadFile from "../components/upload-file/upload-file";
   export default {
+    components: {UploadFile},
     data() {
       return {
         baseInfo:{
