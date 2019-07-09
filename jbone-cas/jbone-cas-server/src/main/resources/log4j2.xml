@@ -189,7 +189,7 @@
             <AppenderRef ref="casConsole"/>
             <AppenderRef ref="casFile"/>
         </AsyncLogger>
-        <AsyncLogger name="org.apereo.cas" level="info" additivity="true" includeLocation="true">
+        <AsyncLogger name="org.apereo.cas" level="info" additivity="false" includeLocation="true">
             <AppenderRef ref="casFile"/>
             <AppenderRef ref="casConsole"/>
         </AsyncLogger>
