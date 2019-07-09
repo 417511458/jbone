@@ -17,19 +17,22 @@ const SSO_OAUTH_AUTHOIZE_URL = SSO_BASE_URL + 'oauth2.0/authorize?response_type=
 const SSO_OAUTH_ACCESSTOKEN_URL = 'oauth2.0/accessToken'
 
 
-export const handleAuth = (code) => {
+export const handleAuth = (code, callback) => {
   let token = getToken();
   console.info("token:" + token)
   //没有token，表示未登录/已登录但还没获取token
   if(!token){
     //登录过但未获取token
     if(code){
-      requestToken(code);
+      requestToken(code, callback);
     }
     //还未登录，重定向到登录页
     else{
       toLogin();
     }
+  }else{
+    //有token,直接调用路由钩子函数回调函数
+    callback()
   }
   //有token，表示已经登录过，token过期后需要刷新token
   // else{
@@ -42,7 +45,7 @@ export const toLogin = () => {
   window.location.href = SSO_OAUTH_AUTHOIZE_URL;
 }
 
-export const requestToken = (code) => {
+export const requestToken = (code, callback) => {
   axios.requestByBaseUrl(SSO_BASE_URL,{
     url: SSO_OAUTH_ACCESSTOKEN_URL,
     method: 'get',
@@ -59,6 +62,8 @@ export const requestToken = (code) => {
     let accessToken = res.data.access_token
     if(accessToken){
       setToken(accessToken)
+      //获取到token，调用路由钩子函数回调函数
+      callback()
     }else{
       toLogin();
     }
