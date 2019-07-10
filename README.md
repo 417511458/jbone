@@ -1,3 +1,5 @@
+![Jbone功能架构图](doc/images/logo.png)
+
 **项目官网：[http://jbone.cn](http://jbone.cn)（基于jbone cms构建)**
 
 [开发文档](http://jbone.cn/category/37)
