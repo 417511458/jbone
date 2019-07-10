@@ -97,7 +97,7 @@ public class CategoryController {
                     return PageCode.PAGE_404;
                 }
                 articleService.toArticleDetail(modelMap,articleResponseDO,categoryDO);
-                return PAGE_ARTICLE;
+                return commonService.getTemplatePage(PAGE_ARTICLE);
             }
 
         }
@@ -119,7 +119,7 @@ public class CategoryController {
 
         modelMap.addAttribute("category",categoryDO);
 
-        return pageName;
+        return commonService.getTemplatePage(pageName);
     }
 
     /**
@@ -164,7 +164,7 @@ public class CategoryController {
 
         modelMap.addAttribute("category",categoryDO);
 
-        return PAGE_SPECIAL;
+        return commonService.getTemplatePage(PAGE_SPECIAL);
     }
 
     private List<SpecialTreeVo> getTreeVo(List<CategoryTocDO> categoryTocDOS,String contextPath,CategoryTocDO currentToc,Long categoryId){

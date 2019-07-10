@@ -32,8 +32,10 @@
           <Input v-model="site.description" type="textarea" :rows="4" placeholder="描述" />
         </FormItem>
 
-        <FormItem label="模版" prop="templateId" :required="true">
-          <Input v-model="site.templateId" placeholder="模版" />
+        <FormItem label="模版" prop="templateId">
+          <Select v-model="site.templateId">
+            <Option v-for="item in templateList" :value="item.id" :key="item.id">{{ item.name }} ({{item.code}}) </Option>
+          </Select>
         </FormItem>
 
       </Form>
@@ -46,6 +48,7 @@
 
 <script>
   import siteApi from '@/api/site'
+  import templateApi from "@/api/template"
   import { mapMutations } from 'vuex'
     export default {
       name: "siteEdit",
@@ -87,6 +90,14 @@
             templateId: 0,
             enable: '1'
           },
+          queryTemplate: {
+            name: '',
+            code: '',
+            totalRecord: 0,
+            pageSize: 50,
+            pageNumber: 1
+          },
+          templateList:[],
           loading: false,
           ruleValidate: {
             name: [
@@ -121,11 +132,25 @@
       methods:{
         init(id){
           this.loadSite(id)
+          this.loadTemplates()
         },
 
         ...mapMutations([
           'closeTag'
         ]),
+
+        loadTemplates(){
+          let self = this;
+          templateApi.commonRequest(this.queryTemplate).then(function (res) {
+            if (!res.data.success) {
+              self.$Message.error(result.status.message);
+            } else {
+              self.templateList = res.data.data.datas == null ? [] : res.data.data.datas;
+            }
+          }).catch(function (error) {
+            self.$Message.error(error.message);
+          });
+        },
 
         loadSite(id) {
           this.site = {

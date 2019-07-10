@@ -9,6 +9,7 @@ import cn.jbone.cms.core.dao.entity.SiteAdmin;
 import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.SiteAdminRepository;
 import cn.jbone.cms.core.dao.repository.SiteRepository;
+import cn.jbone.cms.core.dao.repository.TemplateRepository;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.utils.SpecificationUtils;
@@ -40,6 +41,8 @@ public class SiteService {
 
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private TemplateService templateService;
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -59,7 +62,12 @@ public class SiteService {
         if(site != null && site.getPid() > 0){
             site = siteRepository.getOne(site.getPid());
         }
-        return siteConverter.toSiteDO(site);
+
+        SiteDO siteDO = siteConverter.toSiteDO(site);
+        if(siteDO.getTemplateId() > 0){
+           siteDO.setTemplate(templateService.get(siteDO.getTemplateId()));
+        }
+        return siteDO;
     }
 
     public void delete(Integer id){

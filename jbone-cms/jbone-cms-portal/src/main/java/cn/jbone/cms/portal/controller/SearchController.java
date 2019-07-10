@@ -36,6 +36,6 @@ public class SearchController {
 
         modelMap.addAttribute("keywords",keywords);
 
-        return "search";
+        return commonService.getTemplatePage("search");
     }
 }

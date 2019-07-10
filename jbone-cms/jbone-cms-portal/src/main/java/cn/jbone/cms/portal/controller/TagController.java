@@ -42,6 +42,6 @@ public class TagController {
 
         modelMap.addAttribute("tag",tagService.findById(tagId));
 
-        return "tag";
+        return commonService.getTemplatePage("tag");
     }
 }

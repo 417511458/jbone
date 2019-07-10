@@ -46,4 +46,6 @@ public class SiteDO {
      * 是否启用: 1,启用，0，关闭
      */
     private int enable;
+
+    private TemplateDO template;
 }

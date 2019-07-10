@@ -35,7 +35,7 @@ public class ArticleController {
     public String index(ModelMap modelMap, @PathVariable(value="articleId") long articleId){
         articleService.toArticleDetail(modelMap,articleId);
         commonService.setCommonModuleDatas(modelMap);
-        return "article";
+        return commonService.getTemplatePage("article");
     }
 
     @RequestMapping("article/submitComment")

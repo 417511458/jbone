@@ -1,7 +1,10 @@
 package cn.jbone.cms.portal.service;
 
 import cn.jbone.cms.common.constant.DictionaryConstant;
+import cn.jbone.cms.common.dataobject.SiteDO;
+import cn.jbone.cms.common.dataobject.TemplateDO;
 import cn.jbone.cms.portal.manager.SiteManager;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -27,6 +30,15 @@ public class CommonService {
         modelMap.addAttribute("hotArticles",articleService.findHotArticles());
         modelMap.addAttribute("tagCloud",tagService.findTagCloud());
         modelMap.addAttribute("links",siteManager.getCurrentLinks());
+    }
+
+    public String getTemplatePage(String page){
+        SiteDO siteDO = siteManager.getCurrentSite();
+        TemplateDO templateDO = siteDO.getTemplate();
+        if(templateDO != null && !StringUtils.isBlank(templateDO.getCode())){
+            return templateDO.getCode() + "/" + page;
+        }
+        return page;
     }
 
 

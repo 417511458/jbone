@@ -28,6 +28,6 @@ public class IndexController {
 
         modelMap.addAttribute("pagedArticles",articleService.findArticles(articleSearchDO));
 
-        return "index";
+        return commonService.getTemplatePage("index");
     }
 }
