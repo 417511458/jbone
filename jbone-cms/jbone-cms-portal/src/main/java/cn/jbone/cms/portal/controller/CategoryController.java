@@ -11,7 +11,7 @@ import cn.jbone.cms.portal.service.CommonService;
 import cn.jbone.cms.portal.service.TagService;
 import cn.jbone.cms.portal.vo.SpecialTreeVo;
 import cn.jbone.common.dataobject.PagedResponseDO;
-import cn.jbone.errors.PageCode;
+import cn.jbone.errors.Jbone404Exception;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,8 +33,6 @@ public class CategoryController {
     @Autowired
     private ArticleService articleService;
     @Autowired
-    private TagService tagService;
-    @Autowired
     private CategoryService categoryService;
 
     public static String PAGE_CATEGORY = "category";
@@ -55,7 +53,7 @@ public class CategoryController {
 
         CategoryDO categoryDO = categoryService.findById(categoryId);
         if(categoryDO == null){
-            return PageCode.PAGE_404;
+            throw new Jbone404Exception();
         }
 
         PagedResponseDO<ArticleResponseDO> pagedArticles = null;
@@ -94,7 +92,7 @@ public class CategoryController {
             else if(categoryDO.getShowType() == CategoryShowTypeEnum.FIRSTARTICLE){
                 ArticleResponseDO articleResponseDO = articleService.getFirstArticle(categoryId);
                 if(articleResponseDO == null){
-                    return PageCode.PAGE_404;
+                    throw new Jbone404Exception();
                 }
                 articleService.toArticleDetail(modelMap,articleResponseDO,categoryDO);
                 return commonService.getTemplatePage(PAGE_ARTICLE);
@@ -136,12 +134,12 @@ public class CategoryController {
 
         CategoryDO categoryDO = categoryService.findById(categoryId);
         if(categoryDO == null){
-            return PageCode.PAGE_404;
+            throw new Jbone404Exception();
         }
 
         CategoryTocDO categoryTocDO = categoryService.getTocById(tocId);
         if(categoryTocDO == null){
-            return PageCode.PAGE_404;
+            throw new Jbone404Exception();
         }
 
         //专题文章

@@ -8,8 +8,10 @@ import cn.jbone.cms.portal.manager.SiteManager;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.dataobject.SearchConditionDO;
 import cn.jbone.common.dataobject.SearchSortDO;
+import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.common.utils.DateUtil;
+import cn.jbone.errors.Jbone404Exception;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -75,7 +77,7 @@ public class ArticleService {
         hits(id);
         ArticleResponseDO article = findById(id);
         if(article == null){
-            return;
+            throw new Jbone404Exception();
         }
 
         CategoryDO categoryDO = null;

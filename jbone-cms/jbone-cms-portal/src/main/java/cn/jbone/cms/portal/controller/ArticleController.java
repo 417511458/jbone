@@ -4,12 +4,15 @@ import cn.jbone.cas.client.utils.SessionUtil;
 import cn.jbone.cms.common.dataobject.CommentDO;
 import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.cms.portal.service.*;
+import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.rpc.Result;
+import cn.jbone.errors.PageCode;
 import cn.jbone.sys.common.UserResponseDO;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -32,7 +36,7 @@ public class ArticleController {
     Logger logger = LoggerFactory.getLogger(getClass());
 
     @RequestMapping("article/{articleId}")
-    public String index(ModelMap modelMap, @PathVariable(value="articleId") long articleId){
+    public String index(ModelMap modelMap, @PathVariable(value="articleId") long articleId, HttpServletResponse response){
         articleService.toArticleDetail(modelMap,articleId);
         commonService.setCommonModuleDatas(modelMap);
         return commonService.getTemplatePage("article");
