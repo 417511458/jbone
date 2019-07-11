@@ -2029,12 +2029,12 @@ fieldset[disabled] .btn-shutdown.focus {
 }
 
 .logo-img{
-  width:100px;
+  width:200px;
   height:100px;
   display:inline-block;
   vertical-align:middle;
   margin-right:26px;
-  background: url(../images/logo.png) no-repeat;
+  background: url(../images/logo-text.png) no-repeat;
   background-size:100% 100%;
   -moz-background-size:100% 100%;
 }
