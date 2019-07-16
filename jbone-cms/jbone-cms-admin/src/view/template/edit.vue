@@ -31,6 +31,12 @@
             <span slot="close">禁用</span>
           </i-switch>
         </FormItem>
+        <FormItem label="单页模版" prop="singlePage" :required="true">
+          <i-switch v-model="template.singlePage" size="large" true-value="1" false-value="0">
+            <span slot="open">启用</span>
+            <span slot="close">禁用</span>
+          </i-switch>
+        </FormItem>
         <FormItem label="描述" prop="description">
           <Input v-model="template.description" type="textarea" :rows="4" placeholder="描述" />
         </FormItem>
@@ -87,7 +93,9 @@
             type: '',
             style: '',
             color: '',
-            enable: '1'
+            enable: '1',
+            singlePage: '0',
+            dataCollectors: ''
           },
           templateTypes:[],
           templateColors: [],
@@ -111,6 +119,9 @@
             ],
             frontCover: [
               {required: true, message: '封面图不能为空', trigger: 'blur'}
+            ],
+            singlePage: [
+              {required: true, message: '单页不能为空', trigger: 'blur'}
             ]
           },
         };
@@ -151,7 +162,9 @@
             type: '',
             style: '',
             color: '',
-            enable: '1'
+            enable: '1',
+            singlePage: '0',
+            dataCollectors: ''
           }
           this.loadTemlate()
           this.loadTemplateType()
@@ -175,6 +188,8 @@
                 self.template.images = result.data.images;
                 self.template.style = result.data.style;
                 self.template.type = result.data.type;
+                self.template.singlePage = result.data.singlePage + '';
+                self.template.dataCollectors = result.data.dataCollectors;
               } else {
                 self.$Message.error(result.status.message);
               }

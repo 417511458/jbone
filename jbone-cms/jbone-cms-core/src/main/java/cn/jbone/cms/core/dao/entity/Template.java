@@ -69,5 +69,17 @@ public class Template extends BaseEntity {
     @Column(name = "enable")
     private int enable;
 
+    /**
+     * 是否单页模版，1：单页，0：多页
+     */
+    @Column(name = "single_page")
+    private int singlePage;
+
+    /**
+     * 数据收集器，以逗号隔开
+     */
+    @Column(name = "data_collectors",length = 2048)
+    private String dataCollectors;
+
 
 }

@@ -53,4 +53,11 @@ public class TemplateDO {
     private int enable;
 
     private Integer creator;
+
+    private int singlePage;
+
+    /**
+     * 数据收集器，以逗号隔开
+     */
+    private String dataCollectors;
 }

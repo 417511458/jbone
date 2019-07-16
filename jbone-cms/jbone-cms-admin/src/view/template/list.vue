@@ -23,9 +23,12 @@
               <img :src="template.frontCover" style="width: 200px;height:200px;">
               <h3>{{template.description}}</h3>
               <div>
-                <Button type="success" icon="ios-search" @click="toViewModel(template)" style="margin-left: 10px">预览</Button>
-                <Button type="primary" icon="ios-search" @click="toEditModel(template)" style="margin-left: 10px">修改</Button>
-                <Button type="error" icon="ios-add" @click="handleDelete(template.id)" style="margin-left: 10px">删除</Button>
+                <Button type="primary" icon="ios-brush-outline" @click="toEditModel(template)" style="margin-left: 10px">修改</Button>
+                <Button type="info" style="margin-left: 10px" icon="ios-settings-outline" @click="handleEditContent(template)">
+                  页面内容
+                </Button>
+                <Button type="success" icon="ios-eye-outline" @click="toViewModel(template)" style="margin-left: 10px">预览</Button>
+                <Button type="error" icon="ios-trash-outline" @click="handleDelete(template.id)" style="margin-left: 10px">删除</Button>
               </div>
             </div>
           </Card>
@@ -48,15 +51,17 @@
     </Modal>
 
     <template-edit :id="modal.id" :title="modal.title" :show-modal="modal.showModal" @updateShowModal="(val) => {modal.showModal = val}" @success="search"></template-edit>
+    <edit-page-content :id="pageContentModal.id" :title="pageContentModal.title" :show-modal="pageContentModal.showModal" @updateShowModal="(val) => {pageContentModal.showModal = val}" @success="search"></edit-page-content>
 
   </div>
 </template>
 <script>
   import templateApi from '@/api/template'
   import TemplateEdit from "./edit";
+  import EditPageContent from "./editPageContent";
 
   export default {
-    components: {TemplateEdit},
+    components: {EditPageContent, TemplateEdit},
     data() {
 
       const validateName = (rule, value, callback) => {
@@ -110,6 +115,11 @@
         },
         loading: false,
         modal:{
+          title: '',
+          showModal: false,
+          id: 0,
+        },
+        pageContentModal:{
           title: '',
           showModal: false,
           id: 0,
@@ -205,6 +215,11 @@
         this.query.pageSize = pageSize;
         this.search();
       },
+      handleEditContent(template){
+        this.pageContentModal.title = template.name
+        this.pageContentModal.showModal = true
+        this.pageContentModal.id = template.id
+      }
     }
   }
 </script>
