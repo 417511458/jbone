@@ -7,6 +7,7 @@ import cn.jbone.cms.core.service.TemplateService;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,7 @@ public class TemplateApiImpl implements TemplateApi {
 
     @Override
     public Result<PagedResponseDO<TemplateDO>> commonRequest(@RequestBody TemplateSearchDO templateSearchDO) {
+        logger.info("搜索模版:{}", JSON.toJSONString(templateSearchDO));
         PagedResponseDO<TemplateDO> pagedResponseDO = null;
         try {
             pagedResponseDO = templateService.commonRequest(templateSearchDO);
@@ -80,6 +82,7 @@ public class TemplateApiImpl implements TemplateApi {
             logger.warn("Template getAll error.",e);
             return Result.wrap500Error("系统错误");
         }
+        logger.info("搜索模版结果:{}", JSON.toJSONString(pagedResponseDO));
         return Result.wrapSuccess(pagedResponseDO);
     }
 }

@@ -136,9 +136,6 @@
             return
           }
           let currentDataCollectors = JSON.parse(this.template.dataCollectors)
-          for (let v of Object.values(currentDataCollectors)) {
-            console.info(v)
-          }
           this.dataCollectors.forEach(function(dataCollector, index, arr) {
             for (let k of Object.keys(currentDataCollectors)) {
               let v = currentDataCollectors[k];
@@ -158,6 +155,7 @@
             let result = res.data;
             if(result.success){
               self.templatePages = result.data == null ? [] : result.data
+              self.setDefaultContent();
             }else{
               self.$Message.error(result.status.message);
             }

@@ -53,14 +53,19 @@ public class DataCollectorHandler {
         }
 
         if(StringUtils.isBlank(templateDO.getDataCollectors())){
+            logger.warn("'没找到模版[{}]的数据收集器",templateDO.getId());
             return;
         }
 
         JSONObject dataCollectorObj = JSON.parseObject(templateDO.getDataCollectors());
         String pageDataCollectors = dataCollectorObj.getString(context.getPage());
+        logger.info("当前站点：{}, 当前页：{},收集数据：{}",context.getSiteId(),context.getPage(),pageDataCollectors);
+
         if(StringUtils.isBlank(pageDataCollectors)){
             return;
         }
+
+
 
         String[] dataCollectors = pageDataCollectors.split(",");
         if(dataCollectors.length == 1){

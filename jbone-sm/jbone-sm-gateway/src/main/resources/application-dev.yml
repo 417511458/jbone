@@ -68,6 +68,11 @@ zuul:
     jbone-fs-server: /fs/**       #文件上传
   sensitive-headers:
 
+# 转发超时时间
+ribbon:
+  ReadTimeout: 10000  # 单位毫秒数
+  SocketTimeout: 10000
+
 #CAS服务地址
 jbone:
   #系统服务名称
