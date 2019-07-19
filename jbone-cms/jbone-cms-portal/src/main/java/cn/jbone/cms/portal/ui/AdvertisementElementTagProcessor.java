@@ -1,12 +1,8 @@
 package cn.jbone.cms.portal.ui;
 
-import cn.jbone.cms.api.AdvertisementApi;
 import cn.jbone.cms.common.constant.DictionaryConstant;
 import cn.jbone.cms.common.dataobject.AdvertisementDO;
-import cn.jbone.cms.common.dataobject.search.AdvertisementSearchDO;
-import cn.jbone.cms.portal.manager.SiteManager;
-import cn.jbone.common.dataobject.PagedResponseDO;
-import cn.jbone.common.rpc.Result;
+import cn.jbone.cms.portal.cache.CachedSiteManager;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.CollectionUtils;
@@ -53,9 +49,9 @@ public class AdvertisementElementTagProcessor extends AbstractElementTagProcesso
             return;
         }
 
-        SiteManager siteManager = appCtx.getBean(SiteManager.class);
+        CachedSiteManager cachedSiteManager = appCtx.getBean(CachedSiteManager.class);
 
-        List<AdvertisementDO> advertisementDOS = siteManager.getCurrentAds();
+        List<AdvertisementDO> advertisementDOS = cachedSiteManager.getCurrentAds();
         if(!CollectionUtils.isEmpty(advertisementDOS)){
 
             for (AdvertisementDO advertisementDO : advertisementDOS){

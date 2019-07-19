@@ -1,9 +1,10 @@
 package cn.jbone.cms.portal.service;
 
 import cn.jbone.cms.common.constant.DictionaryConstant;
+import cn.jbone.cms.common.constant.GlobalConstant;
 import cn.jbone.cms.common.dataobject.SiteDO;
 import cn.jbone.cms.common.dataobject.TemplateDO;
-import cn.jbone.cms.portal.manager.SiteManager;
+import cn.jbone.cms.portal.cache.CachedSiteManager;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,7 @@ import org.springframework.ui.ModelMap;
 public class CommonService {
 
     @Autowired
-    private ArticleService articleService;
-    @Autowired
-    private TagService tagService;
-    @Autowired
-    private SiteManager siteManager;
+    private CachedSiteManager cachedSiteManager;
 
     public void setCommonProperties(ModelMap modelMap){
         setSettings(modelMap);
@@ -26,16 +23,10 @@ public class CommonService {
         setGlobalPlugins(modelMap);
     }
 
-    public void setCommonModuleDatas(ModelMap modelMap){
-        modelMap.addAttribute("hotArticles",articleService.findHotArticles());
-        modelMap.addAttribute("tagCloud",tagService.findTagCloud());
-        modelMap.addAttribute("links",siteManager.getCurrentLinks());
-    }
-
     public String getTemplatePage(String page){
-        SiteDO siteDO = siteManager.getCurrentSite();
+        SiteDO siteDO = cachedSiteManager.getCurrentSite();
         TemplateDO templateDO = siteDO.getTemplate();
-        if(templateDO != null && !StringUtils.isBlank(templateDO.getCode())){
+        if(templateDO != null && !StringUtils.isBlank(templateDO.getCode()) && !GlobalConstant.DEFAULT_TEMPLATE_CODE.equalsIgnoreCase(templateDO.getCode())){
             return templateDO.getCode() + "/" + page;
         }
         return page;
@@ -43,18 +34,14 @@ public class CommonService {
 
 
     private void setMenus(ModelMap modelMap){
-        modelMap.addAttribute("menus",siteManager.getCurrentMenus());
+        modelMap.addAttribute("menus", cachedSiteManager.getCurrentMenus());
     }
 
     private void setSettings(ModelMap modelMap){
-        modelMap.addAttribute("settings",siteManager.getCurrentSiteSettings());
+        modelMap.addAttribute("settings", cachedSiteManager.getCurrentSiteSettings());
     }
 
     private void setGlobalPlugins(ModelMap modelMap){
-        modelMap.addAttribute("globalPlugins",siteManager.getCurrentPlugsByType(DictionaryConstant.ITEM_PLUGIN_TYPE_GLOBAL));
-    }
-
-    public void setAriclePlugins(ModelMap modelMap){
-        modelMap.addAttribute("articlePlugins",siteManager.getCurrentPlugsByType(DictionaryConstant.ITEM_PLUGIN_TYPE_ARTICLE));
+        modelMap.addAttribute("globalPlugins", cachedSiteManager.getCurrentPlugsByType(DictionaryConstant.ITEM_PLUGIN_TYPE_GLOBAL));
     }
 }

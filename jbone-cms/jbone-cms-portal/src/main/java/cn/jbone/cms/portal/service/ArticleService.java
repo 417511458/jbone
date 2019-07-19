@@ -1,14 +1,14 @@
 package cn.jbone.cms.portal.service;
 
 import cn.jbone.cms.api.ArticleApi;
+import cn.jbone.cms.common.constant.DictionaryConstant;
 import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.common.dataobject.CategoryDO;
-import cn.jbone.cms.portal.manager.SiteManager;
+import cn.jbone.cms.portal.cache.CachedSiteManager;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.dataobject.SearchConditionDO;
 import cn.jbone.common.dataobject.SearchSortDO;
-import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.common.utils.DateUtil;
 import cn.jbone.errors.Jbone404Exception;
@@ -18,7 +18,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class ArticleService {
@@ -31,12 +30,10 @@ public class ArticleService {
     private CommentService commentService;
 
     @Autowired
-    private CommonService commonService;
-    @Autowired
-    private SiteManager siteManager;
+    private CachedSiteManager cachedSiteManager;
 
     public PagedResponseDO<ArticleResponseDO> findArticles(ArticleSearchDO articleRequestDO){
-        articleRequestDO.setSiteId(siteManager.getCurrentSiteId());
+        articleRequestDO.setSiteId(cachedSiteManager.getCurrentSiteId());
         Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleRequestDO);
         if(result != null && result.isSuccess()){
             PagedResponseDO<ArticleResponseDO> data = result.getData();
@@ -48,22 +45,6 @@ public class ArticleService {
         return null;
     }
 
-    public List<ArticleResponseDO> findHotArticles(){
-        ArticleSearchDO articleSearchDO = ArticleSearchDO.build();
-        articleSearchDO.clearSort();
-        articleSearchDO.addSort(new SearchSortDO("hits",SearchSortDO.Direction.DESC));
-        articleSearchDO.addSort(new SearchSortDO("addTime",SearchSortDO.Direction.DESC));
-        articleSearchDO.setSiteId(siteManager.getCurrentSiteId());
-
-        Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleSearchDO);
-        if(result != null && result.isSuccess()){
-            PagedResponseDO<ArticleResponseDO> data = result.getData();
-            if(data != null){
-                return data.getDatas();
-            }
-        }
-        return null;
-    }
 
     public ArticleResponseDO findById(Long id){
         Result<ArticleResponseDO> result = articleApi.get(id);
@@ -102,8 +83,7 @@ public class ArticleService {
         modelMap.addAttribute("lastArticle",getLastOrNextArticle(article,SearchConditionDO.Operator.GREATER_THAN));
         modelMap.addAttribute("nextArticle",getLastOrNextArticle(article,SearchConditionDO.Operator.LESS_THAN));
         modelMap.addAttribute("comments",commentService.getByArticleId(article.getId()));
-
-        commonService.setAriclePlugins(modelMap);
+        modelMap.addAttribute("articlePlugins", cachedSiteManager.getCurrentPlugsByType(DictionaryConstant.ITEM_PLUGIN_TYPE_ARTICLE));
     }
 
     //上一篇文章

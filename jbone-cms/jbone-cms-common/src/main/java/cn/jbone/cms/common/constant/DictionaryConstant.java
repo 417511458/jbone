@@ -51,4 +51,18 @@ public class DictionaryConstant {
     public static final String ITEM_TEMPLATE_STYLE_SIMPLE = "simple";       //简约
     public static final String ITEM_TEMPLATE_STYLE_BEAUTIFUL = "beautiful"; //唯美
 
+
+
+    //
+    //
+    // 页面名字
+    //
+    //
+    public static final String ITEM_PAGE_NAME_INDEX = "index";              //首页
+    public static final String ITEM_PAGE_NAME_ARTICLE = "article";          //文章
+    public static final String ITEM_PAGE_NAME_CATEGORY = "category";        //分类
+    public static final String ITEM_PAGE_NAME_SPECIAL = "special";          //专题
+    public static final String ITEM_PAGE_NAME_TAG = "tag";                  //标签
+    public static final String ITEM_PAGE_NAME_SERACH = "search";            //搜索
+
 }

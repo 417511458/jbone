@@ -1,7 +1,7 @@
 package cn.jbone.cms.portal.intercepter;
 
 import cn.jbone.cas.client.utils.SessionUtil;
-import cn.jbone.cms.portal.manager.SiteManager;
+import cn.jbone.cms.portal.cache.CachedSiteManager;
 import cn.jbone.cms.portal.service.CommonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
     private CommonService commonService;
 
     @Autowired
-    private SiteManager siteManager;
+    private CachedSiteManager cachedSiteManager;
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -65,7 +65,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
                 return true;
             }
         }
-        siteManager.checkAndUpdateCurrentSite(request);
+        cachedSiteManager.checkAndUpdateCurrentSite(request);
         return super.preHandle(request, response, handler);
     }
 
@@ -83,7 +83,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 
         logger.info("uri : {}" , request.getRequestURI());
         if(modelAndView != null){
-            siteManager.checkAndUpdateCurrentSite(request);
+            cachedSiteManager.checkAndUpdateCurrentSite(request);
             //配置属性
             commonService.setCommonProperties(modelAndView.getModelMap());
             //用户信息

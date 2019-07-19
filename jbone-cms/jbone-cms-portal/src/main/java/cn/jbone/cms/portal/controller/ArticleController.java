@@ -1,8 +1,11 @@
 package cn.jbone.cms.portal.controller;
 
 import cn.jbone.cas.client.utils.SessionUtil;
+import cn.jbone.cms.common.constant.DictionaryConstant;
 import cn.jbone.cms.common.dataobject.CommentDO;
 import cn.jbone.cms.common.enums.StatusEnum;
+import cn.jbone.cms.portal.collectors.DataCollectorContext;
+import cn.jbone.cms.portal.collectors.DataCollectorHandler;
 import cn.jbone.cms.portal.service.*;
 import cn.jbone.common.exception.ObjectNotFoundException;
 import cn.jbone.common.rpc.Result;
@@ -32,14 +35,16 @@ public class ArticleController {
     private ArticleService articleService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private DataCollectorHandler dataCollectorHandler;
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
     @RequestMapping("article/{articleId}")
     public String index(ModelMap modelMap, @PathVariable(value="articleId") long articleId, HttpServletResponse response){
         articleService.toArticleDetail(modelMap,articleId);
-        commonService.setCommonModuleDatas(modelMap);
-        return commonService.getTemplatePage("article");
+        dataCollectorHandler.handle(DataCollectorContext.build(modelMap, DictionaryConstant.ITEM_PAGE_NAME_ARTICLE));
+        return commonService.getTemplatePage(DictionaryConstant.ITEM_PAGE_NAME_ARTICLE);
     }
 
     @RequestMapping("article/submitComment")

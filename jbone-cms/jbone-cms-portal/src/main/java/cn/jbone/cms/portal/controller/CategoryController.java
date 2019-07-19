@@ -1,10 +1,13 @@
 package cn.jbone.cms.portal.controller;
 
+import cn.jbone.cms.common.constant.DictionaryConstant;
 import cn.jbone.cms.common.dataobject.*;
 import cn.jbone.cms.common.dataobject.config.ArticleFiledConfigDO;
 import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
 import cn.jbone.cms.common.enums.CategoryShowTypeEnum;
 import cn.jbone.cms.common.enums.CategoryTypeEnum;
+import cn.jbone.cms.portal.collectors.DataCollectorContext;
+import cn.jbone.cms.portal.collectors.DataCollectorHandler;
 import cn.jbone.cms.portal.service.ArticleService;
 import cn.jbone.cms.portal.service.CategoryService;
 import cn.jbone.cms.portal.service.CommonService;
@@ -35,9 +38,8 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    public static String PAGE_CATEGORY = "category";
-    public static String PAGE_ARTICLE = "article";
-    public static String PAGE_SPECIAL = "special";
+    @Autowired
+    private DataCollectorHandler dataCollectorHandler;
 
     /**
      * 栏目统一入口
@@ -49,15 +51,10 @@ public class CategoryController {
      */
     @RequestMapping("category/{categoryId}")
     public String index(ModelMap modelMap, @PathVariable(value="categoryId") long categoryId, @RequestParam(value="p",required = false) Integer p, HttpServletRequest request){
-        commonService.setCommonModuleDatas(modelMap);
-
         CategoryDO categoryDO = categoryService.findById(categoryId);
         if(categoryDO == null){
             throw new Jbone404Exception();
         }
-
-        PagedResponseDO<ArticleResponseDO> pagedArticles = null;
-        String pageName = PAGE_CATEGORY;
 
         int pageNumber = (p == null) ? 1 : p;
 
@@ -66,17 +63,7 @@ public class CategoryController {
 
         //专题文章
         if(categoryDO.getType() == CategoryTypeEnum.SPECIAL){
-            pageName = PAGE_SPECIAL;
-            List<CategoryTocDO> categoryTocDOS = categoryService.getCategoryTocTree(categoryId);
-            if(!CollectionUtils.isEmpty(categoryTocDOS) && categoryTocDOS.get(0) != null){
-                List<SpecialTreeVo> specialTreeVos =  getTreeVo(categoryTocDOS,request.getContextPath(),categoryTocDOS.get(0),categoryId);
-                modelMap.addAttribute("specialTree", specialTreeVos);
-                modelMap.addAttribute("categoryToc",categoryTocDOS.get(0));
-                if(categoryTocDOS.get(0).getArticle() != null){
-                    ArticleResponseDO articleResponseDO = articleService.findById(categoryTocDOS.get(0).getArticle().getId());
-                    modelMap.addAttribute("article",articleResponseDO);
-                }
-            }
+            return "redirect:/special/" + categoryId + "";
         }
 
         //普通分类文章
@@ -84,9 +71,7 @@ public class CategoryController {
 
             //列表展示，返回到列表页
             if(categoryDO.getShowType() == CategoryShowTypeEnum.LIST){
-                pageName = PAGE_CATEGORY;
                 articleSearchDO.setCategoryId(categoryId);
-                pagedArticles = articleService.findArticles(articleSearchDO);
             }
             //第一篇文章，跳转到文章详情页
             else if(categoryDO.getShowType() == CategoryShowTypeEnum.FIRSTARTICLE){
@@ -94,11 +79,11 @@ public class CategoryController {
                 if(articleResponseDO == null){
                     throw new Jbone404Exception();
                 }
-                articleService.toArticleDetail(modelMap,articleResponseDO,categoryDO);
-                return commonService.getTemplatePage(PAGE_ARTICLE);
+                return "redirect:/article/" + articleResponseDO.getId();
             }
 
         }
+
         //标签虚拟分类
         else if(categoryDO.getType() == CategoryTypeEnum.TAG){
             if(!CollectionUtils.isEmpty(categoryDO.getTags())){
@@ -108,16 +93,19 @@ public class CategoryController {
                 }
                 articleSearchDO.setTagIds(tagIds);
             }
-
-            pagedArticles = articleService.findArticles(articleSearchDO);
         }
 
 
-        modelMap.addAttribute("pagedArticles",pagedArticles);
+        dataCollectorHandler.handle(DataCollectorContext.build(modelMap,articleSearchDO,DictionaryConstant.ITEM_PAGE_NAME_CATEGORY));
 
         modelMap.addAttribute("category",categoryDO);
 
-        return commonService.getTemplatePage(pageName);
+        return commonService.getTemplatePage(DictionaryConstant.ITEM_PAGE_NAME_CATEGORY);
+    }
+
+    @RequestMapping("special/{categoryId}")
+    public String specialRoot(ModelMap modelMap, @PathVariable(value="categoryId") long categoryId, HttpServletRequest request){
+        return special(modelMap,categoryId,0l,request);
     }
 
     /**
@@ -130,15 +118,8 @@ public class CategoryController {
      */
     @RequestMapping("special/{categoryId}/{tocId}")
     public String special(ModelMap modelMap, @PathVariable(value="categoryId") long categoryId, @PathVariable(value="tocId") Long tocId, HttpServletRequest request){
-        commonService.setCommonModuleDatas(modelMap);
-
         CategoryDO categoryDO = categoryService.findById(categoryId);
         if(categoryDO == null){
-            throw new Jbone404Exception();
-        }
-
-        CategoryTocDO categoryTocDO = categoryService.getTocById(tocId);
-        if(categoryTocDO == null){
             throw new Jbone404Exception();
         }
 
@@ -146,6 +127,12 @@ public class CategoryController {
         if(categoryDO.getType() == CategoryTypeEnum.SPECIAL){
             List<CategoryTocDO> categoryTocDOS = categoryService.getCategoryTocTree(categoryId);
             if(!CollectionUtils.isEmpty(categoryTocDOS)){
+                CategoryTocDO categoryTocDO = null;
+                if(tocId != null && tocId > 0){
+                    categoryTocDO = categoryService.getTocById(tocId);
+                }else{
+                    categoryTocDO = categoryTocDOS.get(0);
+                }
                 List<SpecialTreeVo> specialTreeVos =  getTreeVo(categoryTocDOS,request.getContextPath(),categoryTocDO,categoryId);
                 modelMap.addAttribute("specialTree", specialTreeVos);
                 modelMap.addAttribute("categoryToc",categoryTocDO);
@@ -162,7 +149,9 @@ public class CategoryController {
 
         modelMap.addAttribute("category",categoryDO);
 
-        return commonService.getTemplatePage(PAGE_SPECIAL);
+        dataCollectorHandler.handle(DataCollectorContext.build(modelMap,DictionaryConstant.ITEM_PAGE_NAME_SPECIAL));
+
+        return commonService.getTemplatePage(DictionaryConstant.ITEM_PAGE_NAME_SPECIAL);
     }
 
     private List<SpecialTreeVo> getTreeVo(List<CategoryTocDO> categoryTocDOS,String contextPath,CategoryTocDO currentToc,Long categoryId){

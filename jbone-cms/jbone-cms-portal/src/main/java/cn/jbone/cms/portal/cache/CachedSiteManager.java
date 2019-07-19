@@ -1,4 +1,4 @@
-package cn.jbone.cms.portal.manager;
+package cn.jbone.cms.portal.cache;
 
 import cn.jbone.cms.api.*;
 import cn.jbone.cms.common.dataobject.*;
@@ -6,7 +6,6 @@ import cn.jbone.cms.common.dataobject.search.AdvertisementSearchDO;
 import cn.jbone.cms.common.dataobject.search.CategorySearchDO;
 import cn.jbone.cms.common.enums.BooleanEnum;
 import cn.jbone.cms.common.enums.StatusEnum;
-import cn.jbone.cms.portal.service.LinkService;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
@@ -26,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 @Repository
-public class SiteManager implements InitializingBean {
+public class CachedSiteManager implements InitializingBean {
     @Autowired
     private SiteApi siteApi;
     @Autowired
@@ -73,7 +72,7 @@ public class SiteManager implements InitializingBean {
     /**
      * 当前站点，必须在请求pre里设置
      */
-    ThreadLocal<String> domainThreadLocal = new ThreadLocal<>();
+    static ThreadLocal<String> domainThreadLocal = new ThreadLocal<>();
     public void checkAndUpdateCurrentSite(HttpServletRequest request){
         String url = request.getScheme()+"://"+ request.getServerName();
         domainThreadLocal.set(url);
@@ -171,7 +170,7 @@ public class SiteManager implements InitializingBean {
     }
 
     private Integer cacheSiteMumSize = 100;             //缓存站点最大数,100个域名
-    private Integer cacheTimeSecond = 60 * 60 * 2;      //缓存失效时间，2小时
+    private Integer cacheTimeSecond = 60 * 5;           //缓存失效时间，5m
 
     private Integer cacheSettingsTimeoutSecond = 60 * 5;    //站点属性超时时间，5m
 
@@ -185,14 +184,14 @@ public class SiteManager implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        SiteManager siteManager = this;
+        CachedSiteManager cachedSiteManager = this;
         siteMap = CacheBuilder
                 .newBuilder()
                 .maximumSize(cacheSiteMumSize)
                 .refreshAfterWrite(this.cacheTimeSecond, TimeUnit.SECONDS)
                 .build(new CacheLoader<String, SiteDO>() {
                             public SiteDO load(String key) throws Exception {
-                                return siteManager.reloadSite(key);
+                                return cachedSiteManager.reloadSite(key);
                             }
                         });
 
@@ -202,7 +201,7 @@ public class SiteManager implements InitializingBean {
                 .refreshAfterWrite(this.cacheSettingsTimeoutSecond, TimeUnit.SECONDS)
                 .build(new CacheLoader<String, Map<String,String>>() {
                     public Map<String,String> load(String key) throws Exception {
-                        return siteManager.reloadSiteSettings(key);
+                        return cachedSiteManager.reloadSiteSettings(key);
                     }
                 });
 
@@ -212,7 +211,7 @@ public class SiteManager implements InitializingBean {
                 .refreshAfterWrite(this.cacheMenusTimeoutSecond, TimeUnit.SECONDS)
                 .build(new CacheLoader<String, List<CategoryDO>>() {
                     public List<CategoryDO> load(String key) throws Exception {
-                        return siteManager.reloadMenus(key);
+                        return cachedSiteManager.reloadMenus(key);
                     }
                 });
 
@@ -222,7 +221,7 @@ public class SiteManager implements InitializingBean {
                 .refreshAfterWrite(this.cacheAdsTimeoutSecond, TimeUnit.SECONDS)
                 .build(new CacheLoader<String, List<AdvertisementDO>>() {
                     public List<AdvertisementDO> load(String key) throws Exception {
-                        return siteManager.reloadAds(key);
+                        return cachedSiteManager.reloadAds(key);
                     }
                 });
 
@@ -232,7 +231,7 @@ public class SiteManager implements InitializingBean {
                 .refreshAfterWrite(this.cachePluginTimeoutSecond, TimeUnit.SECONDS)
                 .build(new CacheLoader<String, Map<String,List<PluginDO>>>() {
                     public Map<String,List<PluginDO>> load(String key) throws Exception {
-                        return siteManager.reloadPlugins(key);
+                        return cachedSiteManager.reloadPlugins(key);
                     }
                 });
 
@@ -242,7 +241,7 @@ public class SiteManager implements InitializingBean {
                 .refreshAfterWrite(this.cacheLinkTimeoutSecond, TimeUnit.SECONDS)
                 .build(new CacheLoader<String, List<LinkDO>>() {
                     public List<LinkDO> load(String key) throws Exception {
-                        return siteManager.reloadLinks(key);
+                        return cachedSiteManager.reloadLinks(key);
                     }
                 });
     }

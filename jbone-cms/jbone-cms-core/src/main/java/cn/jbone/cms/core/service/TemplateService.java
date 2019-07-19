@@ -94,8 +94,8 @@ public class TemplateService {
 
 
             if(StringUtils.isNotBlank(templateSearchDO.getCode())){
-                Path<String> name = root.get("name");
-                predicates.add(criteriaBuilder.like(name,"%" + templateSearchDO.getCode() + "%"));
+                Path<String> code = root.get("code");
+                predicates.add(criteriaBuilder.equal(code,templateSearchDO.getCode()));
             }
 
             if(StringUtils.isNotBlank(templateSearchDO.getName())){
