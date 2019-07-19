@@ -60,6 +60,7 @@
           templateDataCollectors:[],
           templatePages:[],
           dataCollectors: [],
+          allDataCollectors: [],
           loading: false,
         };
       },
@@ -135,15 +136,17 @@
           if(this.template.dataCollectors == null || this.template.dataCollectors == ''){
             return
           }
+          this.dataCollectors = []
+          let self = this;
           let currentDataCollectors = JSON.parse(this.template.dataCollectors)
-          this.dataCollectors.forEach(function(dataCollector, index, arr) {
+          this.allDataCollectors.forEach(function(dataCollector, index, arr) {
             for (let k of Object.keys(currentDataCollectors)) {
               let v = currentDataCollectors[k];
               if(v.indexOf(dataCollector.dictValue) > -1){
                 dataCollector[k] = true
-                console.info(dataCollector)
               }
             }
+            self.dataCollectors.push(dataCollector)
           });
           console.info(this.dataCollectors)
 
@@ -169,7 +172,7 @@
           dictionaryApi.getItemsByCode('data_collector').then(function (res) {
             let result = res.data;
             if(result.success){
-              self.dataCollectors = result.data == null ? [] : result.data
+              self.allDataCollectors = result.data == null ? [] : result.data
               self.setDefaultContent();
             }else{
               self.$Message.error(result.status.message);
