@@ -133,12 +133,13 @@
         },
 
         setDefaultContent(){
-          if(this.template.dataCollectors == null || this.template.dataCollectors == ''){
-            return
-          }
+
           this.dataCollectors = []
           let self = this;
-          let currentDataCollectors = JSON.parse(this.template.dataCollectors)
+          let currentDataCollectors = {}
+          if(this.template.dataCollectors != null && this.template.dataCollectors != ''){
+            currentDataCollectors = JSON.parse(this.template.dataCollectors)
+          }
           this.allDataCollectors.forEach(function(dataCollector, index, arr) {
             for (let k of Object.keys(currentDataCollectors)) {
               let v = currentDataCollectors[k];

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="">
+  <meta name="description" th:content="${settings.description}" />
+  <meta name="keywords" th:content="${settings.keywords}" />
+  <title th:text="${settings.title}">CMS标题 - 未配置</title>
+
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/resume-orange/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+  <link th:href="@{/resume-orange/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link th:href="@{/resume-orange/css/resume.min.css}" rel="stylesheet">
+  <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+</head>
+
+<body id="page-top">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+      <span class="d-block d-lg-none">Clarence Taylor</span>
+      <span class="d-none d-lg-block">
+        <img th:if="${!#strings.isEmpty(settings.logo)}" class="img-fluid img-profile rounded-circle mx-auto mb-2" th:src="${settings.logo}" alt="">
+        <img th:if="${#strings.isEmpty(settings.logo)}" class="img-fluid img-profile rounded-circle mx-auto mb-2" th:src="@{/resume-orange/img/logo.png}" alt="">
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <!--
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#about">关于我</a>
+        </li>
+        -->
+        <li th:each="menu,menuStat : ${menus}" th:class="nav-item">
+          <a class="nav-link js-scroll-trigger" th:href="'#' + ${menu.title}" th:text="${menu.title}">菜单标题</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid p-0">
+<!--
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
+      <div class="w-100">
+        <h1 class="mb-0" th:text="${settings.home_title}">
+        </h1>
+        <div class="subheading mb-5">
+          <span th:text="${settings.home_description}"></span>
+          <a th:if="${!#strings.isEmpty(settings.contact_mail)}" th:href="${settings.contact_mail}">邮箱地址</a>
+        </div>
+        <p class="lead mb-5" th:text="${settings.aboutme}">关于我</p>
+        <div class="social-icons">
+          <a th:if="${!#strings.isEmpty(settings.contact_github)}" th:href="${settings.contact_github}" target="_blank" class="fab fa-github">GitHub</a>
+          <a th:if="${!#strings.isEmpty(settings.contact_gitee)}" th:href="${settings.contact_gitee}" target="_blank" class="fab fa-gitee">Gitee</a>
+        </div>
+      </div>
+    </section>
+-->
+    <hr class="m-0">
+    <div th:each="category,categoryStat : ${categoryList}" th:id="${category.title}">
+      <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="experience">
+        <div class="w-100">
+          <h2 class="mb-5" th:text="${category.title}">栏目标题</h2>
+
+          <div th:each="article,articleStat : ${category.articleList}" class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+            <div class="resume-content">
+              <h3 class="mb-0" th:text="${article.title}"></h3>
+              <div class="subheading mb-3" th:text="${article.description}"></div>
+              <div th:utext="${article.articleData.content}"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="m-0">
+
+    </div>
+
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script th:src="@{/resume-orange/vendor/jquery/jquery.min.js}"></script>
+  <script th:src="@{/resume-orange/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+  <!-- Plugin JavaScript -->
+  <script th:src="@{/resume-orange/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+  <!-- Custom scripts for this template -->
+  <script th:src="@{/resume-orange/js/resume.min.js}"></script>
+
+</body>
+
+</html>

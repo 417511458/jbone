@@ -2,9 +2,9 @@
 
 **项目官网：[http://jbone.cn](http://jbone.cn)（基于jbone cms构建)**
 
-[开发文档](http://jbone.cn/category/37)
+[开发文档](http://jbone.cn/special/37)
 
-[部署文档](http://jbone.cn/category/38)
+[部署文档](http://jbone.cn/special/38)
 
 jbone主要关注两个方面，一个是微服务架构的落地实现，另一个更重要的是进行深入的技术探究。
 
@@ -21,7 +21,7 @@ jbone项目主要关注两个方面的技术交流：
 
 项目官网：[http://jbone.cn](http://jbone.cn)（基于jbone cms构建)
 
-QQ群：547104190（1群）、992113778（2群）
+QQ群：992113778（2群）、547104190（1群）
 
 公众号：writebugs
 
