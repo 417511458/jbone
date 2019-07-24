@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:jbone="http://www.jbone.cn">
 
 <head>
 
@@ -24,6 +24,7 @@
 </head>
 
 <body id="page-top">
+<div th:replace="/layout/plugin :: globalPlugins"></div>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
@@ -68,7 +69,7 @@
       </div>
     </section>
 -->
-    <hr class="m-0">
+    <jbone:advertisement location="home_top"></jbone:advertisement>
     <div th:each="category,categoryStat : ${categoryList}" th:id="${category.title}">
       <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="experience">
         <div class="w-100">
@@ -87,6 +88,7 @@
       <hr class="m-0">
 
     </div>
+    <jbone:advertisement location="home_bottom"></jbone:advertisement>
 
   </div>
 

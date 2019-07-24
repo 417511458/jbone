@@ -2,6 +2,8 @@
 
 **项目官网：[http://jbone.cn](http://jbone.cn)（基于jbone cms构建)**
 
+[作者简历](http://majunwei.jbone.cn)（基于jbone cms构建)
+
 [开发文档](http://jbone.cn/special/37)
 
 [部署文档](http://jbone.cn/special/38)
