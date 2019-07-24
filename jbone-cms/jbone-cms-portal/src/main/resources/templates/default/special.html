@@ -9,17 +9,17 @@
   <meta name="author" content="" />
 
   <title th:text="${category.title} + ' - ' + ${settings.title}">CMS标题 - 未配置</title>
-  <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+  <link rel="icon" th:href="@{/default/img/favicon.ico}" type="image/x-icon" />
 
 
 </head>
 
 <body class="parent-active" style="display: block;">
 
-<div th:replace="/layout/css :: css"></div>
-<link rel="stylesheet" th:href="@{/css/glyphicon.css}" />
-<link rel="stylesheet" th:href="@{/css/special.css}" />
-<div th:replace="/layout/plugin :: globalPlugins"></div>
+<div th:replace="/default/layout/css :: css"></div>
+<link rel="stylesheet" th:href="@{/default/css/glyphicon.css}" />
+<link rel="stylesheet" th:href="@{/default/css/special.css}" />
+<div th:replace="/common/plugin :: globalPlugins"></div>
 
 
 <aside class="left-sidebar">
@@ -36,7 +36,7 @@
 </aside>
 
 <div id="main-wrapper">
-  <header id="header" class="parent-active" th:replace="/layout/header :: header"></header>
+  <header id="header" class="parent-active" th:replace="/default/layout/header :: header"></header>
   <jbone:advertisement location="special_article_top"></jbone:advertisement>
   <div class="content-header" th:if="${categoryToc != null}">
         <h1 th:text="${categoryToc.title}"></h1>
@@ -61,28 +61,28 @@
 
 
 
-<script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
-<script th:src="@{/js/popper.min.js}"></script>
-<script th:src="@{/js/vendor/bootstrap.min.js}"></script>
-<script th:src="@{/js/vendor/bootstrap-treeview.min.js}"></script>
-<script th:src="@{/js/easing.min.js}"></script>
-<script th:src="@{/js/hoverIntent.js}"></script>
-<script th:src="@{/js/superfish.min.js}"></script>
-<script th:src="@{/js/jquery.ajaxchimp.min.js}"></script>
-<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
-<script th:src="@{/js/jquery.tabs.min.js}"></script>
-<script th:src="@{/js/jquery.nice-select.min.js}"></script>
-<script th:src="@{/js/isotope.pkgd.min.js}"></script>
-<script th:src="@{/js/waypoints.min.js}"></script>
-<script th:src="@{/js/jquery.counterup.min.js}"></script>
-<script th:src="@{/js/simple-skillbar.js}"></script>
-<script th:src="@{/js/owl.carousel.min.js}"></script>
-<script th:src="@{/js/mail-script.js}"></script>
-<script type="text/javascript" th:src="@{/js/jquery.nav.js}"></script>
-<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/default/js/vendor/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/defaultjs/popper.min.js}"></script>
+<script th:src="@{/default/js/vendor/bootstrap.min.js}"></script>
+<script th:src="@{/default/js/vendor/bootstrap-treeview.min.js}"></script>
+<script th:src="@{/default/js/easing.min.js}"></script>
+<script th:src="@{/default/js/hoverIntent.js}"></script>
+<script th:src="@{/default/js/superfish.min.js}"></script>
+<script th:src="@{/default/js/jquery.ajaxchimp.min.js}"></script>
+<script th:src="@{/default/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/default/js/jquery.tabs.min.js}"></script>
+<script th:src="@{/default/js/jquery.nice-select.min.js}"></script>
+<script th:src="@{/default/js/isotope.pkgd.min.js}"></script>
+<script th:src="@{/default/js/waypoints.min.js}"></script>
+<script th:src="@{/default/js/jquery.counterup.min.js}"></script>
+<script th:src="@{/default/js/simple-skillbar.js}"></script>
+<script th:src="@{/default/js/owl.carousel.min.js}"></script>
+<script th:src="@{/default/js/mail-script.js}"></script>
+<script type="text/javascript" th:src="@{/default/js/jquery.nav.js}"></script>
+<script th:src="@{/default/js/main.js}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
 
-<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/default/js/common.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
       // SyntaxHighlighter.all();

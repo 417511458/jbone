@@ -8,44 +8,44 @@
   <meta name="keywords" th:content="${settings.keywords}" />
   <meta name="author" content="" />
 
-  <title th:text="${keywords} + ' - ' + ${settings.title}">CMS标题 - 未配置</title>
-  <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+  <title th:text="${settings.title}">CMS标题 - 未配置</title>
+  <link rel="icon" th:href="@{/default/img/favicon.ico}" type="image/x-icon" />
 
 
 </head>
 
 <body class="parent-active" style="display: block;">
+<div th:replace="/default/layout/css :: css"></div>
+<div th:replace="/default/layout/js :: js"></div>
+<div th:replace="/common/plugin :: globalPlugins"></div>
+<jbone:advertisement location="home_top"></jbone:advertisement>
+<header id="header" class="parent-active" th:replace="/default/layout/header :: header"></header>
 
-<div th:replace="/layout/css :: css"></div>
-<div th:replace="/layout/js :: js"></div>
-<div th:replace="/layout/plugin :: globalPlugins"></div>
-<header id="header" class="parent-active" th:replace="/layout/header :: header"></header>
-
-<!-- start banner Area -->
-<section class="relative about-banner" id="home">
-  <div class="overlay overlay-bg"></div>
-  <div class="container">
-    <div class="row d-flex align-items-center justify-content-center">
-      <div class="about-content col-lg-12">
-        <h1 class="text-white" th:text="'搜索文章:&nbsp;' + ${keywords}">
-          搜索文章
-        </h1>
-        <!--
-        <p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="elements.html"> Elements</a></p>
-        -->
+  <!-- start banner Area -->
+  <section class="banner-area relative blog-home-banner" id="home" th:style=" ${#strings.isEmpty(settings.home_banner)} ? 'background-image:url(' + @{/img/home-bg.jpg} + ')' : 'background-image:url(' + ${settings.home_banner} + ')'">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+      <div class="row d-flex align-items-center justify-content-center">
+        <div class="about-content blog-header-content col-lg-12">
+          <h1 class="text-white" th:text="${settings.home_title}">
+            首页标题 - 未配置
+          </h1>
+          <p class="text-white" th:text="${settings.home_description}">
+            首页说明 - 未配置
+          </p>
+          <a th:if="${!#strings.isEmpty(settings.contact_github)}" th:href="${settings.contact_github}" target="_blank" class="primary-btn">GitHub</a>
+          <a th:if="${!#strings.isEmpty(settings.contact_gitee)}" th:href="${settings.contact_gitee}" target="_blank" class="primary-btn">Gitee</a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- End banner Area -->
+  </section>
+  <!-- End banner Area -->
 
 <section class="post-content-area">
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-9 posts-list" th:if="${pagedArticles != null && pagedArticles.total > 0}">
-        <jbone:advertisement location="article_list_top"></jbone:advertisement>
-        <div th:each="article,articleStat : ${pagedArticles.datas}">
-          <div class="single-post row" >
+        <div class="single-post row" th:each="article,articleStat : ${pagedArticles.datas}">
           <div class="col-lg-3  col-md-3 meta-details">
             <ul class="tags" th:if="${not #lists.isEmpty(article.tags)}">
 
@@ -70,15 +70,14 @@
             </p>
             <a th:href="@{/article/{articleId}(articleId=${article.id})}" class="primary-btn">阅读全文</a>
           </div>
-          </div>
-          <jbone:advertisement location="article_list_middle" th:if="${articleStat.index +1 < articleStat.size}"></jbone:advertisement>
+            <hr>
         </div>
-        <jbone:advertisement location="article_list_bottom"></jbone:advertisement>
+
         <!-- 分页组件 -->
         <nav class="blog-pagination justify-content-center d-flex" th:if="${pagedArticles.pagination != null}">
           <ul class="pagination">
             <li class="page-item" th:if="${pagedArticles.pagination.showLastButton}">
-              <a th:href="@{/search(p=${pagedArticles.pagination.lastPage},keywords=${keywords})}" class="page-link" aria-label="Previous">
+              <a th:href="@{/(p=${pagedArticles.pagination.lastPage})}" class="page-link" aria-label="Previous">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-left"></span>
 		                                    </span>
@@ -87,11 +86,11 @@
 
 
             <li th:class="${page.pageNum == pagedArticles.pageNum} ? 'page-item active' : 'page-item'" th:each="page,pageStat : ${pagedArticles.pagination.pages}">
-              <a th:href="@{/search(p=${page.pageNum},keywords=${keywords})}" class="page-link" th:text="${page.text}">01</a>
+              <a th:href="@{/(p=${page.pageNum})}" class="page-link" th:text="${page.text}">01</a>
             </li>
 
             <li class="page-item" th:if="${pagedArticles.pagination.showNextButton}">
-              <a th:href="@{/search(p=${pagedArticles.pagination.nextPage},keywords=${keywords})}" class="page-link" aria-label="Next">
+              <a th:href="@{/(p=${pagedArticles.pagination.nextPage})}" class="page-link" aria-label="Next">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-right"></span>
 		                                    </span>
@@ -101,17 +100,18 @@
         </nav>
       </div>
       <div class="col-lg-9 posts-list" th:unless="${pagedArticles != null && pagedArticles.total > 0}">
-        <div class="alert alert-danger" role="alert"><h1>未搜索到关于'<font th:text="${keywords}"></font>'的文章</h1></div>
+        <div class="alert alert-danger" role="alert"><h1>未搜索到文章</h1></div>
       </div>
+
       <!-- 右侧公共模块，搜索、热门文章、广告、标签云 -->
-      <div th:include="/layout/right :: right" class="col-lg-3 sidebar-widgets"></div>
+      <div th:include="/default/layout/right :: right" class="col-lg-3 sidebar-widgets"></div>
 
     </div>
   </div>
 </section>
 <!-- End post-content Area -->
-
-  <div th:replace="/layout/footer :: footer"></div>
+<jbone:advertisement location="home_bottom"></jbone:advertisement>
+  <div th:replace="/default/layout/footer :: footer"></div>
 
 
 

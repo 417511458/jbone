@@ -9,7 +9,7 @@
   <meta name="author" content="" />
 
   <title th:text="${article.title} + ' - ' + ${settings.title}">CMS标题 - 未配置</title>
-  <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+  <link rel="icon" th:href="@{/default/img/favicon.ico}" type="image/x-icon" />
 
   <style>
     #bdshare_weixin_qrcode_dialog_qr table {
@@ -21,11 +21,11 @@
 
 <body class="parent-active" style="display: block;">
 
-<div th:replace="/layout/css :: css"></div>
-<div th:replace="/layout/js :: js"></div>
-<div th:replace="/layout/plugin :: globalPlugins"></div>
-<div th:replace="/layout/plugin :: articlePlugins"></div>
-<header id="header" class="parent-active" th:replace="/layout/header :: header"></header>
+<div th:replace="/default/layout/css :: css"></div>
+<div th:replace="/default/layout/js :: js"></div>
+<div th:replace="/common/plugin :: globalPlugins"></div>
+<div th:replace="/common/plugin :: articlePlugins"></div>
+<header id="header" class="parent-active" th:replace="/default/layout/header :: header"></header>
 
 <!-- start banner Area -->
 <section class="relative about-banner" id="home">
@@ -146,14 +146,14 @@
         <div class="alert alert-danger" role="alert"><h1>未找到文章</h1></div>
       </div>
       <!-- 右侧公共模块，搜索、热门文章、广告、标签云 -->
-      <div th:include="/layout/right :: right" class="col-lg-3 sidebar-widgets"></div>
+      <div th:include="/default/layout/right :: right" class="col-lg-3 sidebar-widgets"></div>
 
     </div>
   </div>
 </section>
 <!-- End post-content Area -->
 
-  <div th:replace="/layout/footer :: footer"></div>
+  <div th:replace="/default/layout/footer :: footer"></div>
 
 <script>
   function submitComment(){

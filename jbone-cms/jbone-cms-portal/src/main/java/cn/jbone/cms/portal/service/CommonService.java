@@ -26,10 +26,10 @@ public class CommonService {
     public String getTemplatePage(String page){
         SiteDO siteDO = cachedSiteManager.getCurrentSite();
         TemplateDO templateDO = siteDO.getTemplate();
-        if(templateDO != null && !StringUtils.isBlank(templateDO.getCode()) && !GlobalConstant.DEFAULT_TEMPLATE_CODE.equalsIgnoreCase(templateDO.getCode())){
+        if(templateDO != null && !StringUtils.isBlank(templateDO.getCode())){
             return templateDO.getCode() + "/" + page;
         }
-        return page;
+        return GlobalConstant.DEFAULT_TEMPLATE_CODE + "/" + page;
     }
 
 
