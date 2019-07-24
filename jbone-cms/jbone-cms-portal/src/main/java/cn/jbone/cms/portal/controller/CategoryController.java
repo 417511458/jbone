@@ -79,9 +79,8 @@ public class CategoryController {
                 if(articleResponseDO == null){
                     throw new Jbone404Exception();
                 }
-                return "redirect:/article/" + articleResponseDO.getId();
+                return "forward:/article/" + articleResponseDO.getId();
             }
-
         }
 
         //标签虚拟分类
