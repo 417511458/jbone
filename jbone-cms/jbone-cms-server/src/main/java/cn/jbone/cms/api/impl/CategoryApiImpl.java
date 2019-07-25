@@ -97,7 +97,7 @@ public class CategoryApiImpl implements CategoryApi {
     }
 
     @Override
-    public Result<PagedResponseDO<CategoryDO>> requestCategorys(CategorySearchDO categorySearchDO) {
+    public Result<PagedResponseDO<CategoryDO>> requestCategorys(@RequestBody CategorySearchDO categorySearchDO) {
         PagedResponseDO<CategoryDO> pagedResponseDO = null;
         try {
             pagedResponseDO = categoryService.requestCategorys(categorySearchDO);

@@ -5,6 +5,9 @@
       <FormItem label="栏目标题" prop="title" :required="true">
         <i-input v-model="data.title" clearable placeholder="栏目标题"></i-input>
       </FormItem>
+      <FormItem label="栏目编码" prop="code" :required="true">
+        <i-input v-model="data.code" clearable placeholder="栏目编码（用于导航路径）"></i-input>
+      </FormItem>
 
       <FormItem label="关键字" prop="keywords">
         <i-input v-model="data.keywords" clearable placeholder="关键字"></i-input>
@@ -14,7 +17,7 @@
         <i-input v-model="data.description" clearable placeholder="说明"></i-input>
       </FormItem>
 
-      <FormItem label="类型" prop="type" >
+      <FormItem label="类型" prop="type">
         <RadioGroup v-model="data.type" type="button">
           <Radio label="CATEGORY">普通栏目</Radio>
           <Radio label="TAG">标签聚合栏目</Radio>
@@ -118,6 +121,7 @@
             status: 'PUBLISH',
             showType: 'LIST',
             frontCover: '',
+            code: '',
             tags: []
           },
           loading: false,
@@ -125,6 +129,9 @@
             title: [
               {required: true, message: '标题不能为空', trigger: 'blur'},
               {validator: validateName, trigger: 'blur'}
+            ],
+            code: [
+              {required: true, message: '编码不能为空', trigger: 'blur'}
             ]
           }
         };
@@ -174,6 +181,7 @@
             status: 'PUBLISH',
             showType: 'LIST',
             frontCover: '',
+            code: '',
             tags: []
           }
 
@@ -199,6 +207,7 @@
                 status: result.data.status,
                 showType: result.data.showType,
                 frontCover: result.data.frontCover,
+                code: result.data.code,
                 tags: result.data.tags
               };
             }else{

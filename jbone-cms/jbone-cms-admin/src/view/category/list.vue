@@ -60,6 +60,10 @@
               key: 'title',
             },
             {
+              title: '栏目编码',
+              key: 'code',
+            },
+            {
               title: '关键字',
               key: 'keywords',
             },

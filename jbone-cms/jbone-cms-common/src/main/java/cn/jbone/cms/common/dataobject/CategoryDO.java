@@ -89,4 +89,6 @@ public class CategoryDO {
 
     private Integer creator;
 
+    private String code;
+
 }

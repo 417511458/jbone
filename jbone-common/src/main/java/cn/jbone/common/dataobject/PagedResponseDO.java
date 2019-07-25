@@ -1,6 +1,7 @@
 package cn.jbone.common.dataobject;
 
 import lombok.Data;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,13 @@ public class PagedResponseDO<T> {
     List<T> datas;
 
     PaginationDO pagination;    //分页组建
+
+    public T getFirstData(){
+        if(CollectionUtils.isEmpty(this.datas)){
+            return null;
+        }
+        return this.datas.get(0);
+    }
 
     public void buildPagination(){
         if(total <= 0){

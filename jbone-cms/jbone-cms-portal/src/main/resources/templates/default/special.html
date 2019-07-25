@@ -48,14 +48,14 @@
   <div class="main-content post-content" th:if="${article == null && categoryToc != null }">
     <ul th:if="${not #lists.isEmpty(categoryToc.children)}">
       <li th:each="cate,cateStat : ${categoryToc.children}">
-        <a th:href="@{/special/{categoryId}/{categoryTocId}(categoryId=${category.id},categoryTocId=${cate.id})}" th:text="${cate.title}"></a>
+        <a th:href="@{/category/{categoryCode}/{categoryTocId}(categoryCode=${category.code},categoryTocId=${cate.id})}" th:text="${cate.title}"></a>
       </li>
     </ul>
 
   </div>
   <jbone:advertisement location="special_article_bottom"></jbone:advertisement>
   <div class="main-content" th:if="${categoryToc != null && article != null}">
-    原创文章，转载请注明出处：<a th:href="@{/special/{categoryId}/{categoryTocId}(categoryId=${category.id},categoryTocId=${categoryToc.id})}" th:text="'jbone - ' + ${article.title}">文章标题</a>
+    原创文章，转载请注明出处：<a th:href="@{/category/{categoryCode}/{categoryTocId}(categoryCode=${category.code},categoryTocId=${categoryToc.id})}" th:text="'jbone - ' + ${article.title}">文章标题</a>
   </div>
 </div>
 

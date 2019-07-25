@@ -12,9 +12,14 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "category",
-        indexes = {@Index(name = "category_index_orders",columnList = "orders"),
-                @Index(name = "category_index_site_id",columnList = "site_id")
-})
+        indexes = {
+            @Index(name = "category_index_orders",columnList = "orders"),
+            @Index(name = "category_index_site_id",columnList = "site_id"),
+        },
+        uniqueConstraints = {
+            @UniqueConstraint(name = "category_uc_siteid_code",columnNames = {"site_id","code"})
+        }
+)
 public class Category extends BaseEntity {
     @Id
     @Column(name = "id")
@@ -124,4 +129,10 @@ public class Category extends BaseEntity {
      */
     @Column(name = "site_id")
     private Integer siteId;
+
+    /**
+     * 栏目编码，用于导航URL
+     */
+    @Column(name = "code")
+    private String code;
 }

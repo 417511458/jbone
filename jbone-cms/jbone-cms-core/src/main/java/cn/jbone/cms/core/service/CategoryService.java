@@ -13,9 +13,11 @@ import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.utils.SpecificationUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -121,8 +123,13 @@ public class CategoryService {
 
         checkLimit(categoryDO);
 
-        Category category = categoryConverter.toCategory(categoryDO);
-        categoryRepository.save(category);
+        try {
+            Category category = categoryConverter.toCategory(categoryDO);
+            categoryRepository.save(category);
+        } catch (DataIntegrityViolationException e) {
+            logger.warn("栏目编码已存在",e);
+            throw new JboneException("栏目编码已存在");
+        }
     }
 
     private void checkParam(CategoryDO categoryDO){
@@ -188,6 +195,11 @@ public class CategoryService {
                 return criteriaQuery.getRestriction();
             }
             List<Predicate> predicates = new ArrayList<>();
+
+            if(StringUtils.isNotBlank(categorySearchDO.getCode())){
+                Path<String> code = root.get("code");
+                predicates.add(criteriaBuilder.equal(code,categorySearchDO.getCode()));
+            }
 
             if(StringUtils.isNotBlank(categorySearchDO.getTitle())){
                 Path<String> title = root.get("title");
