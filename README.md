@@ -4,9 +4,9 @@
 
 [作者简历](http://majunwei.jbone.cn)（基于jbone cms构建)
 
-[开发文档](http://jbone.cn/special/37)
+[开发文档](http://jbone.cn/category/development_document)
 
-[部署文档](http://jbone.cn/special/38)
+[部署文档](http://jbone.cn/category/deployment_document)
 
 jbone主要关注两个方面，一个是微服务架构的落地实现，另一个更重要的是进行深入的技术探究。
 
