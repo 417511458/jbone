@@ -1,58 +1,87 @@
 <template>
   <div>
-    <card :dis-hover="true" style="text-align: right">
-        <Button type="primary" size="large" :loading="loading" @click="addOrUpdate('PUBLISH')">发表</Button>
-        &nbsp;&nbsp;
-        <Button type="success" size="large" :loading="loading" @click="addOrUpdate('AUDIT')">保存</Button>
+
+    <card :dis-hover="true">
+      <Row>
+        <Col span="4">
+          <h2>{{categoryTitle}}</h2>
+          <Menu :active-name="categoryTree.selectedData.id" ref="menu" width="auto" @on-select="handleSelect">
+            <template v-for="item in categoryTree.data">
+              <template v-if="item.children && item.children.length > 0">
+                <MenuGroup :name="item.id" :title="item.title">
+                  <MenuItem  v-for="childItem in item.children" :name="childItem.id" style="margin-left: 20px;">
+                    <Icon type="md-document" />
+                    {{childItem.title}}
+                  </MenuItem>
+                </MenuGroup>
+              </template>
+              <template v-else>
+                <MenuItem :name="item.id">
+                  <Icon type="md-document" />
+                  {{item.title}}
+                </MenuItem>
+              </template>
+            </template>
+          </Menu>
+        </Col>
+        <Col span="20">
+          <card :dis-hover="true" v-show="showContentCard">
+            <Form :model="article" :label-width="100" ref="modalForm" :rules="ruleValidate">
+              <FormItem :label="titleLabel" prop="title" :required="true">
+                <i-input v-model="article.title" clearable :placeholder="titleLabel"></i-input>
+              </FormItem>
+
+              <FormItem label="关键字" prop="keywords" v-if="keywordsShow">
+                <i-input v-model="article.keywords" clearable placeholder="关键字"></i-input>
+              </FormItem>
+
+              <FormItem label="说明" prop="description">
+                <i-input v-model="article.description" clearable placeholder="说明"></i-input>
+              </FormItem>
+
+              <FormItem label="标签" v-show="showTag">
+                <Row>
+                  <!--
+                  <Col span="6">
+                    <tree-select :data="categoryTree.data" v-model="categoryTree.selectedData" :expand-all="true" check-strictly @on-check-change="handleTreeSelectCheckChange"></tree-select>
+                  </Col>
+                  -->
+
+                  <Col span="6">
+                    <Select v-model="article.tagIds" filterable multiple>
+                      <Option v-for="tag in tags" :value="tag.id" :key="tag.id">{{ tag.name }}</Option>
+                    </Select>
+                  </Col>
+
+                  <Col span="2" style="text-align: center">评论设置:</Col>
+                  <Col span="6">
+                    <RadioGroup v-model="article.allowComment" type="button">
+                      <Radio label="TRUE">允许评论</Radio>
+                      <Radio label="FALSE">关闭评论</Radio>
+                    </RadioGroup>
+                  </Col>
+
+                </Row>
+              </FormItem>
+              <FormItem label="内容" prop="articleData.content" v-show="showEditor">
+                <div class="edit_container" >
+                  <tinymce ref="editor" v-model="article.articleData.content"></tinymce>
+                </div>
+              </FormItem>
+              <FormItem :label="frontCoverLabel" prop="frontCover">
+                <upload-file v-model="article.frontCover"></upload-file>
+              </FormItem>
+              <FormItem>
+                <Button type="primary" size="large" :loading="loading" @click="addOrUpdate('PUBLISH')">发表</Button>
+                &nbsp;&nbsp;
+                <Button type="success" size="large" :loading="loading" @click="addOrUpdate('AUDIT')">保存</Button>
+              </FormItem>
+
+            </Form>
+          </Card>
+        </Col>
+      </Row>
     </card>
-    <Card :dis-hover="true">
-      <Form :model="article" :label-width="100" ref="modalForm" :rules="ruleValidate">
-        <FormItem label="文章标题" prop="title" :required="true">
-          <i-input v-model="article.title" clearable placeholder="栏目标题"></i-input>
-        </FormItem>
-
-        <FormItem label="关键字" prop="keywords">
-          <i-input v-model="article.keywords" clearable placeholder="关键字"></i-input>
-        </FormItem>
-
-        <FormItem label="说明" prop="description" >
-          <i-input v-model="article.description" clearable placeholder="说明"></i-input>
-        </FormItem>
-
-        <FormItem label="所属栏目">
-          <Row>
-            <Col span="6">
-              <tree-select :data="categoryTree.data" v-model="categoryTree.selectedData" :expand-all="true" check-strictly @on-check-change="handleTreeSelectCheckChange"></tree-select>
-            </Col>
-
-            <Col span="2" style="text-align: center">文章标签:</Col>
-            <Col span="6">
-              <Select v-model="article.tagIds" filterable multiple>
-                <Option v-for="tag in tags" :value="tag.id" :key="tag.id">{{ tag.name }}</Option>
-              </Select>
-            </Col>
-
-            <Col span="2" style="text-align: center">评论设置:</Col>
-            <Col span="6">
-              <RadioGroup v-model="article.allowComment" type="button">
-                <Radio label="TRUE">允许评论</Radio>
-                <Radio label="FALSE">关闭评论</Radio>
-              </RadioGroup>
-            </Col>
-
-          </Row>
-        </FormItem>
-        <FormItem label="文章内容" prop="articleData.content" >
-          <div class="edit_container" >
-            <tinymce ref="editor" v-model="article.articleData.content"></tinymce>
-          </div>
-        </FormItem>
-        <FormItem label="封面图" prop="frontCover" >
-          <upload-file v-model="article.frontCover"></upload-file>
-        </FormItem>
-
-      </Form>
-    </Card>
   </div>
 </template>
 
@@ -114,7 +143,7 @@
           },
           categoryTree: {
             data: [],
-            selectedData: [],
+            selectedData: {},
             operation: {
               success: true,
               message: ""
@@ -125,8 +154,108 @@
         }
       },
       computed:{
-        title(){
-          return this.id > 0 ? '编辑文章' : '新增文章'
+        categoryTitle(){
+
+          let title = this.categoryTree.selectedData.title;
+          if(title){
+            return '所属栏目(' + title + ')'
+          }else{
+            return '所属栏目'
+          }
+
+        },
+        titleLabel(){
+          let title = '文章标题'
+          if(this.categoryTree.selectedData){
+            let type = this.categoryTree.selectedData.type;
+            if(type){
+              if(type == 'CATEGORY'){
+                title = '文章标题'
+              }else if(type == 'IMG'){
+                title = '图片标题'
+              }else if(type == 'PRODUCT'){
+                title = '产品名称'
+              }else if(type == 'NEWS'){
+                title = '新闻标题'
+              }
+            }
+          }
+          return title
+        },
+        frontCoverLabel(){
+          let title = '封面图'
+          if(this.categoryTree.selectedData){
+            let type = this.categoryTree.selectedData.type;
+            if(type){
+              if(type == 'IMG'){
+                title = '图片'
+              }
+            }
+          }
+          return title
+        },
+
+        keywordsShow(){
+          let show = true
+          if(this.categoryTree.selectedData){
+            let type = this.categoryTree.selectedData.type;
+            if(type){
+              if(type == 'IMG'){
+                show = false
+              }
+            }
+          }
+          return show
+        },
+
+        showContentCard(){
+          let show = true
+          let type = this.categoryTree.selectedData.type;
+          if(!type){
+            return false
+          }
+
+          if(type == 'TAG'){
+            show = false
+          }else if(type == 'SPECIAL'){
+            show = false
+          }
+
+          return show
+        },
+
+        showTag(){
+          let show = true
+          let type = this.categoryTree.selectedData.type;
+          if(!type){
+            return false
+          }
+
+          if(type == 'CATEGORY'){
+            show = true
+          }else if(type == 'IMG'){
+            show = false
+          }else if(type == 'PRODUCT'){
+            show = true
+          }else if(type == 'NEWS'){
+            show = true
+          }
+
+          return show
+        },
+
+        showEditor(){
+          let show = true
+          let type = this.categoryTree.selectedData.type;
+          if(!type){
+            return false
+          }
+
+          if(type == 'IMG'){
+            show = false
+          }
+
+          return show
         }
       },
 
@@ -168,7 +297,8 @@
             if (!res.data.success) {
               self.setTreeMessage(res.data.status.message);
             } else {
-              self.categoryTree.data = res.data.data;
+              self.categoryTree.data = res.data.data == null ? [] : res.data.data;
+              self.initSelectedCate(self.article.category.id)
             }
           }).catch(function (error) {
             self.setTreeMessage(error.message);
@@ -183,6 +313,33 @@
           }).catch(function (error) {
             console.error("加载标签失败!" + error.message)
           });
+        },
+
+        handleSelect (name) {
+          this.initSelectedCate(name);
+        },
+
+        initSelectedCate(id){
+          if(id && this.categoryTree.data.length > 0){
+            let self = this;
+            this.categoryTree.data.forEach(function(item, index, arr) {
+              let children = item.children;
+              if(children && children.length > 0){
+                children.forEach(function(childItem, index, arr) {
+                  if(id == childItem.id){
+                    self.categoryTree.selectedData = childItem;
+                  }
+                })
+              }
+
+              if(id == item.id){
+                self.categoryTree.selectedData = item;
+              }
+
+            });
+          }
+          console.log(this.categoryTree.selectedData)
+
         },
 
         loadArticle(id) {
@@ -224,7 +381,7 @@
                 self.article.category.id = result.data.category.id;
                 self.article.tagIds = result.data.tagIds;
                 self.article.articleData.content = result.data.articleData.content;
-                self.categoryTree.selectedData = [result.data.category.id];
+                self.initSelectedCate(result.data.category.id)
               }else{
                 self.$Message.error(result.status.message);
               }
@@ -244,16 +401,14 @@
             return
           }
 
-          if(this.categoryTree.selectedData.length <= 0){
+
+          this.article.status = status;
+          this.article.category.id = this.categoryTree.selectedData.id;
+
+          if(!this.article.category.id){
             this.$Message.error("请选择文章栏目");
             return;
           }
-          if(this.categoryTree.selectedData.length > 1){
-            this.$Message.error("只能选择一个栏目");
-            return;
-          }
-          this.article.status = status;
-          this.article.category.id = this.categoryTree.selectedData[0]
 
           console.info(this.article)
           this.loading = true;

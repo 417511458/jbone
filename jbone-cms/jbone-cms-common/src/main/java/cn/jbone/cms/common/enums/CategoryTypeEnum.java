@@ -9,6 +9,12 @@ public enum  CategoryTypeEnum {
 
     TAG("TAG标签虚拟栏目"),
 
+    IMG("图片栏目"),
+
+    NEWS("新闻栏目"),
+
+    PRODUCT("产品栏目"),
+
     SPECIAL("专题栏目");
 
 

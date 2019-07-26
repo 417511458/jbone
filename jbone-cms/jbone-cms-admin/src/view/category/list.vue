@@ -22,6 +22,9 @@
           <span v-if="scope.row.type == 'CATEGORY'">普通栏目</span>
           <span v-if="scope.row.type == 'TAG'">标签聚合栏目</span>
           <span v-if="scope.row.type == 'SPECIAL'">专题栏目</span>
+          <span v-if="scope.row.type == 'IMG'">图片栏目</span>
+          <span v-if="scope.row.type == 'NEWS'">新闻栏目</span>
+          <span v-if="scope.row.type == 'PRODUCT'">产品栏目</span>
         </template>
       </tree-table>
     </card>

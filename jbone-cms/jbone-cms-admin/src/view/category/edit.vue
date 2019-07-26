@@ -19,9 +19,12 @@
 
       <FormItem label="类型" prop="type">
         <RadioGroup v-model="data.type" type="button">
-          <Radio label="CATEGORY">普通栏目</Radio>
-          <Radio label="TAG">标签聚合栏目</Radio>
-          <Radio label="SPECIAL">专题栏目</Radio>
+          <Radio label="CATEGORY">文章</Radio>
+          <Radio label="SPECIAL">专题</Radio>
+          <Radio label="IMG">图集</Radio>
+          <Radio label="NEWS">新闻</Radio>
+          <Radio label="PRODUCT">产品</Radio>
+          <Radio label="TAG">标签聚合</Radio>
         </RadioGroup>
       </FormItem>
 
@@ -60,8 +63,8 @@
 
       <FormItem label="跳转目标" prop="target">
         <RadioGroup v-model="data.target" type="button">
-          <Radio label="_self">当前页</Radio>
           <Radio label="_blank">新标签页</Radio>
+          <Radio label="_self">当前页</Radio>
         </RadioGroup>
       </FormItem>
 
@@ -117,7 +120,7 @@
             keywords: '',
             description: '',
             type: 'CATEGORY',
-            inMenu: 'FALSE',
+            inMenu: 'TRUE',
             status: 'PUBLISH',
             showType: 'LIST',
             frontCover: '',
@@ -177,7 +180,7 @@
             keywords: '',
             description: '',
             type: 'CATEGORY',
-            inMenu: 'FALSE',
+            inMenu: 'TRUE',
             status: 'PUBLISH',
             showType: 'LIST',
             frontCover: '',
