@@ -59,4 +59,6 @@ public class CategoryTocDO {
 
     private Long categoryId;
 
+    private String type;
+
 }

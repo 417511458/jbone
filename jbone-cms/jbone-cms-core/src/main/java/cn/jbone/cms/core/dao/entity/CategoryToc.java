@@ -72,8 +72,15 @@ public class CategoryToc extends BaseEntity {
     /**
      * 关联文章
      */
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.REMOVE)
     @JoinColumn(name = "article_id")
     private Article article;
+
+
+    /**
+     * 类型
+     */
+    @Column(name = "type")
+    private String type;
 
 }

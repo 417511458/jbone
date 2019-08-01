@@ -1,5 +1,6 @@
 package cn.jbone.cms.core.converter;
 
+import cn.jbone.cms.common.dataobject.config.ArticleFiledConfigDO;
 import cn.jbone.cms.common.dataobject.config.CategoryFieldConfigDO;
 import cn.jbone.cms.common.dataobject.CategoryTocDO;
 import cn.jbone.cms.core.dao.entity.CategoryToc;
@@ -36,7 +37,7 @@ public class CategoryTocConverter {
         CategoryTocDO categoryTocDO = new CategoryTocDO();
         BeanUtils.copyProperties(categoryToc,categoryTocDO,"childCategoryToc","category","article");
 
-        categoryTocDO.setArticle(articleConverter.toBaseArticleDO(categoryToc.getArticle()));
+        categoryTocDO.setArticle(articleConverter.toArticleDO(categoryToc.getArticle(), ArticleFiledConfigDO.build().includeContent(true)));
         categoryTocDO.setCategory(categoryConverter.toCategoryDO(categoryToc.getCategory(), CategoryFieldConfigDO.build()));
         categoryTocDO.setChildren(toCategoryTocDOs(categoryToc.getChildCategoryToc()));
 
@@ -72,13 +73,6 @@ public class CategoryTocConverter {
         if(categoryToc == null){
             categoryToc = new CategoryToc();
         }
-        if(categoryTocDO.getArticle() != null && categoryTocDO.getArticle().getId() != null && categoryTocDO.getArticle().getId() > 0){
-            categoryToc.setArticle(articleRepository.getOne(categoryTocDO.getArticle().getId()));
-        }
-
-        if(categoryTocDO.getCategoryId() != null && categoryTocDO.getCategoryId() > 0){
-            categoryToc.setCategory(categoryRepository.getOne(categoryTocDO.getCategoryId()));
-        }
 
         categoryToc.setFrontCover(categoryTocDO.getFrontCover());
         categoryToc.setOrders(categoryTocDO.getOrders());
@@ -86,6 +80,19 @@ public class CategoryTocConverter {
         categoryToc.setTarget(categoryTocDO.getTarget());
         categoryToc.setTitle(categoryTocDO.getTitle());
         categoryToc.setUrl(categoryTocDO.getUrl());
+        categoryToc.setType(categoryTocDO.getType());
+
+        if(categoryTocDO.getArticle() != null){
+            categoryTocDO.getArticle().setTitle(categoryToc.getTitle());
+            categoryToc.setFrontCover(categoryTocDO.getArticle().getFrontCover());
+            categoryToc.setArticle(articleConverter.toArticle(categoryTocDO.getArticle()));
+        }
+
+        if(categoryTocDO.getCategoryId() != null && categoryTocDO.getCategoryId() > 0){
+            categoryToc.setCategory(categoryRepository.getOne(categoryTocDO.getCategoryId()));
+        }
+
+
 
         return categoryToc;
     }

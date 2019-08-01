@@ -30,7 +30,7 @@
             <article-list v-if="showArticleList" :category-id="categoryTree.selectedData.id" @addArticle="toAddArticle" @editArticle="toEditArticle"></article-list>
             <br />
             <article-edit v-if="showArticleEdit" :category-id="categoryTree.selectedData.id" :category-type="categoryTree.selectedData.type" :article-id="articleId" @success="editArticleSuccess"></article-edit>
-            <special v-if="showSpecial"></special>
+            <special v-if="showSpecial" :category-id="categoryTree.selectedData.id" :category-type="categoryTree.selectedData.type"></special>
           </Card>
         </Col>
       </Row>

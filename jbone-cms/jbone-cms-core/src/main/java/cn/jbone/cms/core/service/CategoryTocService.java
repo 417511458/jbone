@@ -1,12 +1,17 @@
 package cn.jbone.cms.core.service;
 
+import cn.jbone.cms.common.dataobject.ArticleRequestDO;
+import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.common.dataobject.CategoryTocDO;
 import cn.jbone.cms.core.converter.CategoryTocConverter;
+import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.entity.Category;
 import cn.jbone.cms.core.dao.entity.CategoryToc;
+import cn.jbone.cms.core.dao.repository.ArticleRepository;
 import cn.jbone.cms.core.dao.repository.CategoryRepository;
 import cn.jbone.cms.core.dao.repository.CategoryTocRepository;
 import cn.jbone.common.exception.JboneException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -22,6 +27,10 @@ public class CategoryTocService {
     private CategoryTocRepository categoryTocRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ArticleRepository articleRepository;
+    @Autowired
+    private ArticleService articleService;
 
     public void delete(Long id){
         if(!categoryTocRepository.existsById(id)){
@@ -30,8 +39,8 @@ public class CategoryTocService {
         if(categoryTocRepository.countByPid(id) > 0){
             throw new JboneException("存在子目录，不能删除");
         }
-
-        categoryTocRepository.deleteById(id);
+        CategoryToc categoryToc = categoryTocRepository.getOne(id);
+        categoryTocRepository.delete(categoryToc);
     }
 
     public CategoryTocDO get(Long id){
@@ -43,6 +52,14 @@ public class CategoryTocService {
     public CategoryTocDO addOrUpdate(CategoryTocDO categoryTocDO){
         checkParam(categoryTocDO);
         CategoryToc categoryToc = categoryTocConverter.toCategoryToc(categoryTocDO);
+        if(categoryTocDO.getArticle() != null){
+            categoryTocDO.getArticle().setTitle(categoryTocDO.getTitle());
+
+            ArticleRequestDO articleRequestDO = new ArticleRequestDO();
+            BeanUtils.copyProperties(categoryTocDO.getArticle(),articleRequestDO);
+            ArticleResponseDO articleResponseDo = articleService.addOrUpdateArticle(articleRequestDO);
+            categoryToc.setArticle(articleRepository.getOne(articleResponseDo.getId()));
+        }
         categoryTocRepository.save(categoryToc);
         return get(categoryToc.getId());
     }

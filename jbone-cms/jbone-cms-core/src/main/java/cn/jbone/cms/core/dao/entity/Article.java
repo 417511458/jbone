@@ -84,7 +84,7 @@ public class Article extends BaseEntity {
     /**
      * 文章内容，双向关联
      */
-    @OneToOne(targetEntity = ArticleData.class,mappedBy = "article",fetch=FetchType.LAZY)
+    @OneToOne(targetEntity = ArticleData.class,mappedBy = "article",fetch=FetchType.LAZY,cascade = CascadeType.REMOVE)
     @NotFound(action= NotFoundAction.IGNORE)
     private ArticleData articleData;
 

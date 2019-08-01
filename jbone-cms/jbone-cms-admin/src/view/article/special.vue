@@ -1,30 +1,7 @@
 <template>
   <div>
-
-    <card :dis-hover="true">
       <Row>
-        <Col span="4">
-          <h2>{{categoryTitle}}</h2>
-          <Menu :active-name="categoryTree.selectedData.id" ref="menu" width="auto" @on-select="handleSelect">
-            <template v-for="item in categoryTree.data">
-              <template v-if="item.children && item.children.length > 0">
-                <MenuGroup :name="item.id" :title="item.title">
-                  <MenuItem  v-for="childItem in item.children" :name="childItem.id" style="margin-left: 20px;">
-                    <Icon type="md-document" />
-                    {{childItem.title}}
-                  </MenuItem>
-                </MenuGroup>
-              </template>
-              <template v-else>
-                <MenuItem :name="item.id">
-                  <Icon type="md-document" />
-                  {{item.title}}
-                </MenuItem>
-              </template>
-            </template>
-          </Menu>
-        </Col>
-        <Col span="4" v-if="showSpecial">
+        <Col span="6">
           <h2>专题目录</h2>
           <Menu :active-name="special.toc.id" ref="specialToc" width="auto" @on-select="handleSelectToc">
             <template v-for="item in special.tree">
@@ -49,33 +26,37 @@
             </template>
           </Menu>
         </Col>
-        <Col :span="showSpecial ? 16 : 20">
-          <card :dis-hover="true" v-show="showContentCard">
-            <div style="text-align: center;margin-bottom: 10px" v-if="showSpecial">
+        <Col :span="18" v-if="special.showContentCard">
+          <card :dis-hover="true">
+            <div style="text-align: center;margin-bottom: 10px">
               <Button @click="addRootToc">添加根目录</Button>
               <Button @click="appendToc" style="margin-left: 10px">添加子目录</Button>
-
-              <RadioGroup v-model="special.tocType" style="margin-left: 10px">
-                <Radio label="link">
-                  <span>外部链接</span>
-                </Radio>
-                <Radio label="article">
-                  <span>内部文章</span>
-                </Radio>
-              </RadioGroup>
+              <Button @click="removeToc" style="margin-left: 10px">删除当前目录</Button>
             </div>
 
-            <div v-if="showSpecialContent">
-              <Form :model="special.toc" :label-width="100" ref="tocForm" :rules="ruleValidate" v-if="showSpecial && special.tocType == 'link'">
+              <Form :model="special.toc" :label-width="100" ref="tocForm" :rules="ruleValidate">
                 <FormItem label="标题" prop="title" :required="true">
                   <i-input v-model="special.toc.title" clearable placeholder="栏目标题"></i-input>
                 </FormItem>
 
-                <FormItem label="链接" prop="keywords">
+
+                <FormItem label="类型" prop="type" :required="true">
+                  <RadioGroup v-model="special.toc.type">
+                    <Radio label="inner">
+                      <span>内部文章</span>
+                    </Radio>
+                    <Radio label="outer">
+                      <span>外部链接</span>
+                    </Radio>
+                  </RadioGroup>
+                </FormItem>
+
+
+                <FormItem label="链接" prop="url">
                   <i-input v-model="special.toc.url" clearable placeholder="链接URL"></i-input>
                 </FormItem>
 
-                <FormItem label="打开目标" prop="type" >
+                <FormItem label="打开目标" prop="target" >
                   <RadioGroup v-model="special.toc.target">
                     <Radio label="_self">当前窗口打开</Radio>
                     <Radio label="_blank">新窗口打开</Radio>
@@ -86,35 +67,24 @@
                   <InputNumber v-model="special.toc.orders" clearable  placeholder="排序号"></InputNumber>
                 </FormItem>
 
-                <FormItem label="" prop="" >
-                  <Button type="primary" size="large" long :loading="loading" @click="addOrUpdateToc">保存</Button>
-                </FormItem>
-              </Form>
-
-              <Form :model="article" :label-width="100" ref="modalForm" :rules="ruleValidate" v-else>
-                <FormItem :label="titleLabel" prop="title" :required="true">
-                  <i-input v-model="article.title" clearable :placeholder="titleLabel"></i-input>
+                <FormItem label="关键字" prop="article.keywords">
+                  <i-input v-model="special.toc.article.keywords" clearable placeholder="关键字"></i-input>
                 </FormItem>
 
-                <FormItem label="关键字" prop="keywords" v-if="keywordsShow">
-                  <i-input v-model="article.keywords" clearable placeholder="关键字"></i-input>
+                <FormItem label="说明" prop="article.description">
+                  <i-input v-model="special.toc.article.description" clearable placeholder="说明"></i-input>
                 </FormItem>
-
-                <FormItem label="说明" prop="description">
-                  <i-input v-model="article.description" clearable placeholder="说明"></i-input>
-                </FormItem>
-
-                <FormItem label="标签" v-show="showTag">
+                <FormItem label="标签">
                   <Row>
                     <Col span="6">
-                      <Select v-model="article.tagIds" filterable multiple>
+                      <Select v-model="special.toc.article.tagIds" filterable multiple>
                         <Option v-for="tag in tags" :value="tag.id" :key="tag.id">{{ tag.name }}</Option>
                       </Select>
                     </Col>
 
                     <Col span="2" style="text-align: center">评论设置:</Col>
                     <Col span="6">
-                      <RadioGroup v-model="article.allowComment" type="button">
+                      <RadioGroup v-model="special.toc.article.allowComment" type="button">
                         <Radio label="TRUE">允许评论</Radio>
                         <Radio label="FALSE">关闭评论</Radio>
                       </RadioGroup>
@@ -122,48 +92,47 @@
 
                   </Row>
                 </FormItem>
-                <FormItem label="内容" prop="articleData.content" v-show="showEditor">
+                <FormItem label="内容" prop="article.articleData.content">
                   <div class="edit_container" >
-                    <tinymce ref="editor" v-model="article.articleData.content"></tinymce>
+                    <tinymce ref="editor" v-model="special.toc.article.articleData.content"></tinymce>
                   </div>
                 </FormItem>
-                <FormItem :label="frontCoverLabel" prop="frontCover">
-                  <upload-file v-model="article.frontCover"></upload-file>
+                <FormItem label="封面图" prop="article.frontCover">
+                  <upload-file v-model="special.toc.article.frontCover"></upload-file>
                 </FormItem>
                 <FormItem>
-                  <Button type="primary" size="large" :loading="loading" @click="addOrUpdate('PUBLISH')">发表</Button>
-                  &nbsp;&nbsp;
-                  <Button type="success" size="large" :loading="loading" @click="addOrUpdate('AUDIT')">保存</Button>
+                  <Button type="primary" size="large" :loading="loading" @click="addOrUpdateToc">发表</Button>
                 </FormItem>
 
               </Form>
-            </div>
 
           </Card>
         </Col>
       </Row>
-    </card>
   </div>
 </template>
 
 <script>
     import Tinymce from "../../components/tinymce/index";
-    import categoryApi from '@/api/category'
-    import articleApi from '@/api/article'
     import tagApi from '@/api/tag'
     import TreeSelect from "../../components/tree-select/tree-select";
     import { mapMutations } from 'vuex'
     import siteApi from '@/api/site'
     import UploadFile from "../components/upload-file/upload-file";
     import categoryTocApi from '@/api/categoryToc'
+    import { getUserId } from '@/libs/util'
 
     export default {
       name: "special",
       components: {UploadFile, TreeSelect, Tinymce},
       props:{
-        id: {
+        categoryId:{
           type: Number,
           default: 0
+        },
+        categoryType:{
+          type: String,
+          default: ''
         }
       },
       data() {
@@ -179,37 +148,12 @@
           }
         };
         return {
-          article: {
-            id: 0,
-            title: '',
-            frontCover: '',
-            keywords: '',
-            orders: 0,
-            description: '',
-            status: 'PUBLISH',
-            allowComment: 'TRUE',
-            category:{
-              id: 0
-            },
-            tagIds: [],
-            articleData:{
-              content: ''
-            }
-          },
           tags: [],
           ruleValidate: {
             title: [
               {required: true, message: '标题不能为空', trigger: 'blur'},
               {validator: validateName, trigger: 'blur'}
             ]
-          },
-          categoryTree: {
-            data: [],
-            selectedData: {},
-            operation: {
-              success: true,
-              message: ""
-            }
           },
           special:{
             tree:[],
@@ -221,179 +165,56 @@
               target: '_self',
               orders: 0,
               categoryId:0,
-              article: null
+              type: 'inner',
+              article: {
+                id: 0,
+                title: '',
+                frontCover: '',
+                keywords: '',
+                orders: 0,
+                description: '',
+                status: 'PUBLISH',
+                allowComment: 'TRUE',
+                category:{
+                  id: 0
+                },
+                tagIds: [],
+                articleData:{
+                  content: ''
+                }
+              }
             },
-            initToc:true,
-            tocType:'article'
+            showContentCard:true,
           },
           loading:false,
           showFrontCover:false
         }
       },
       computed:{
-        categoryTitle(){
 
-          let title = this.categoryTree.selectedData.title;
-          if(title){
-            return '所属栏目(' + title + ')'
-          }else{
-            return '所属栏目'
-          }
-
-        },
-        titleLabel(){
-          let title = '文章标题'
-          if(this.categoryTree.selectedData){
-            let type = this.categoryTree.selectedData.type;
-            if(type){
-              if(type == 'CATEGORY'){
-                title = '文章标题'
-              }else if(type == 'IMG'){
-                title = '图片标题'
-              }else if(type == 'PRODUCT'){
-                title = '产品名称'
-              }else if(type == 'NEWS'){
-                title = '新闻标题'
-              }
-            }
-          }
-          return title
-        },
-        frontCoverLabel(){
-          let title = '封面图'
-          if(this.categoryTree.selectedData){
-            let type = this.categoryTree.selectedData.type;
-            if(type){
-              if(type == 'IMG'){
-                title = '图片'
-              }
-            }
-          }
-          return title
-        },
-
-        keywordsShow(){
-          let show = true
-          if(this.categoryTree.selectedData){
-            let type = this.categoryTree.selectedData.type;
-            if(type){
-              if(type == 'IMG'){
-                show = false
-              }
-            }
-          }
-          return show
-        },
-
-        showContentCard(){
-          let show = true
-          let type = this.categoryTree.selectedData.type;
-          if(!type){
-            return false
-          }
-
-          if(type == 'TAG'){
-            show = false
-          }
-
-          return show
-        },
-
-        showTag(){
-          let show = true
-          let type = this.categoryTree.selectedData.type;
-          if(!type){
-            return false
-          }
-
-          if(type == 'CATEGORY'){
-            show = true
-          }else if(type == 'IMG'){
-            show = false
-          }else if(type == 'PRODUCT'){
-            show = true
-          }else if(type == 'NEWS'){
-            show = true
-          }
-
-          return show
-        },
-
-        showEditor(){
-          let show = true
-          let type = this.categoryTree.selectedData.type;
-          if(!type){
-            return false
-          }
-
-          if(type == 'IMG'){
-            show = false
-          }
-
-          return show
-        },
-
-        showSpecial(){
-          let show = false
-          let type = this.categoryTree.selectedData.type;
-          if(!type){
-            return false
-          }
-
-          if(type == 'SPECIAL'){
-            show = true
-          }
-
-          return show
-        },
-
-        showSpecialContent(){
-          return !this.initToc
-        },
       },
 
-      beforeRouteUpdate (to, from, next) {
-        // 在当前路由改变，但是该组件被复用时调用
-        // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
-        // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
-        // 可以访问组件实例 `this`
-        this.init(to.query.id);
-        next();
-      },
-
-      mounted() {
-        if(this.$route.query.id > 0){
-          this.init(this.$route.query.id);
-        }else{
-          this.init(0);
+      watch:{
+        categoryId(val){
+          this.init();
         }
+      },
+      mounted() {
+        this.init();
       },
 
       methods: {
 
-        init(id){
+        init(){
           // 加载栏目树
-          this.searchCategoryTree();
           this.searchTags();
-          this.loadArticle(id)
+          this.loadTocs()
         },
 
         ...mapMutations([
           'closeTag'
         ]),
-        searchCategoryTree(){
-          let self = this;
-          categoryApi.getCategoryTree().then(function (res) {
-            if (!res.data.success) {
-              self.setTreeMessage(res.data.status.message);
-            } else {
-              self.categoryTree.data = res.data.data == null ? [] : res.data.data;
-              self.initSelectedCate(self.article.category.id)
-            }
-          }).catch(function (error) {
-            self.setTreeMessage(error.message);
-          });
-        },
+
         searchTags(){
           let self = this;
           tagApi.getAll().then(function (res) {
@@ -405,128 +226,33 @@
           });
         },
 
-        handleSelect (name) {
-          this.initSelectedCate(name);
-          this.resetTocData()
-          this.loadTocs()
-        },
 
-        initSelectedCate(id){
-          if(id && this.categoryTree.data.length > 0){
-            let self = this;
-            this.categoryTree.data.forEach(function(item, index, arr) {
-              let children = item.children;
-              if(children && children.length > 0){
-                children.forEach(function(childItem, index, arr) {
-                  if(id == childItem.id){
-                    self.categoryTree.selectedData = childItem;
-                  }
-                })
-              }
-
-              if(id == item.id){
-                self.categoryTree.selectedData = item;
-              }
-
-            });
-          }
-          console.log(this.categoryTree.selectedData)
-
-        },
-
-        loadArticle(id) {
-          if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
-            this.$Message.error('请选择站点');
-            return
-          }
-
-          this.clearArticle()
-
-          if(id > 0){
-            let self = this;
-            articleApi.getById(id).then(function (res) {
-              let result = res.data;
-              if(result.success){
-                self.setArticle(result.data)
-                self.initSelectedCate(result.data.category.id)
-              }else{
-                self.$Message.error(result.status.message);
-              }
-            }).catch(function (error) {
-              self.$Message.error(error.message);
-            });
-          }
-
-        },
 
         setArticle(data){
           if(data == null){
+            this.clearArticle()
             return
           }
-          this.article.id = data.id;
-          this.article.title = data.title;
-          this.article.frontCover = data.frontCover;
-          this.article.keywords = data.keywords;
-          this.article.orders = data.orders;
-          this.article.description = data.description;
-          this.article.status = data.status;
-          this.article.allowComment = data.allowComment;
-          this.article.category.id = data.category == null ? 0 : data.category.id;
-          this.article.tagIds = data.tagIds;
-          this.article.articleData.content = data.articleData == null ? '' : data.articleData.content;
-        },
-
-        setTreeMessage(message) {
-          this.categoryTree.operation.success = false;
-          this.categoryTree.operation.message = message;
-        },
-
-        addOrUpdate(status) {
-          if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
-            this.$Message.error('请选择站点');
-            return
+          this.special.toc.article.id = data.id;
+          this.special.toc.article.title = data.title;
+          this.special.toc.article.frontCover = data.frontCover;
+          this.special.toc.article.keywords = data.keywords;
+          this.special.toc.article.orders = data.orders;
+          this.special.toc.article.description = data.description;
+          this.special.toc.article.status = data.status;
+          this.special.toc.article.allowComment = data.allowComment;
+          this.special.toc.article.tagIds = data.tagIds;
+          this.special.toc.article.articleData.content = data.articleData == null ? '' : data.articleData.content;
+          try {
+            //这里防止第一次加载，未初始化时出错，Cannot read property 'parse' of undefined
+            this.$refs.editor.setContent(this.special.toc.article.articleData.content)
+          } catch (error) {
+            console.warn('设置文章内容',error)
           }
-
-          this.article.status = status;
-          this.article.category.id = this.categoryTree.selectedData.id;
-
-          if(!this.article.category.id){
-            this.$Message.error("请选择文章栏目");
-            return;
-          }
-
-          console.info(this.article)
-          this.loading = true;
-          let self = this;
-          this.$refs.modalForm.validate((valid) => {
-            if (valid) {
-              articleApi.addOrUpdate(this.article).then(function (res) {
-                let result = res.data;
-                if (result.success) {
-                  self.$Message.info("发表成功");
-                  //添加文章成功后，跳到列表页
-                  if(self.article.id <= 0){
-                    self.$router.push({ path: '/content/article/list'})
-                    self.closeTag({
-                      name: 'article_edit'
-                    })
-                  }
-                } else {
-                  self.$Message.error(result.status.message);
-                }
-                self.loading = false;
-              }).catch(function (error) {
-                self.$Message.error(error.message);
-                self.loading = false;
-              });
-            } else {
-              self.loading = false;
-            }
-          })
         },
 
         clearArticle(){
-          this.article ={
+          this.special.toc.article = {
             id: 0,
             title: '',
             frontCover: '',
@@ -542,6 +268,12 @@
             articleData:{
               content: ''
             }
+          }
+          try {
+            //这里防止第一次加载，未初始化时出错，Cannot read property 'parse' of undefined
+            this.$refs.editor.setContent(this.special.toc.article.articleData.content)
+          } catch (error) {
+            console.warn('设置文章内容',error)
           }
         },
 
@@ -557,12 +289,11 @@
         resetTocData(){
           this.special.tree = []
           this.clearToc()
-          this.special.tocType = 'article'
         },
 
 
         loadTocs(){
-          let type = this.categoryTree.selectedData.type;
+          let type = this.categoryType;
           if(!type){
             return
           }
@@ -572,40 +303,28 @@
           }
 
           let self = this;
-          categoryTocApi.getTree(this.categoryTree.selectedData.id).then(function (res) {
+          categoryTocApi.getTree(this.categoryId).then(function (res) {
             if (!res.data.success) {
-              self.setTreeMessage(res.data.status.message);
+              self.$Message.error(res.data.status.message);
             } else {
               self.special.tree = res.data.data == null ? [] : res.data.data;
             }
           }).catch(function (error) {
-            self.setTreeMessage(error.message);
+            self.$Message.error(error.message);
           });
         },
 
-        resetTocType(){
-          if(this.special.toc.article == null){
-            this.special.tocType = 'link'
-          }else{
-            this.special.tocType = 'article'
-          }
-        },
         setToc(data){
           this.special.toc.id = data.id;
-          if(data.article != null){
-            this.setArticle(data.article);
-          }else{
-            this.clearArticle()
-          }
+          this.special.toc.article = data.article;
           this.special.toc.target = data.target;
           this.special.toc.url = data.url;
           this.special.toc.categoryId = data.category.id;
           this.special.toc.orders = data.orders;
           this.special.toc.pid = data.pid;
           this.special.toc.title = data.title;
-          this.special.initToc = false
-          this.resetTocType()
-
+          this.special.toc.type = data.type;
+          this.setArticle(data.article);
         },
 
         clearToc(){
@@ -615,14 +334,14 @@
             pid: 0,
             url: '',
             target: '_self',
+            type : 'inner',
             orders: 0,
-            categoryId: this.categoryTree.selectedData.id,
-            article: null
+            categoryId: this.categoryId,
           }
-          this.special.initToc = true
-          this.resetTocType()
+          this.clearArticle()
         },
         loadToc(id){
+          this.special.showContentCard = false
           this.clearToc()
           let self = this;
           categoryTocApi.getById(id).then(function (res) {
@@ -631,6 +350,7 @@
               console.info("获取专题目录失败" + result.status.message);
             } else {
               self.setToc(result.data);
+              self.special.showContentCard = true
             }
           }).catch(function (error) {
             console.info("获取专题目录失败" + error);
@@ -638,13 +358,10 @@
         },
 
         addOrUpdateToc(){
-          if(this.special.tocType == 'article'){
-            this.article.category.id = this.categoryTree.selectedData.id
-            this.special.toc.article = this.article
-          }else{
-            this.special.toc.article = null
-          }
-
+          this.special.toc.article.category = {id: this.categoryId}
+          this.special.toc.article.creator = getUserId();
+          this.special.toc.article.siteId = siteApi.getCurrentSiteID()
+          this.special.toc.categoryId = this.categoryId
           let self = this;
           this.$refs.tocForm.validate((valid) => {
             if (valid) {
@@ -653,7 +370,7 @@
                 if (result.success) {
                   self.$Message.info("操作成功");
                   self.loadTocs();
-                  self.setToc(result.data);
+                  self.clearToc()
                 } else {
                   self.$Message.error(result.status.message);
                 }
@@ -672,17 +389,22 @@
         addRootToc(){
           this.clearToc();
         },
-        removeToc (root, node, data) {
-          console.info(data);
+        removeToc () {
+
+          if(this.special.toc.id <= 0){
+            this.$Message.info('请选择目录');
+            return
+          }
           let self = this;
           this.$Modal.confirm({
             title: '确定要删除这条记录吗？',
             onOk: () => {
-              categoryTocApi.delete(data.id).then(function (res) {
+              categoryTocApi.delete(this.special.toc.id).then(function (res) {
                 let result = res.data;
                 if(result.success){
                   self.$Message.info('删除成功');
                   self.loadTocs();
+                  self.clearToc()
                 }else {
                   self.$Message.error('删除失败!' + result.status.message);
                 }
