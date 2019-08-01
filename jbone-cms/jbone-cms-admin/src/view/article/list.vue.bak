@@ -7,18 +7,13 @@
         </p>
 
         <div style="margin-bottom: 10px;">
-          <Input clearable placeholder="文章标题" v-model="query.title" style="width: 250px;" />
+          <tree-select :data="categoryTree.data" placeholder="文章栏目" style="width:250px;" v-model="categoryTree.selectedData" :expand-all="true" check-strictly></tree-select>
+          <Input clearable placeholder="文章标题" v-model="query.title" style="width: 250px;margin-left: 10px;" />
           <Button type="primary" icon="ios-search" @click="searchArticle" style="margin-left: 10px;">查询</Button>
           <Button type="primary" icon="ios-add" @click="toAddModel" style="margin-left: 10px;">发表文章</Button>
         </div>
 
-        <Table :loading="table.loading" :columns="table.columns" :data="table.data" stripe border ref="selection" @on-delete="handleDelete" @on-select="handleSelect">
-          <template slot="action" slot-scope="{ row, index }">
-            <Button @click="toEditModel(index)" type="primary" size="small">编辑</Button>
-            <Button @click="handleDelete(index)" type="warning" size="small" style="margin-left: 5px">删除</Button>
-            <Button @click="handleFlushDelete(index)" type="error" size="small" style="margin-left: 5px">彻底删除</Button>
-          </template>
-        </Table>
+        <Table :loading="table.loading" :columns="table.columns" :data="table.data" stripe border ref="selection" @on-delete="handleDelete" @on-select="handleSelect"></Table>
         <Page :total="query.totalRecord" show-total :pageSize="query.pageSize" @on-change="pageChange" show-sizer @on-page-size-change="pageSizeChange"
               v-show="table.operation.success"></Page>
       </card>
@@ -47,7 +42,7 @@
       return {
         query: {
           title: '',
-          categoryId: 0,
+          categoryIds: [0],
           totalRecord: 0,
           pageSize: 10,
           pageNumber: 1
@@ -87,7 +82,50 @@
             {title: '阅读量', key: 'hits'},
             {
               title: '操作',
-              slot: 'action'
+              key: 'handle',
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'primary',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.toEditModel(params.index);
+                      }
+                    }
+                  }, '修改'),
+                  h('Button', {
+                    props: {
+                      type: 'warning',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.handleDelete(params.index);
+                      }
+                    }
+                  }, '删除'),
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    on: {
+                      click: () => {
+                        this.handleFlushDelete(params.index);
+                      }
+                    }
+                  }, '彻底删除')
+                ]);
+              }
             }
           ],
           data: [],
@@ -116,15 +154,23 @@
       this.init();
     },
 
-    watch: {
-      categoryId(val){
-        this.table.data = []
-      }
-    },
     methods: {
 
       init(){
         // 加载栏目树
+        this.searchCategoryTree();
+      },
+      searchCategoryTree(){
+        let self = this;
+        categoryApi.getCategoryTree().then(function (res) {
+          if (!res.data.success) {
+            self.setTreeMessage(res.data.status.message);
+          } else {
+            self.categoryTree.data = res.data.data;
+          }
+        }).catch(function (error) {
+          self.setTreeMessage(error.message);
+        });
       },
       searchArticle() {
         if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
@@ -133,7 +179,7 @@
         }
         this.table.loading = true;
         let self = this;
-        this.query.categoryId = this.categoryId;
+        this.query.categoryIds = this.categoryTree.selectedData;
         articleApi.commonSearch(this.query).then(function (res) {
           console.info(res);
           self.table.loading = false;
@@ -153,15 +199,23 @@
         });
       },
       toAddModel() {
-        this.$emit('addArticle');
+        if(siteApi.getCurrentSiteID() == null || siteApi.getCurrentSiteID() == ''){
+          this.$Message.error('请选择站点');
+          return
+        }
+        this.$router.push({ path: '/content/article/edit', params: { id:0 }})
       },
 
       toEditModel(index) {
-        this.$emit('editArticle',this.table.data[index].id);
+        this.$router.push({ path: '/content/article/edit', query: { id:this.table.data[index].id }})
       },
       setTableMessage(message) {
         this.table.operation.success = false;
         this.table.operation.message = message;
+      },
+      setTreeMessage(message) {
+        this.categoryTree.operation.success = false;
+        this.categoryTree.operation.message = message;
       },
       handleDelete (index) {
         let self = this;

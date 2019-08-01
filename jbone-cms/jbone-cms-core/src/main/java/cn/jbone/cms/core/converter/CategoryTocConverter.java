@@ -75,8 +75,9 @@ public class CategoryTocConverter {
         if(categoryTocDO.getArticle() != null && categoryTocDO.getArticle().getId() != null && categoryTocDO.getArticle().getId() > 0){
             categoryToc.setArticle(articleRepository.getOne(categoryTocDO.getArticle().getId()));
         }
-        if(categoryTocDO.getCategory() != null && categoryTocDO.getCategory().getId() != null && categoryTocDO.getCategory().getId() > 0){
-            categoryToc.setCategory(categoryRepository.getOne(categoryTocDO.getCategory().getId()));
+
+        if(categoryTocDO.getCategoryId() != null && categoryTocDO.getCategoryId() > 0){
+            categoryToc.setCategory(categoryRepository.getOne(categoryTocDO.getCategoryId()));
         }
 
         categoryToc.setFrontCover(categoryTocDO.getFrontCover());

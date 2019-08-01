@@ -57,4 +57,6 @@ public class CategoryTocDO {
      */
     private ArticleDO article;
 
+    private Long categoryId;
+
 }
