@@ -48,6 +48,8 @@
             <Button type="primary" size="large" :loading="loading" @click="addOrUpdate('PUBLISH')">发表</Button>
             &nbsp;&nbsp;
             <Button type="success" size="large" :loading="loading" @click="addOrUpdate('AUDIT')">保存</Button>
+            &nbsp;&nbsp;
+            <Button type="info" size="large" :loading="loading" @click="cancel">取消</Button>
           </FormItem>
 
         </Form>
@@ -346,6 +348,10 @@
             console.warn('设置文章内容',error)
           }
         },
+
+        cancel(){
+          this.$emit('cancel');
+        }
       }
     }
 </script>

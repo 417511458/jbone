@@ -37,6 +37,21 @@ public class CategoryTocApiImpl implements CategoryTocApi {
     }
 
     @Override
+    public Result<CategoryTocDO> getByCategoryAndArticle(Long categoryId, Long articleId) {
+        CategoryTocDO categoryTocDO = null;
+        try{
+            categoryTocDO = categoryTocService.getByCategoryAndArticle(categoryId,articleId);
+        }catch (JboneException e){
+            logger.warn("CategoryToc getByCategoryAndArticle error.",e);
+            return Result.wrap500Error(e.getMessage());
+        }catch (Exception e){
+            logger.warn("CategoryToc getByCategoryAndArticle error.",e);
+            return Result.wrap500Error("系统错误");
+        }
+        return Result.wrapSuccess(categoryTocDO);
+    }
+
+    @Override
     public Result<CategoryTocDO> addOrUpdate(@RequestBody CategoryTocDO categoryTocDO) {
         CategoryTocDO categoryToc = null;
         try {

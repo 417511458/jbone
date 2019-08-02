@@ -1,5 +1,6 @@
 package cn.jbone.cms.core.dao.repository;
 
+import cn.jbone.cms.core.dao.entity.Article;
 import cn.jbone.cms.core.dao.entity.Category;
 import cn.jbone.cms.core.dao.entity.CategoryToc;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,6 @@ public interface CategoryTocRepository extends JpaRepository<CategoryToc,Long>, 
     long countByPid(long pid);
 
     List<CategoryToc> findAllByCategoryAndPidOrderByOrders(Category category,long pid);
+
+    List<CategoryToc> findAllByCategoryAndArticle(Category category, Article article);
 }

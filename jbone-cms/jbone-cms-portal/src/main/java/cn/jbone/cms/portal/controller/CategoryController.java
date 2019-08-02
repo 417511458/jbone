@@ -1,6 +1,7 @@
 package cn.jbone.cms.portal.controller;
 
 import cn.jbone.cms.common.constant.DictionaryConstant;
+import cn.jbone.cms.common.constant.GlobalConstant;
 import cn.jbone.cms.common.dataobject.*;
 import cn.jbone.cms.common.dataobject.config.ArticleFiledConfigDO;
 import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
@@ -205,10 +206,10 @@ public class CategoryController {
                 specialTreeVo.getState().setSelected(true);
             }
             specialTreeVo.setText(categoryTocDO.getTitle());
-            if(StringUtils.isNotBlank(categoryTocDO.getUrl())){
-                specialTreeVo.setHref(categoryTocDO.getUrl());
-            }else{
+            if(StringUtils.isBlank(categoryTocDO.getType()) || GlobalConstant.CATEGORY_TOC_TYPE_INNER.equalsIgnoreCase(categoryTocDO.getType())){
                 specialTreeVo.setHref(contextPath + "/category/" + categoryDO.getCode() + "/" + categoryTocDO.getId());
+            }else{
+                specialTreeVo.setHref(categoryTocDO.getUrl());
             }
             specialTreeVos.add(specialTreeVo);
 

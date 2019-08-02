@@ -81,4 +81,12 @@ public class CategoryService {
         }
         return null;
     }
+
+    public CategoryTocDO getTocByCategoryAndArticle(Long categoryId,Long articleId){
+        Result<CategoryTocDO> result = categoryTocApi.getByCategoryAndArticle(categoryId,articleId);
+        if(result != null && result.isSuccess()){
+            return result.getData();
+        }
+        return null;
+    }
 }

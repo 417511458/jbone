@@ -15,6 +15,9 @@ public interface CategoryTocApi {
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
     Result<CategoryTocDO> get(@RequestParam("id") Long id);
 
+    @RequestMapping(value = "/getByCategoryAndArticle",method = {RequestMethod.GET})
+    Result<CategoryTocDO> getByCategoryAndArticle(@RequestParam("categoryId") Long categoryId,@RequestParam("articleId") Long articleId);
+
     @RequestMapping(value = "/addOrUpdate",method = {RequestMethod.POST})
     Result<CategoryTocDO> addOrUpdate(@RequestBody CategoryTocDO categoryTocDO);
 

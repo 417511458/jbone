@@ -52,11 +52,11 @@
                 </FormItem>
 
 
-                <FormItem label="链接" prop="url">
+                <FormItem label="链接" prop="url" v-show="showLink">
                   <i-input v-model="special.toc.url" clearable placeholder="链接URL"></i-input>
                 </FormItem>
 
-                <FormItem label="打开目标" prop="target" >
+                <FormItem label="打开目标" prop="target" v-show="showTarget" >
                   <RadioGroup v-model="special.toc.target">
                     <Radio label="_self">当前窗口打开</Radio>
                     <Radio label="_blank">新窗口打开</Radio>
@@ -67,14 +67,14 @@
                   <InputNumber v-model="special.toc.orders" clearable  placeholder="排序号"></InputNumber>
                 </FormItem>
 
-                <FormItem label="关键字" prop="article.keywords">
-                  <i-input v-model="special.toc.article.keywords" clearable placeholder="关键字"></i-input>
+                <FormItem label="关键字" prop="article.keywords" v-show="showKeywords">
+                  <i-input v-model="special.toc.article.keywords" clearable placeholder="关键字,用逗号或空格隔开"></i-input>
                 </FormItem>
 
-                <FormItem label="说明" prop="article.description">
+                <FormItem label="说明" prop="article.description" v-show="showDescription">
                   <i-input v-model="special.toc.article.description" clearable placeholder="说明"></i-input>
                 </FormItem>
-                <FormItem label="标签">
+                <FormItem label="标签" v-show="showTag">
                   <Row>
                     <Col span="6">
                       <Select v-model="special.toc.article.tagIds" filterable multiple>
@@ -92,12 +92,12 @@
 
                   </Row>
                 </FormItem>
-                <FormItem label="内容" prop="article.articleData.content">
+                <FormItem label="内容" prop="article.articleData.content" v-show="showContent">
                   <div class="edit_container" >
                     <tinymce ref="editor" v-model="special.toc.article.articleData.content"></tinymce>
                   </div>
                 </FormItem>
-                <FormItem label="封面图" prop="article.frontCover">
+                <FormItem label="封面图" prop="article.frontCover" v-show="showFrontCover">
                   <upload-file v-model="special.toc.article.frontCover"></upload-file>
                 </FormItem>
                 <FormItem>
@@ -187,11 +187,57 @@
             showContentCard:true,
           },
           loading:false,
-          showFrontCover:false
         }
       },
       computed:{
+        showLink(){
+          if(this.special.toc.type == 'inner'){
+            return false
+          }
+          return true
+        },
 
+        showTarget(){
+          if(this.special.toc.type == 'inner'){
+            return false
+          }
+          return true
+        },
+
+        showKeywords(){
+          if(this.special.toc.type == 'inner'){
+            return true
+          }
+          return false
+        },
+
+        showDescription(){
+          if(this.special.toc.type == 'inner'){
+            return true
+          }
+          return false
+        },
+
+        showTag(){
+          if(this.special.toc.type == 'inner'){
+            return true
+          }
+          return false
+        },
+
+        showContent(){
+          if(this.special.toc.type == 'inner'){
+            return true
+          }
+          return false
+        },
+
+        showFrontCover(){
+          if(this.special.toc.type == 'inner'){
+            return true
+          }
+          return false
+        }
       },
 
       watch:{

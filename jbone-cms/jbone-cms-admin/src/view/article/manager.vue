@@ -27,9 +27,11 @@
 
         <Col :span="20">
           <card :dis-hover="true" v-show="showContentCard">
-            <article-list v-if="showArticleList" :category-id="categoryTree.selectedData.id" @addArticle="toAddArticle" @editArticle="toEditArticle"></article-list>
+
+
+            <article-edit v-if="showArticleEdit" :category-id="categoryTree.selectedData.id" :category-type="categoryTree.selectedData.type" :article-id="articleId" @success="editArticleSuccess" @cancel="hideArticle"></article-edit>
             <br />
-            <article-edit v-if="showArticleEdit" :category-id="categoryTree.selectedData.id" :category-type="categoryTree.selectedData.type" :article-id="articleId" @success="editArticleSuccess"></article-edit>
+            <article-list v-if="showArticleList" :category-id="categoryTree.selectedData.id" @addArticle="toAddArticle" @editArticle="toEditArticle"></article-list>
             <special v-if="showSpecial" :category-id="categoryTree.selectedData.id" :category-type="categoryTree.selectedData.type"></special>
           </Card>
         </Col>

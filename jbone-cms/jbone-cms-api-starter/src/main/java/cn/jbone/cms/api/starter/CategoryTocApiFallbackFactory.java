@@ -18,10 +18,17 @@ public class CategoryTocApiFallbackFactory implements FallbackFactory<CategoryTo
 
     @Override
     public CategoryTocApi create(Throwable throwable) {
-        return new CategoryTocApi() {
+        return new CategoryTocApi()
+        {
             @Override
             public Result<CategoryTocDO> get(Long id) {
                 logger.error("rpc get broke",throwable);
+                return Result.wrapProtectedError();
+            }
+
+            @Override
+            public Result<CategoryTocDO> getByCategoryAndArticle(Long categoryId, Long articleId) {
+                logger.error("rpc getByCategoryAndArticle broke",throwable);
                 return Result.wrapProtectedError();
             }
 

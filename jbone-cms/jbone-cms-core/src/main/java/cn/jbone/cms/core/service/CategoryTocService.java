@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,6 +47,22 @@ public class CategoryTocService {
     public CategoryTocDO get(Long id){
         CategoryToc categoryToc = categoryTocRepository.getOne(id);
         return categoryTocConverter.toCategoryTocDO(categoryToc);
+    }
+
+    public CategoryTocDO getByCategoryAndArticle(Long categoryId,Long articleId){
+        Category category = categoryRepository.getOne(categoryId);
+        if(category == null){
+            return null;
+        }
+        Article article = articleRepository.getOne(articleId);
+        if(article == null){
+            return null;
+        }
+        List<CategoryToc> categoryTocs = categoryTocRepository.findAllByCategoryAndArticle(category,article);
+        if(!CollectionUtils.isEmpty(categoryTocs)){
+            return categoryTocConverter.toCategoryTocDO(categoryTocs.get(0));
+        }
+        return null;
     }
 
 

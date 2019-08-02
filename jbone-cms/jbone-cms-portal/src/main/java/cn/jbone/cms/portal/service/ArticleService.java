@@ -54,21 +54,6 @@ public class ArticleService {
         return null;
     }
 
-    public void toArticleDetail(ModelMap modelMap,Long id){
-        hits(id);
-        ArticleResponseDO article = findById(id);
-        if(article == null){
-            throw new Jbone404Exception();
-        }
-
-        CategoryDO categoryDO = null;
-        if(article.getCategory() != null){
-            categoryDO = categoryService.findById(article.getCategory().getId());
-        }
-
-        toArticleDetail(modelMap,article,categoryDO);
-    }
-
     public void hits(Long id){
         articleApi.hits(id); //增加阅读量
     }
@@ -77,6 +62,8 @@ public class ArticleService {
         if(article == null){
             return;
         }
+
+        hits(article.getId());
 
         modelMap.addAttribute("category",categoryDO);
         modelMap.addAttribute("article",article);
