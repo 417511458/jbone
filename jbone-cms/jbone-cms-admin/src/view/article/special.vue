@@ -408,6 +408,12 @@
           this.special.toc.article.creator = getUserId();
           this.special.toc.article.siteId = siteApi.getCurrentSiteID()
           this.special.toc.categoryId = this.categoryId
+
+          //如果是外部文章，则不发表
+          if(this.special.toc.type == 'outer'){
+            this.special.toc.article.status = 'AUDIT'
+          }
+
           let self = this;
           this.$refs.tocForm.validate((valid) => {
             if (valid) {

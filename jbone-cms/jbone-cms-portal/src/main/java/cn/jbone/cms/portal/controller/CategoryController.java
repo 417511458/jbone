@@ -76,7 +76,8 @@ public class CategoryController {
             return toTag(modelMap,categoryDO,request,pageNumber);
         }
 
-        throw new JboneException("不合法的分类:" + JSON.toJSONString(categoryDO));
+        //默认跳转到普通分类
+        return toCategory(modelMap,categoryDO,request,pageNumber);
 
     }
 

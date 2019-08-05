@@ -6,6 +6,7 @@ import cn.jbone.common.dataobject.SearchListDO;
 import cn.jbone.common.dataobject.SearchSortDO;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -34,7 +35,7 @@ public class ArticleSearchDO extends SearchListDO {
     /**
      * 文章状态，枚举,默认发布状态
      */
-    private List<StatusEnum> statusList;
+    private List<StatusEnum> statusList = new ArrayList<>();
 
     /**
      * 分类
@@ -77,7 +78,6 @@ public class ArticleSearchDO extends SearchListDO {
         ArticleSearchDO articleSearchDO = new ArticleSearchDO();
         articleSearchDO.setPageNumber(pageNumber);
         articleSearchDO.setPageSize(pageSize);
-        articleSearchDO.addSort(new SearchSortDO("addTime", SearchSortDO.Direction.DESC));
         return articleSearchDO;
     }
 

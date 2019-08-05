@@ -68,7 +68,12 @@ public class ArticleController {
         }
 
         articleService.toArticleDetail(modelMap,article,categoryDO);
-        dataCollectorHandler.handle(DataCollectorContext.build(modelMap, DictionaryConstant.ITEM_PAGE_NAME_ARTICLE));
+
+
+        DataCollectorContext context = DataCollectorContext.build(modelMap, DictionaryConstant.ITEM_PAGE_NAME_ARTICLE);
+        context.setArticle(article);
+        context.setCategory(categoryDO);
+        dataCollectorHandler.handle(context);
         return commonService.getTemplatePage(DictionaryConstant.ITEM_PAGE_NAME_ARTICLE);
     }
 

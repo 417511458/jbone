@@ -24,16 +24,11 @@ public class ArticleService {
 
     @Autowired
     private ArticleApi articleApi;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private CommentService commentService;
 
     @Autowired
     private CachedSiteManager cachedSiteManager;
 
     public PagedResponseDO<ArticleResponseDO> findArticles(ArticleSearchDO articleRequestDO){
-        articleRequestDO.setSiteId(cachedSiteManager.getCurrentSiteId());
         Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleRequestDO);
         if(result != null && result.isSuccess()){
             PagedResponseDO<ArticleResponseDO> data = result.getData();
@@ -67,34 +62,16 @@ public class ArticleService {
 
         modelMap.addAttribute("category",categoryDO);
         modelMap.addAttribute("article",article);
-        modelMap.addAttribute("lastArticle",getLastOrNextArticle(article,SearchConditionDO.Operator.GREATER_THAN));
-        modelMap.addAttribute("nextArticle",getLastOrNextArticle(article,SearchConditionDO.Operator.LESS_THAN));
-        modelMap.addAttribute("comments",commentService.getByArticleId(article.getId()));
         modelMap.addAttribute("articlePlugins", cachedSiteManager.getCurrentPlugsByType(DictionaryConstant.ITEM_PLUGIN_TYPE_ARTICLE));
     }
 
-    //上一篇文章
-    private ArticleResponseDO getLastOrNextArticle(ArticleResponseDO article, SearchConditionDO.Operator operator){
-        ArticleSearchDO articleSearchDO = ArticleSearchDO.build();
-        articleSearchDO.setPageSize(1);
-        if(article.getCategory() != null){
-            articleSearchDO.setCategoryId(article.getCategory().getId());
-        }
-        String conditionValue = DateUtil.formateDate(new Date(article.getAddTime()),DateUtil.TIME_FORMAT);
-        articleSearchDO.addCondition(new SearchConditionDO("addTime",operator,conditionValue));
-
-        PagedResponseDO<ArticleResponseDO> result = findArticles(articleSearchDO);
-        if (result != null && !CollectionUtils.isEmpty(result.getDatas())){
-            return  result.getDatas().get(0);
-        }
-        return null;
-    }
 
     //第一篇文章
     public ArticleResponseDO getFirstArticle(Long categoryId){
         ArticleSearchDO articleSearchDO = ArticleSearchDO.build();
         articleSearchDO.setPageSize(1);
         articleSearchDO.setCategoryId(categoryId);
+        articleSearchDO.setSiteId(cachedSiteManager.getCurrentSiteId());
         articleSearchDO.addSort(new SearchSortDO("orders",SearchSortDO.Direction.ASC));
 
         PagedResponseDO<ArticleResponseDO> result = findArticles(articleSearchDO);

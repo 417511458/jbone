@@ -157,6 +157,11 @@ public class ArticleService {
     public PagedResponseDO<ArticleResponseDO> commonRequest(ArticleSearchDO articleSearchDO){
 
         Sort sort = SpecificationUtils.buildSort(articleSearchDO.getSorts());
+
+        //默认添加时间倒叙
+        if(sort.isUnsorted()){
+            sort = Sort.by(Sort.Order.desc("addTime"));
+        }
         PageRequest pageRequest = PageRequest.of(articleSearchDO.getPageNumber()-1, articleSearchDO.getPageSize(),sort);
         Page<Article> articlePage =  articleRepository.findAll(new ArticleCommonRequestSpecification(articleSearchDO),pageRequest);
 

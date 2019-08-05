@@ -3,6 +3,7 @@ package cn.jbone.cms.portal.collectors;
 import cn.jbone.cms.api.ArticleApi;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
+import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.dataobject.SearchSortDO;
 import cn.jbone.common.rpc.Result;
@@ -29,6 +30,7 @@ public class NewArticleListCollector implements IDataCollector {
         articleSearchDO.addSort(new SearchSortDO("addTime",SearchSortDO.Direction.DESC));
         articleSearchDO.addSort(new SearchSortDO("hits",SearchSortDO.Direction.DESC));
         articleSearchDO.setSiteId(context.getSiteId());
+        articleSearchDO.getStatusList().add(StatusEnum.PUBLISH);
 
         List<ArticleResponseDO> articleResponseDOList = null;
         Result<PagedResponseDO<ArticleResponseDO>> result = articleApi.commonRequest(articleSearchDO);

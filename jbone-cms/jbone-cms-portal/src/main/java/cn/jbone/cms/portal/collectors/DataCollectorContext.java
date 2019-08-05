@@ -1,15 +1,21 @@
 package cn.jbone.cms.portal.collectors;
 
+import cn.jbone.cms.common.dataobject.ArticleResponseDO;
+import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
+import lombok.Data;
 import org.springframework.ui.ModelMap;
 
 import java.io.Serializable;
 
+@Data
 public class DataCollectorContext implements Serializable {
     private ModelMap modelMap;
     private Integer siteId;
     private ArticleSearchDO articleRequestDO;
     private String page;
+    private ArticleResponseDO article;
+    private CategoryDO category;
 
     public void addAttribute(String key,Object value){
         this.modelMap.addAttribute(key,value);
@@ -63,35 +69,4 @@ public class DataCollectorContext implements Serializable {
         return context;
     }
 
-    public String getPage() {
-        return page;
-    }
-
-    public void setPage(String page) {
-        this.page = page;
-    }
-
-    public ModelMap getModelMap() {
-        return modelMap;
-    }
-
-    public void setModelMap(ModelMap modelMap) {
-        this.modelMap = modelMap;
-    }
-
-    public Integer getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(Integer siteId) {
-        this.siteId = siteId;
-    }
-
-    public ArticleSearchDO getArticleRequestDO() {
-        return articleRequestDO;
-    }
-
-    public void setArticleRequestDO(ArticleSearchDO articleRequestDO) {
-        this.articleRequestDO = articleRequestDO;
-    }
 }

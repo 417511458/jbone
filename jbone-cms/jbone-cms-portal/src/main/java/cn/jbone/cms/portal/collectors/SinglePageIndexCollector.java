@@ -4,6 +4,7 @@ import cn.jbone.cms.api.ArticleApi;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.common.dataobject.CategoryDO;
 import cn.jbone.cms.common.dataobject.search.ArticleSearchDO;
+import cn.jbone.cms.common.enums.StatusEnum;
 import cn.jbone.cms.portal.cache.CachedSiteManager;
 import cn.jbone.cms.portal.service.ArticleService;
 import cn.jbone.cms.portal.vo.SinglePageCategoryVo;
@@ -47,6 +48,8 @@ public class SinglePageIndexCollector implements IDataCollector{
             ArticleSearchDO articleSearchDO = ArticleSearchDO.build();
             articleSearchDO.setCategoryId(categoryDO.getId());
             articleSearchDO.getConfig().includeContent(true);
+            articleSearchDO.getStatusList().add(StatusEnum.PUBLISH);
+            articleSearchDO.setSiteId(context.getSiteId());
             PagedResponseDO<ArticleResponseDO> pagedResponseDO = articleService.findArticles(articleSearchDO);
             if(pagedResponseDO != null){
                 singlePageCategoryVo.setArticleList(pagedResponseDO.getDatas());
