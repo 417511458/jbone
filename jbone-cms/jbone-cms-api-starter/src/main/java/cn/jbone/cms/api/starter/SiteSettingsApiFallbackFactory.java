@@ -3,6 +3,8 @@ package cn.jbone.cms.api.starter;
 import cn.jbone.cms.api.SiteSettingsApi;
 import cn.jbone.cms.common.dataobject.BatchSaveSiteSettingDO;
 import cn.jbone.cms.common.dataobject.SiteSettingsDO;
+import cn.jbone.cms.common.dataobject.search.SiteSettingsSearchDO;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
@@ -54,6 +56,12 @@ public class SiteSettingsApiFallbackFactory implements FallbackFactory<SiteSetti
             @Override
             public Result<Map<String, String>> getMap(Integer siteId) {
                 logger.error("rpc getMap broke",throwable);
+                return Result.wrapProtectedError();
+            }
+
+            @Override
+            public Result<PagedResponseDO<SiteSettingsDO>> commonRequest(SiteSettingsSearchDO settingsSearchDO) {
+                logger.error("rpc commonRequest broke",throwable);
                 return Result.wrapProtectedError();
             }
         };

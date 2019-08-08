@@ -9,7 +9,11 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-@Table(name = "site_settings",indexes = {@Index(name = "site_settings_index_siteid",columnList = "site_id")})
+@Table(name = "site_settings",
+        indexes = {@Index(name = "site_settings_index_siteid",columnList = "site_id")},
+        uniqueConstraints = {
+        @UniqueConstraint(name = "site_settings_uc_siteid_name",columnNames = {"site_id","name"})}
+        )
 public class SiteSettings extends BaseEntity {
 
     @Id
@@ -25,7 +29,7 @@ public class SiteSettings extends BaseEntity {
     private Integer siteId;
 
     /**
-     * 设置名，如title
+     * 设置key，如title
      */
     @Column(name = "name",nullable = false)
     private String name;
@@ -35,6 +39,18 @@ public class SiteSettings extends BaseEntity {
      */
     @Column(name = "value")
     private String value;
+
+    /**
+     * 提示文案
+     */
+    @Column(name = "prompt")
+    private String prompt;
+
+    /**
+     * 数据类型
+     */
+    @Column(name = "data_type")
+    private String dataType;
 
 
 

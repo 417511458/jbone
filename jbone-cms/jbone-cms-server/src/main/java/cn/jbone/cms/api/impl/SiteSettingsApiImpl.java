@@ -3,7 +3,9 @@ package cn.jbone.cms.api.impl;
 import cn.jbone.cms.api.SiteSettingsApi;
 import cn.jbone.cms.common.dataobject.BatchSaveSiteSettingDO;
 import cn.jbone.cms.common.dataobject.SiteSettingsDO;
+import cn.jbone.cms.common.dataobject.search.SiteSettingsSearchDO;
 import cn.jbone.cms.core.service.SiteSettingsService;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
 import org.slf4j.Logger;
@@ -111,5 +113,20 @@ public class SiteSettingsApiImpl implements SiteSettingsApi {
             return Result.wrap500Error("系统错误");
         }
         return Result.wrapSuccess(siteSettingsMap);
+    }
+
+    @Override
+    public Result<PagedResponseDO<SiteSettingsDO>> commonRequest(@RequestBody SiteSettingsSearchDO settingsSearchDO) {
+        PagedResponseDO<SiteSettingsDO> pagedResponseDO = null;
+        try {
+            pagedResponseDO = siteSettingsService.commonRequest(settingsSearchDO);
+        } catch (JboneException e) {
+            logger.warn("SiteSettings settingsSearchDO error.",e);
+            return Result.wrap500Error(e.getMessage());
+        } catch (Exception e) {
+            logger.error("SiteSettings settingsSearchDO error.",e);
+            return Result.wrap500Error("系统错误");
+        }
+        return Result.wrapSuccess(pagedResponseDO);
     }
 }

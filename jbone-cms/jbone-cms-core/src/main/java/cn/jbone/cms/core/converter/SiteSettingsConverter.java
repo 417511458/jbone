@@ -26,6 +26,8 @@ public class SiteSettingsConverter {
         siteSettingsDO.setName(siteSettings.getName());
         siteSettingsDO.setSiteId(siteSettings.getSiteId());
         siteSettingsDO.setValue(siteSettings.getValue());
+        siteSettingsDO.setDataType(siteSettings.getDataType());
+        siteSettingsDO.setPrompt(siteSettings.getPrompt());
         return siteSettingsDO;
     }
 
@@ -57,6 +59,8 @@ public class SiteSettingsConverter {
         settings.setName(settingsDO.getName());
         settings.setSiteId(settingsDO.getSiteId());
         settings.setValue(settingsDO.getValue());
+        settings.setDataType(settingsDO.getDataType());
+        settings.setPrompt(settingsDO.getPrompt());
         return settings;
     }
 

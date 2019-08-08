@@ -4,13 +4,7 @@ import siteApi from '@/api/site'
 let siteSettingsApi = {};
 
 siteSettingsApi.getAll = function(){
-  return axios.request({
-    url: 'cms/siteSettings/getMap',
-    method: 'get',
-    params: {
-      siteId: siteApi.getCurrentSiteID()
-    }
-  });
+  return this.getAllWithSiteId(siteApi.getCurrentSiteID())
 }
 
 siteSettingsApi.getAllWithSiteId = function(siteId){
@@ -22,6 +16,16 @@ siteSettingsApi.getAllWithSiteId = function(siteId){
     }
   });
 }
+
+siteSettingsApi.commonRequest = function(condition){
+  condition.siteId = siteApi.getCurrentSiteID()
+  return axios.request({
+    url: 'cms/siteSettings/commonRequest',
+    method: 'post',
+    data: condition
+  });
+}
+
 
 siteSettingsApi.getById = function(id){
   return axios.request({

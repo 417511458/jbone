@@ -50,8 +50,11 @@ export default {
   special_page: '专题管理',
   dictionary_list: '字典管理',
 
-  base: '基本设置',
-  site_base_page: '网站基本信息',
+  base: '系统管理',
+  site: '站点配置',
+  site_base_page: '站点基本信息',
+  site_extend_page: '站点扩展信息',
+  site_property_page: '编辑站点信息',
   link_list: '友情链接',
   plugin_list: '插件管理',
 

@@ -12,7 +12,7 @@ public class SiteSettingsDO {
     private Integer siteId;
 
     /**
-     * 设置名，如title
+     * 扩展key，如title
      */
     private String name;
 
@@ -20,6 +20,16 @@ public class SiteSettingsDO {
      * 值
      */
     private String value;
+
+    /**
+     * 提示文案
+     */
+    private String prompt;
+
+    /**
+     * 数据类型
+     */
+    private String dataType;
 
     private Integer creator;
 }

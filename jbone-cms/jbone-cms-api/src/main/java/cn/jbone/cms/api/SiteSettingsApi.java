@@ -2,6 +2,8 @@ package cn.jbone.cms.api;
 
 import cn.jbone.cms.common.dataobject.BatchSaveSiteSettingDO;
 import cn.jbone.cms.common.dataobject.SiteSettingsDO;
+import cn.jbone.cms.common.dataobject.search.SiteSettingsSearchDO;
+import cn.jbone.common.dataobject.PagedResponseDO;
 import cn.jbone.common.rpc.Result;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,9 @@ public interface SiteSettingsApi {
 
     @RequestMapping(value = "/getList",method = {RequestMethod.GET})
     Result<List<SiteSettingsDO>> getList(@RequestParam("siteId") Integer siteId);
+
+    @RequestMapping(value = "/commonRequest",method = {RequestMethod.POST})
+    Result<PagedResponseDO<SiteSettingsDO>> commonRequest(@RequestBody SiteSettingsSearchDO settingsSearchDO);
 
     @RequestMapping(value = "/getMap",method = {RequestMethod.GET})
     Result<Map<String,String>> getMap(@RequestParam("siteId") Integer siteId);

@@ -59,14 +59,23 @@ export default [
       icon: 'ios-book'
     },
     children: [
+      // {
+      //   path: 'article/edit',
+      //   name: 'article_edit',
+      //   meta: {
+      //     icon: 'ios-add-circle-outline',
+      //     title: '发表文章'
+      //   },
+      //   component: () => import('@/view/article/edit.vue')
+      // },
       {
-        path: 'article/edit',
-        name: 'article_edit',
+        path: 'article/list',
+        name: 'article_list',
         meta: {
-          icon: 'ios-add-circle-outline',
-          title: '发表文章'
+          icon: 'ios-book',
+          title: '文章管理'
         },
-        component: () => import('@/view/article/edit.vue')
+        component: () => import('@/view/article/manager.vue')
       },
       {
         path: 'category/list',
@@ -76,15 +85,6 @@ export default [
           title: '栏目管理'
         },
         component: () => import('@/view/category/list.vue')
-      },
-      {
-        path: 'article/list',
-        name: 'article_list',
-        meta: {
-          icon: 'ios-book',
-          title: '文章管理'
-        },
-        component: () => import('@/view/article/manager.vue')
       },
       {
         path: 'tag/list',
@@ -136,6 +136,45 @@ export default [
     ]
   },
   {
+    path: '/site',
+    name: 'site',
+    component: Main,
+    meta: {
+      title: '站点配置',
+      icon: 'ios-book'
+    },
+    children: [
+      {
+        path: 'base',
+        name: 'site_base_page',
+        meta: {
+          icon: 'ios-book',
+          title: '站点基本信息'
+        },
+        component: () => import('@/view/site-settings/Settings.vue')
+      },
+      {
+        path: 'extend',
+        name: 'site_extend_page',
+        meta: {
+          icon: 'ios-book',
+          title: '站点扩展信息'
+        },
+        component: () => import('@/view/site-settings/extend.vue')
+      },
+      {
+        path: 'edit',
+        name: 'site_property_page',
+        meta: {
+          icon: 'ios-book',
+          title: '站点属性编辑',
+          hideInMenu: true,
+        },
+        component: () => import('@/view/site-settings/edit.vue')
+      },
+    ]
+  },
+  {
     path: '/base',
     name: 'base',
     component: Main,
@@ -144,15 +183,6 @@ export default [
       icon: 'ios-book'
     },
     children: [
-      {
-        path: 'site_base_page',
-        name: 'site_base_page',
-        meta: {
-         icon: 'ios-book',
-         title: '网站基本信息'
-        },
-        component: () => import('@/view/site-settings/Settings.vue')
-      },
       {
         path: 'dictionary/list',
         name: 'dictionary_list',
