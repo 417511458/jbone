@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:jbone="http://www.jbone.cn">
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" th:content="${settings.description}" />
+  <meta name="keywords" th:content="${settings.keywords}" />
+  <meta name="author" content="" />
+
+  <title th:text="${settings.title}">CMS标题 - 未配置</title>
+  <link rel="icon" th:href="@{/default/img/favicon.ico}" type="image/x-icon" />
+
+
+</head>
+
+<body class="parent-active" style="display: block;">
+<p>这是测试静态页面用的</p>
+<p>这是描述：<span th:text="${settings.description}"></span></p>
+<p>这是关于我的文案：<span th:text="${settings.aboutme}"></span></p>
+
+</body>
+
+</html>

@@ -43,7 +43,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
         excludeUris.add(".gif");
         excludeUris.add(".png");
         excludeUris.add(".ico");
-        excludeUris.add(".html");
+//        excludeUris.add(".html");
 
         //字体文件
         excludeUris.add(".otf");
