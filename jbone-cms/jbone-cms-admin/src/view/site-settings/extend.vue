@@ -11,7 +11,13 @@
         <Icon type="ios-film-outline"></Icon>
         网站基本信息配置
       </p>
-      <Table :loading="table.loading" :columns="table.columns" :data="table.data" stripe border ref="selection" @on-delete="handleDelete"></Table>
+      <Table :loading="table.loading" :columns="table.columns" :data="table.data" stripe border ref="selection" @on-delete="handleDelete">
+        <template slot="dataType" slot-scope="{ row, index }">
+          <span v-if="row.dataType == 'text'">文本</span>
+          <span v-if="row.dataType == 'img'">图片</span>
+          <span v-if="row.dataType == 'richText'">富文本</span>
+        </template>
+      </Table>
       <Page :total="query.totalRecord" show-total :pageSize="query.pageSize" @on-change="pageChange" show-sizer @on-page-size-change="pageSizeChange"
             v-show="table.operation.success"></Page>
     </card>
@@ -62,6 +68,11 @@
             {title: '配置名', key: 'name'},
             {title: '配置值', key: 'value'},
             {title: '说明', key: 'prompt'},
+            {
+              title: '类型',
+              type: 'template',
+              slot: 'dataType'
+            },
             {
               title: '操作',
               key: 'handle',

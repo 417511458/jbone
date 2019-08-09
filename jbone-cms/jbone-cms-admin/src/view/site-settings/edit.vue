@@ -11,12 +11,20 @@
           <i-input v-model="settings.name" clearable placeholder="属性名，用于页面取值，如title、keywords等"></i-input>
         </FormItem>
         <FormItem label="属性类型" prop="dataType" :required="true">
-          <Select v-model="settings.dataType">
+          <Select v-model="settings.dataType" @on-change="handleDataTypeChange">
             <Option v-for="item in dataTypes" :value="item.dictValue" :key="item.id">{{ item.dictName }}</Option>
           </Select>
         </FormItem>
-        <FormItem label="属性值" prop="value" :required="true">
+        <FormItem label="属性值" prop="value" :required="true" v-if="settings.dataType == 'text'">
           <i-input v-model="settings.value" type="textarea" :rows="4" clearable placeholder="属性值，展示在页面上的内容"></i-input>
+        </FormItem>
+        <FormItem label="上传图片" prop="value" :required="true" v-if="settings.dataType == 'img'">
+          <upload-file v-model="settings.value"></upload-file>
+        </FormItem>
+        <FormItem label="上传图片" prop="value" :required="true" v-if="settings.dataType == 'richText'">
+          <div class="edit_container" >
+            <tinymce ref="editor" v-model="settings.value"></tinymce>
+          </div>
         </FormItem>
         <FormItem label="属性描述" prop="prompt">
           <i-input v-model="settings.prompt" clearable placeholder="备注下本属性的作用，不会展示"></i-input>
@@ -36,11 +44,14 @@
 </template>
 
 <script>
+  import UploadFile from "../components/upload-file/upload-file";
+  import Tinymce from "../../components/tinymce/index";
   import dictionaryApi from '@/api/dictionary'
   import siteSettingsApi from '@/api/siteSettings'
   import { mapMutations } from 'vuex'
     export default {
       name: "editSettings",
+      components: {Tinymce,UploadFile},
       data(){
         return {
           settings:{
@@ -169,6 +180,17 @@
           this.closeTag({
             name: 'site_property_page'
           })
+        },
+
+        handleDataTypeChange(val){
+          if(val == 'richText'){
+            try {
+              //这里防止第一次加载，未初始化时出错，Cannot read property 'parse' of undefined
+              this.$refs.editor.setContent(this.settings.value)
+            } catch (error) {
+              console.warn('设置文章内容',error)
+            }
+          }
         }
       }
     }
