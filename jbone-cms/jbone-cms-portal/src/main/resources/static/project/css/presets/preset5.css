@@ -1,0 +1,389 @@
+/* Global styles
+================================================== */
+
+a{
+	color: #334F96;
+}
+
+a.read-more:hover{
+	color: #327cbc;
+}
+
+
+/* Typography
+================================================== */
+
+.btn.btn-primary{
+	border: 2px solid #334F96;
+}
+
+.btn.btn-primary:hover{
+	background: #334F96;
+}
+
+.btn.btn-primary.solid{
+	background: #334F96;
+}
+
+ul.circle li:before{
+	color: #334F96;
+}
+
+ul.check-list li i{
+	color: #334F96;
+}
+
+blockquote {
+	border-left: 5px solid #334F96;
+}
+
+/* Common styles
+================================================== */
+
+.heading:hover .title-icon{
+	color: #334F96;
+}
+
+h2.entry-title a:hover{
+	color: #334F96;
+}
+
+/* Icon pentagon */
+
+.icon-pentagon{
+	background: none repeat scroll 0 0 #334F96;
+}
+
+.icon-pentagon:before{
+	border-bottom: 10px solid #334F96;
+}
+
+.icon-pentagon:after {
+	border-top: 10px solid #334F96;
+}
+
+.service-icon:before {
+	border-bottom: 30px solid #334F96;
+}
+
+.service-icon:after {
+	border-top: 30px solid #334F96;
+}
+
+/* Carousel controller */
+
+.ts-carousel-controller .left:hover,
+.ts-carousel-controller .right:hover,
+.owl-controls .owl-prev:hover, 
+.owl-controls .owl-next:hover{
+	background: #334F96;
+}
+
+/* Input form */
+
+.form-control:focus{
+	border: 1px solid #334F96 !important;
+}
+
+/* Flex Slider */
+
+.portfolio-slider .flex-direction-nav a:hover,
+.second-slider .flex-direction-nav a:hover {
+	background: #334F96;
+}
+
+/* Pagination */
+
+.pagination>.active>a, .pagination>.active>a:hover,
+.pagination>li>a:hover{
+	background: #334F96;
+}
+
+/* Header area
+================================================== */
+
+/*-- Header --*/
+.header{
+	border-top: 5px solid #334F96;
+}
+
+.header-solid ul.navbar-nav > li:hover > a, .header-solid ul.navbar-nav > li.active > a {
+  color: #334F96;
+}
+
+/*-- Logo --*/
+
+.navbar-brand{
+	background: #334F96;
+}
+
+/*-- Main navigation --*/
+
+ul.navbar-nav > li:hover > a, 
+ul.navbar-nav > li.active > a{
+	color: #334F96;
+}
+
+.navbar-toggle{
+	background: #334F96;
+}
+
+.dropdown-menu > ul > li.active > a{
+	color: #334F96;
+}
+
+.dropdown-menu > ul > li>a:hover, 
+.dropdown-menu > ul > li>a:focus{
+	color: #334F96;
+}
+
+
+/* Header area - 2
+================================================== */
+
+/*-- Header bgnone fixed --*/
+
+.header-bgnone{
+	background: #334F96;
+}
+
+
+/* Slideshow
+================================================== */
+
+/*-- Main slide --*/
+
+#main-slide .carousel-indicators li.active,
+#main-slide .carousel-indicators li:hover {
+    background-color: #334F96;
+}
+
+#main-slide .carousel-control i:hover{
+	background: #334F96;
+}
+
+/* Image Block
+================================================== */
+
+.image-block-content .feature-icon{
+	background: #334F96;
+}
+
+/* Portfolio
+================================================== */
+
+.isotope-nav ul li a{
+	border: 1px solid #334F96;
+}
+
+.isotope-nav ul a.active, 
+.isotope-nav ul a:hover{
+	background: #334F96;
+}
+
+.isotope-nav ul a.active:after, 
+.isotope-nav ul a:hover:after{
+	border-color: #334F96 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+}
+
+/* Feature box
+================================================== */
+.feature-icon{
+	color: #334F96;
+}
+
+.feature-center-icon{
+	color: #334F96;
+}
+
+/* About us
+================================================== */
+
+/* Featured Tab */
+
+.featured-tab .nav-tabs>li.active>a{
+	background: #334F96;
+}
+
+.featured-tab .nav-tabs>li.active>a:after{
+	border-left-color: #334F96;
+}
+
+.featured-tab .nav-tabs>li>a:hover{
+	background: #334F96;
+	color: #fff;
+}
+.featured-tab .nav-tabs>li>a:hover:after{
+	border-left-color: #334F96;
+}
+
+/* Pricing table
+================================================== */
+
+.plan.featured .plan-price{
+	background: #334F96;
+}
+.plan.featured .plan-price:after{
+	border-top-color: #334F96;
+}
+
+/* Testimonial
+================================================== */
+
+.testimonial-slide .testimonial-text:before{
+	color: #334F96;
+}
+
+.testimonial-slide .testimonial-text:after{
+	color: #334F96;
+}
+
+.testimonial-slide.owl-theme .owl-controls .owl-page.active span{
+	background: #334F96;
+}
+
+/* Recent Post
+================================================== */
+
+.post-img-overlay a:hover{
+	background: #334F96;
+}
+
+
+/* Footer
+================================================== */
+
+.copyright-info a:hover{
+	color: #334F96;
+}
+
+.footer2 .copyright-info a{
+	color: #334F96;
+}
+
+#back-to-top .btn.btn-primary:hover{
+	background: #334F96;
+}
+
+.footer-about-us h4{
+	color: #334F96;
+}
+
+.footer-widget .latest-post-content h4 a:hover{
+	color: #334F96;
+}
+
+.subscribe button{
+	background: #334F96;
+}
+
+/* Blog Item page
+================================================== */
+
+.post-meta a:hover{
+	color: #334F96;
+}
+
+.author-url span a:hover{
+	color: #334F96;
+}
+
+.comments-counter a:hover{
+	color: #334F96;
+}
+
+.comments-list .comment-reply:hover{
+	color: #334F96;
+}
+
+/*-- Blog sidebar --*/
+
+.widget-tab .nav-tabs>li.active>a{
+	background: #334F96;
+}
+
+.widget-tab h4.entry-title a:hover{
+	color: #334F96;
+}
+
+.widget-tags ul > li a:hover{
+	background: #334F96;
+}
+
+/* Landing page
+================================================== */
+
+.landing-header.header-bgnone ul.navbar-nav > li:hover > a, 
+.landing-header.header-bgnone ul.navbar-nav > li.active > a {
+	color: #334F96;
+}
+
+.features-content .features-icon{
+	color: #334F96;
+}
+
+.landing_facts{
+	background: #334F96;
+}
+
+.landing-tab .nav-tabs>li.active{
+	border-right: 5px solid #334F96;
+}
+
+.landing-tab .nav-tabs>li.active>a i{
+	color: #334F96;
+}
+
+.landing-tab .nav-tabs>li>a:hover{
+	color: #334F96 !important;
+}
+
+.landing-tab .tab-pane i.big{
+	color: #334F96;
+}
+
+.app-gallery.owl-theme .owl-controls .owl-page.active span{
+	background: #334F96;
+}
+
+.landing_page_clients{
+	background: #334F96;
+}
+
+/* Misc */
+
+.title-border{
+	border-bottom: 2px solid #334F96;
+}
+
+.post-title a:hover{
+	color: #334F96;
+}
+
+.portfolio-static-desc a:hover{
+	color: #334F96;
+}
+
+.client-carousel .item a:hover{
+	border: 1px solid #334F96;
+}
+
+.footer ul li a:hover{
+	color: #334F96;
+}
+
+.call-to-action{
+	background: #334F96;
+}
+
+.blog-date{
+	background: #334F96;
+}
+
+.widget-categories ul.category-list  li a:hover{
+	color: #334F96;
+}
+
+.about-message ul li a:hover{
+	color: #334F96;
+}

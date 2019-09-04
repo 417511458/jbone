@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+    <title>BizCraft - Responsive Html5 Template</title>
+    <meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="icon" th:href="@{/project/img/favicon/favicon-32x32.png}" type="image/x-icon" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" th:href="@{/project/img/favicon/favicon-144x144.png}">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" th:href="@{/project/img/favicon/favicon-72x72.png}">
+	<link rel="apple-touch-icon-precomposed" th:href="@{/project/img/favicon/favicon-54x54.png}">
+
+
+</head>
+
+<body>
+<div th:replace="/project/layout/css :: css"></div>
+	<div class="body-inner">
+	<!-- Header start -->
+		<header id="header" class="navbar-fixed-top header" role="banner" th:replace="/project/layout/header :: header"></header>
+
+	<div id="banner-area">
+		<img th:src="@{/project/images/banner/banner2.jpg}" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>Typography</h2>
+		        	<ul class="breadcrumb">
+			            <li>Home</li>
+			            <li>Features</li>
+			            <li><a href="#"> Typography</a></li>
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+
+	<!-- Main container start -->
+
+	<section id="main-container">
+		<div class="container">
+
+			<div class="row">
+
+				<div class="col-md-6">
+					<h3 class="title-border">Heading</h3>
+					<h1>h1. Heading 1</h1>
+	                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly.</p>
+	                <h2>h2. Heading 2</h2>
+	                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even.</p>
+	                <h3>h3. Heading 3</h3>
+	                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look.</p>
+	                <h4>h4. Heading 4</h4>
+	                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t.</p>
+	                <h5>h5. Heading 5</h5>
+	                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.</p>
+	                <h6>h6. Heading 6</h6>
+	                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words.</p>
+
+				</div><!--/ Col end -->
+
+				<div class="col-md-6">
+
+					<h3 class="title-border">Paragraph</h3>
+
+                    <p>Lorem ipsum dolor sit amet, <mark>a mark here</mark> adipisicing elit. Atque, iusto, minus sequi natus nesciunt rerum tenetur corrupti autem officiis fugiat expedita laudantium ea aspernatur</p>
+                    <p><strong class="text-success">Consectetur adipisicing elit</strong>. Corrupti, aliquam, voluptates, nulla, blanditiis totam voluptatem <strong class="text-danger">voluptatum quod ipsa debitis non</strong> ab odio natus.</p>
+
+                    <div class="gap-20"></div>
+
+                    <h3 class="title-border">Blockquote</h3>
+
+                  	<blockquote>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                  	</blockquote>
+
+                  <blockquote class="pull-right">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                  </blockquote>
+
+				</div><!--/ Col end -->
+
+
+
+
+			</div><!-- Content row  end -->
+
+		</div><!--/ container end -->
+
+	</section><!--/ Main container end -->
+
+
+		<footer id="footer" class="footer" th:replace="/project/layout/footer :: footer"></footer>
+
+
+		<section id="copyright" class="copyright angle" th:replace="/project/layout/footer :: copyright"></section>
+
+		<div th:replace="/project/layout/js :: js"></div>
+	</div><!-- Body inner end -->
+</body>
+</html>

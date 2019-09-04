@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+    <title>BizCraft - Responsive Html5 Template</title>
+    <meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="icon" th:href="@{/project/img/favicon/favicon-32x32.png}" type="image/x-icon" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" th:href="@{/project/img/favicon/favicon-144x144.png}">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" th:href="@{/project/img/favicon/favicon-72x72.png}">
+	<link rel="apple-touch-icon-precomposed" th:href="@{/project/img/favicon/favicon-54x54.png}">
+
+
+</head>
+
+<body>
+<div th:replace="/project/layout/css :: css"></div>
+	<div class="body-inner">
+	<!-- Header start -->
+		<header id="header" class="navbar-fixed-top header" role="banner" th:replace="/project/layout/header :: header"></header>
+
+	<div id="banner-area">
+		<img th:src="@{/project/images/banner/banner2.jpg}" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>Portfolio Classic</h2>
+		        	<ul class="breadcrumb">
+			            <li>Home</li>
+			            <li>Portfolio</li>
+			            <li><a href="#"> Portfolio Classic</a></li>
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+
+
+	<!-- Portfolio start -->
+	<section id="main-container" class="portfolio portfolio-box">
+		<div class="container">
+			<!--Isotope filter start -->
+			<div class="row text-center">
+				<div class="isotope-nav" data-isotope-nav="isotope">
+					<ul>
+						<li><a href="#" class="active" data-filter="*">All</a></li>
+						<li><a href="#" data-filter=".web-design">Web Design</a></li>
+						<li><a href="#" data-filter=".development">Development</a></li>
+						<li><a href="#" data-filter=".joomla">Joomla</a></li>
+						<li><a href="#" data-filter=".wordpress">Wordpress</a></li>
+					</ul>
+				</div>
+			</div><!-- Isotope filter end -->
+
+			<div class="row">
+				<div id="isotope" class="isotope">
+					<div class="col-sm-3 web-design isotope-item">
+						<div class="grid">
+							<figure class="effect-oscar">
+								<img th:src="@{/project/images/portfolio/portfolio1.jpg}" alt="">
+								<figcaption>
+									<h3>Startup Business</h3>
+									<a class="link icon-pentagon" href="portfolio-item.html"><i class="fa fa-link"></i></a>
+									<a class="view icon-pentagon" data-rel="prettyPhoto" href="images/portfolio/portfolio-bg1.jpg"><i class="fa fa-search"></i></a>
+								</figcaption>
+							</figure>
+						</div>
+					</div><!-- Isotope item end -->
+
+					<div class="col-sm-3 development isotope-item">
+						<div class="grid">
+							<figure class="effect-oscar">
+								<img th:src="@{/project/images/portfolio/portfolio2.jpg}" alt="">
+								<figcaption>
+									<h3>Easy to Lanunch</h3>
+									<a class="link icon-pentagon" href="portfolio-item.html"><i class="fa fa-link"></i></a>
+									<a class="view icon-pentagon" data-rel="prettyPhoto" href="images/portfolio/portfolio-bg2.jpg"><i class="fa fa-search"></i></a>
+								</figcaption>
+							</figure>
+						</div>
+					</div><!-- Isotope item end -->
+
+					<div class="col-sm-3 joomla isotope-item">
+						<div class="grid">
+							<figure class="effect-oscar">
+								<img th:src="@{/project/images/portfolio/portfolio3.jpg}" alt="">
+								<figcaption>
+									<h3>Your Business</h3>
+									<a class="link icon-pentagon" href="portfolio-item.html"><i class="fa fa-link"></i></a>
+									<a class="view icon-pentagon" data-rel="prettyPhoto" href="images/portfolio/portfolio-bg3.jpg"><i class="fa fa-search"></i></a>
+								</figcaption>
+							</figure>
+						</div>
+					</div><!-- Isotope item end -->
+
+					<div class="col-sm-3 wordpress isotope-item">
+						<div class="grid">
+							<figure class="effect-oscar">
+								<img th:src="@{/project/images/portfolio/portfolio4.jpg}" alt="">
+								<figcaption>
+									<h3>Prego Match</h3>
+									<a class="link icon-pentagon" href="portfolio-item.html"><i class="fa fa-link"></i></a>
+									<a class="view icon-pentagon" data-rel="prettyPhoto" href="images/portfolio/portfolio-bg4.jpg"><i class="fa fa-search"></i></a>
+								</figcaption>
+							</figure>
+						</div>
+					</div><!-- Isotope item end -->
+
+					<div class="col-sm-3 joomla isotope-item">
+						<div class="grid">
+							<figure class="effect-oscar">
+								<img th:src="@{/project/images/portfolio/portfolio5.jpg}" alt="">
+								<figcaption>
+									<h3>Fashion Brand</h3>
+									<a class="link icon-pentagon" href="portfolio-item.html"><i class="fa fa-link"></i></a>
+									<a class="view icon-pentagon" data-rel="prettyPhoto" href="images/portfolio/portfolio-bg5.jpg"><i class="fa fa-search"></i></a>
+								</figcaption>
+							</figure>
+						</div>
+					</div><!-- Isotope item end -->
+
+					<div class="col-sm-3 development isotope-item">
+						<div class="grid">
+							<figure class="effect-oscar">
+								<img th:src="@{/project/images/portfolio/portfolio6.jpg}" alt="">
+								<figcaption>
+									<h3>The Insidage</h3>
+									<a class="link icon-pentagon" href="portfolio-item.html"><i class="fa fa-link"></i></a>
+									<a class="view icon-pentagon" data-rel="prettyPhoto" href="images/portfolio/portfolio-bg1.jpg"><i class="fa fa-search"></i></a>
+								</figcaption>
+							</figure>
+						</div>
+					</div><!-- Isotope item end -->
+
+					<div class="col-sm-3 development isotope-item">
+						<div class="grid">
+							<figure class="effect-oscar">
+								<img th:src="@{/project/images/portfolio/portfolio7.jpg}" alt="">
+								<figcaption>
+									<h3>Light Carpet</h3>
+									<a class="link icon-pentagon" href="portfolio-item.html"><i class="fa fa-link"></i></a>
+									<a class="view icon-pentagon" data-rel="prettyPhoto" href="images/portfolio/portfolio-bg2.jpg"><i class="fa fa-search"></i></a>
+								</figcaption>
+							</figure>
+						</div>
+					</div><!-- Isotope item end -->
+
+					<div class="col-sm-3 development isotope-item">
+						<div class="grid">
+							<figure class="effect-oscar">
+								<img th:src="@{/project/images/portfolio/portfolio8.jpg}" alt="">
+								<figcaption>
+									<h3>Amazing Keyboard</h3>
+									<a class="link icon-pentagon" href="portfolio-item.html"><i class="fa fa-link"></i></a>
+									<a class="view icon-pentagon" data-rel="prettyPhoto" href="images/portfolio/portfolio-bg3.jpg"><i class="fa fa-search"></i></a>
+								</figcaption>
+							</figure>
+						</div>
+					</div><!-- Isotope item end -->
+				</div><!-- Isotope content end -->
+			</div><!-- Content row end -->
+		</div><!-- Container end -->
+	</section><!-- Portfolio end -->
+
+	<div class="gap-40"></div>
+
+		<footer id="footer" class="footer" th:replace="/project/layout/footer :: footer"></footer>
+		<section id="copyright" class="copyright angle" th:replace="/project/layout/footer :: copyright"></section>
+		<div th:replace="/project/layout/js :: js"></div>
+	</div><!-- Body inner end -->
+</body>
+</html>

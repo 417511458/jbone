@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+    <title>BizCraft - Responsive Html5 Template</title>
+    <meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="icon" th:href="@{/project/img/favicon/favicon-32x32.png}" type="image/x-icon" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" th:href="@{/project/img/favicon/favicon-144x144.png}">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" th:href="@{/project/img/favicon/favicon-72x72.png}">
+	<link rel="apple-touch-icon-precomposed" th:href="@{/project/img/favicon/favicon-54x54.png}">
+
+
+</head>
+
+<body>
+<div th:replace="/project/layout/css :: css"></div>
+	<div class="body-inner">
+	<!-- Header start -->
+	<header id="header" class="navbar-fixed-top header" role="banner" th:replace="/project/layout/header :: header"></header>
+
+	<div id="banner-area">
+		<img th:src="@{/project/images/banner/banner2.jpg}" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>404 Error Page</h2>
+		        	<ul class="breadcrumb">
+			            <li>Home</li>
+			            <li>Pages</li>
+			            <li><a href="index.html"> 404 Error Page</a></li>
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+
+	<!-- Main container start -->
+
+	<section id="main-container">
+		<div class="container">
+			<div class="error-page text-center">
+				<div class="error-code">
+					<strong>404</strong>
+				</div>
+				<div class="error-message">
+					<h3>Oops... Page Not Found!</h3>
+				</div>
+				<div class="error-body">
+					Try using the button below to go to main page of the site <br/>
+					<a href="index.html" class="btn btn-primary solid blank"><i class="fa fa-arrow-circle-left">&nbsp;</i> Go to Home</a>
+				</div>
+			</div>
+		</div>
+	</section><!--/ Main container end -->
+
+
+	<!-- Footer start -->
+	<footer id="footer" class="footer" th:replace="/project/layout/footer :: footer"></footer><!-- Footer end -->
+
+
+	<!-- Footer start -->
+	<section id="copyright" class="copyright angle" th:replace="/project/layout/footer :: copyright"></section><!--/ Footer end -->
+
+		<div th:replace="/project/layout/js :: js"></div>
+	</div><!-- Body inner end -->
+</body>
+</html>

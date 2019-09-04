@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+    <header id="header" class="navbar-fixed-top header" role="banner" th:fragment="header">
+        <div class="container">
+            <div class="row">
+                <!-- Logo start -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="navbar-brand navbar-bg">
+                        <a th:href="@{/index.html}">
+                            <img class="img-responsive" th:href="@{/project/images/logo.png}" alt="logo">
+                        </a>
+                    </div>
+                </div><!--/ Logo end -->
+                <nav class="collapse navbar-collapse clearfix" role="navigation">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home <i class="fa fa-angle-down"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li><a th:href="@{/index.html}">Home 1</a></li>
+                                    <li><a th:href="@{/index-2.html}">Home 2</a></li>
+                                    <li><a th:href="@{/index-3.html}">Home 3</a></li>
+                                    <li><a th:href="@{/index-4.html}">Home 4</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Company <i class="fa fa-angle-down"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li><a th:href="@{/about.html}">About Us</a></li>
+                                    <li><a th:href="@{/service.html}">Services</a></li>
+                                    <li><a th:href="@{/career.html}">Career</a></li>
+                                    <li><a th:href="@{/testimonial.html}">Testimonials</a></li>
+                                    <li><a th:href="@{/faq.html}">Faq</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio <i class="fa fa-angle-down"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li><a th:href="@{/portfolio-classic.html}">Portfolio Classic</a></li>
+                                    <li class="active"><a th:href="@{/portfolio-static.html}">Portfolio Static</a></li>
+                                    <li><a th:href="@{/portfolio-item.html}">Portfolio Single</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li><a th:href="@{/team.html}">Our Team</a></li>
+                                    <li><a th:href="@{/about2.html}">About Us - 2</a></li>
+                                    <li><a th:href="@{/service2.html}">Services - 2</a></li>
+                                    <li><a th:href="@{/service-single.html}">Services Single</a></li>
+                                    <li><a th:href="@{/pricing.html}">Pricing Table</a></li>
+                                    <li><a th:href="@{/404.html}">404 Page</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <i class="fa fa-angle-down"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li><a th:href="@{/blog-rightside.html}">Blog with Sidebar</a></li>
+                                    <li><a th:href="@{/blog-item.html}">Blog Single</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Features <i class="fa fa-angle-down"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li><a th:href="@{/typography.html}">Typography</a></li>
+                                    <li><a th:href="@{/elements.html}">Elements</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a th:href="@{/contact.html}">Contact</a></li>
+                    </ul>
+                </nav><!--/ Navigation end -->
+            </div><!--/ Row end -->
+        </div><!--/ Container end -->
+    </header><!--/ Header end -->
+</body>
+</html>

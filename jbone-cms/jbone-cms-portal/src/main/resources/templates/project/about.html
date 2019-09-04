@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+    <title>BizCraft - Responsive Html5 Template</title>
+    <meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="icon" th:href="@{/project/img/favicon/favicon-32x32.png}" type="image/x-icon" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" th:href="@{/project/img/favicon/favicon-144x144.png}">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" th:href="@{/project/img/favicon/favicon-72x72.png}">
+	<link rel="apple-touch-icon-precomposed" th:href="@{/project/img/favicon/favicon-54x54.png}">
+
+</head>
+
+<body>
+<div th:replace="/project/layout/css :: css"></div>
+	<div class="body-inner">
+	<!-- Header start -->
+	<header id="header" class="navbar-fixed-top header" role="banner" th:replace="/project/layout/header :: header"></header>
+
+	<div id="banner-area">
+		<img th:src="@{/project/images/banner/banner1.jpg}" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>About Us</h2>
+		        	<ul class="breadcrumb">
+			            <li>Home</li>
+			            <li>Company</li>
+			            <li><a href="#"> About Us</a></li>
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+
+	<!-- Main container start -->
+
+	<section id="main-container">
+		<div class="container">
+
+			<!-- Company Profile -->
+			<div class="row">
+				<div class="col-md-12 heading">
+					<span class="title-icon classic pull-left"><i class="fa fa-suitcase"></i></span>
+					<h2 class="title classic">Company Profile</h2>
+				</div>
+			</div><!-- Title row end -->
+
+			<div class="row">
+				<div class="landing-tab clearfix">
+					<ul class="nav nav-tabs nav-stacked col-md-3 col-sm-5">
+					  	<li class="active">
+					  		<a class="animated fadeIn" href="#tab_a" data-toggle="tab">
+					  			<span class="tab-icon"><i class="fa fa-info"></i></span>
+					  			<div class="tab-info">
+						  			<h3>Who Are We</h3>
+					  			</div>
+					  		</a>
+					  	</li>
+					  	<li>
+						  	<a class="animated fadeIn" href="#tab_b" data-toggle="tab">
+						  		<span class="tab-icon"><i class="fa fa-briefcase"></i></span>
+					  			<div class="tab-info">
+						  			<h3>Our Company</h3>
+					  			</div>
+						  	</a>
+						</li>
+					 	<li>
+						  	<a class="animated fadeIn" href="#tab_c" data-toggle="tab">
+						  		<span class="tab-icon"><i class="fa fa-android"></i></span>
+					  			<div class="tab-info">
+						  			<h3>What We Do</h3>
+					  			</div>
+						  	</a>
+						</li>
+						<li>
+						  	<a class="animated fadeIn" href="#tab_d" data-toggle="tab">
+						  		<span class="tab-icon"><i class="fa fa-pagelines"></i></span>
+					  			<div class="tab-info">
+						  			<h3>Modern Design</h3>
+					  			</div>
+						  	</a>
+						</li>
+						<li>
+						  	<a class="animated fadeIn" href="#tab_e" data-toggle="tab">
+						  		<span class="tab-icon"><i class="fa fa-support"></i></span>
+					  			<div class="tab-info">
+						  			<h3>Dedicated Support</h3>
+					  			</div>
+						  	</a>
+						</li>
+					</ul>
+					<div class="tab-content col-md-9 col-sm-7">
+				        <div class="tab-pane active animated fadeInRight" id="tab_a">
+				        	<i class="fa fa-trophy big"></i>
+				            <h3>We Are Awwared Winning Company</h3>
+				            <p>Over the year we have lots of experience in our field. In sit amet massa sapien. Vestibulum diam turpis, gravida in lobortis id, ornare a eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sagittis nulla non elit dignissim suscipit. Duis lorem nulla, eleifend.</p>
+				        </div>
+				        <div class="tab-pane animated fadeInLeft" id="tab_b">
+				        	<i class="fa fa-briefcase big"></i>
+				            <h3>We Have Worldwide Business</h3>
+							<p>Helvetica cold-pressed lomo messenger bag ugh. Vinyl jean shorts Austin pork belly PBR retro, Etsy VHS kitsch actually messenger bag pug. Pbrb semiotics try-hard, Schlitz occupy dreamcatcher master cleanse Marfa Vice tofu. </p>
+				        </div>
+				        <div class="tab-pane animated fadeIn" id="tab_c">
+				            <i class="fa fa-android big"></i>
+				            <h3>We Build Readymade Applications</h3>
+				            <p>Over the year we have lots of experience in our field. In sit amet massa sapien. Vestibulum diam turpis, gravida in lobortis id, ornare a eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sagittis nulla non elit dignissim suscipit. Duis lorem nulla, eleifend.</p>
+				        </div>
+				        <div class="tab-pane animated fadeIn" id="tab_d">
+				            <i class="fa fa-pagelines big"></i>
+				            <h3>Clean and Modern Design</h3>
+				            <p>Over the year we have lots of experience in our field. In sit amet massa sapien. Vestibulum diam turpis, gravida in lobortis id, ornare a eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sagittis nulla non elit dignissim suscipit. Duis lorem nulla, eleifend.</p>
+				        </div>
+				        <div class="tab-pane animated fadeIn" id="tab_e">
+				            <i class="fa fa-support big"></i>
+				            <h3>24/7 Dedicated Support</h3>
+				            <p>Occupy selfies Tonx, +1 Truffaut beard organic normcore tilde flannel artisan squid cray single-origin coffee. Master cleanse vinyl Austin kogi, semiotics skateboard fap wayfarers health goth. Helvetica cray church-key hashtag Carles. Four dollar toast meggings seitan, Tonx pork belly VHS Bushwick. Chambray banh mi cornhole. Locavore messenger bag seitan.</p>
+				        </div>
+					</div><!-- tab content -->
+	    		</div><!-- Overview tab end -->
+			</div><!--/ Content row end -->
+
+			<!-- Company Profile -->
+
+		</div><!--/ 1st container end -->
+
+
+		<div class="gap-60"></div>
+
+
+		<!-- Counter Strat -->
+		<div class="ts_counter_bg parallax parallax2">
+			<div class="parallax-overlay"></div>
+			<div class="container">
+				<div class="row wow fadeInLeft text-center">
+					<div class="facts col-md-3 col-sm-6">
+						<span class="facts-icon"><i class="fa fa-user"></i></span>
+						<div class="facts-num">
+							<span class="counter">1200</span>
+						</div>
+						<h3>Clients</h3>
+					</div>
+
+					<div class="facts col-md-3 col-sm-6">
+						<span class="facts-icon"><i class="fa fa-institution"></i></span>
+						<div class="facts-num">
+							<span class="counter">1277</span>
+						</div>
+						<h3>Item Sold</h3>
+					</div>
+
+					<div class="facts col-md-3 col-sm-6">
+						<span class="facts-icon"><i class="fa fa-suitcase"></i></span>
+						<div class="facts-num">
+							<span class="counter">869</span>
+						</div>
+						<h3>Projects</h3>
+					</div>
+
+					<div class="facts col-md-3 col-sm-6">
+						<span class="facts-icon"><i class="fa fa-trophy"></i></span>
+						<div class="facts-num">
+							<span class="counter">76</span>
+						</div>
+						<h3>Awwards</h3>
+					</div>
+
+					<div class="gap-40"></div>
+
+					<div><a href="#" class="btn btn-primary solid">See Our Portfolio</a></div>
+
+				</div><!--/ row end -->
+			</div><!--/ Container end -->
+		</div><!--/ Counter end -->
+
+		<div class="gap-60"></div>
+
+
+		<div class="container"><!-- 2nd container start -->
+
+			<!-- Team start -->
+			<div class="team">
+
+				<div class="row">
+					<div class="col-md-12 heading">
+						<span class="title-icon classic pull-left"><i class="fa fa-weixin"></i></span>
+						<h2 class="title classic">Meet with our Team</h2>
+					</div>
+				</div><!-- Title row end -->
+
+				<div class="row text-center">
+					<div class="col-md-3 col-sm-6">
+						<div class="team wow slideInLeft">
+							<div class="img-hexagon">
+								<img th:src="@{/project/images/team/team1.jpg}" alt="">
+								<span class="img-top"></span>
+								<span class="img-bottom"></span>
+							</div>
+							<div class="team-content">
+								<h3>Vosgi Varduhi</h3>
+								<p>Web Designer</p>
+								<div class="team-social">
+									<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+									<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+									<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+									<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+									<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+								</div>
+							</div>
+						</div>
+					</div><!--/ Team 1 end -->
+					<div class="col-md-3 col-sm-6">
+						<div class="team wow slideInLeft">
+							<div class="img-hexagon">
+								<img th:src="@{/project/images/team/team2.jpg}" alt="">
+								<span class="img-top"></span>
+								<span class="img-bottom"></span>
+							</div>
+							<div class="team-content">
+								<h3>Robert Aleska</h3>
+								<p>Web Designer</p>
+								<div class="team-social">
+									<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+									<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+									<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+									<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+									<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+								</div>
+							</div>
+						</div>
+					</div><!--/ Team 2 end -->
+					<div class="col-md-3 col-sm-6">
+						<div class="team wow slideInRight">
+							<div class="img-hexagon">
+								<img th:src="@{/project/images/team/team3.jpg}" alt="">
+								<span class="img-top"></span>
+								<span class="img-bottom"></span>
+							</div>
+							<div class="team-content">
+								<h3>Taline Voski</h3>
+								<p>Web Designer</p>
+								<div class="team-social">
+									<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+									<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+									<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+									<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+									<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+								</div>
+							</div>
+						</div>
+					</div><!--/ Team 3 end -->
+					<div class="col-md-3 col-sm-6">
+						<div class="team animate wow slideInRight">
+							<div class="img-hexagon">
+								<img th:src="@{/project/images/team/team4.jpg}" alt="">
+								<span class="img-top"></span>
+								<span class="img-bottom"></span>
+							</div>
+							<div class="team-content">
+								<h3>Alban Spencer</h3>
+								<p>Web Designer</p>
+								<div class="team-social">
+									<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+									<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+									<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+									<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+									<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+								</div>
+							</div>
+						</div>
+					</div><!--/ Team 4 end -->
+				</div><!--/ Content row end -->
+
+			</div><!-- Team end -->
+
+		</div><!-- 2nd container end -->
+	</section><!--/ Main container end -->
+
+
+
+	<div class="gap-40"></div>
+
+		<footer id="footer" class="footer" th:replace="/project/layout/footer :: footer"></footer>
+
+
+		<section id="copyright" class="copyright angle" th:replace="/project/layout/footer :: copyright"></section>
+
+
+		<div th:replace="/project/layout/js :: js"></div>
+	</div><!-- Body inner end -->
+</body>
+</html>

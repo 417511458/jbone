@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+    <title>BizCraft - Responsive Html5 Template</title>
+    <meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="icon" th:href="@{/project/img/favicon/favicon-32x32.png}" type="image/x-icon" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" th:href="@{/project/img/favicon/favicon-144x144.png}">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" th:href="@{/project/img/favicon/favicon-72x72.png}">
+	<link rel="apple-touch-icon-precomposed" th:href="@{/project/img/favicon/favicon-54x54.png}">
+
+
+</head>
+
+<body>
+<div th:replace="/project/layout/css :: css"></div>
+	<div class="body-inner">
+	<!-- Header start -->
+		<header id="header" class="navbar-fixed-top header" role="banner" th:replace="/project/layout/header :: header"></header>
+
+	<div id="banner-area">
+		<img th:src="@{/project/images/banner/banner2.jpg}" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>Our Team</h2>
+		        	<ul class="breadcrumb">
+			            <li>Home</li>
+			            <li>Pages</li>
+			            <li><a href="#"> Our Team</a></li>
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+
+	<!-- Main container start -->
+
+	<section id="main-container">
+		<div class="container">
+
+
+			<div class="row">
+				<div class="col-md-12 heading">
+					<span class="title-icon classic pull-left"><i class="fa fa-users"></i></span>
+					<h2 class="title classic">Team Style 1</h2>
+				</div>
+			</div>
+
+
+			<div class="row text-center">
+				<div class="col-md-3 col-sm-6">
+					<div class="team wow slideInLeft">
+						<div class="img-hexagon">
+							<img th:src="@{/project/images/team/team1.jpg}" alt="">
+							<span class="img-top"></span>
+							<span class="img-bottom"></span>
+						</div>
+						<div class="team-content">
+							<h3>Vosgi Varduhi</h3>
+							<p>Web Designer</p>
+							<div class="team-social">
+								<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+								<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+								<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+								<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+								<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+							</div>
+						</div>
+					</div>
+				</div><!--/ Team 1 end -->
+				<div class="col-md-3 col-sm-6">
+					<div class="team wow slideInLeft">
+						<div class="img-hexagon">
+							<img th:src="@{/project/images/team/team2.jpg}" alt="">
+							<span class="img-top"></span>
+							<span class="img-bottom"></span>
+						</div>
+						<div class="team-content">
+							<h3>Robert Aleska</h3>
+							<p>Web Designer</p>
+							<div class="team-social">
+								<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+								<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+								<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+								<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+								<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+							</div>
+						</div>
+					</div>
+				</div><!--/ Team 2 end -->
+				<div class="col-md-3 col-sm-6">
+					<div class="team wow slideInRight">
+						<div class="img-hexagon">
+							<img th:src="@{/project/images/team/team3.jpg}" alt="">
+							<span class="img-top"></span>
+							<span class="img-bottom"></span>
+						</div>
+						<div class="team-content">
+							<h3>Taline Voski</h3>
+							<p>Web Designer</p>
+							<div class="team-social">
+								<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+								<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+								<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+								<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+								<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+							</div>
+						</div>
+					</div>
+				</div><!--/ Team 3 end -->
+				<div class="col-md-3 col-sm-6">
+					<div class="team animate wow slideInRight">
+						<div class="img-hexagon">
+							<img th:src="@{/project/images/team/team4.jpg}" alt="">
+							<span class="img-top"></span>
+							<span class="img-bottom"></span>
+						</div>
+						<div class="team-content">
+							<h3>Alban Spencer</h3>
+							<p>Web Designer</p>
+							<div class="team-social">
+								<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+								<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+								<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+								<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+								<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+							</div>
+						</div>
+					</div>
+				</div><!--/ Team 4 end -->
+			</div><!--/ Content row end -->
+
+
+			<div class="gap-60"></div>
+
+			<div class="row">
+				<div class="col-md-12 heading">
+					<span class="title-icon classic pull-left"><i class="fa fa-users"></i></span>
+					<h2 class="title classic">Team Style 2</h2>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6 col-sm-6">
+					<div class="team team-list wow slideInLeft">
+						<div class="img-hexagon">
+							<img th:src="@{/project/images/team/team1.jpg}" alt="">
+							<span class="img-top"></span>
+							<span class="img-bottom"></span>
+						</div>
+						<div class="team-content">
+							<h3>Vosgi Varduhi</h3>
+							<p>Web Designer</p>
+							<p class="desc">Eradicate invest honesty human rights accessibility theory of social change. Diversity experience in the field compassion, inspire breakthroughs planned giving.</p>
+
+							<div class="team-social">
+								<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+								<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+								<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+								<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+								<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+							</div>
+						</div>
+					</div>
+				</div><!--/ Team 1 end -->
+				<div class="col-md-6 col-sm-6">
+					<div class="team team-list wow slideInRight">
+						<div class="img-hexagon">
+							<img th:src="@{/project/images/team/team2.jpg}" alt="">
+							<span class="img-top"></span>
+							<span class="img-bottom"></span>
+						</div>
+						<div class="team-content">
+							<h3>Robert Aleska</h3>
+							<p>Web Designer</p>
+							<p class="desc">Carbon emissions reductions giving, legitimize amplify non-partisan Aga Khan. Policy dialogue assessment expert free-speech cornerstone disruptor freedom. Cesar Chavez empower.</p>
+							<div class="team-social">
+								<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+								<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+								<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+								<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+								<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+							</div>
+						</div>
+					</div>
+				</div><!--/ Team 2 end -->
+			</div><!--/ Content row end -->
+
+			<div class="gap-60"></div>
+
+			<div class="row">
+				<div class="col-md-12 heading">
+					<span class="title-icon classic pull-left"><i class="fa fa-users"></i></span>
+					<h2 class="title classic">Team Style 3</h2>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6 col-sm-6">
+					<div class="team team-list-square wow slideInLeft">
+						<div class="img-square">
+							<img th:src="@{/project/images/team/team3.jpg}" alt="">
+						</div>
+						<div class="team-content">
+							<h3>Vosgi Varduhi</h3>
+							<p>Web Designer</p>
+							<p class="desc">Eradicate invest honesty human rights accessibility theory of social change. Diversity experience in the field compassion, inspire breakthroughs planned giving.</p>
+
+							<div class="team-social">
+								<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+								<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+								<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+								<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+								<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+							</div>
+						</div>
+					</div>
+				</div><!--/ Team 1 end -->
+				<div class="col-md-6 col-sm-6">
+					<div class="team team-list-square wow slideInRight">
+						<div class="img-square">
+							<img th:src="@{/project/images/team/team4.jpg}" alt="">
+						</div>
+						<div class="team-content">
+							<h3>Robert Aleska</h3>
+							<p>Web Designer</p>
+							<p class="desc">Carbon emissions reductions giving, legitimize amplify non-partisan Aga Khan. Policy dialogue assessment expert free-speech cornerstone disruptor freedom. Cesar Chavez empower.</p>
+							<div class="team-social">
+								<a class="fb" href="#"><i class="fa fa-facebook"></i></a>
+								<a class="twt" href="#"><i class="fa fa-twitter"></i></a>
+								<a class="gplus" href="#"><i class="fa fa-google-plus"></i></a>
+								<a class="linkdin" href="#"><i class="fa fa-linkedin"></i></a>
+								<a class="dribble" href="#"><i class="fa fa-dribbble"></i></a>
+							</div>
+						</div>
+					</div>
+				</div><!--/ Team 2 end -->
+			</div><!--/ Content row end -->
+
+		</div><!--/ container end -->
+
+	</section><!--/ Main container end -->
+
+	<section class="call-to-action">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<h3>Join with BizCraft and Give Your Website a Brand New Look</h3>
+					<a href="#" class="pull-right btn btn-primary white">Purchase Now</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+		<footer id="footer" class="footer" th:replace="/project/layout/footer :: footer"></footer>
+
+
+		<section id="copyright" class="copyright angle" th:replace="/project/layout/footer :: copyright"></section>
+
+		<div th:replace="/project/layout/js :: js"></div>
+	</div><!-- Body inner end -->
+</body>
+</html>
