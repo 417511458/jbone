@@ -355,18 +355,6 @@
 
             <dependency>
                 <groupId>cn.jbone</groupId>
-                <artifactId>jbone-sys-service</artifactId>
-                <version>${jbone.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cn.jbone</groupId>
-                <artifactId>jbone-sys-dao</artifactId>
-                <version>${jbone.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cn.jbone</groupId>
                 <artifactId>jbone-cas-client</artifactId>
                 <version>${jbone.version}</version>
             </dependency>
