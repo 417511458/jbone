@@ -29,7 +29,7 @@
         <spring.boot.version>2.0.6.RELEASE</spring.boot.version>
         <shiro.version>1.4.0</shiro.version>
         <jbone.version>1.0.0</jbone.version>
-        <jackson.version>2.9.7</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
         <commons-io.version>2.5</commons-io.version>
         <commons-text.version>1.1</commons-text.version>
         <commons-pool2.version>2.4.2</commons-pool2.version>
