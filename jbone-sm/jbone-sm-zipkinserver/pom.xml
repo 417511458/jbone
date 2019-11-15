@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
 
     <name>jbone-sm-zipkinserver</name>
-    <url>http://maven.apache.org</url>
+    <url>http://jbone.cn</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

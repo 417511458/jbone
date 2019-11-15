@@ -9,7 +9,7 @@
     <artifactId>jbone-sm</artifactId>
     <packaging>pom</packaging>
     <name>Maven Portlet Archetype</name>
-    <url>http://maven.apache.org</url>
+    <url>http://jbone.cn</url>
     <modules>
         <module>jbone-sm-register</module>
         <module>jbone-sm-admin</module>
