@@ -44,15 +44,16 @@ QQ群：992113778（2群）、547104190（1群）
 
 ### 项目模块划分
 * jbone-sso : 单点登录模块
-* jbone-service-manager : 服务管理模块(包含注册中心、服务网关、服务监控、调用链追踪等)
+* jbone-service-management : 服务管理模块(包含注册中心、服务网关、服务监控、调用链追踪等)
 * jbone-system : 系统管理模块,用于权限管理等
 * jbone-cms ：内容管理系统
-* jbone-bpm : 工作流模块(未完成)
 * jbone-common : 公共模块
 * jbone-banner : jbone通用banner
 * jbone-configuration : 公共配置模块
-* jbone-b2b2c : 多店铺电商平台 (未完成)
 * jbone-ui : 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。
+* jbone-b2b2c : 多店铺电商平台 (未完成)
+* jbone-bpm : 工作流模块(未完成)
+
 
 ### 技术选型
 技术 | 简介 | 网址

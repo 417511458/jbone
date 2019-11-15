@@ -9,7 +9,6 @@
         <module>jbone-sm</module>
         <module>jbone-common</module>
         <module>jbone-configuration</module>
-        <module>jbone-bpm</module>
         <module>jbone-cms</module>
         <module>jbone-ui</module>
         <module>jbone-errors</module>
