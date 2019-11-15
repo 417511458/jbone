@@ -58,13 +58,6 @@
             <version>1.0.0</version>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>cn.jbone</groupId>
-            <artifactId>jbone-fs-repo-fastdfs</artifactId>
-            <version>1.0.0</version>
-        </dependency>
--->
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-fs-repo-qiniu</artifactId>
@@ -73,6 +66,12 @@
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-fs-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-banner</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
@@ -103,7 +102,7 @@
             </plugin>
         </plugins>
 
-        <finalName>jbone-sys-server</finalName>
+        <finalName>jbone-fs-server</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

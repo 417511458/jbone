@@ -115,11 +115,17 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-cas-client</artifactId>
+            <artifactId>jbone-sso-client</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-banner</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>

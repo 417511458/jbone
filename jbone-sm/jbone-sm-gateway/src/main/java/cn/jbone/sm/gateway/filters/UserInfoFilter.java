@@ -3,7 +3,7 @@ package cn.jbone.sm.gateway.filters;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sm.gateway.constants.GatewayConstants;
 import cn.jbone.sm.gateway.token.TokenRepository;
-import cn.jbone.sys.common.UserResponseDO;
+import cn.jbone.sso.common.domain.UserInfo;
 import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -42,13 +42,13 @@ public class UserInfoFilter extends ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         String requestUri = requestContext.getRequest().getRequestURI();
         if(requestUri.equals(GatewayConstants.CURRENT_USER_URI)){
-            UserResponseDO userInfo = tokenRepository.get(requestContext.get(GatewayConstants.TOKEN_KEY).toString()).getUserResponseDO();
+            UserInfo userInfo = tokenRepository.get(requestContext.get(GatewayConstants.TOKEN_KEY).toString()).getUserInfo();
             if(userInfo == null){
                 return null;
             }
 
             //拷贝后再返回，去掉密码等敏感信息
-            UserResponseDO userResponseDO = new UserResponseDO();
+            UserInfo userResponseDO = new UserInfo();
             userResponseDO.setAuthInfo(userInfo.getAuthInfo());
             userResponseDO.setBaseInfo(userInfo.getBaseInfo());
 

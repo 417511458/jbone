@@ -65,7 +65,7 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-api-starter</artifactId>
+            <artifactId>jbone-system-api-starter</artifactId>
         </dependency>
     </dependencies>
 

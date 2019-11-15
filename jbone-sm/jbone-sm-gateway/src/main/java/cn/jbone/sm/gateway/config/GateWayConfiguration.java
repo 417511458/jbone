@@ -1,6 +1,6 @@
 package cn.jbone.sm.gateway.config;
 
-import cn.jbone.cas.common.JboneToken;
+import cn.jbone.sso.common.token.JboneToken;
 import cn.jbone.sm.gateway.filters.TokenFilter;
 import cn.jbone.sm.gateway.filters.UserInfoFilter;
 import cn.jbone.sm.gateway.token.TokenRepository;

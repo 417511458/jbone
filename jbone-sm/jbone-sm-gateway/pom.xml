@@ -22,7 +22,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-api-starter</artifactId>
+            <artifactId>jbone-system-api-starter</artifactId>
         </dependency>
 
         <!-- zipkin客户端依赖配置，使用rabbit -->
@@ -61,7 +61,13 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-cas-common</artifactId>
+            <artifactId>jbone-sso-common</artifactId>
+            <version>${jbone.sso.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-banner</artifactId>
             <version>1.0.0</version>
         </dependency>
 

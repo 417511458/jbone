@@ -1,8 +1,8 @@
 package cn.jbone.bpm.admin.controller;
 
 import cn.jbone.configuration.JboneConfiguration;
-import cn.jbone.sys.api.UserApi;
-import cn.jbone.sys.common.UserResponseDO;
+import cn.jbone.system.api.UserApi;
+import cn.jbone.system.common.UserResponseDO;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.ui.ModelMap;
 

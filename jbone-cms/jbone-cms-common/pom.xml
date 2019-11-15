@@ -22,8 +22,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-common</artifactId>
-            <version>1.0.0</version>
+            <artifactId>jbone-system-common</artifactId>
         </dependency>
     </dependencies>
 

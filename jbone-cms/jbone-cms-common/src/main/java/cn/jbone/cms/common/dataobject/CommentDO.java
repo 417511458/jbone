@@ -1,7 +1,7 @@
 package cn.jbone.cms.common.dataobject;
 
 import cn.jbone.cms.common.enums.StatusEnum;
-import cn.jbone.sys.common.UserResponseDO;
+import cn.jbone.system.common.UserResponseDO;
 import lombok.Data;
 
 @Data

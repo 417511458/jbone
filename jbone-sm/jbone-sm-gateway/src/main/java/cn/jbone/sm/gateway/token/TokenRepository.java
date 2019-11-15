@@ -1,6 +1,6 @@
 package cn.jbone.sm.gateway.token;
 
-import cn.jbone.cas.common.JboneToken;
+import cn.jbone.sso.common.token.JboneToken;
 import cn.jbone.sm.gateway.constants.GatewayConstants;
 import org.springframework.data.redis.core.RedisTemplate;
 

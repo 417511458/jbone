@@ -45,7 +45,7 @@
         </dependency>
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-api-starter</artifactId>
+            <artifactId>jbone-system-api-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.shiro</groupId>
@@ -56,7 +56,7 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-api</artifactId>
+            <artifactId>jbone-system-api</artifactId>
         </dependency>
 
         <dependency>

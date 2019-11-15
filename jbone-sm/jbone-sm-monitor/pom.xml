@@ -128,7 +128,7 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sys-api</artifactId>
+            <artifactId>jbone-system-api</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.jbone</groupId>
@@ -136,7 +136,7 @@
         </dependency>
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-cas-client</artifactId>
+            <artifactId>jbone-sso-client</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.jbone</groupId>
@@ -147,6 +147,12 @@
                     <artifactId>shiro-core</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-banner</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>

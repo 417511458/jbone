@@ -1,7 +1,0 @@
-#服务
-server:
-  port: 20002
-
-spring:
-  profiles:
-    active: @profileActive@

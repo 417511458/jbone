@@ -1,6 +1,6 @@
 package cn.jbone.configuration;
 
-import cn.jbone.configuration.props.CasProperties;
+import cn.jbone.configuration.props.SsoProperties;
 import cn.jbone.configuration.props.FSProperties;
 import cn.jbone.configuration.props.RpcProperties;
 import cn.jbone.configuration.props.SysProperties;
@@ -27,7 +27,7 @@ public class JboneConfiguration {
     /**
      * CAS配置
      */
-    private CasProperties cas = new CasProperties();
+    private SsoProperties sso = new SsoProperties();
 
     /**
      * 远程调用配置
@@ -49,12 +49,12 @@ public class JboneConfiguration {
         this.sys = sys;
     }
 
-    public CasProperties getCas() {
-        return cas;
+    public SsoProperties getSso() {
+        return sso;
     }
 
-    public void setCas(CasProperties cas) {
-        this.cas = cas;
+    public void setSso(SsoProperties sso) {
+        this.sso = sso;
     }
 
     public RpcProperties getRpc() {
@@ -77,7 +77,7 @@ public class JboneConfiguration {
     public String toString() {
         return "JboneConfiguration{" +
                 "sys=" + sys +
-                ", cas=" + cas +
+                ", sso=" + sso +
                 ", rpc=" + rpc +
                 '}';
     }

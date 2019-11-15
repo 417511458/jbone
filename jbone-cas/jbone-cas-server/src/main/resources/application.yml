@@ -1,9 +1,0 @@
-##
-# CAS Server Context Configuration
-#
-server:
-  port: 30001
-
-spring:
-  profiles:
-    active: @profileActive@

@@ -23,13 +23,13 @@ export default {
   sso: {
     dev: {
       OAUTH_REDIRECT_URI : 'http://jbone-cms-admin.majunwei.com:50002/',
-      SSO_BASE_URL : 'http://jbone-cas.majunwei.com:30001/cas/',
+      SSO_BASE_URL : 'http://sso.local.jbone.cn/',
       OAUTH_CLIENT_ID : 'cmsadmin',
       OAUTH_CLIENT_SECRET : 'cmsadmin'
     },
     pro: {
       OAUTH_REDIRECT_URI : 'http://jbone-cms-admin.majunwei.com:50002/',
-      SSO_BASE_URL : 'http://jbone-cas.majunwei.com:30001/cas/',
+      SSO_BASE_URL : 'http://sso.local.jbone.cn/',
       OAUTH_CLIENT_ID : 'cmsadmin',
       OAUTH_CLIENT_SECRET : 'cmsadmin'
     }

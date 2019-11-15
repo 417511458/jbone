@@ -1,6 +1,7 @@
 package cn.jbone.fs;
 
-import cn.jbone.common.boot.AbastractJboneBanner;
+
+import cn.jbone.banner.AbastractJboneBanner;
 
 public class JboneFSServerBanner extends AbastractJboneBanner {
 

@@ -1,8 +1,8 @@
 package cn.jbone.cms.portal.intercepter;
 
-import cn.jbone.cas.client.utils.SessionUtil;
 import cn.jbone.cms.portal.cache.CachedSiteManager;
 import cn.jbone.cms.portal.service.CommonService;
+import cn.jbone.sso.client.utils.SessionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

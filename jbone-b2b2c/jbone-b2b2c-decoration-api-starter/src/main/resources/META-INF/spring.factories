@@ -1,1 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.jbone.b2b2c.decoration.api.starter.DecorationApiAutoConfiguration

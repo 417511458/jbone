@@ -74,13 +74,13 @@ management:
       server:
         auto-time-requests: false #解决zipkin异常：Prometheus requires that all meters with the same name have the same set of tag keys
 jbone:
-  #CAS服务地址
-  cas:
-    casServerUrl: http://jbone-cas.majunwei.com:30001/cas
+  #SSO服务地址
+  sso:
+    ssoServerUrl: http://sso.local.jbone.cn
     #当前系统地址
-    currentServerUrlPrefix: http://jbone-sm-zipkinserver.majunwei.com:10004
-    #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
-    casFilterUrlPattern: /cas
+    currentServerUrlPrefix: http://zipkinserver.local.jbone.cn
+    #过滤器地址,SSO认证通过后会回掉到jbone.sso.currentServerUrlPrefix/jbone.sso.ssoFilterUrlPattern
+    ssoFilterUrlPattern: /sso
     #登录成功后的跳转路径，默认"/"
     successUrl: /zipkin/
     #未授权的跳转路径，默认"/403"

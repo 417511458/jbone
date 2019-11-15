@@ -1,6 +1,5 @@
 package cn.jbone.cms.portal.controller;
 
-import cn.jbone.cas.client.utils.SessionUtil;
 import cn.jbone.cms.common.constant.DictionaryConstant;
 import cn.jbone.cms.common.dataobject.ArticleResponseDO;
 import cn.jbone.cms.common.dataobject.CategoryDO;
@@ -13,7 +12,8 @@ import cn.jbone.cms.portal.collectors.DataCollectorHandler;
 import cn.jbone.cms.portal.service.*;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.errors.Jbone404Exception;
-import cn.jbone.sys.common.UserResponseDO;
+import cn.jbone.sso.client.utils.SessionUtil;
+import cn.jbone.system.common.UserResponseDO;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

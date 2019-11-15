@@ -1,6 +1,6 @@
 package cn.jbone.sm.admin;
 
-import cn.jbone.common.boot.AbastractJboneBanner;
+import cn.jbone.banner.AbastractJboneBanner;
 
 public class JboneSmAdminBanner extends AbastractJboneBanner {
     @Override

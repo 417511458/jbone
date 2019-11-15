@@ -62,7 +62,7 @@
         </dependency>
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-cas-client</artifactId>
+            <artifactId>jbone-sso-client</artifactId>
         </dependency>
 
         <dependency>
@@ -89,6 +89,12 @@
         <dependency>
             <groupId>cn.jbone</groupId>
             <artifactId>jbone-cms-api-starter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-banner</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

@@ -49,14 +49,14 @@ management:
       show-details: ALWAYS
 
 
-#CAS服务地址
+#SSO服务地址
 jbone:
-  cas:
-    casServerUrl: http://jbone-cas.majunwei.com:30001/cas
+  sso:
+    ssoServerUrl: http://sso.local.jbone.cn
     #当前系统地址
-    currentServerUrlPrefix: http://jbone-sm-admin.majunwei.com:10002
-    #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
-    casFilterUrlPattern: /cas
+    currentServerUrlPrefix: http://smadmin.local.jbone.cn
+    #过滤器地址,SSO认证通过后会回掉到jbone.sso.currentServerUrlPrefix/jbone.sso.ssoFilterUrlPattern
+    ssoFilterUrlPattern: /sso
     #登录成功后的跳转路径，默认"/"
     successUrl: /admin/
     logoutUrl: /admin/logout

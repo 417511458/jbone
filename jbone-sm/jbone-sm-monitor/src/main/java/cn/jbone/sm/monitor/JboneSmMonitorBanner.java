@@ -1,6 +1,6 @@
 package cn.jbone.sm.monitor;
 
-import cn.jbone.common.boot.AbastractJboneBanner;
+import cn.jbone.banner.AbastractJboneBanner;
 
 public class JboneSmMonitorBanner extends AbastractJboneBanner {
     @Override

@@ -2,7 +2,7 @@ package cn.jbone.cms.api;
 
 import cn.jbone.cms.common.dataobject.BatchSaveSiteAdminDO;
 import cn.jbone.common.rpc.Result;
-import cn.jbone.sys.common.UserResponseDO;
+import cn.jbone.system.common.UserResponseDO;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

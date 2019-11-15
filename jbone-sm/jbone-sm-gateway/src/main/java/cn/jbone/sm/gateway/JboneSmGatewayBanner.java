@@ -1,8 +1,9 @@
 package cn.jbone.sm.gateway;
 
-import cn.jbone.common.boot.AbastractJboneBanner;
+import cn.jbone.banner.AbastractJboneBanner;
 
 public class JboneSmGatewayBanner extends AbastractJboneBanner {
+
     @Override
     protected String getTitle() {
         return "Jbone Gateway";

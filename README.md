@@ -43,34 +43,15 @@ QQ群：992113778（2群）、547104190（1群）
 ![Jbone功能架构图](doc/images/features.png)
 
 ### 项目模块划分
-* jbone-cas : 用户单点登录模块
-    * jbone-cas-client：客户端jar包，用于系统集成单点登录
-    * jbone-cas-server：CAS服务端，单独部署，用于单点登录、服务授权、找回密码等
-* jbone-sm : 服务管理模块
-    * jbone-sm-admin : 服务管理系统，包括服务监控、服务管理等
-    * jbone-sm-gateway: 服务网关
-    * jbone-sm-monitor: 服务监控
-    * jbone-sm-register : 服务注册中心，原则上所有服务都要注册进来
-    * jbone-sm-zipkinserver : 基于zipkin的调用链跟踪系统
-* jbone-sys : 系统管理模块
-    * jbone-sys-admin ： 系统管理后台
-    * jbone-sys-api : 系统服务对外接口定义
-    * jbone-sys-api-starter : 系统服务接口启动器，引入jar包即可调用系统服务
-    * jbone-sys-core : 系统管理核心
-    * jbone-sys-common : 系统管理公共模块
-    * jbone-sys-server : 系统管理服务
-* jbone-cms ：内容管理模块
-    * jbone-cms-admin: cms后台管理
-    * jbone-cms-api: cms对外接口定义
-    * jbone-cms-api-starter: cms对外接口启动器，引入jar包接口调用cms服务
-    * jbone-cms-common: cms公共模块
-    * jbone-cms-core: cms核心模块
-    * jbone-cms-portal: cms前端
-    * jbone-cms-server: cms后端服务
+* jbone-sso : 单点登录模块
+* jbone-service-manager : 服务管理模块(包含注册中心、服务网关、服务监控、调用链追踪等)
+* jbone-system : 系统管理模块,用于权限管理等
+* jbone-cms ：内容管理系统
 * jbone-bpm : 工作流模块(未完成)
 * jbone-common : 公共模块
+* jbone-banner : jbone通用banner
 * jbone-configuration : 公共配置模块
-* jbone-b2b2c : 多店铺电商平台模块 (未完成)
+* jbone-b2b2c : 多店铺电商平台 (未完成)
 * jbone-ui : 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。
 
 ### 技术选型

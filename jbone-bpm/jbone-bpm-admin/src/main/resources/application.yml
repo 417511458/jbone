@@ -43,13 +43,13 @@ management:
 
 #Jbone配置
 jbone:
-  cas:
-    #CAS服务地址
-    casServerUrl: https://jbone-cas.majunwei.com:8443/cas
+  sso:
+    #SSO服务地址
+    ssoServerUrl: https://sso.local.jbone.cn
     #当前系统地址
-    currentServerUrlPrefix: http://jbone-bpm-admin.majunwei.com:60002
-    #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
-    casFilterUrlPattern: /cas
+    currentServerUrlPrefix: http://bpmadmin.local.jbone.cn
+    #过滤器地址,SSO认证通过后会回掉到jbone.sso.currentServerUrlPrefix/jbone.sso.ssoFilterUrlPattern
+    ssoFilterUrlPattern: /sso
     #登录成功后的跳转路径，默认"/"
     successUrl: /
     #未授权的跳转路径，默认"/403"

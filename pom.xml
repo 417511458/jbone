@@ -6,17 +6,15 @@
     <artifactId>jbone</artifactId>
     <version>1.0.0</version>
     <modules>
-        <module>jbone-cas</module>
         <module>jbone-sm</module>
         <module>jbone-common</module>
-        <module>jbone-sys</module>
         <module>jbone-configuration</module>
         <module>jbone-bpm</module>
         <module>jbone-cms</module>
         <module>jbone-ui</module>
         <module>jbone-errors</module>
-        <module>jbone-b2b2c</module>
         <module>jbone-fs</module>
+        <module>jbone-banner</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -29,6 +27,8 @@
         <spring.boot.version>2.0.6.RELEASE</spring.boot.version>
         <shiro.version>1.4.0</shiro.version>
         <jbone.version>1.0.0</jbone.version>
+        <jbone.system.version>1.0.0-SNAPSHOT</jbone.system.version>
+        <jbone.sso.version>1.0.0-SNAPSHOT</jbone.sso.version>
         <jackson.version>2.9.7</jackson.version>
         <commons-io.version>2.5</commons-io.version>
         <commons-text.version>1.1</commons-text.version>
@@ -61,6 +61,40 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+
+        <!-- jdk8之前支持的包    start -->
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.istack</groupId>
+            <artifactId>istack-commons-runtime</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
         </dependency>
     </dependencies>
 
@@ -338,8 +372,9 @@
 
             <dependency>
                 <groupId>cn.jbone</groupId>
-                <artifactId>jbone-sys-api</artifactId>
-                <version>${jbone.version}</version>
+                <artifactId>jbone-system-api</artifactId>
+                <version>${jbone.system.version}</version>
+
             </dependency>
 
             <dependency>
@@ -355,14 +390,20 @@
 
             <dependency>
                 <groupId>cn.jbone</groupId>
-                <artifactId>jbone-cas-client</artifactId>
-                <version>${jbone.version}</version>
+                <artifactId>jbone-sso-client</artifactId>
+                <version>${jbone.sso.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>cn.jbone</groupId>
-                <artifactId>jbone-sys-api-starter</artifactId>
-                <version>${jbone.version}</version>
+                <artifactId>jbone-system-api-starter</artifactId>
+                <version>${jbone.system.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.jbone</groupId>
+                <artifactId>jbone-system-common</artifactId>
+                <version>${jbone.system.version}</version>
             </dependency>
 
             <dependency>

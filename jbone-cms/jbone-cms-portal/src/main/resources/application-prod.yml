@@ -67,13 +67,13 @@ management:
 
 #Jbone配置
 jbone:
-  cas:
-    #CAS服务地址
-    casServerUrl: http://cas.jbone.cn
+  sso:
+    #SSO服务地址
+    ssoServerUrl: http://sso.jbone.cn
     #当前系统地址
     currentServerUrlPrefix: http://jbone.cn
-    #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
-    casFilterUrlPattern: /cas
+    #过滤器地址,SSO认证通过后会回掉到jbone.sso.currentServerUrlPrefix/jbone.sso.ssoFilterUrlPattern
+    ssoFilterUrlPattern: /sso
     #登录成功后的跳转路径，默认"/"
     successUrl: http://jbone.cn/
     #未授权的跳转路径，默认"/403"

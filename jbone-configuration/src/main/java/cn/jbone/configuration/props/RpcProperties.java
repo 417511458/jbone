@@ -13,7 +13,7 @@ public class RpcProperties implements Serializable {
     /**
      * 系统服务
      */
-    private SysServerProperties sysServer = new SysServerProperties();
+    private SystemServerProperties systemServer = new SystemServerProperties();
     private CmsServerProperties cmsServer = new CmsServerProperties();
     private EbPortalServerProperties ebPortalServer = new EbPortalServerProperties();
     private ShopServerProperties shopServer = new ShopServerProperties();

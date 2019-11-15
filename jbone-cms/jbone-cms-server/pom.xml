@@ -53,6 +53,11 @@
         </dependency>
         <!-- zipkin客户端依赖配置，使用rabbit -->
 
+        <dependency>
+            <groupId>cn.jbone</groupId>
+            <artifactId>jbone-banner</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <profiles>

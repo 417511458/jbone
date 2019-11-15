@@ -1,7 +1,7 @@
 package cn.jbone.bpm.admin.controller;
 
 import cn.jbone.configuration.JboneConfiguration;
-import cn.jbone.sys.api.UserApi;
+import cn.jbone.system.api.UserApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

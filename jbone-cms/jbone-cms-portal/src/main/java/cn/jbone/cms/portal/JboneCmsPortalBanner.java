@@ -1,6 +1,6 @@
 package cn.jbone.cms.portal;
 
-import cn.jbone.common.boot.AbastractJboneBanner;
+import cn.jbone.banner.AbastractJboneBanner;
 
 public class JboneCmsPortalBanner extends AbastractJboneBanner {
 

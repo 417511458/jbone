@@ -5,7 +5,7 @@ import cn.jbone.cms.common.dataobject.BatchSaveSiteAdminDO;
 import cn.jbone.cms.core.service.SiteAdminService;
 import cn.jbone.common.exception.JboneException;
 import cn.jbone.common.rpc.Result;
-import cn.jbone.sys.common.UserResponseDO;
+import cn.jbone.system.common.UserResponseDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

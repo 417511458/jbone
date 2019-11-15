@@ -1,10 +1,10 @@
 package cn.jbone.sm.gateway.filters;
 
-import cn.jbone.cas.common.JboneToken;
+import cn.jbone.sso.common.token.JboneToken;
 import cn.jbone.common.rpc.Result;
 import cn.jbone.sm.gateway.constants.GatewayConstants;
 import cn.jbone.sm.gateway.token.TokenRepository;
-import cn.jbone.sys.common.UserResponseDO;
+import cn.jbone.system.common.UserResponseDO;
 import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -69,9 +69,9 @@ public class TokenFilter extends ZuulFilter {
 
         requestContext.set(GatewayConstants.TOKEN_KEY,token);
         //将用户ID保存到上下文
-        requestContext.set(GatewayConstants.USER_ID,jboneToken.getUserResponseDO().getBaseInfo().getId());
+        requestContext.set(GatewayConstants.USER_ID,jboneToken.getUserInfo().getBaseInfo().getId());
 
-        requestContext.addZuulRequestHeader(GatewayConstants.USER_ID,jboneToken.getUserResponseDO().getBaseInfo().getId() + "");
+        requestContext.addZuulRequestHeader(GatewayConstants.USER_ID,jboneToken.getUserInfo().getBaseInfo().getId() + "");
         return null;
     }
 

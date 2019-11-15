@@ -67,15 +67,15 @@ management:
 
 #Jbone配置
 jbone:
-  cas:
+  sso:
     #CAS服务地址
-    casServerUrl: http://jbone-cas.majunwei.com:30001/cas
+    ssoServerUrl: http://sso.local.jbone.cn
     #当前系统地址
-    currentServerUrlPrefix: http://jbone-cms-portal.majunwei.com:50003
-    #过滤器地址,CAS认证通过后会回掉到jbone.cas.currentServerUrlPrefix/jbone.cas.casFilterUrlPattern
-    casFilterUrlPattern: /cas
+    currentServerUrlPrefix: http://cmsportal.local.jbone.cn
+    #过滤器地址,SSO认证通过后会回掉到jbone.sso.currentServerUrlPrefix/jbone.sso.ssoFilterUrlPattern
+    ssoFilterUrlPattern: /sso
     #登录成功后的跳转路径，默认"/"
-    successUrl: http://jbone-cms-portal.majunwei.com:50003/
+    successUrl: http://cmsportal.local.jbone.cn/
     #未授权的跳转路径，默认"/403"
     unauthorizedUrl: /403
     #客户端Session失效时间，默认30分钟
