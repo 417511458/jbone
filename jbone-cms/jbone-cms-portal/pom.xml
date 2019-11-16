@@ -83,11 +83,6 @@
 
         <dependency>
             <groupId>cn.jbone</groupId>
-            <artifactId>jbone-sm-monitor-publisher</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.jbone</groupId>
             <artifactId>jbone-cms-api-starter</artifactId>
             <version>1.0.0</version>
         </dependency>

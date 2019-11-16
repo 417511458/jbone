@@ -83,13 +83,13 @@ set keystoreJDKPath="C:\devSpace\Java\jdk1.8.0_131\jre\lib\security\cacerts "
 ## 启动应用
 依次启动：
 
-1. jbone-sm-register
+1. jbone-sm-registry
 
 2. jbone-sm-admin
 
-3. jbone-sys-server
+3. jbone-system-server
 
-4. jbone-sys-admin
+4. jbone-system-admin
 
 5. jbone-cas-server (支持两种部署方式)
 

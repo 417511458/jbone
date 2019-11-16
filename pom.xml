@@ -6,7 +6,6 @@
     <artifactId>jbone</artifactId>
     <version>1.0.0</version>
     <modules>
-        <module>jbone-sm</module>
         <module>jbone-common</module>
         <module>jbone-configuration</module>
         <module>jbone-cms</module>
@@ -413,20 +412,15 @@
             <dependency>
                 <groupId>cn.jbone</groupId>
                 <artifactId>jbone-ui</artifactId>
-                <version>${jbone.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>cn.jbone</groupId>
                 <artifactId>jbone-errors</artifactId>
-                <version>${jbone.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>cn.jbone</groupId>
-                <artifactId>jbone-sm-monitor-publisher</artifactId>
-                <version>${jbone.version}</version>
-            </dependency>
 
         </dependencies>
 

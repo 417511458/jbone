@@ -1,5 +1,0 @@
-server.port: 10005
-
-spring:
-  profiles:
-    active: @profileActive@
