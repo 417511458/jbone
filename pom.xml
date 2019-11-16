@@ -12,7 +12,6 @@
         <module>jbone-cms</module>
         <module>jbone-ui</module>
         <module>jbone-errors</module>
-        <module>jbone-fs</module>
         <module>jbone-banner</module>
     </modules>
     <packaging>pom</packaging>
