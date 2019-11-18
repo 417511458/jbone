@@ -47,7 +47,7 @@ QQ群：992113778（2群）、547104190（1群）
 * jbone-service-management : 服务管理模块(包含注册中心、服务网关、服务监控、调用链追踪等)
 * jbone-system : 系统管理模块,包括权限管理等
 * jbone-fs : 文件系统，用于存储和管理文件、图片等
-* jbone-cms ：内容管理系统
+* jbone-cms ：多站点内容管理系统
 * jbone-common : 公共模块
 * jbone-banner : jbone通用banner
 * jbone-configuration : 公共配置模块

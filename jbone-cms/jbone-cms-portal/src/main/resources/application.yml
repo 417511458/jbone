@@ -1,7 +1,0 @@
-#服务
-server:
-  port: 50003
-
-spring:
-  profiles:
-    active: @profileActive@

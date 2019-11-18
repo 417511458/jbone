@@ -1,6 +1,0 @@
-server:
-  port: 50001
-
-spring:
-  profiles:
-    active: @profileActive@

@@ -8,7 +8,6 @@
     <modules>
         <module>jbone-common</module>
         <module>jbone-configuration</module>
-        <module>jbone-cms</module>
         <module>jbone-ui</module>
         <module>jbone-errors</module>
         <module>jbone-banner</module>
