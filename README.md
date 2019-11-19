@@ -3,12 +3,15 @@
 
 ![Jbone logo](doc/images/logo-text.png)
 
-jbone是基于Spring Cloud开发的项目群，下面是功能架构图：
+jbone是基于Spring Cloud开发的项目群
+
+**功能架构图**
 
 ![Jbone功能架构图](doc/images/features.png)
 
+**项目成员**
 
-模块 | 简介 | 项目地址
+项目名 | 简介 | 项目地址
 ---- | ------ | ----
 jbone-sso | 单点登录模块 | [github](https://github.com/417511458/jbone-sso) , [码云](https://gitee.com/majunwei2017/jbone-sso)
 jbone-service-management | 服务管理模块(包含注册中心、服务网关、服务监控、调用链追踪等)  |  [github](https://github.com/417511458/jbone-service-management) , [码云](https://gitee.com/majunwei2017/jbone-service-management)
