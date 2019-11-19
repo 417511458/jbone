@@ -1,4 +1,28 @@
-![Jbone功能架构图](doc/images/logo-text.png)
+
+
+
+![Jbone logo](doc/images/logo-text.png)
+
+jbone是基于Spring Cloud开发的项目群，下面是功能架构图：
+
+![Jbone功能架构图](doc/images/features.png)
+
+
+模块 | 简介 | 项目地址
+---- | ------ | ----
+jbone-sso | 单点登录模块 | [github](https://github.com/417511458/jbone-sso) , [码云](https://gitee.com/majunwei2017/jbone-sso)
+jbone-service-management | 服务管理模块(包含注册中心、服务网关、服务监控、调用链追踪等)  |  [github](https://github.com/417511458/jbone-service-management) , [码云](https://gitee.com/majunwei2017/jbone-service-management)
+jbone-system | 系统管理模块,通用权限管理等 | [github](https://github.com/417511458/jbone-system) , [码云](https://gitee.com/majunwei2017/jbone-system)
+jbone-fs | 文件系统，用于存储和管理文件、图片等 | [github](https://github.com/417511458/jbone-fs) , [码云](https://gitee.com/majunwei2017/jbone-fs)
+jbone-cms | 多站点内容管理系统 | [github](https://github.com/417511458/jbone-cms) , [码云](https://gitee.com/majunwei2017/jbone-cms)
+jbone-common | 公共模块，封装工具类等 | [github](https://github.com/417511458/jbone) , [码云](https://gitee.com/majunwei2017/jbone)
+jbone-banner | jbone通用艺术banner | [github](https://github.com/417511458/jbone) , [码云](https://gitee.com/majunwei2017/jbone)
+jbone-configuration | 公共配置模块 | [github](https://github.com/417511458/jbone) , [码云](https://gitee.com/majunwei2017/jbone)
+jbone-ui | 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。 | [github](https://github.com/417511458/jbone) , [码云](https://gitee.com/majunwei2017/jbone)
+jbone-b2b2c | 多店铺电商平台 (未完成) | [github](https://github.com/417511458/jbone-b2b2c) , [码云](https://gitee.com/majunwei2017/jbone-b2b2c)
+jbone-bpm | 工作流模块(未完成) | [github](https://github.com/417511458/jbone-bpm) , [码云](https://gitee.com/majunwei2017/jbone-bpm)
+
+# 交流方式
 
 [项目官网](http://jbone.cn)（基于jbone cms构建)
 
@@ -7,21 +31,6 @@
 [开发文档](http://jbone.cn/category/development_document)
 
 [部署文档](http://jbone.cn/category/deployment_document)
-
-jbone主要关注两个方面，一个是微服务架构的落地实现，另一个更重要的是进行深入的技术探究。
-
-# jbone定位
-## 学习交流探技术
-随着微服务的发展，出现了很多微服务架构的解决方案，Spring Cloud就是其中的典型代表。jbone是基于Spring Cloud搭建的微服务项目，包括服务注册与发现、服务监控、服务管理、服务网关、服务熔断等常见微服务组件。 除Spring Cloud以外，会根据业务特点选择合适的解决方案，如单点登录的CAS、安全框架Shiro等。具体参考《技术选型》。
-
-jbone项目主要关注两个方面的技术交流：
-* 功能实现：了解技术组件并落地实现，为相同技术选型的项目，提供实现参考。
-* 技术探究：实现功能的同时，针对选择的技术框架进行深入探究，使用的同时获得技术提升。知道How to use,更要知道How it works。（技术探究文章会以专题文章的形式发表到jbone官网）
-## 落地实现造轮子
-造轮子的成本非常高，企业快速的业务发展，更想拿来即用。jbone在技术交流的过程中会沉淀出很多轮子，如服务治理、系统管理、内容管理、电商平台等解决方案。使中小企业花最少的成本建立自己的服务治理体系、电商平台、企业管理平台、支付平台等。
-# 交流方式
-
-项目官网：[http://jbone.cn](http://jbone.cn)（基于jbone cms构建)
 
 QQ群：992113778（2群）、547104190（1群）
 
@@ -34,29 +43,13 @@ QQ群：992113778（2群）、547104190（1群）
 微信群：先添加作者好友再加入
 
 # 系统简介
+
 ## 系统要求
+
 **JDK11+**
 
 
-## 系统设计
-### jbone功能架构图
-![Jbone功能架构图](doc/images/features.png)
-
-### 项目模块划分
-* jbone-sso : 单点登录模块
-* jbone-service-management : 服务管理模块(包含注册中心、服务网关、服务监控、调用链追踪等)
-* jbone-system : 系统管理模块,包括权限管理等
-* jbone-fs : 文件系统，用于存储和管理文件、图片等
-* jbone-cms ：多站点内容管理系统
-* jbone-common : 公共模块
-* jbone-banner : jbone通用banner
-* jbone-configuration : 公共配置模块
-* jbone-ui : 以webjars形式管理前端静态资源，所有包含页面的工程需要依赖此模块。
-* jbone-b2b2c : 多店铺电商平台 (未完成)
-* jbone-bpm : 工作流模块(未完成)
-
-
-### 技术选型
+## 技术选型
 技术 | 简介 | 网址
 ---- | ------ | ----
 Spring Boot | 基础构建框架，用于快速整合各资源 | [https://projects.spring.io/spring-boot/](https://projects.spring.io/spring-boot/)
