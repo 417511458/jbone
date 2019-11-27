@@ -27,13 +27,7 @@ jbone-bpm | 工作流模块(未完成) | [github](https://github.com/417511458/j
 
 # 交流方式
 
-[项目官网](http://jbone.cn)（基于jbone cms构建)
-
-[作者简历](http://majunwei.jbone.cn)（基于jbone cms构建)
-
-[开发文档](http://jbone.cn/category/development_document)
-
-[部署文档](http://jbone.cn/category/deployment_document)
+[项目官网](http://jbone.cn)
 
 QQ群：992113778（2群）、547104190（1群）
 
