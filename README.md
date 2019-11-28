@@ -3,7 +3,9 @@
 
 ![Jbone logo](doc/images/logo-text.png)
 
-jbone是基于Spring Cloud开发的项目群
+jbone是基于Spring Cloud开发的项目群，是对Spring Cloud微服务架构的综合应用实践和基础开发框架
+
+[jbone.cn](http://jbone.cn)
 
 **功能架构图**
 
