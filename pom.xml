@@ -424,12 +424,7 @@
                 <artifactId>jbone-errors</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
-
         </dependencies>
-
-
-
     </dependencyManagement>
 
     <licenses>
