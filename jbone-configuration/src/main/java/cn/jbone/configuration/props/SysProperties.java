@@ -10,7 +10,6 @@ public class SysProperties implements Serializable {
 
     /**
      * 系统名字（注册中心）
-     * @return
      */
     private String serverName;
 

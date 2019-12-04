@@ -46,12 +46,6 @@ public class SearchConditionDO {
     }
 
 
-    /**
-     *
-     * 链表式构建
-     *
-     */
-
     public static SearchConditionDO build(){
         return new SearchConditionDO();
     }

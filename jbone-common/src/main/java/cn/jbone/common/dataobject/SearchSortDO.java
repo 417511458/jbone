@@ -22,9 +22,6 @@ public class SearchSortDO {
     }
 
 
-    /**
-     * 链表构建
-     */
     public static SearchSortDO build(){
         return new SearchSortDO();
     }

@@ -24,8 +24,8 @@ public class AbstractService<T> {
     /**
      * 获取搜索列表的通用Specification
      * key=S_filedName_pattern
-     * @param searchListDTO
-     * @return
+     * @param searchListDTO 查询参数
+     * @return 查询定义
      */
     public Specification<T> getSearchListSpecification(SearchListDTO searchListDTO){
         return new Specification<T>() {
@@ -109,8 +109,8 @@ public class AbstractService<T> {
 
     /**
      * 获取分页请求对象
-     * @param searchListDTO
-     * @return
+     * @param searchListDTO p
+     * @return r
      */
     public PageRequest getPageRequest(SearchListDTO searchListDTO){
         PageRequest pageRequest = null;

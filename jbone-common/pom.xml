@@ -12,6 +12,7 @@
 
     <name>jbone-common</name>
     <url>http://jbone.cn</url>
+    <description>jbone common</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -86,4 +87,5 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
+
 </project>

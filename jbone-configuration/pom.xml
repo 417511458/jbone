@@ -12,6 +12,7 @@
 
     <name>jbone-configuration</name>
     <url>http://jbone.cn</url>
+    <description>jbone configuration</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

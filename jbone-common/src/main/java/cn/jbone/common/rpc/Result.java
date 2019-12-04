@@ -67,7 +67,7 @@ public class Result<T> implements Serializable {
 
     /**
      * 系统错误
-     * @return
+     * @return 错误
      */
     public static Result wrap500Error() {
         return wrap500Error("系统错误");
@@ -75,7 +75,7 @@ public class Result<T> implements Serializable {
 
     /**
      * 系统熔断保护
-     * @return
+     * @return 错误
      */
     public static Result wrapProtectedError() {
         return wrapError(STATUS_PROTECTED,"系统熔断保护");

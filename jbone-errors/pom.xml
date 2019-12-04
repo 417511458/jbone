@@ -12,7 +12,8 @@
     <artifactId>jbone-errors</artifactId>
     <packaging>jar</packaging>
     <name>jbone-errors</name>
-    <url>http://www.jbone.cn</url>
+    <url>http://jbone.cn</url>
+    <description>jbone errors</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -16,11 +16,11 @@ import java.util.List;
 public class SpecificationUtils<T> {
     /**
      * 构建条件查询
-     * @param root
-     * @param criteriaBuilder
-     * @param conditions
-     * @param <T>
-     * @return
+     * @param root p
+     * @param criteriaBuilder p
+     * @param conditions p
+     * @param <T> t
+     * @return r
      */
     public static <T> List<Predicate> generatePredicates(Root<T> root, CriteriaBuilder criteriaBuilder, List<SearchConditionDO> conditions){
         if(CollectionUtils.isEmpty(conditions)){
@@ -79,8 +79,8 @@ public class SpecificationUtils<T> {
 
     /**
      * 构建排序
-     * @param sortDOS
-     * @return
+     * @param sortDOS s
+     * @return r
      */
     public static Sort buildSort(List<SearchSortDO> sortDOS){
         Sort sort = null;

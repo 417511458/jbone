@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * 分页数据对象
- * @param <T>
  */
 @Data
 public class PagedResponseDO<T> {
