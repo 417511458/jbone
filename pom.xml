@@ -36,7 +36,7 @@
         <commons-cli.version>1.4</commons-cli.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <commons-logging.version>1.2</commons-logging.version>
-        <commons-configuration2.version>2.2</commons-configuration2.version>
+        <commons-configuration2.version>2.7</commons-configuration2.version>
         <commons-validator.version>1.6</commons-validator.version>
         <commons-codec.version>1.10</commons-codec.version>
         <commons-jexl.version>1.1</commons-jexl.version>
