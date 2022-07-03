@@ -1,6 +1,6 @@
 
-# 强烈推荐Dubbo学习教程：
-# [深入剖析Dubbo架构设计和实现原理](https://juejin.cn/book/7069596046602534919)
+## 强烈推荐Dubbo学习教程：
+## [深入剖析Dubbo架构设计和实现原理](https://juejin.cn/book/7069596046602534919)
 
 ![Jbone logo](doc/images/logo-text.png)
 
