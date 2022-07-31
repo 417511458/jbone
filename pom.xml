@@ -45,7 +45,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <druid.version>1.1.6</druid.version>
         <lombok.version>1.18.6</lombok.version>
-        <fastjson.version>1.2.46</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
 
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
