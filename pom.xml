@@ -30,7 +30,7 @@
         <jbone.system.version>1.0.0-SNAPSHOT</jbone.system.version>
         <jbone.sso.version>1.0.0-SNAPSHOT</jbone.sso.version>
         <jackson.version>2.9.7</jackson.version>
-        <commons-io.version>2.5</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-text.version>1.1</commons-text.version>
         <commons-pool2.version>2.4.2</commons-pool2.version>
         <commons-cli.version>1.4</commons-cli.version>
